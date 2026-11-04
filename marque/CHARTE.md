@@ -5,7 +5,7 @@ Version de travail · novembre 2026 · à valider par le bureau
 
 > **État de ce fichier** : copie de la charte publiée le 4 novembre 2026 (https://claude.ai/artifact/EhTqyWrkSQibEFKKZiydUK).
 > Mise à jour du 4 novembre 2026 : le logo est validé en **Nunito** (§ 4.1).
-> Point encore ouvert : la maquette du site utilise **Figtree** pour les textes, alors que le § 4.2 prévoit Nunito (voir § 10 et `CLAUDE.md`).
+> Point encore ouvert : la maquette du site utilise **Figtree** pour les titres et le texte courant, alors que le § 4.2 prévoit Nunito (voir § 10 et `CLAUDE.md`).
 
 ---
 
@@ -146,7 +146,7 @@ Prochaine étape : faire **vectoriser le logo** (lettres converties en tracés) 
 
 | Usage | Police | Graisse | Remarque |
 | --- | --- | --- | --- |
-| Titres | **Nunito** (police du logo) | ExtraBold / Black | Renforce l’identité |
+| Titres | **Nunito** (police du logo) | ExtraBold / Black | Renforce l’identité. La maquette du site utilise Figtree : point ouvert (§ 10) |
 | Texte courant | **Nunito** | Regular 400, Bold 700 | Lisible à l’écran et à l’impression. La maquette du site utilise Figtree : point ouvert (§ 10) |
 | Bureautique (Word, PowerPoint) si les polices ne sont pas installées | Arial | Regular, Bold | Police de repli universelle |
 
@@ -239,7 +239,7 @@ Ne pas :
 
 ## 10. Points ouverts
 
-- [ ] Police des textes du site : Figtree (utilisée sur la maquette) ou Nunito (prévue au § 4.2)
+- [ ] Police des textes du site (titres et texte courant) : Figtree (utilisée sur la maquette) ou Nunito (prévue au § 4.2)
 - [ ] Validation du vert anis à partir du fichier source de l’ancien logo, s’il existe
 - [ ] Références CMJN et Pantone
 - [ ] Validation du bureau
