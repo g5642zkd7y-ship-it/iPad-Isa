@@ -32,6 +32,13 @@
 
   const DATA = {
     veille: [
+      { id: 'v0', src: 'hors', where: 'Assurance maladie', date: '2026-11-02', when: '2 novembre 2026',
+        title: 'Protocole 2027-2029 : l’Assurance maladie et les syndicats de biologistes signent',
+        teaser: 'Le protocole est signé par l’ensemble des syndicats représentatifs de biologistes médicaux, dont le SLBC.',
+        resume: 'L’Assurance maladie et l’ensemble des syndicats représentatifs de biologistes médicaux, dont le SLBC, ont signé le 2 novembre 2026 un nouveau protocole d’accord pour la période 2027-2029. Il prend le relais de l’accord du 20 décembre 2024, qui gelait la nomenclature jusqu’en décembre 2026.',
+        impact: 'fort',
+        facts: [['Signature', '2 novembre 2026'], ['Période couverte', '2027 à 2029'], ['Signataires', 'Assurance maladie et syndicats représentatifs de biologistes médicaux, dont le SLBC']],
+        url: 'https://toute-la.veille-acteurs-sante.fr/246686/lassurance-maladie-et-lensemble-des-syndicats-representatifs-de-biologistes-medicaux-signent-un-nouveau-protocole-daccord-pour-la-periode-2027-2029/', linkLabel: 'Lire le communiqué de l’Assurance maladie' },
       { id: 'v1', src: 'jo', where: 'Journal officiel', date: '2026-10-30', when: 'JO du 30 octobre 2026',
         title: 'Décret n° 2026-1009 du 28 octobre 2026 sur la transmission obligatoire de données à l’autorité sanitaire',
         teaser: 'Hors système d’information, le responsable du laboratoire crée le numéro de signalement lorsque le diagnostic repose sur un examen biologique.',

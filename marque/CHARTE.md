@@ -4,8 +4,8 @@ Syndicat des Laboratoires de Biologie Clinique
 Version de travail · novembre 2026 · à valider par le bureau
 
 > **État de ce fichier** : copie de la charte publiée le 4 novembre 2026 (https://claude.ai/artifact/EhTqyWrkSQibEFKKZiydUK).
-> Depuis, le logo a été validé en **Nunito** (Black 900 pour « SLBC », Bold 700 pour la signature), et le site utilise **Figtree** pour les textes (voir `CLAUDE.md`).
-> Les § 4.1, 4.2 et 10 ci-dessous sont donc à mettre à jour une fois ces choix confirmés par le bureau.
+> Mise à jour du 4 novembre 2026 : le logo est validé en **Nunito** (§ 4.1).
+> Point encore ouvert : la maquette du site utilise **Figtree** pour les textes, alors que le § 4.2 prévoit Nunito (voir § 10 et `CLAUDE.md`).
 
 ---
 
@@ -26,7 +26,7 @@ Le logo associe un **symbole** (deux cellules qui se rejoignent) et un **nom** e
 | Élément | Description |
 | --- | --- |
 | Symbole | Un rond gris (en haut à gauche) et un rond vert anis (en bas à droite) qui se chevauchent ; la zone commune est en vert foncé. |
-| Nom | « SLBC » en capitales, dans la police retenue (voir § 4). |
+| Nom | « SLBC » en capitales, en Nunito Black 900 (voir § 4). |
 | Signature | « Syndicat des Laboratoires de Biologie Clinique ». Sur deux lignes en version horizontale (« de Biologie Clinique » en vert foncé), sur une ligne en version verticale. |
 
 ### 2.2 Les versions
@@ -129,27 +129,25 @@ En dessous de ces tailles, la signature devient illisible : utiliser le symbole 
 
 ## 4. Typographie
 
-### 4.1 Police du logo — choix à arrêter par le bureau
+### 4.1 Police du logo : Nunito
 
-Quatre versions sont soumises au bureau. Une seule sera retenue.
+Le logo est validé en **Nunito**, police ronde et chaleureuse. Elle a été retenue parmi les quatre polices proposées (Nunito, Baloo 2, Lexend et Fredoka).
 
-| Version | Police | Nom « SLBC » | Signature | Caractère |
-| --- | --- | --- | --- | --- |
-| 1 | **Nunito** | Black 900 | Bold 700 | Ronde et chaleureuse ; version de référence |
-| 2 | **Baloo 2** | ExtraBold 800 | SemiBold 600 | La plus grasse, beaucoup de présence |
-| 3 | **Lexend** | ExtraBold 800 | Medium 500 | Sobre, institutionnelle, très lisible |
-| 4 | **Fredoka** | Bold 700 | SemiBold 600 | La plus jeune et la plus ronde |
+| Élément | Police | Graisse |
+| --- | --- | --- |
+| Nom « SLBC » | **Nunito** | Black 900 |
+| Signature | **Nunito** | Bold 700 |
 
-Toutes sont disponibles gratuitement sur Google Fonts, sous licence libre OFL, utilisables en usage commercial.
+Nunito est disponible gratuitement sur Google Fonts, sous licence libre OFL, utilisable en usage commercial.
 
-Une fois la police choisie, faire **vectoriser le logo** (lettres converties en tracés) pour livrer des fichiers qui s’affichent correctement sans que la police soit installée.
+Prochaine étape : faire **vectoriser le logo** (lettres converties en tracés) pour livrer des fichiers qui s’affichent correctement sans que la police soit installée.
 
 ### 4.2 Polices des documents
 
 | Usage | Police | Graisse | Remarque |
 | --- | --- | --- | --- |
-| Titres | Police du logo retenue | ExtraBold / Black | Renforce l’identité |
-| Texte courant | **Nunito** | Regular 400, Bold 700 | Lisible à l’écran et à l’impression |
+| Titres | **Nunito** (police du logo) | ExtraBold / Black | Renforce l’identité |
+| Texte courant | **Nunito** | Regular 400, Bold 700 | Lisible à l’écran et à l’impression. La maquette du site utilise Figtree : point ouvert (§ 10) |
 | Bureautique (Word, PowerPoint) si les polices ne sont pas installées | Arial | Regular, Bold | Police de repli universelle |
 
 ### 4.3 Échelle typographique
@@ -217,7 +215,7 @@ Ne pas :
   --slbc-fond-clair:  #F7F8F4;
   --slbc-blanc:       #FFFFFF;
 
-  /* Typographie — remplacer « Nunito » des titres par la police retenue */
+  /* Typographie — Nunito, police du logo */
   --slbc-police-titres: "Nunito", Arial, sans-serif;
   --slbc-police-texte:  "Nunito", Arial, sans-serif;
 
@@ -230,17 +228,18 @@ Ne pas :
 ---
 
 ## 9. Fichiers à produire après validation
-- Logo vectorisé dans la police retenue : horizontal, vertical, symbole seul.
-- Pour chaque version : couleur, inversé (fond sombre), monochrome gris, monochrome blanc.
-- Formats : SVG et PDF vectoriel (impression, signalétique), PNG transparent en plusieurs tailles (web, bureautique).
-- Références CMJN et Pantone validées sur épreuve.
-- Modèles : papier à en-tête, carte de visite, présentation, signature e-mail.
+
+1. Logo vectorisé en Nunito (Black 900 pour le nom, Bold 700 pour la signature) : horizontal, vertical, symbole seul.
+2. Pour chaque version : couleur, inversé (fond sombre), monochrome gris, monochrome blanc.
+3. Formats : SVG et PDF vectoriel (impression, signalétique), PNG transparent en plusieurs tailles (web, bureautique).
+4. Références CMJN et Pantone validées sur épreuve.
+5. Modèles : papier à en-tête, carte de visite, présentation, signature e-mail.
 
 ---
 
 ## 10. Points ouverts
 
-- Choix de la police du logo (Nunito, Baloo 2, Lexend ou Fredoka)
-- Validation du vert anis à partir du fichier source de l’ancien logo, s’il existe
-- Références CMJN et Pantone
-- Validation du bureau
+- [ ] Police des textes du site : Figtree (utilisée sur la maquette) ou Nunito (prévue au § 4.2)
+- [ ] Validation du vert anis à partir du fichier source de l’ancien logo, s’il existe
+- [ ] Références CMJN et Pantone
+- [ ] Validation du bureau

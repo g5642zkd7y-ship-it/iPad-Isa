@@ -42,7 +42,8 @@ Note de travail rédigée le 4 novembre 2026 à partir des artefacts existants s
 - Protocole précédent : accord du 20 décembre 2024 (SNMB, SDBIO, SLBC), gel de la nomenclature jusqu'en décembre 2026, tenu à −1 M€ près sur 2024-2026.
 - Projet CNAM du 16/10/2026 : base 2026 estimée à 3 980 M€ (±10 M€), enveloppe +1 % en 2027 puis +0,8 %, IST sans ordonnance dans les actes courants, régulation 100 % en janvier puis 80 % en août, biologie délocalisée dans l'enveloppe, annexe 1 (mécanisme) vide, clause de survie jusqu'en 2031.
 - Conditions de signature posées dans la note du 20/10 : (1) base = dépense réelle 2026 sans plafond ; (2) IST hors des actes courants ; (3) annexe 1 rédigée avec symétrie automatique.
-- **Nouveau, d'après la presse (non vérifié sur source primaire)** : protocole **signé le 2 novembre 2026** par la CNAM, l'UNOCAM et les quatre syndicats représentatifs. Les sources se contredisent sur la présence du SLBC parmi les signataires. Contenu rapporté : +1,1 %/an sur les actes courants, 100 M€ pour les actes nouveaux, base alignée sur la prévision de dépense 2026, ouverture d'une renégociation de la convention de 1994, plan d'action d'ici début 2027.
+- **Protocole 2027-2029 signé le 2 novembre 2026** par la CNAM, l'UNOCAM et les syndicats représentatifs. **Le SLBC l'a signé** (confirmé par Isabelle Eimer le 4 novembre 2026).
+- Contenu rapporté par la presse, non vérifié sur le texte signé : +1,1 %/an sur les actes courants, 100 M€ pour les actes nouveaux, base alignée sur la prévision de dépense 2026, ouverture d'une renégociation de la convention de 1994, plan d'action d'ici début 2027.
 
 ### PLFSS 2027
 
@@ -72,9 +73,10 @@ Note de travail rédigée le 4 novembre 2026 à partir des artefacts existants s
 
 ## À mettre à jour dans la maquette
 
-1. Bloc « Protocole 2027-2030 » : le protocole couvre **2027-2029** et serait signé depuis le 2 novembre 2026.
-2. Suivi du PLFSS 2027 : ajouter le rejet du 23 octobre, la séance au Sénat du 9 novembre et l'échéance du 26 novembre.
-3. Veille : ajouter la signature du protocole en tête ; vérifier l'intitulé de la PPL n° 2956 et ajouter la PPL n° 3076.
+1. ~~Bloc « Protocole 2027-2030 »~~ : fait le 4 novembre 2026 (protocole 2027-2029 signé, entrée en tête de la veille).
+2. Suivi du PLFSS 2027 : ajouter le rejet du 23 octobre, la séance au Sénat du 9 novembre et l'échéance du 26 novembre (en attente d'accord).
+3. Veille : vérifier l'intitulé de la PPL n° 2956 et ajouter la PPL n° 3076 (en attente d'accord).
+4. ~~Charte~~ : logo passé en Nunito le 4 novembre 2026. Reste ouvert : Figtree ou Nunito pour les textes du site.
 
 ## Limites de l'environnement
 

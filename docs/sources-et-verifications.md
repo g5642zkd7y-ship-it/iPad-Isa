@@ -21,6 +21,9 @@ Communiqués de presse :
 - 2019, laboratoires en grève : https://www.le-crestois.fr/images/breves_2019/CP_APBM_VF.pdf
 - 25 septembre 2014, appel unitaire à la fermeture : https://lesbiologistesmedicaux.fr/la-biologie-medicale-2~/communique-de-presse-sjbm~/appel-unitaire-a-la-fermeture-des-laboratoires-de-biologie-medicale-le-30-septembre-prochain
 
+Protocole 2027-2029 avec l’Assurance maladie :
+- Signature le 2 novembre 2026, SLBC signataire (confirmé par Isabelle Eimer le 4 novembre 2026). Communiqué de l’Assurance maladie, relayé par La Veille Acteurs de Santé : https://toute-la.veille-acteurs-sante.fr/246686/lassurance-maladie-et-lensemble-des-syndicats-representatifs-de-biologistes-medicaux-signent-un-nouveau-protocole-daccord-pour-la-periode-2027-2029/ (lien relevé dans les résultats de recherche ; la page n’a pas pu être ouverte depuis l’environnement de travail).
+
 Veille réglementaire (exemple du 4 novembre 2026) :
 - Décret n° 2026-1009 du 28 octobre 2026 (JO n° 0254 du 30 octobre 2026) : https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000055029947
 - Arrêté du 22 octobre 2026 (biosimilaires) : https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000055018337
