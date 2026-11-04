@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="SLBC">
+  <defs><clipPath id="slbc-commun"><circle cx="44" cy="44" r="36"/></clipPath></defs>
+  <circle cx="44" cy="44" r="36" fill="#FFFFFF"/>
+  <circle cx="76" cy="76" r="36" fill="#A3BE3C"/>
+  <circle cx="76" cy="76" r="36" fill="#D6E4A6" clip-path="url(#slbc-commun)"/>
+</svg>

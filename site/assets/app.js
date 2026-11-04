@@ -1,0 +1,757 @@
+(() => {
+  'use strict';
+
+  /* ---------- Outils ---------- */
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const smooth = () => (reduceMotion ? 'auto' : 'smooth');
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const norm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const fmt = (iso, opts) => { try { return new Intl.DateTimeFormat('fr-FR', opts).format(new Date(iso + 'T12:00:00')); } catch (e) { return iso; } };
+  const longDate = (iso) => fmt(iso, { day: 'numeric', month: 'long', year: 'numeric' });
+  const shortDate = (iso) => fmt(iso, { day: 'numeric', month: 'short', year: 'numeric' });
+  const pad = (n) => String(n).padStart(2, '0');
+  const todayISO = () => { const d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  const isHttp = (u) => /^https?:\/\//i.test(String(u || ''));
+
+  const sv = (w, body) => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
+  const ICON = {
+    check: sv(22, '<path d="M4.5 12.5l4.5 4.5L19.5 6.5"/>'),
+    lock: sv(16, '<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
+    lockS: sv(13, '<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
+    doc: sv(30, '<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/>'),
+    scale: sv(30, '<path d="M12 4v16M6 20h12M5 7h14"/><path d="M5 7l-3 6a3.5 3.5 0 0 0 6 0zM19 7l-3 6a3.5 3.5 0 0 0 6 0z"/>'),
+    people: sv(30, '<circle cx="9" cy="8.5" r="3.5"/><path d="M2.5 20c.7-3.5 3.3-5.5 6.5-5.5s5.8 2 6.5 5.5"/><circle cx="17.5" cy="9.5" r="2.5"/><path d="M17.5 14.5c2.2 0 3.7 1.4 4.2 4"/>'),
+    columns: sv(30, '<path d="M3 9.5L12 4l9 5.5"/><path d="M5.5 10v8M10 10v8M14 10v8M18.5 10v8"/><path d="M3 20.5h18"/>')
+  };
+
+  /* ---------- Contenu (repris du site actuel et des sources officielles) ---------- */
+  const SRC = { jo: 'Journal officiel', parl: 'Parlement', hors: 'Hors JO' };
+  const IMPACT = { fort: 'Impact fort', suivre: 'À suivre', faible: 'Impact faible' };
+
+  const DATA = {
+    veille: [
+      { id: 'v1', src: 'jo', where: 'Journal officiel', date: '2026-10-30', when: 'JO du 30 octobre 2026',
+        title: 'Décret n° 2026-1009 du 28 octobre 2026 sur la transmission obligatoire de données à l’autorité sanitaire',
+        teaser: 'Hors système d’information, le responsable du laboratoire crée le numéro de signalement lorsque le diagnostic repose sur un examen biologique.',
+        resume: 'Le décret précise qui pseudonymise les données transmises lors des signalements de maladies à déclaration obligatoire. Pour les signalements effectués hors du système d’information, la création du numéro de signalement revient au responsable du laboratoire de biologie médicale lorsque le diagnostic repose sur un examen biologique.',
+        impact: 'fort',
+        facts: [['Publication', 'JO n° 0254 du 30 octobre 2026, texte n° 34'], ['Articles modifiés', 'R. 1413-58-1 et R. 3113-2 du code de la santé publique'], ['Entrée en vigueur', 'Le lendemain de la publication']],
+        url: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000055029947', linkLabel: 'Lire le décret sur Légifrance' },
+      { id: 'v2', src: 'parl', where: 'Sénat', date: '2026-11-02', when: '2 novembre 2026',
+        title: 'PLFSS 2027 : le projet de loi est transmis au Sénat',
+        teaser: 'Considéré comme rejeté par l’Assemblée nationale, le texte part en commission des affaires sociales du Sénat.',
+        resume: 'Le projet de loi de financement de la sécurité sociale pour 2027, considéré comme rejeté par l’Assemblée nationale, a été transmis au Sénat et renvoyé à sa commission des affaires sociales. La veille suit les articles et les amendements qui concernent les laboratoires.',
+        impact: 'suivre',
+        facts: [['Texte', 'n° 138 (2026-2027)'], ['Étape', 'Renvoi à la commission des affaires sociales']],
+        url: 'https://www.senat.fr/leg/pjl26-138.html', linkLabel: 'Voir le texte sur senat.fr' },
+      { id: 'v3', src: 'parl', where: 'Assemblée nationale', date: '2026-06-23', when: 'Suivie depuis le 23 juin 2026',
+        title: 'Proposition de loi n° 2956 contre les excès de la financiarisation en santé',
+        teaser: 'Déposée le 23 juin 2026 et renvoyée à la commission des affaires sociales.',
+        resume: 'La proposition de loi portant mesures visant à lutter contre les excès de la financiarisation en santé a été déposée à l’Assemblée nationale le 23 juin 2026 et renvoyée à la commission des affaires sociales. Le SLBC suit chaque étape de son examen.',
+        impact: 'suivre',
+        facts: [['Dépôt', '23 juin 2026'], ['Commission', 'Affaires sociales']],
+        url: 'https://www.assemblee-nationale.fr/dyn/17/textes/l17b2956_proposition-loi', linkLabel: 'Voir le texte sur assemblee-nationale.fr' },
+      { id: 'v4', src: 'jo', where: 'Journal officiel', date: '2026-10-22', when: 'Arrêté du 22 octobre 2026',
+        title: 'Biosimilaires substituables par le pharmacien d’officine : la liste est modifiée',
+        teaser: 'Concerne la substitution en officine. Pas d’effet direct sur les laboratoires.',
+        resume: 'L’arrêté modifie la liste des groupes biologiques similaires que le pharmacien d’officine peut substituer, ainsi que les conditions de substitution. Il n’a pas d’effet direct sur l’activité des laboratoires de biologie médicale.',
+        impact: 'faible',
+        facts: [['Texte', 'Arrêté du 22 octobre 2026 modifiant l’arrêté du 17 septembre 2026']],
+        url: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000055018337', linkLabel: 'Lire l’arrêté sur Légifrance' }
+    ],
+    presse: [
+      { id: 'p1', date: '2024-12-20', year: '2024',
+        title: 'L’Assurance maladie et trois syndicats de biologistes médicaux signent un accord pour stabiliser la trajectoire économique des laboratoires pendant deux ans',
+        with: 'Communiqué commun du SNMB, du SDBIO et du SLBC',
+        chapo: 'Revalorisation de cotations trop fortement baissées en septembre 2024, gel de la nomenclature jusqu’en décembre 2026, transparence sur les dépenses de biologie : les trois syndicats signataires lèvent leur consigne de fermeture de fin d’année.',
+        url: 'https://snmbio.com/files/COMMUNIQUE%20DE%20PRESSE%20SDBIO%20-%20SLBC%20et%20SNMB%20-%20Signature%20accord%20CNAM.pdf', linkLabel: 'Lire le communiqué (PDF)' },
+      { id: 'p2', date: '2019-01-01', dateLabel: '2019', year: '2019',
+        title: 'Laboratoires de biologie médicale en grève : et si demain les laboratoires de proximité disparaissaient ?',
+        with: 'Communiqué commun du SDB, du SNMB, du SLBC et du SJBM',
+        chapo: 'Les syndicats de biologistes dénoncent les baisses de tarifs imposées sur une sélection d’actes parmi les plus prescrits, et leurs conséquences pour les laboratoires de proximité.',
+        url: 'https://www.le-crestois.fr/images/breves_2019/CP_APBM_VF.pdf', linkLabel: 'Lire le communiqué (PDF)' },
+      { id: 'p3', date: '2014-09-25', year: '2014',
+        title: 'Appel unitaire à la fermeture des laboratoires de biologie médicale le 30 septembre',
+        with: 'Communiqué commun du SDB, du SLBC, du SNMB, du SJBM et de la FNSIP-BM',
+        chapo: 'Les syndicats refusent que la biologie médicale soit traitée comme un service marchand et dénoncent la remise en cause de la réforme de 2013.',
+        url: 'https://lesbiologistesmedicaux.fr/la-biologie-medicale-2~/communique-de-presse-sjbm~/appel-unitaire-a-la-fermeture-des-laboratoires-de-biologie-medicale-le-30-septembre-prochain', linkLabel: 'Lire le communiqué' }
+    ],
+    actus: [
+      { id: 'a1', date: '2026-09-07', cat: 'Santé publique', title: 'Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', excerpt: 'Sur les 22 actions du plan, deux touchent les laboratoires, dont le déploiement de la biologie délocalisée.', url: 'https://www.slbc.fr/strategie-nationale-de-sante-sexuelle-2026-2030-le-texte-integral-du-ministere/' },
+      { id: 'a2', date: '2026-09-07', cat: 'Santé publique', title: 'Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle', excerpt: 'La feuille de route prévoit le déploiement de la biologie médicale délocalisée.', url: 'https://www.slbc.fr/feuille-de-route-2026-2030-de-la-strategie-nationale-de-sante-sexuelle/' },
+      { id: 'a3', date: '2026-08-31', cat: 'Exercice', title: 'Rapport Beaudeux-Bouvier : biologistes médicaux et assistance médicale à la procréation', excerpt: 'Une mission ministérielle propose de reconnaître et de rémunérer les consultations des biologistes médicaux en assistance médicale à la procréation.', url: 'https://www.slbc.fr/rapport-beaudeux-bouvier-biologistes-medicaux-et-assistance-medicale-a-la-procreation/' },
+      { id: 'a4', date: '2026-08-31', cat: 'Vie du syndicat', title: 'Décès du Docteur Jean-François Perotto', excerpt: '', url: 'https://www.slbc.fr/deces-du-docteur-jean-francois-perotto/' },
+      { id: 'a5', date: '2026-07-01', cat: 'Social', title: 'Négociations salariales : recommandation patronale et grille 2026', excerpt: 'Les organisations patronales, dont le SLBC, ont émis une recommandation le 15 décembre 2025.', url: 'https://www.slbc.fr/negociations-salariales-recommandation-patronale-et-grille-2026/' },
+      { id: 'a6', date: '2026-06-09', cat: 'Appels à projets', title: 'Appel à candidatures PNMR4 pour les tests fonctionnels', excerpt: 'La DGOS a lancé le 9 juin 2026 un appel à candidatures dans le cadre du 4e plan national maladies rares.', url: 'https://www.slbc.fr/appel-a-candidatures-pnmr4-pour-les-tests-fonctionnels/' },
+      { id: 'a7', date: '2026-05-04', cat: 'Social', title: 'Grève nationale historique des salariés des laboratoires', excerpt: '', url: 'https://www.slbc.fr/actualites/' },
+      { id: 'a8', date: '2026-04-16', cat: 'Nomenclature', title: 'Innovation diagnostique : déploiement du RIHN 2.0', excerpt: '', url: 'https://www.slbc.fr/actualites/' },
+      { id: 'a9', date: '2026-02-05', cat: 'Vie du syndicat', title: 'Une ambition commune : valoriser notre expertise médicale', excerpt: '', url: 'https://www.slbc.fr/actualites/' },
+      { id: 'a10', date: '2026-02-04', cat: 'Nomenclature', title: 'Radiation de la vitesse de sédimentation (VS) de la NABM', excerpt: '', url: 'https://www.slbc.fr/actualites/' }
+    ]
+  };
+
+  const EXPERTS = [
+    { s: 'Service juridique', n: 'Céline Roquelle-Meyer', d: 'Avocate spécialisée en droit de la santé' },
+    { s: 'Service social', n: 'Laurence Monville-Roustand', d: 'Droit du travail et droit de la sécurité sociale' },
+    { s: 'Service économique et fiscal', n: 'Philippe Taboulet', d: 'Expert-comptable et commissaire aux comptes' }
+  ];
+  const BUREAU = [
+    ['Président', 'Thierry Bouchet'], ['Vice-président', 'Antoine Crinquette'], ['Vice-présidente', 'Isabelle Eimer'],
+    ['Vice-président', 'Pascal Melin'], ['Trésorier', 'Jean-Philippe Brochet'], ['Trésorier adjoint', 'Hala Sarmini'],
+    ['Secrétaire général', 'Nicolas Roquigny'], ['Conseiller spécial', 'Frédéric Lahiani'], ['Chargée de communication', 'Caroline Gutsmuth']
+  ];
+  const PROTOCOLE = ['Thierry Bouchet', 'Antoine Crinquette', 'Isabelle Eimer', 'Pascal Melin'];
+  const MISSIONS = [
+    'Défendre l’éthique, la reconnaissance de la biologie comme discipline de santé publique et la recherche de l’excellence.',
+    'Accompagner la réforme de la biologie en préservant l’indépendance des biologistes, pharmaciens ou médecins, salariés ou associés.',
+    'Favoriser le regroupement des biologistes pour mutualiser leurs moyens.'
+  ];
+  const PRIORITES = [
+    'Faire reconnaître le rôle médical du biologiste.',
+    'Intégrer le biologiste dans le parcours de soins : premier recours, permanence des soins, dépistage.',
+    'Anticiper la concurrence européenne et les effets de la maîtrise des dépenses de biologie.',
+    'Promouvoir une politique qualité, dont l’accréditation est l’aboutissement.',
+    'Donner accès aux technologies avancées par la spécialisation et la mise en commun des moyens.'
+  ];
+  const CHARTE = [
+    { t: 'Biologie libérale, indépendante et responsable', d: 'Les biologistes choisissent leurs méthodes et maîtrisent leurs investissements, leurs achats et leurs recrutements, sans intervention des financiers sur la profession.' },
+    { t: 'Médicalisation par la spécialisation', d: 'Un biologiste médical responsable sur chaque site, joignable rapidement. La formation continue et la spécialisation dans chaque discipline sont prioritaires.' },
+    { t: 'Qualité prouvée, efficience', d: 'Oui à l’accréditation, avec des objectifs progressifs et réalistes, adaptés aux réalités du terrain.' },
+    { t: 'Rassembler la profession', d: 'Réunir une part importante et homogène des biologistes attachés à l’indépendance du biologiste médical, pour conforter la crédibilité de la profession.' }
+  ];
+  const INSTANCES = [
+    { n: 'Commission de hiérarchisation des actes de biologie', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Jean-Philippe Galhaud', 'Vincent Vieillefond'],
+      sub: [['Groupe AMP', ['Alain Lemeur']], ['Groupe biochimie', []], ['Groupe cytogénétique', ['Alain Lemeur']], ['Groupe hématologie', ['Christophe Uguen']]] },
+    { n: 'Commission conventionnelle paritaire nationale', r: 'Convention avec l’Assurance maladie', reps: ['Daniel Gadeyne', 'Thierry Bouchet', 'Hala Sarmini'] },
+    { n: 'Commission nationale de biologie médicale', r: 'Conditions d’exercice de la profession', reps: ['Valérie Chepeaux'] },
+    { n: 'Cofrac', r: 'Commission technique d’accréditation', reps: ['Hala Sarmini', 'Jean-Philippe Galhaud'] },
+    { n: 'Ministère chargé de la santé', r: 'Relations avec la tutelle', reps: ['Thierry Bouchet', 'Hala Sarmini'] },
+    { n: 'Commission sociale paritaire', r: 'Dialogue social de la branche', reps: ['Thierry Bouchet', 'Daniel Gadeyne', 'Fabienne Moulinier', 'Véronique Petit'] },
+    { n: 'Commission biologie européenne', r: 'Représentation de la profession en Europe', reps: ['Simone Zerah', 'Jean-Philippe Brochet'] },
+    { n: 'Agence de la biomédecine', r: 'AMP, génétique, prélèvement et greffe', reps: [] },
+    { n: 'Santé publique France', r: 'Surveillance sanitaire, ex-InVS', reps: [] },
+    { n: 'Société française de biologie clinique', r: 'Société savante', reps: [] },
+    { n: 'Bio Qualité', r: 'Conseil d’administration', reps: ['François Thomas', 'Jean-François Rousselle'] },
+    { n: 'Centre national des professions de santé', r: 'Interprofession libérale', reps: ['Thierry Bouchet'] },
+    { n: 'Agence nationale du DPC', r: 'Développement professionnel continu', reps: ['Hala Sarmini'] },
+    { n: 'Klesia', r: 'Prévoyance de la branche', reps: ['Thierry Bouchet', 'Christian Aymard'] }
+  ];
+  const CA = [
+    ['Auvergne-Rhône-Alpes et Bourgogne-Franche-Comté', ['Nicolas Roquigny', 'Éric Flatin', 'François Targe', 'Benoît Dumont', 'Marc Thome', 'Fabienne Moulinier']],
+    ['Grand Est', ['Isabelle Eimer', 'Jovana Moularde', 'Carole Granello']],
+    ['Hauts-de-France', ['Nicolas Chatelain', 'Antoine Crinquette']],
+    ['Île-de-France et outre-mer', ['Thierry Bouchet', 'Pascal Melin', 'Hala Sarmini', 'Alexandre Guiard', 'Ahmed Aboubacar', 'Sophie Beria']],
+    ['Nouvelle-Aquitaine', ['Jean-Philippe Brochet']],
+    ['Ouest', ['Laurent Perrot']],
+    ['Provence-Alpes-Côte d’Azur, Languedoc et Corse', ['Guillaume Arimana', 'Sylvain Chambourlier', 'Laurent Kbaier']]
+  ];
+  const URPS = [
+    ['Auvergne-Rhône-Alpes', ['Jacques Pojer', 'Valérie Chepeaux']], ['Bourgogne-Franche-Comté', ['Christian Aymard']],
+    ['Bretagne', ['Eric Gueheneux']], ['Centre-Val de Loire', ['François Thomas']], ['Corse', ['Gérard Pesquie']],
+    ['Grand Est', ['Christian Laeng', 'Michel Pax']], ['Hauts-de-France', ['Nicolas Chatelain', 'Daniel Gadeyne']],
+    ['Île-de-France', ['Hala Sarmini', 'Thierry Bouchet']], ['Normandie', ['Paul Bracquemart']],
+    ['Nouvelle-Aquitaine', ['Jean-Philippe Brochet']], ['Occitanie', ['Olivier Attali', 'Arnaud Longuet']],
+    ['Pays de la Loire', ['François Maillet']], ['Provence-Alpes-Côte d’Azur', ['Jean-Pierre Fayon', 'Frédéric Charrier']],
+    ['Guadeloupe', ['Frédéric Leroy']], ['Guyane', []], ['Martinique', ['Gérard Cherchel']],
+    ['La Réunion', ['Paul Emile Gin']], ['Mayotte', ['Ahmed Aboubacar']]
+  ];
+  const COMPTES = [
+    { y: '2023', d: 'Bilan et rapport du commissaire aux comptes' },
+    { y: '2022', d: 'États financiers et rapport du commissaire aux comptes' },
+    { y: '2021', d: 'Bilan et rapport du commissaire aux comptes' }
+  ];
+  const NABM = [
+    { t: 'Arrêté du 25 janvier 2024' }, { t: 'Arrêté du 5 janvier 2024' },
+    { t: 'Décision de l’UNCAM du 7 mars 2023' }, { t: 'Arrêté du 26 janvier 2023' },
+    { t: 'Aides à la prescription', s: 'Thyroïde, vitamine D, groupe sanguin (RAI)' }
+  ];
+  const TEXTES = [
+    { theme: 'Branche et rémunération', short: 'Branche', items: ['Rapport de branche des laboratoires de biologie médicale 2021', 'Grille de salaires au 1er mai 2022'] },
+    { theme: 'Exercice et réforme de la biologie', short: 'Exercice', items: ['Loi n° 2013-442 portant réforme de la biologie médicale', 'Loi n° 2016-41 de modernisation de notre système de santé', 'Décret n° 2021-293 sur les laboratoires de biologie médicale de référence', 'Arrêté du 8 mars 2021 sur l’accréditation des examens de biologie médicale'] },
+    { theme: 'Crise sanitaire', short: 'Covid-19', items: ['Lois, décrets et arrêtés relatifs à la covid-19, de 2020 à 2022'] },
+    { theme: 'Guide de référence', short: 'Guide', items: ['« Références juridiques : biologie médicale », DGOS et CNAM, novembre 2018'] }
+  ];
+  const PARTNERS = [
+    { n: 'Cofrac', d: 'Comité français d’accréditation', url: 'https://www.cofrac.fr' },
+    { n: 'HAS', d: 'Haute Autorité de santé', url: 'https://www.has-sante.fr' },
+    { n: 'Santé publique France', d: 'Agence nationale de santé publique', url: 'https://www.santepubliquefrance.fr' },
+    { n: 'INCa', d: 'Institut national du cancer', url: 'https://www.e-cancer.fr' },
+    { n: 'SFBC', d: 'Société française de biologie clinique', url: 'https://www.sfbc-asso.fr' },
+    { n: 'SFM', d: 'Société française de microbiologie', url: 'https://www.sfm-microbiologie.org' },
+    { n: 'CNPS', d: 'Centre national des professions de santé', url: 'https://www.cnps.fr' },
+    { n: 'Klesia', d: 'Prévoyance', url: 'https://www.klesia.fr' }
+  ];
+  const BENEFITS = [
+    { icon: 'doc', t: 'La veille complète, chaque lundi', d: 'Le Journal officiel, l’Assemblée nationale et le Sénat, analysés pour votre laboratoire.' },
+    { icon: 'scale', t: 'Trois services d’experts', d: 'Juridique, social, économique et fiscal, réservés aux adhérents.' },
+    { icon: 'people', t: 'Les groupes de travail', d: 'Faire évoluer la nomenclature avec vos pairs et renforcer vos compétences.' },
+    { icon: 'columns', t: 'Une voix dans les instances', d: 'Nomenclature, convention avec l’Assurance maladie, accréditation, Europe.' }
+  ];
+  const TRACKERS = [
+    { title: 'PLFSS 2027', steps: [
+      { n: 'Assemblée nationale', w: 'Texte considéré comme rejeté', done: true },
+      { n: 'Transmission au Sénat', w: '2 novembre 2026', done: true },
+      { n: 'Commission des affaires sociales du Sénat', w: 'Saisie', done: true },
+      { n: 'Séance publique au Sénat', w: 'À venir' },
+      { n: 'Suite de la navette parlementaire', w: 'À venir' } ] },
+    { title: 'PPL n° 2956, financiarisation en santé', steps: [
+      { n: 'Dépôt à l’Assemblée nationale', w: '23 juin 2026', done: true },
+      { n: 'Commission des affaires sociales', w: 'Saisie', done: true },
+      { n: 'Examen en commission', w: 'À venir' },
+      { n: 'Séance publique', w: 'À venir' } ] }
+  ];
+
+  /* ---------- Publications de démonstration (mémorisées dans ce navigateur uniquement) ---------- */
+  const STORE_KEY = 'slbc-maquette-publications';
+  const loadDemo = () => { try { const raw = localStorage.getItem(STORE_KEY); const list = raw ? JSON.parse(raw) : []; return Array.isArray(list) ? list : []; } catch (e) { return []; } };
+  const saveDemo = (list) => { try { localStorage.setItem(STORE_KEY, JSON.stringify(list)); } catch (e) { /* stockage indisponible : la démonstration reste en mémoire */ } };
+  let demoPosts = loadDemo().filter((p) => p && DATA[p.kind] && p.item && typeof p.item.title === 'string' && typeof p.item.date === 'string');
+  demoPosts.forEach((p) => { if (p.item.url && !isHttp(p.item.url)) p.item.url = null; });
+  demoPosts.slice().reverse().forEach((p) => { if (!DATA[p.kind].some((x) => x.id === p.item.id)) DATA[p.kind].unshift(p.item); });
+
+  /* ---------- Gabarits ---------- */
+  const vcard = (v) =>
+    '<a class="vcard" href="#veille" data-section="vi-' + esc(v.id) + '">' +
+      '<span class="src"><span class="dot dot-' + esc(v.src) + '" aria-hidden="true"></span>' + esc(v.where || SRC[v.src]) + '</span>' +
+      '<h3>' + esc(v.title) + '</h3>' +
+      '<p>' + esc(v.teaser || v.resume) + '</p>' +
+      '<span class="vmeta"><span>' + esc(v.when) + '</span><span class="impact impact-' + esc(v.impact) + '">' + esc(IMPACT[v.impact]) + '</span></span>' +
+    '</a>';
+
+  const vitem = (v) => {
+    const facts = (v.facts || []).map((f) => '<dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd>').join('');
+    return '<details class="vitem" id="vi-' + esc(v.id) + '"><summary>' +
+        '<span class="v-sum"><span class="v-top">' +
+          '<span class="src src-light"><span class="dot dot-' + esc(v.src) + '" aria-hidden="true"></span>' + esc(v.where || SRC[v.src]) + '</span>' +
+          '<span>' + esc(v.when) + '</span>' +
+          '<span class="impact impact-' + esc(v.impact) + '">' + esc(IMPACT[v.impact]) + '</span>' +
+          (v.members ? '<span class="tag-members">' + ICON.lockS + 'Adhérents</span>' : '') +
+        '</span><span class="v-title">' + esc(v.title) + '</span></span>' +
+        '<span class="v-plus" aria-hidden="true"></span>' +
+      '</summary><div class="v-body">' +
+        '<p>' + esc(v.resume) + '</p>' +
+        (facts ? '<dl class="v-facts">' + facts + '</dl>' : '') +
+        '<div class="link-row">' +
+          (v.url && isHttp(v.url) ? '<a class="more" href="' + esc(v.url) + '" target="_blank" rel="noopener">' + esc(v.linkLabel || 'Texte officiel') + '</a>' : '') +
+          '<span class="members-only">' + ICON.lock + 'Analyse détaillée réservée aux adhérents</span>' +
+        '</div></div></details>';
+  };
+
+  const pitem = (p) =>
+    '<article class="pitem" id="cp-' + esc(p.id) + '">' +
+      '<p class="p-meta"><span class="p-date">' + esc(p.dateLabel || longDate(p.date)) + '</span><span>' + esc(p.with) + '</span>' +
+        (p.members ? '<span class="tag-members">' + ICON.lockS + 'Adhérents</span>' : '') + '</p>' +
+      '<h2 class="p-title">' + esc(p.title) + '</h2>' +
+      (p.chapo ? '<p class="p-chapo">' + esc(p.chapo) + '</p>' : '') +
+      (p.url && isHttp(p.url) ? '<a class="more" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.linkLabel || 'Lire le communiqué') + '</a>'
+                              : '<span class="muted" style="font-size:15px">Publié depuis l’espace adhérent (démonstration).</span>') +
+    '</article>';
+
+  const arow = (a) =>
+    '<li><a class="row-link" href="#actualites" data-section="ac-' + esc(a.id) + '">' +
+      '<time class="row-date" datetime="' + esc(a.date) + '">' + esc(shortDate(a.date)) + '</time>' +
+      '<span class="row-title">' + esc(a.title) + '</span>' +
+      '<span class="row-cat">' + esc(a.cat) + '</span>' +
+    '</a></li>';
+
+  const anews = (a) =>
+    '<li class="news-item" id="ac-' + esc(a.id) + '">' +
+      '<p class="news-meta"><time datetime="' + esc(a.date) + '">' + esc(longDate(a.date)) + '</time><span>' + esc(a.cat) + '</span>' +
+        (a.members ? '<span class="tag-members">' + ICON.lockS + 'Adhérents</span>' : '') + '</p>' +
+      '<h2 class="news-title">' + esc(a.title) + '</h2>' +
+      (a.excerpt ? '<p class="news-excerpt">' + esc(a.excerpt) + '</p>' : '') +
+      (a.url && isHttp(a.url) ? '<a class="more" href="' + esc(a.url) + '" target="_blank" rel="noopener">Lire sur slbc.fr</a>' : '') +
+    '</li>';
+
+  const expertsHTML = EXPERTS.map((e) => '<li><span class="ex-service">' + esc(e.s) + '</span><span class="ex-name">' + esc(e.n) + '</span><span class="ex-desc">' + esc(e.d) + '</span></li>').join('');
+  const namesOr = (names, empty) => (names.length ? esc(names.join(', ')) : '<span class="pending">' + esc(empty) + '</span>');
+
+  /* ---------- Commande segmentée ---------- */
+  function seg(el, options, current, onPick) {
+    el.innerHTML = options.map((o) => '<button type="button" aria-pressed="' + (o === current ? 'true' : 'false') + '">' + esc(o) + '</button>').join('');
+    $$('button', el).forEach((b, i) => b.addEventListener('click', () => {
+      onPick(options[i]);
+      const pressed = el.querySelector('[aria-pressed="true"]');
+      if (pressed) pressed.focus();
+    }));
+  }
+
+  /* ---------- Rendu du contenu fixe ---------- */
+  function renderStatic() {
+    $('#home-experts').innerHTML = expertsHTML;
+    $('#join-experts').innerHTML = expertsHTML;
+    $('#home-instances').innerHTML = INSTANCES.map((i) => '<li><span class="nw-name">' + esc(i.n) + '</span><span class="nw-role">' + esc(i.r) + '</span></li>').join('');
+    const charte = CHARTE.map((c) => '<div class="charter-item"><h3 class="h-block">' + esc(c.t) + '</h3><p>' + esc(c.d) + '</p></div>').join('');
+    $('#home-charte').innerHTML = charte;
+    $('#synd-charte').innerHTML = charte;
+    $('#home-benefits').innerHTML = BENEFITS.map((b) => '<li>' + ICON.check + '<span>' + esc(b.t) + '</span></li>').join('');
+    $('#benefits-grid').innerHTML = BENEFITS.map((b) => '<div class="benefit">' + ICON[b.icon] + '<h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
+    $('#missions-list').innerHTML = MISSIONS.map((m) => '<li>' + esc(m) + '</li>').join('');
+    $('#priorites-list').innerHTML = PRIORITES.map((m) => '<li>' + esc(m) + '</li>').join('');
+    $('#bureau-list').innerHTML = BUREAU.map((b) => '<li class="person"><span class="person-role">' + esc(b[0]) + '</span><span class="person-name">' + esc(b[1]) + '</span></li>').join('');
+    $('#protocole-list').textContent = PROTOCOLE.join(', ');
+    $('#ca-list').innerHTML = CA.map((r) => '<details class="region"><summary><span>' + esc(r[0]) + '</span><span class="count">' + r[1].length + ' administrateur' + (r[1].length > 1 ? 's' : '') + '</span></summary><p>' + esc(r[1].join(', ')) + '</p></details>').join('');
+    $('#inst-list').innerHTML = INSTANCES.map((i) => {
+      const sub = i.sub ? '<div class="inst-sub">' + i.sub.map((g) => '<div><strong>' + esc(g[0]) + '</strong>' + namesOr(g[1], 'À désigner') + '</div>').join('') + '</div>' : '';
+      return '<div class="inst-row"><div><p class="inst-name">' + esc(i.n) + '</p><p class="inst-role">' + esc(i.r) + '</p></div><p class="inst-reps">' + namesOr(i.reps, 'Représentant à désigner') + '</p>' + sub + '</div>';
+    }).join('');
+    $('#urps-list').innerHTML = URPS.map((u) => '<div class="urps-item"><p class="urps-region">' + esc(u[0]) + '</p><p class="urps-names">' + namesOr(u[1], 'Poste non pourvu') + '</p></div>').join('');
+    $('#comptes-list').innerHTML = COMPTES.map((c) => '<li><a class="row-link" href="https://www.slbc.fr/bilan-et-etat-financier/" target="_blank" rel="noopener"><span class="row-date">Exercice ' + esc(c.y) + '</span><span class="row-title">' + esc(c.d) + '</span><span class="row-cat">slbc.fr</span></a></li>').join('') +
+      '<li><a class="row-link" href="https://www.slbc.fr/le-syndicat/les-statuts-du-slbc/" target="_blank" rel="noopener"><span class="row-date">Statuts</span><span class="row-title">Les statuts du SLBC</span><span class="row-cat">slbc.fr</span></a></li>';
+    $('#trackers').innerHTML = TRACKERS.map((t) => '<p class="track-title">' + esc(t.title) + '</p><ol class="track">' + t.steps.map((s) => '<li class="' + (s.done ? 'done' : '') + '"><span class="step-name">' + esc(s.n) + '</span><span class="step-when">' + esc(s.w) + '</span></li>').join('') + '</ol>').join('');
+    $('#foot-partners').innerHTML = PARTNERS.slice(0, 5).map((p) => '<li><a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.n) + '</a></li>').join('');
+    renderDocs('');
+  }
+
+  function renderDocs(q) {
+    const terms = norm(q).split(/\s+/).filter(Boolean);
+    const ok = (s) => !terms.length || terms.every((t) => norm(s).includes(t));
+    const nabm = NABM.filter((d) => ok(d.t + ' ' + (d.s || '') + ' nabm nomenclature'));
+    $('#doc-nabm-list').innerHTML = nabm.map((d) => '<li><a class="row-link" href="https://www.slbc.fr/documentation/chab/" target="_blank" rel="noopener"><span class="row-date">NABM</span><span class="row-title">' + esc(d.t) + (d.s ? '<span class="row-sub">' + esc(d.s) + '</span>' : '') + '</span><span class="row-cat">slbc.fr</span></a></li>').join('');
+    $('#doc-nabm').hidden = !nabm.length;
+    let html = '';
+    let count = 0;
+    TEXTES.forEach((g) => {
+      const items = g.items.filter((t) => ok(t + ' ' + g.theme));
+      if (!items.length) return;
+      count += items.length;
+      html += '<p class="doc-theme">' + esc(g.theme) + '</p><ul class="rows">' + items.map((t) => '<li><a class="row-link" href="https://www.slbc.fr/documentation/professionnel/" target="_blank" rel="noopener"><span class="row-date">' + esc(g.short) + '</span><span class="row-title">' + esc(t) + '</span><span class="row-cat">slbc.fr</span></a></li>').join('') + '</ul>';
+    });
+    $('#doc-textes-list').innerHTML = html;
+    $('#doc-textes').hidden = !count;
+    const parts = PARTNERS.filter((p) => ok(p.n + ' ' + p.d + ' partenaire'));
+    $('#partners-list').innerHTML = parts.map((p) => '<li><a href="' + esc(p.url) + '" target="_blank" rel="noopener"><strong>' + esc(p.n) + '</strong><span>' + esc(p.d) + '</span></a></li>').join('');
+    $('#doc-partenaires').hidden = !parts.length;
+    $('#doc-empty').hidden = Boolean(nabm.length || count || parts.length);
+  }
+
+  /* ---------- Rendu du contenu publié ---------- */
+  const state = { homeCat: 'Toutes', actuCat: 'Toutes', presseYear: 'Toutes', veilleSrc: 'Tout' };
+  const CAT_ORDER = ['Toutes', 'Nomenclature', 'Social', 'Santé publique', 'Exercice', 'Vie du syndicat', 'Appels à projets'];
+  const cats = () => { const present = new Set(DATA.actus.map((a) => a.cat)); return CAT_ORDER.filter((c) => c === 'Toutes' || present.has(c)); };
+  const byDate = (a, b) => b.date.localeCompare(a.date);
+
+  function renderShelf() { $('#home-shelf').innerHTML = DATA.veille.map(vcard).join(''); updateShelf(); }
+  function renderHomeActus() {
+    seg($('#home-actu-seg'), cats(), state.homeCat, (c) => { state.homeCat = c; renderHomeActus(); });
+    $('#home-actus').innerHTML = DATA.actus.slice().sort(byDate).filter((a) => state.homeCat === 'Toutes' || a.cat === state.homeCat).slice(0, 5).map(arow).join('');
+  }
+  function renderActus() {
+    seg($('#actu-seg'), cats(), state.actuCat, (c) => { state.actuCat = c; renderActus(); });
+    $('#actu-list').innerHTML = DATA.actus.slice().sort(byDate).filter((a) => state.actuCat === 'Toutes' || a.cat === state.actuCat).map(anews).join('');
+  }
+  function renderVeille() {
+    const map = { 'Journal officiel': 'jo', 'Parlement': 'parl', 'Hors JO': 'hors' };
+    seg($('#veille-seg'), ['Tout', 'Journal officiel', 'Parlement', 'Hors JO'], state.veilleSrc, (s) => { state.veilleSrc = s; renderVeille(); });
+    const list = DATA.veille.filter((v) => state.veilleSrc === 'Tout' || v.src === map[state.veilleSrc]);
+    $('#veille-list').innerHTML = list.length ? list.map(vitem).join('') : '<p class="empty">Aucun élément « ' + esc(state.veilleSrc) + ' » dans cette synthèse.</p>';
+  }
+  function renderPresse() {
+    const years = ['Toutes'].concat(Array.from(new Set(DATA.presse.map((p) => p.year))).sort((a, b) => b.localeCompare(a)));
+    seg($('#presse-seg'), years, state.presseYear, (y) => { state.presseYear = y; renderPresse(); });
+    $('#presse-list').innerHTML = DATA.presse.slice().sort(byDate).filter((p) => state.presseYear === 'Toutes' || p.year === state.presseYear).map(pitem).join('');
+  }
+  function renderRecent() {
+    const all = []
+      .concat(DATA.presse.map((x) => ({ k: 'Communiqué', d: x.date, l: x.dateLabel, t: x.title, demo: x.demo })))
+      .concat(DATA.veille.map((x) => ({ k: 'Veille', d: x.date, l: null, t: x.title, demo: x.demo })))
+      .concat(DATA.actus.map((x) => ({ k: 'Actualité', d: x.date, l: null, t: x.title, demo: x.demo })))
+      .sort((a, b) => b.d.localeCompare(a.d)).slice(0, 5);
+    $('#recent').innerHTML = all.map((r) => '<li><span class="r-kind">' + esc(r.k) + ', ' + esc(r.l || shortDate(r.d)) + (r.demo ? ', démonstration' : '') + '</span><span class="r-title">' + esc(r.t) + '</span></li>').join('');
+    $('#reset-demo').hidden = !demoPosts.length;
+  }
+  function renderDynamic() { renderShelf(); renderHomeActus(); renderActus(); renderVeille(); renderPresse(); renderRecent(); INDEX = buildIndex(); }
+
+  /* ---------- Étagère de la veille ---------- */
+  const shelf = $('#home-shelf');
+  const shelfBtns = $$('[data-shelf]');
+  function updateShelf() {
+    if (!shelf || shelfBtns.length < 2) return;
+    const max = shelf.scrollWidth - shelf.clientWidth;
+    shelfBtns[0].disabled = shelf.scrollLeft <= 4;
+    shelfBtns[1].disabled = max <= 4 || shelf.scrollLeft >= max - 4;
+  }
+  shelfBtns.forEach((b) => b.addEventListener('click', () => {
+    const card = shelf.querySelector('.vcard');
+    const step = card ? card.getBoundingClientRect().width + 16 : 320;
+    shelf.scrollBy({ left: step * Number(b.dataset.shelf), behavior: smooth() });
+  }));
+  shelf.addEventListener('scroll', updateShelf, { passive: true });
+  window.addEventListener('resize', updateShelf);
+
+  /* ---------- Navigation entre les vues ---------- */
+  const VIEWS = ['accueil', 'syndicat', 'veille', 'presse', 'actualites', 'documentation', 'adherer', 'espace'];
+  let current = null;
+  let pendingSection = null;
+
+  function goSection(id) {
+    let t = document.getElementById(id);
+    if (!t || t.offsetParent === null) {
+      state.veilleSrc = 'Tout'; state.actuCat = 'Toutes'; state.presseYear = 'Toutes';
+      renderVeille(); renderActus(); renderPresse();
+      t = document.getElementById(id);
+    }
+    if (!t) return;
+    if (t.tagName === 'DETAILS') t.open = true;
+    t.scrollIntoView({ behavior: smooth(), block: 'start' });
+  }
+
+  function route() {
+    let v = (location.hash || '').slice(1) || 'accueil';
+    if (VIEWS.indexOf(v) < 0) v = 'accueil';
+    const changed = v !== current;
+    $$('.view').forEach((el) => {
+      const on = el.dataset.view === v;
+      el.hidden = !on;
+      if (on && changed && current !== null) { el.classList.remove('entering'); void el.offsetWidth; el.classList.add('entering'); }
+    });
+    $$('[data-nav]').forEach((a) => { if (a.dataset.nav === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    current = v;
+    closeMenu();
+    if (v === 'accueil') requestAnimationFrame(updateShelf);
+    if (pendingSection) {
+      const id = pendingSection;
+      pendingSection = null;
+      requestAnimationFrame(() => goSection(id));
+    } else if (changed) {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (href === '#') return;
+    const sec = a.dataset.section || null;
+    if (a.id === 'toast-link') $('#toast').hidden = true;
+    closeSearch(true);
+    closeMenu();
+    const here = location.hash || '#accueil';
+    if (href === here) {
+      e.preventDefault();
+      if (sec) goSection(sec); else window.scrollTo({ top: 0, behavior: smooth() });
+    } else {
+      pendingSection = sec;
+    }
+  });
+  window.addEventListener('hashchange', route);
+
+  /* ---------- Menu mobile ---------- */
+  const menuBtn = $('#menu-btn');
+  const mmenu = $('#mmenu');
+  function openMenu() { mmenu.hidden = false; menuBtn.setAttribute('aria-expanded', 'true'); menuBtn.setAttribute('aria-label', 'Fermer le menu'); document.documentElement.style.overflow = 'hidden'; }
+  function closeMenu() { if (mmenu.hidden) return; mmenu.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.setAttribute('aria-label', 'Ouvrir le menu'); document.documentElement.style.overflow = ''; }
+  menuBtn.addEventListener('click', () => (mmenu.hidden ? openMenu() : closeMenu()));
+
+  /* ---------- Recherche ---------- */
+  let INDEX = [];
+  function buildIndex() {
+    const idx = [];
+    const page = (title, sub, href, section) => idx.push({ type: 'Page', title, sub, href, section, text: '' });
+    page('Le syndicat', 'Missions, charte, bureau, représentants', '#syndicat');
+    page('Bureau exécutif', 'Président, vice-présidents, trésorier, secrétaire général', '#syndicat', 'bureau');
+    page('Conseil d’administration', 'Les administrateurs par région', '#syndicat', 'conseil');
+    page('Nos représentants', 'Nomenclature, convention, accréditation, Europe', '#syndicat', 'representants');
+    page('Les URPS', 'La représentation des biologistes en région', '#syndicat', 'urps');
+    page('Comptes et statuts', 'Exercices 2021 à 2023', '#syndicat', 'comptes');
+    page('Veille réglementaire', 'Journal officiel, Assemblée nationale, Sénat', '#veille');
+    page('Salle de presse', 'Les communiqués du SLBC', '#presse');
+    page('Actualités', 'L’information du syndicat', '#actualites');
+    page('Nomenclature des actes (NABM)', 'Arrêtés et décisions de l’UNCAM', '#documentation', 'doc-nabm');
+    page('Textes réglementaires', 'Lois, décrets et arrêtés', '#documentation', 'doc-textes');
+    page('Adhérer au SLBC', 'Demande d’adhésion en ligne', '#adherer');
+    page('Espace adhérent', 'Publier un communiqué ou la veille', '#espace');
+    DATA.veille.forEach((v) => idx.push({ type: 'Veille', title: v.title, sub: v.when, href: '#veille', section: 'vi-' + v.id, text: v.resume }));
+    DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title, sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with }));
+    DATA.actus.forEach((a) => idx.push({ type: 'Actualité', title: a.title, sub: longDate(a.date), href: '#actualites', section: 'ac-' + a.id, text: a.excerpt + ' ' + a.cat }));
+    BUREAU.forEach((b) => idx.push({ type: 'Bureau', title: b[1], sub: b[0], href: '#syndicat', section: 'bureau', text: '' }));
+    EXPERTS.forEach((e) => idx.push({ type: 'Expert', title: e.n, sub: e.s, href: '#adherer', section: null, text: e.d }));
+    INSTANCES.forEach((i) => idx.push({ type: 'Instance', title: i.n, sub: i.r, href: '#syndicat', section: 'representants', text: i.reps.join(' ') }));
+    NABM.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Nomenclature des actes', href: '#documentation', section: 'doc-nabm', text: d.s || '' }));
+    TEXTES.forEach((g) => g.items.forEach((t) => idx.push({ type: 'Document', title: t, sub: g.theme, href: '#documentation', section: 'doc-textes', text: '' })));
+    return idx;
+  }
+  const srItem = (it) =>
+    '<li><a class="sr-link" href="' + esc(it.href) + '"' + (it.section ? ' data-section="' + esc(it.section) + '"' : '') + '>' +
+      '<span class="sr-type">' + esc(it.type) + '</span>' +
+      '<span class="sr-main"><span class="sr-name">' + esc(it.title) + '</span>' + (it.sub ? '<span class="sr-sub">' + esc(it.sub) + '</span>' : '') + '</span>' +
+    '</a></li>';
+  function renderSearch(q) {
+    const box = $('#search-results');
+    const terms = norm(q).split(/\s+/).filter(Boolean);
+    if (!terms.length) {
+      const quick = ['Veille réglementaire', 'Adhérer au SLBC', 'Nomenclature des actes (NABM)', 'Bureau exécutif', 'Salle de presse'].map((t) => INDEX.find((i) => i.title === t)).filter(Boolean);
+      box.innerHTML = '<p class="sr-title">Liens rapides</p><ul class="sr-list">' + quick.map(srItem).join('') + '</ul>';
+      return;
+    }
+    const scored = [];
+    INDEX.forEach((it) => {
+      const hay = norm([it.title, it.sub, it.text, it.type].join(' '));
+      if (!terms.every((t) => hay.includes(t))) return;
+      const tn = norm(it.title);
+      const score = terms.reduce((s, t) => s + (tn.includes(t) ? 2 : 0), 0) + (tn.startsWith(terms[0]) ? 1 : 0);
+      scored.push([score, it]);
+    });
+    scored.sort((a, b) => b[0] - a[0]);
+    box.innerHTML = scored.length
+      ? '<p class="sr-title">' + scored.length + ' résultat' + (scored.length > 1 ? 's' : '') + '</p><ul class="sr-list">' + scored.slice(0, 12).map((x) => srItem(x[1])).join('') + '</ul>'
+      : '<p class="sr-empty">Aucun résultat pour « ' + esc(q) + ' ». Essayez « nomenclature », « PLFSS » ou « bureau ».</p>';
+  }
+  const sPanel = $('#search-panel');
+  const sScrim = $('#search-scrim');
+  const sInput = $('#search-input');
+  const sOpen = $('#search-open');
+  function openSearch() {
+    closeMenu();
+    sPanel.hidden = false; sScrim.hidden = false;
+    sOpen.setAttribute('aria-expanded', 'true');
+    sInput.value = '';
+    renderSearch('');
+    document.documentElement.style.overflow = 'hidden';
+    setTimeout(() => sInput.focus(), 30);
+  }
+  function closeSearch(silent) {
+    if (sPanel.hidden) return;
+    sPanel.hidden = true; sScrim.hidden = true;
+    sOpen.setAttribute('aria-expanded', 'false');
+    document.documentElement.style.overflow = '';
+    if (!silent) sOpen.focus({ preventScroll: true });
+  }
+  sOpen.addEventListener('click', openSearch);
+  $('#search-close').addEventListener('click', () => closeSearch(false));
+  sScrim.addEventListener('click', () => closeSearch(false));
+  sInput.addEventListener('input', () => renderSearch(sInput.value));
+  sInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const first = $('#search-results .sr-link'); if (first) { e.preventDefault(); first.click(); } } });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (!sPanel.hidden) closeSearch(false); else closeMenu(); } });
+
+  /* ---------- Copier ---------- */
+  function selectText(el) { if (!el) return; const r = document.createRange(); r.selectNodeContents(el); const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-copy]');
+    if (!b) return;
+    const done = () => { b.textContent = 'Copié'; setTimeout(() => { b.textContent = 'Copier'; }, 1800); };
+    const fallback = () => selectText(b.previousElementSibling);
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(b.dataset.copy).then(done).catch(fallback);
+      else fallback();
+    } catch (err) { fallback(); }
+  });
+
+  /* ---------- Abonnement ---------- */
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  $('#abonnement').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const em = $('#sub-email'); const er = $('#sub-error'); const ok = $('#sub-ok');
+    if (!EMAIL_RE.test(em.value.trim())) { er.textContent = 'Saisissez une adresse e-mail valide, par exemple nom@laboratoire.fr.'; er.hidden = false; ok.hidden = true; em.setAttribute('aria-invalid', 'true'); em.focus(); return; }
+    er.hidden = true; em.removeAttribute('aria-invalid'); ok.hidden = false;
+  });
+
+  /* ---------- Documentation ---------- */
+  $('#doc-q').addEventListener('input', (e) => renderDocs(e.target.value));
+
+  /* ---------- Demande d’adhésion ---------- */
+  const jf = $('#join-form');
+  let jStep = 1;
+  function jShow(n) {
+    jStep = n;
+    $$('[data-panel]', jf).forEach((p) => { p.hidden = Number(p.dataset.panel) !== n; });
+    $$('.steps li', jf).forEach((li, i) => {
+      li.classList.toggle('is-current', i + 1 === n);
+      li.classList.toggle('is-done', i + 1 < n);
+      if (i + 1 === n) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+    });
+    $('#join-prev').hidden = n === 1;
+    $('#join-next').textContent = n === 3 ? 'Envoyer ma demande' : 'Continuer';
+    if (n === 3) {
+      const civ = jf.querySelector('input[name="civ"]:checked');
+      const rows = [
+        ['Nom', ((civ ? civ.value : '') + ' ' + $('#j-prenom').value.trim() + ' ' + $('#j-nom').value.trim()).trim()],
+        ['E-mail', $('#j-email').value.trim()],
+        ['Téléphone', $('#j-tel').value.trim() || 'Non renseigné'],
+        ['Laboratoire', $('#j-labo').value.trim()],
+        ['Ville', $('#j-ville').value.trim()],
+        ['Exercice', $('#j-statut').value]
+      ];
+      $('#j-recap').innerHTML = rows.map((r) => '<dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd>').join('');
+    }
+  }
+  function jValidate(n) {
+    const panel = jf.querySelector('[data-panel="' + n + '"]');
+    let ok = true;
+    $$('.field-error', panel).forEach((x) => { x.hidden = true; x.textContent = ''; });
+    $$('[aria-invalid]', panel).forEach((x) => x.removeAttribute('aria-invalid'));
+    $$('[data-req]', panel).forEach((inp) => {
+      let msg = '';
+      if (inp.type === 'checkbox') { if (!inp.checked) msg = inp.dataset.req; }
+      else if (!inp.value.trim()) msg = inp.dataset.req;
+      else if (inp.type === 'email' && !EMAIL_RE.test(inp.value.trim())) msg = 'Saisissez une adresse e-mail valide, par exemple nom@laboratoire.fr.';
+      if (msg) {
+        ok = false;
+        inp.setAttribute('aria-invalid', 'true');
+        const err = document.getElementById(inp.id + '-err');
+        if (err) { err.textContent = msg; err.hidden = false; }
+      }
+    });
+    if (!ok) { const first = panel.querySelector('[aria-invalid="true"]'); if (first) first.focus(); }
+    return ok;
+  }
+  jf.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!jValidate(jStep)) return;
+    if (jStep < 3) {
+      jShow(jStep + 1);
+      const f = jf.querySelector('[data-panel="' + jStep + '"] .input');
+      if (f) f.focus({ preventScroll: true });
+      return;
+    }
+    $('#join-wrap').hidden = true;
+    $('#join-done').hidden = false;
+  });
+  $('#join-prev').addEventListener('click', () => jShow(Math.max(1, jStep - 1)));
+  $('#join-restart').addEventListener('click', () => { jf.reset(); $('#join-wrap').hidden = false; $('#join-done').hidden = true; jShow(1); });
+
+  /* ---------- Espace adhérent : connexion ---------- */
+  $('#login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const em = $('#login-email'); const er = $('#login-err');
+    if (!em.value.trim()) { er.textContent = 'Saisissez votre e-mail.'; er.hidden = false; em.setAttribute('aria-invalid', 'true'); em.focus(); return; }
+    er.hidden = true; em.removeAttribute('aria-invalid');
+    $('#login').hidden = true; $('#admin').hidden = false;
+    window.scrollTo(0, 0);
+    $('#f-title').focus({ preventScroll: true });
+  });
+  $('#logout').addEventListener('click', () => { $('#admin').hidden = true; $('#login').hidden = false; window.scrollTo(0, 0); });
+
+  /* ---------- Espace adhérent : publier ---------- */
+  const PUB = {
+    cp: { label: 'Communiqué', submit: 'Publier le communiqué', toast: 'Communiqué publié', href: '#presse', prefix: 'cp-', where: 'La publication apparaîtra en tête de la salle de presse.' },
+    veille: { label: 'Veille', submit: 'Publier dans la veille', toast: 'Publié dans la veille', href: '#veille', prefix: 'vi-', where: 'La publication apparaîtra dans la veille réglementaire et dans le bandeau de la page d’accueil.' },
+    actu: { label: 'Actualité', submit: 'Publier l’actualité', toast: 'Actualité publiée', href: '#actualites', prefix: 'ac-', where: 'La publication apparaîtra dans les actualités et sur la page d’accueil.' }
+  };
+  let pubType = 'cp';
+  function renderPubType() {
+    seg($('#pub-type'), ['Communiqué', 'Veille', 'Actualité'], PUB[pubType].label, (l) => {
+      pubType = Object.keys(PUB).find((k) => PUB[k].label === l) || 'cp';
+      renderPubType();
+      updatePreview();
+    });
+    $('#g-veille').hidden = pubType !== 'veille';
+    $('#g-actu').hidden = pubType !== 'actu';
+    $('#pub-submit').textContent = PUB[pubType].submit;
+  }
+  function updatePreview() {
+    const title = $('#f-title').value.trim();
+    const resume = $('#f-resume').value.trim() || $('#f-body').value.trim().slice(0, 220);
+    const date = $('#f-date').value || todayISO();
+    let tags = '<span class="pv-type">' + esc(PUB[pubType].label) + '</span>';
+    if (pubType === 'veille') {
+      const imp = $('#f-impact').value;
+      tags += '<span class="impact impact-' + esc(imp) + '">' + esc(IMPACT[imp]) + '</span>';
+    }
+    if (pubType === 'actu') tags += '<span class="impact impact-suivre">' + esc($('#f-cat').value) + '</span>';
+    if ($('#f-members').checked) tags += '<span class="tag-members">' + ICON.lockS + 'Réservé aux adhérents</span>';
+    const src = pubType === 'veille' ? '<span class="src src-light"><span class="dot dot-' + esc($('#f-src').value) + '" aria-hidden="true"></span>' + esc(SRC[$('#f-src').value]) + '</span>' : '';
+    $('#preview').innerHTML = '<div class="pv-tags">' + tags + '</div>' + src +
+      '<p class="pv-title' + (title ? '' : ' is-empty') + '">' + esc(title || 'Titre de la publication') + '</p>' +
+      '<p class="pv-resume">' + esc(resume || 'Le résumé s’affichera ici. C’est aussi le texte repris sur la page d’accueil.') + '</p>' +
+      '<p class="pv-date">' + esc(longDate(date)) + '</p>';
+    $('#preview-where').textContent = PUB[pubType].where + ($('#f-mail').checked ? ' Les adhérents la recevront aussi par e-mail.' : '');
+  }
+  ['f-title', 'f-resume', 'f-body', 'f-date', 'f-members', 'f-mail', 'f-src', 'f-impact', 'f-cat'].forEach((id) => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', updatePreview);
+    el.addEventListener('change', updatePreview);
+  });
+
+  let toastTimer = null;
+  function showToast(msg, href, section) {
+    $('#toast-msg').textContent = msg;
+    const l = $('#toast-link');
+    if (href) { l.hidden = false; l.setAttribute('href', href); if (section) l.dataset.section = section; else delete l.dataset.section; }
+    else l.hidden = true;
+    $('#toast').hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { $('#toast').hidden = true; }, 6000);
+  }
+
+  $('#pub-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const err = $('#pub-error');
+    const titleEl = $('#f-title');
+    const title = titleEl.value.trim();
+    const urlEl = $('#f-url');
+    const urlVal = urlEl.value.trim();
+    err.hidden = true; titleEl.removeAttribute('aria-invalid'); urlEl.removeAttribute('aria-invalid');
+    if (!title) { err.textContent = 'Ajoutez un titre pour publier.'; err.hidden = false; titleEl.setAttribute('aria-invalid', 'true'); titleEl.focus(); return; }
+    if (pubType === 'veille' && urlVal && !isHttp(urlVal)) { err.textContent = 'Le lien vers le texte officiel doit commencer par https://'; err.hidden = false; urlEl.setAttribute('aria-invalid', 'true'); urlEl.focus(); return; }
+    const date = $('#f-date').value || todayISO();
+    const resume = $('#f-resume').value.trim() || $('#f-body').value.trim().slice(0, 240);
+    const members = $('#f-members').checked;
+    const mail = $('#f-mail').checked;
+    const id = 'd' + Date.now().toString(36);
+    let kind;
+    let item;
+    if (pubType === 'cp') {
+      kind = 'presse';
+      item = { id, date, year: date.slice(0, 4), title, with: 'Communiqué du SLBC', chapo: resume, url: null, members, demo: true };
+      state.presseYear = 'Toutes';
+    } else if (pubType === 'veille') {
+      const src = $('#f-src').value;
+      kind = 'veille';
+      item = { id, src, where: SRC[src], date, when: longDate(date), title, teaser: resume, resume: resume || 'Résumé à compléter.', impact: $('#f-impact').value, facts: [], url: urlVal || null, linkLabel: 'Lire le texte officiel', members, demo: true };
+      state.veilleSrc = 'Tout';
+    } else {
+      kind = 'actus';
+      item = { id, date, cat: $('#f-cat').value, title, excerpt: resume, url: null, members, demo: true };
+      state.homeCat = 'Toutes'; state.actuCat = 'Toutes';
+    }
+    DATA[kind].unshift(item);
+    demoPosts.unshift({ kind, item });
+    saveDemo(demoPosts);
+    renderDynamic();
+    showToast(PUB[pubType].toast + (mail ? ', envoi aux adhérents simulé' : ''), PUB[pubType].href, PUB[pubType].prefix + id);
+    ['f-title', 'f-resume', 'f-body', 'f-url', 'f-file'].forEach((fid) => { document.getElementById(fid).value = ''; });
+    updatePreview();
+  });
+  $('#pub-draft').addEventListener('click', () => showToast('Brouillon enregistré. Il n’est pas visible sur le site.', null, null));
+  $('#reset-demo').addEventListener('click', () => {
+    ['veille', 'presse', 'actus'].forEach((k) => { DATA[k] = DATA[k].filter((x) => !x.demo); });
+    demoPosts = [];
+    saveDemo(demoPosts);
+    renderDynamic();
+    showToast('Publications de démonstration effacées.', null, null);
+  });
+
+  /* ---------- Ouverture : les deux cellules se rejoignent ---------- */
+  function heroIntro() {
+    const grey = $('#hero-grey'); const green = $('#hero-green'); const overlap = $('#hero-overlap'); const clip = $('#hero-clip');
+    if (!grey || !green || !overlap || !clip || reduceMotion) return;
+    const set = (a, b) => { grey.setAttribute('cx', a); clip.setAttribute('cx', a); green.setAttribute('cx', b); overlap.setAttribute('cx', b); };
+    const from = [56, 144];
+    const to = [84, 116];
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    set(from[0], from[1]);
+    let start = null;
+    const frame = (ts) => {
+      if (start === null) start = ts + 250;
+      const t = Math.min(1, Math.max(0, (ts - start) / 1500));
+      const k = ease(t);
+      set(from[0] + (to[0] - from[0]) * k, from[1] + (to[1] - from[1]) * k);
+      if (t < 1) requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  }
+
+  /* ---------- Démarrage ---------- */
+  $('#f-date').value = todayISO();
+  renderStatic();
+  renderDynamic();
+  renderPubType();
+  updatePreview();
+  jShow(1);
+  route();
+  heroIntro();
+})();

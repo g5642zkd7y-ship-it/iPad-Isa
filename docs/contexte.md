@@ -14,10 +14,10 @@ Note de travail rédigée le 4 novembre 2026 à partir des artefacts existants s
 | Chantier | Artefact | État |
 | --- | --- | --- |
 | Charte graphique (DESIGN.md) | https://claude.ai/artifact/EhTqyWrkSQibEFKKZiydUK | Version de travail, à valider par le bureau |
-| Nouveau logo, présentation au bureau | https://claude.ai/artifact/KCR59a2h3UqryejFXh9NNE (Slides) | 4 polices à départager : Nunito, Baloo 2, Lexend, Fredoka |
+| Nouveau logo, présentation au bureau | https://claude.ai/artifact/KCR59a2h3UqryejFXh9NNE (Slides) | Logo validé en Nunito (selon `CLAUDE.md`) ; la présentation montrait 4 polices |
 | Pistes de logo (16 pistes) | https://claude.ai/artifact/5XjHgFR5MJBjyEWxmWh8LC (Design) | Exploration, dépassée par la présentation |
 | Proposition de site (4 écrans) | https://claude.ai/artifact/NLN7nFYk5djBY7UqLBVL7o (Design) | Accueil, Salle de presse, Veille, Admin « Publier » |
-| Maquette complète du site | https://claude.ai/artifact/Vse2Nq8YweogmxHKpnrjRR (page HTML) | La plus aboutie : 8 vues, recherche, formulaire d'adhésion, espace de publication |
+| Maquette complète du site | https://claude.ai/artifact/Vse2Nq8YweogmxHKpnrjRR (page HTML) | La plus aboutie : 8 vues, recherche, formulaire d'adhésion, espace de publication. Source dans `site/` |
 | Observations sur le projet de protocole CNAM du 16/10 | https://claude.ai/artifact/WCHaJs2YcuY3YaMeyu8YvT (Doc) | Note du 20/10/2026, 9 demandes |
 | Réponse au « Pacte pour l'avenir de la biologie médicale » | https://claude.ai/artifact/71MuKdutY8w7tCvZaVPXaR (Doc) | Courrier signé N. Roquigny, 22/10/2026 |
 
@@ -25,8 +25,9 @@ Note de travail rédigée le 4 novembre 2026 à partir des artefacts existants s
 
 - Symbole : rond gris `#5E6266` (44,44 r36) + rond vert anis `#A3BE3C` (76,76 r36), zone commune vert foncé `#5F7A2B`. Fond sombre : gris → blanc, zone commune → `#D6E4A6`.
 - Couleurs : vert anis `#A3BE3C` (jamais pour du texte), vert foncé `#5F7A2B`, vert clair `#D6E4A6`, gris cellule `#5E6266`, gris texte `#3F4347`, fond sombre `#2E3236`, fond clair `#F7F8F4`.
-- Police : Nunito pour le texte ; police du logo à choisir parmi les 4.
-- Points ouverts : choix de la police, valeur exacte du vert (fichier source de l'ancien logo), CMJN/Pantone, validation du bureau.
+- Polices : Nunito pour le logo (validé) ; Figtree pour les textes du site (à valider, la charte indique encore Nunito).
+- Points ouverts : police des textes, valeur exacte du vert (fichier source de l'ancien logo), CMJN/Pantone.
+- Charte complète : `marque/CHARTE.md`.
 
 ## Le site : principe
 
