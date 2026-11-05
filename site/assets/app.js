@@ -187,7 +187,7 @@
   const BENEFITS = [
     { icon: 'doc', t: 'La veille complète, chaque lundi', d: 'Le Journal officiel, l’Assemblée nationale et le Sénat, analysés pour votre laboratoire.' },
     { icon: 'people', t: 'Les groupes de travail', d: 'Faire évoluer la nomenclature avec vos pairs et renforcer vos compétences.' },
-    { icon: 'columns', t: 'Une voix dans les instances', d: 'Nomenclature, convention avec l’Assurance maladie, accréditation, Europe.' }
+    { icon: 'columns', t: 'Une voix dans les instances', d: 'Nomenclature, convention avec l’Assurance maladie, accréditation.' }
   ];
   const TRACKERS = [
     { title: 'PLFSS 2027', steps: [
@@ -451,7 +451,7 @@
     page('Le syndicat', 'Missions, charte, bureau, représentants', '#syndicat');
     page('Bureau exécutif', 'Président, vice-présidents, trésorier, secrétaire général', '#syndicat', 'bureau');
     page('Conseil d’administration', 'Les administrateurs par région', '#syndicat', 'conseil');
-    page('Nos représentants', 'Nomenclature, convention, accréditation, Europe', '#syndicat', 'representants');
+    page('Nos représentants', 'Nomenclature, convention, accréditation', '#syndicat', 'representants');
     page('Les URPS', 'La représentation des biologistes en région', '#syndicat', 'urps');
     page('Statuts et comptes', 'Les statuts du SLBC, comptes 2021 à 2023', '#syndicat', 'comptes');
     page('Veille réglementaire', 'Journal officiel, Assemblée nationale, Sénat', '#veille');
