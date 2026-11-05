@@ -99,10 +99,11 @@
     ]
   };
 
+  /* Bureau communiqué par Isabelle Eimer le 5 novembre 2026. */
   const BUREAU = [
-    ['Président', 'Thierry Bouchet'], ['Vice-président', 'Antoine Crinquette'], ['Vice-présidente', 'Isabelle Eimer'],
-    ['Vice-président', 'Pascal Melin'], ['Trésorier', 'Jean-Philippe Brochet'], ['Trésorier adjoint', 'Hala Sarmini'],
-    ['Secrétaire général', 'Nicolas Roquigny'], ['Conseiller spécial', 'Frédéric Lahiani'], ['Chargée de communication', 'Caroline Gutsmuth']
+    ['Président', 'Thierry Bouchet'], ['Vice-président', 'Antoine Crinquette'], ['Vice-président', 'Pascal Melin'],
+    ['Vice-présidente', 'Isabelle Eimer'], ['Secrétaire général', 'Nicolas Roquigny'],
+    ['Membre du bureau', 'Éric Flatin'], ['Membre du bureau', 'Alexandre Guiard']
   ];
   const PROTOCOLE = ['Thierry Bouchet', 'Antoine Crinquette', 'Isabelle Eimer', 'Pascal Melin'];
   /* Page LinkedIn du SLBC (adresse fournie par Isabelle Eimer le 5 novembre 2026).
@@ -440,7 +441,7 @@
     const idx = [];
     const page = (title, sub, href, section) => idx.push({ type: 'Page', title, sub, href, section, text: '' });
     page('Le syndicat', 'Missions, bureau, représentants', '#syndicat');
-    page('Bureau exécutif', 'Président, vice-présidents, trésorier, secrétaire général', '#syndicat', 'bureau');
+    page('Bureau exécutif', 'Président, vice-présidents, secrétaire général, membres', '#syndicat', 'bureau');
     page('Conseil d’administration', 'Les administrateurs par région', '#syndicat', 'conseil');
     page('Nos représentants', 'Nomenclature, convention, accréditation, Europe', '#syndicat', 'representants');
     page('Les URPS', 'La représentation des biologistes en région', '#syndicat', 'urps');

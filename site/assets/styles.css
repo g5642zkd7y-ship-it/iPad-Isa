@@ -294,6 +294,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .plain-list li{padding:16px 0;border-bottom:1px solid var(--filet);font-size:18px;line-height:1.5;color:var(--texte)}
 .people{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px;border-top:1px solid var(--filet)}
 .person{display:flex;flex-direction:column;gap:2px;padding:20px 0;border-bottom:1px solid var(--filet)}
+.people .person:first-child{grid-column:1/-1}
 .person-role{font-size:14px;color:var(--gris)}
 .person-name{font-size:20px;font-weight:700;letter-spacing:-.01em;color:var(--encre)}
 @media (max-width:860px){.people{grid-template-columns:repeat(2,minmax(0,1fr))}}
