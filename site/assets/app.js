@@ -145,7 +145,7 @@
     ['Provence-Alpes-Côte d’Azur, Languedoc et Corse', ['Guillaume Arimana', 'Sylvain Chambourlier', 'Laurent Kbaier']]
   ];
   const URPS = [
-    ['Auvergne-Rhône-Alpes', ['Jacques Pojer', 'Valérie Chepeaux']], ['Bourgogne-Franche-Comté', ['Christian Aymard']],
+    ['Auvergne-Rhône-Alpes', ['Jacques Pojer', 'Valérie Chepeaux']], ['Bourgogne-Franche-Comté', []],
     ['Bretagne', ['Eric Gueheneux']], ['Centre-Val de Loire', ['François Thomas']], ['Corse', ['Gérard Pesquie']],
     ['Grand Est', ['Christian Laeng', 'Michel Pax']], ['Hauts-de-France', ['Nicolas Chatelain', 'Daniel Gadeyne']],
     ['Île-de-France', ['Hala Sarmini', 'Thierry Bouchet']], ['Normandie', ['Paul Bracquemart']],
@@ -287,7 +287,7 @@
       const sub = i.sub ? '<div class="inst-sub">' + i.sub.map((g) => '<div><strong>' + esc(g[0]) + '</strong>' + namesOr(g[1], 'Représentant à désigner') + '</div>').join('') + '</div>' : '';
       return '<div class="inst-row"><div><p class="inst-name">' + esc(i.n) + '</p><p class="inst-role">' + esc(i.r) + '</p></div><p class="inst-reps">' + namesOr(i.reps, 'Représentant à désigner') + '</p>' + sub + '</div>';
     }).join('');
-    $('#urps-list').innerHTML = URPS.map((u) => '<div class="urps-item"><p class="urps-region">' + esc(u[0]) + '</p><p class="urps-names">' + namesOr(u[1], 'Poste non pourvu') + '</p></div>').join('');
+    $('#urps-list').innerHTML = URPS.map((u) => '<div class="urps-item"><p class="urps-region">' + esc(u[0]) + '</p><p class="urps-names">' + namesOr(u[1], 'Représentant à désigner') + '</p></div>').join('');
     $('#comptes-list').innerHTML = '<li><a class="row-link" href="https://www.slbc.fr/le-syndicat/les-statuts-du-slbc/" target="_blank" rel="noopener"><span class="row-date">Statuts</span><span class="row-title">Les statuts du SLBC</span><span class="row-cat">slbc.fr</span></a></li>' +
       COMPTES.map((c) => '<li><a class="row-link" href="https://www.slbc.fr/bilan-et-etat-financier/" target="_blank" rel="noopener"><span class="row-date">Exercice ' + esc(c.y) + '</span><span class="row-title">' + esc(c.d) + '</span><span class="row-cat">slbc.fr</span></a></li>').join('');
     $('#trackers').innerHTML = TRACKERS.map((t) => '<p class="track-title">' + esc(t.title) + '</p><ol class="track">' + t.steps.map((s) => '<li class="' + (s.done ? 'done' : '') + '"><span class="step-name">' + esc(s.n) + '</span><span class="step-when">' + esc(s.w) + '</span></li>').join('') + '</ol>').join('');
