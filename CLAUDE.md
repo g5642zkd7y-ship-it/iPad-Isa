@@ -23,7 +23,7 @@ Objectifs exprimés pour le site :
 - Version publiée de la maquette (privée) : https://claude.ai/artifact/Vse2Nq8YweogmxHKpnrjRR
 - `docs/contexte.md` : le syndicat, ses chantiers et l’état des dossiers législatifs (protocole, PLFSS), à jour au 4 novembre 2026.
 - Ajouter un communiqué : nouvelle entrée dans `DATA.presse` (`site/assets/app.js`) avec `id` unique (p4, p5…), `date` au format AAAA-MM-JJ (elle fixe l’ordre d’affichage), `year` (les 4 chiffres de la date, pour le filtre), `title`, `with`, `chapo`, `url` du PDF ou de la page, `linkLabel` ; `dateLabel` facultatif si seule l’année est connue. Puis republier la maquette.
-- Lien LinkedIn : constante `LINKEDIN_URL` en tête de `site/assets/app.js`, vide tant que l’adresse de la page n’est pas fournie : un clic sur ces liens affiche alors le message « Adresse de la page LinkedIn du SLBC à compléter. »
+- Lien LinkedIn : constante `LINKEDIN_URL` en tête de `site/assets/app.js` (page https://www.linkedin.com/company/slbc-syndicat-des-laboratoires-de-biologie-clinique/), reliée au pied de page et au bloc « Contact presse ». Si elle est vidée, un clic affiche « Adresse de la page LinkedIn du SLBC à compléter. »
 
 ## Règles de marque (validées, ne pas modifier sans accord)
 
