@@ -11,7 +11,7 @@ La maquette doit être présentée au bureau du SLBC. Toute la rédaction est en
 Objectifs exprimés pour le site :
 - un rendu professionnel, inspiré des sites des grandes marques (Apple en particulier) et **pas « généré par IA »** ;
 - pouvoir **publier des communiqués de presse et des informations de veille réglementaire** facilement ;
-- garder les éléments indispensables du site actuel (bureau, conseil, représentants, URPS, charte, comptes, NABM, documentation, adhésion).
+- garder les éléments indispensables du site actuel (bureau, conseil, représentants, URPS, comptes, NABM, documentation, adhésion). La charte du SLBC (valeurs) a été retirée du site le 5 novembre 2026 à la demande d’Isabelle Eimer : les missions la remplacent.
 
 ## État actuel
 

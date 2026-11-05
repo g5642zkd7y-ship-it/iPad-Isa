@@ -116,12 +116,6 @@
     { t: 'Faire reconnaître le biologiste comme acteur de santé', d: 'Un médecin ou un pharmacien spécialiste, au cœur du parcours de soins, dont le métier mérite d’être connu.' },
     { t: 'Préparer l’avenir du métier', d: 'Attirer et former les jeunes biologistes, accompagner l’innovation diagnostique et faire vivre la fierté de la profession.' }
   ];
-  const CHARTE = [
-    { t: 'Biologie libérale, indépendante et responsable', d: 'Les biologistes choisissent leurs méthodes et maîtrisent leurs investissements, leurs achats et leurs recrutements, sans intervention des financiers sur la profession.' },
-    { t: 'Médicalisation par la spécialisation', d: 'Un biologiste médical responsable sur chaque site, joignable rapidement. La formation continue et la spécialisation dans chaque discipline sont prioritaires.' },
-    { t: 'Qualité prouvée, efficience', d: 'Oui à l’accréditation, avec des objectifs progressifs et réalistes, adaptés aux réalités du terrain.' },
-    { t: 'Rassembler la profession', d: 'Réunir une part importante et homogène des biologistes attachés à l’indépendance du biologiste médical, pour conforter la crédibilité de la profession.' }
-  ];
   const INSTANCES = [
     { n: 'Commission de hiérarchisation des actes de biologie', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Jean-Philippe Galhaud', 'Vincent Vieillefond'],
       sub: [['Groupe AMP', ['Alain Lemeur']], ['Groupe biochimie', []], ['Groupe cytogénétique', ['Alain Lemeur']], ['Groupe hématologie', ['Christophe Uguen']]] },
@@ -281,9 +275,6 @@
   function renderStatic() {
     $('#home-missions').innerHTML = MISSIONS.map((m) => '<li><span class="tile-item">' + esc(m.t) + '</span></li>').join('');
     $('#home-instances').innerHTML = INSTANCES.map((i) => '<li><span class="nw-name">' + esc(i.n) + '</span><span class="nw-role">' + esc(i.r) + '</span></li>').join('');
-    const charte = CHARTE.map((c) => '<div class="charter-item"><h3 class="h-block">' + esc(c.t) + '</h3><p>' + esc(c.d) + '</p></div>').join('');
-    $('#home-charte').innerHTML = charte;
-    $('#synd-charte').innerHTML = charte;
     $('#home-benefits').innerHTML = BENEFITS.map((b) => '<li>' + ICON.check + '<span>' + esc(b.t) + '</span></li>').join('');
     $('#benefits-grid').innerHTML = BENEFITS.map((b) => '<div class="benefit">' + ICON[b.icon] + '<h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
     $('#missions-list').innerHTML = MISSIONS.map((m) => '<div class="charter-item"><h3 class="h-block">' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div>').join('');
@@ -448,7 +439,7 @@
   function buildIndex() {
     const idx = [];
     const page = (title, sub, href, section) => idx.push({ type: 'Page', title, sub, href, section, text: '' });
-    page('Le syndicat', 'Missions, charte, bureau, représentants', '#syndicat');
+    page('Le syndicat', 'Missions, bureau, représentants', '#syndicat');
     page('Bureau exécutif', 'Président, vice-présidents, trésorier, secrétaire général', '#syndicat', 'bureau');
     page('Conseil d’administration', 'Les administrateurs par région', '#syndicat', 'conseil');
     page('Nos représentants', 'Nomenclature, convention, accréditation, Europe', '#syndicat', 'representants');

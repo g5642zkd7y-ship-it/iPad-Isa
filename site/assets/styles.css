@@ -104,6 +104,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .section-tight{padding-block:clamp(48px,6vw,72px)}
 .page-hero{padding-block:clamp(48px,6vw,80px) clamp(32px,4vw,48px)}
 .page-hero + .section-tight{padding-top:clamp(32px,4vw,56px)}
+.page-hero + .section-tight.bg-fond{padding-top:clamp(48px,6vw,72px)}
 .page-hero.bg-encre{padding-bottom:clamp(48px,6vw,72px)}
 .page-hero .container{display:flex;flex-direction:column;gap:20px}
 .bg-fond{background:var(--fond)}
@@ -224,8 +225,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .nw-role{font-size:15px;line-height:1.4;color:var(--gris)}
 @media (max-width:560px){.name-wall{grid-template-columns:minmax(0,1fr)}}
 
-/* ---------- Charte ---------- */
-.charte-values{margin-top:18px}
+/* ---------- Grille de missions ---------- */
 .charter{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 56px;margin-top:56px}
 .charter-item{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:1px solid var(--filet-fort)}
 .charter-item p{max-width:34em;font-size:17px;line-height:1.6}
