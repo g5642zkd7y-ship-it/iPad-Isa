@@ -225,6 +225,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .nw-role{font-size:15px;line-height:1.4;color:var(--gris)}
 @media (max-width:560px){.name-wall{grid-template-columns:minmax(0,1fr)}}
 
+/* ---------- Piliers (accueil) ---------- */
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 48px;margin-top:48px}
+.pillar{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:4px solid var(--anis)}
+.pillar p{max-width:34em;font-size:17px;line-height:1.6;color:var(--texte)}
+@media (max-width:860px){.pillars{grid-template-columns:minmax(0,1fr);gap:32px}}
+
 /* ---------- Grille de missions ---------- */
 .charter{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 56px;margin-top:56px}
 .charter-item{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:1px solid var(--filet-fort)}

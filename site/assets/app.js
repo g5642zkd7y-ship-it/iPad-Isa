@@ -448,6 +448,7 @@
     const idx = [];
     const page = (title, sub, href, section) => idx.push({ type: 'Page', title, sub, href, section, text: '' });
     page('Le syndicat', 'Missions, bureau, représentants', '#syndicat');
+    page('Ce que nous défendons', 'Fierté du métier, souveraineté du diagnostic, science', '#accueil', 'piliers');
     page('Bureau exécutif', 'Président, vice-présidents, secrétaire général, membres', '#syndicat', 'bureau');
     page('Conseil d’administration', 'Les administrateurs par région', '#syndicat', 'conseil');
     page('Nos représentants', 'Nomenclature, convention, accréditation, Europe', '#syndicat', 'representants');
