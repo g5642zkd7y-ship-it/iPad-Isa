@@ -117,14 +117,15 @@
     { t: 'Faire reconnaître le biologiste comme acteur de santé', d: 'Un médecin ou un pharmacien spécialiste, au cœur du parcours de soins, dont le métier mérite d’être connu.' },
     { t: 'Préparer l’avenir du métier', d: 'Attirer et former les jeunes biologistes, accompagner l’innovation diagnostique et faire vivre la fierté de la profession.' }
   ];
+  /* Représentants des six premières instances communiqués par Isabelle Eimer le 5 novembre 2026. */
   const INSTANCES = [
-    { n: 'Commission de hiérarchisation des actes de biologie', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Jean-Philippe Galhaud', 'Vincent Vieillefond'],
+    { n: 'Commission de hiérarchisation des actes de biologie', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'],
       sub: [['Groupe AMP', ['Alain Lemeur']], ['Groupe biochimie', []], ['Groupe cytogénétique', ['Alain Lemeur']], ['Groupe hématologie', ['Christophe Uguen']]] },
-    { n: 'Commission conventionnelle paritaire nationale', r: 'Convention avec l’Assurance maladie', reps: ['Daniel Gadeyne', 'Thierry Bouchet', 'Hala Sarmini'] },
-    { n: 'Commission nationale de biologie médicale', r: 'Conditions d’exercice de la profession', reps: ['Valérie Chepeaux'] },
-    { n: 'Cofrac', r: 'Commission technique d’accréditation', reps: ['Hala Sarmini', 'Jean-Philippe Galhaud'] },
-    { n: 'Ministère chargé de la santé', r: 'Relations avec la tutelle', reps: ['Thierry Bouchet', 'Hala Sarmini'] },
-    { n: 'Commission sociale paritaire', r: 'Dialogue social de la branche', reps: ['Thierry Bouchet', 'Daniel Gadeyne', 'Fabienne Moulinier', 'Véronique Petit'] },
+    { n: 'Commission conventionnelle paritaire nationale', r: 'Convention avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
+    { n: 'Commission nationale de biologie médicale', r: 'Conditions d’exercice de la profession', reps: [] },
+    { n: 'Cofrac', r: 'Commission technique d’accréditation', reps: [] },
+    { n: 'Ministère chargé de la santé', r: 'Relations avec la tutelle', reps: ['Thierry Bouchet', 'Nicolas Roquigny'] },
+    { n: 'Commission sociale paritaire', r: 'Dialogue social de la branche', reps: ['Thierry Bouchet'] },
     { n: 'Commission biologie européenne', r: 'Représentation de la profession en Europe', reps: ['Simone Zerah', 'Jean-Philippe Brochet'] },
     { n: 'Agence de la biomédecine', r: 'AMP, génétique, prélèvement et greffe', reps: [] },
     { n: 'Santé publique France', r: 'Surveillance sanitaire, ex-InVS', reps: [] },
