@@ -6,7 +6,7 @@ Note de travail rédigée le 4 novembre 2026 à partir des artefacts existants s
 
 - **Utilisatrice** : Isabelle Eimer, vice-présidente du **SLBC** (Syndicat des Laboratoires de Biologie Clinique), administratrice Grand Est, membre du groupe de travail « Protocole ».
 - **SLBC** : syndicat de biologistes médicaux libéraux, 6 place de la Madeleine, 75008 Paris, contact@slbc.fr, site actuel slbc.fr.
-- **Bureau** (communiqué par Isabelle Eimer le 5 novembre 2026) : Thierry Bouchet (président) ; Antoine Crinquette, Pascal Melin, Isabelle Eimer (vice-présidents) ; Nicolas Roquigny (secrétaire général) ; Éric Flatin et Alexandre Guiard (membres du bureau). Caroline Gutsmuth, chargée de communication, reste le contact presse.
+- **Bureau** (communiqué par Isabelle Eimer le 5 novembre 2026) : Thierry Bouchet (président) ; Antoine Crinquette, Pascal Melin, Isabelle Eimer (vice-présidents) ; Nicolas Roquigny (secrétaire général) ; Éric Flatin et Alexandre Guiard (membres du bureau). Contact presse : Laurent Kbaier (indiqué par Isabelle Eimer le 5 novembre 2026).
 - **Autres syndicats** : SDBIO, SNMB, Les Biologistes Médicaux (ex-SDB/SJBM), regroupés pour partie dans la FBM.
 
 ## Chantiers en cours (artefacts)
