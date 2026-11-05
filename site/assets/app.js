@@ -110,6 +110,9 @@
     ['Secrétaire général', 'Nicolas Roquigny'], ['Conseiller spécial', 'Frédéric Lahiani'], ['Chargée de communication', 'Caroline Gutsmuth']
   ];
   const PROTOCOLE = ['Thierry Bouchet', 'Antoine Crinquette', 'Isabelle Eimer', 'Pascal Melin'];
+  /* Page LinkedIn du SLBC : coller ici l’adresse complète (https://www.linkedin.com/…).
+     Tant qu’elle est vide, les liens LinkedIn signalent qu’elle reste à compléter. */
+  const LINKEDIN_URL = '';
   const MISSIONS = [
     'Défendre l’éthique, la reconnaissance de la biologie comme discipline de santé publique et la recherche de l’excellence.',
     'Accompagner la réforme de la biologie en préservant l’indépendance des biologistes, pharmaciens ou médecins, salariés ou associés.',
@@ -752,9 +755,18 @@
     requestAnimationFrame(frame);
   }
 
+  /* ---------- Lien LinkedIn ---------- */
+  function setupLinkedin() {
+    $$('[data-linkedin]').forEach((a) => {
+      if (isHttp(LINKEDIN_URL)) { a.href = LINKEDIN_URL; a.target = '_blank'; a.rel = 'noopener'; return; }
+      a.addEventListener('click', (e) => { e.preventDefault(); showToast('Adresse de la page LinkedIn du SLBC à compléter.', null, null); });
+    });
+  }
+
   /* ---------- Démarrage ---------- */
   $('#f-date').value = todayISO();
   renderStatic();
+  setupLinkedin();
   renderDynamic();
   renderPubType();
   updatePreview();

@@ -22,6 +22,8 @@ Objectifs exprimés pour le site :
 - L’« Espace adhérent » est une **démonstration** : la connexion accepte n’importe quel identifiant, et les publications sont gardées uniquement dans le navigateur (`localStorage`, clé `slbc-maquette-publications`). Aucune donnée n’est envoyée.
 - Version publiée de la maquette (privée) : https://claude.ai/artifact/Vse2Nq8YweogmxHKpnrjRR
 - `docs/contexte.md` : le syndicat, ses chantiers et l’état des dossiers législatifs (protocole, PLFSS), à jour au 4 novembre 2026.
+- Ajouter un communiqué : nouvelle entrée en tête de `DATA.presse` dans `site/assets/app.js` (`id`, `date`, `year`, `title`, `with`, `chapo`, `url` du PDF ou de la page, `linkLabel`), puis republier la maquette.
+- Lien LinkedIn : constante `LINKEDIN_URL` en tête de `site/assets/app.js`, vide tant que l’adresse de la page n’est pas fournie (les liens affichent alors « à compléter »).
 
 ## Règles de marque (validées, ne pas modifier sans accord)
 

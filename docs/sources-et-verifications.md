@@ -42,4 +42,5 @@ Veille réglementaire (exemple du 4 novembre 2026) :
 6. **Liste des URPS** : reprise telle quelle du site actuel ; vérifier qu’elle est à jour.
 7. **Cotisation** : aucun montant n’est indiqué sur le site actuel ; la page Adhérer n’en affiche pas.
 8. **Protocole 2027-2029** : vérifier la date de signature et la liste des signataires sur le communiqué officiel, et remplacer le lien du relais par celui d’ameli.fr s’il existe.
+9. **Page LinkedIn du SLBC** : adresse à fournir (aucune page trouvée en recherche le 5 novembre 2026). Les liens du pied de page et de la salle de presse sont en place ; il suffit de renseigner `LINKEDIN_URL` en tête de `site/assets/app.js`. Un compte X existe aussi (@SLBConline), non relié au site.
 
