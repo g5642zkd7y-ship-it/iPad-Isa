@@ -36,6 +36,7 @@ Objectifs exprimés pour le site :
 ## Règles de contenu
 
 - **Devise** : « Défendre la biologie, défendre les patients. » (grand titre de l’accueil, sous le logo, bannières). Dans les textes : « Défendre la biologie médicale, c’est défendre les patients. » Choisie avec Isabelle Eimer le 5 novembre 2026, à valider par le bureau.
+- **Experts** (avocate, service social, expert-comptable) : ils conseillent le syndicat, pas les adhérents. Ne pas les présenter comme un service aux adhérents (retirés du site le 5 novembre 2026 à la demande d’Isabelle Eimer).
 - **Missions** : 4 missions (représenter et défendre ; une biologie de qualité accessible à tous ; le biologiste acteur de santé ; préparer l’avenir du métier), en une seule liste qui remplace les anciennes missions et priorités. Le thème de l’indépendance face à la financiarisation a été retiré à la demande d’Isabelle Eimer.
 
 - **N’invente aucun fait** : chiffre, date, nom, texte de loi ou citation. Le contenu vient du site actuel ou de sources officielles (Légifrance, assemblee-nationale.fr, senat.fr). Ce qui manque reste un emplacement à compléter, signalé comme tel.

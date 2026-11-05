@@ -99,11 +99,6 @@
     ]
   };
 
-  const EXPERTS = [
-    { s: 'Service juridique', n: 'Céline Roquelle-Meyer', d: 'Avocate spécialisée en droit de la santé' },
-    { s: 'Service social', n: 'Laurence Monville-Roustand', d: 'Droit du travail et droit de la sécurité sociale' },
-    { s: 'Service économique et fiscal', n: 'Philippe Taboulet', d: 'Expert-comptable et commissaire aux comptes' }
-  ];
   const BUREAU = [
     ['Président', 'Thierry Bouchet'], ['Vice-président', 'Antoine Crinquette'], ['Vice-présidente', 'Isabelle Eimer'],
     ['Vice-président', 'Pascal Melin'], ['Trésorier', 'Jean-Philippe Brochet'], ['Trésorier adjoint', 'Hala Sarmini'],
@@ -191,7 +186,6 @@
   ];
   const BENEFITS = [
     { icon: 'doc', t: 'La veille complète, chaque lundi', d: 'Le Journal officiel, l’Assemblée nationale et le Sénat, analysés pour votre laboratoire.' },
-    { icon: 'scale', t: 'Trois services d’experts', d: 'Juridique, social, économique et fiscal, réservés aux adhérents.' },
     { icon: 'people', t: 'Les groupes de travail', d: 'Faire évoluer la nomenclature avec vos pairs et renforcer vos compétences.' },
     { icon: 'columns', t: 'Une voix dans les instances', d: 'Nomenclature, convention avec l’Assurance maladie, accréditation, Europe.' }
   ];
@@ -271,7 +265,6 @@
       (a.url && isHttp(a.url) ? '<a class="more" href="' + esc(a.url) + '" target="_blank" rel="noopener">Lire sur slbc.fr</a>' : '') +
     '</li>';
 
-  const expertsHTML = EXPERTS.map((e) => '<li><span class="ex-service">' + esc(e.s) + '</span><span class="ex-name">' + esc(e.n) + '</span><span class="ex-desc">' + esc(e.d) + '</span></li>').join('');
   const namesOr = (names, empty) => (names.length ? esc(names.join(', ')) : '<span class="pending">' + esc(empty) + '</span>');
 
   /* ---------- Commande segmentée ---------- */
@@ -286,8 +279,7 @@
 
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
-    $('#home-experts').innerHTML = expertsHTML;
-    $('#join-experts').innerHTML = expertsHTML;
+    $('#home-missions').innerHTML = MISSIONS.map((m) => '<li><span class="tile-item">' + esc(m.t) + '</span></li>').join('');
     $('#home-instances').innerHTML = INSTANCES.map((i) => '<li><span class="nw-name">' + esc(i.n) + '</span><span class="nw-role">' + esc(i.r) + '</span></li>').join('');
     const charte = CHARTE.map((c) => '<div class="charter-item"><h3 class="h-block">' + esc(c.t) + '</h3><p>' + esc(c.d) + '</p></div>').join('');
     $('#home-charte').innerHTML = charte;
@@ -303,8 +295,8 @@
       return '<div class="inst-row"><div><p class="inst-name">' + esc(i.n) + '</p><p class="inst-role">' + esc(i.r) + '</p></div><p class="inst-reps">' + namesOr(i.reps, 'Représentant à désigner') + '</p>' + sub + '</div>';
     }).join('');
     $('#urps-list').innerHTML = URPS.map((u) => '<div class="urps-item"><p class="urps-region">' + esc(u[0]) + '</p><p class="urps-names">' + namesOr(u[1], 'Poste non pourvu') + '</p></div>').join('');
-    $('#comptes-list').innerHTML = COMPTES.map((c) => '<li><a class="row-link" href="https://www.slbc.fr/bilan-et-etat-financier/" target="_blank" rel="noopener"><span class="row-date">Exercice ' + esc(c.y) + '</span><span class="row-title">' + esc(c.d) + '</span><span class="row-cat">slbc.fr</span></a></li>').join('') +
-      '<li><a class="row-link" href="https://www.slbc.fr/le-syndicat/les-statuts-du-slbc/" target="_blank" rel="noopener"><span class="row-date">Statuts</span><span class="row-title">Les statuts du SLBC</span><span class="row-cat">slbc.fr</span></a></li>';
+    $('#comptes-list').innerHTML = '<li><a class="row-link" href="https://www.slbc.fr/le-syndicat/les-statuts-du-slbc/" target="_blank" rel="noopener"><span class="row-date">Statuts</span><span class="row-title">Les statuts du SLBC</span><span class="row-cat">slbc.fr</span></a></li>' +
+      COMPTES.map((c) => '<li><a class="row-link" href="https://www.slbc.fr/bilan-et-etat-financier/" target="_blank" rel="noopener"><span class="row-date">Exercice ' + esc(c.y) + '</span><span class="row-title">' + esc(c.d) + '</span><span class="row-cat">slbc.fr</span></a></li>').join('');
     $('#trackers').innerHTML = TRACKERS.map((t) => '<p class="track-title">' + esc(t.title) + '</p><ol class="track">' + t.steps.map((s) => '<li class="' + (s.done ? 'done' : '') + '"><span class="step-name">' + esc(s.n) + '</span><span class="step-when">' + esc(s.w) + '</span></li>').join('') + '</ol>').join('');
     $('#foot-partners').innerHTML = PARTNERS.slice(0, 5).map((p) => '<li><a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.n) + '</a></li>').join('');
     renderDocs('');
@@ -461,7 +453,7 @@
     page('Conseil d’administration', 'Les administrateurs par région', '#syndicat', 'conseil');
     page('Nos représentants', 'Nomenclature, convention, accréditation, Europe', '#syndicat', 'representants');
     page('Les URPS', 'La représentation des biologistes en région', '#syndicat', 'urps');
-    page('Comptes et statuts', 'Exercices 2021 à 2023', '#syndicat', 'comptes');
+    page('Statuts et comptes', 'Les statuts du SLBC, comptes 2021 à 2023', '#syndicat', 'comptes');
     page('Veille réglementaire', 'Journal officiel, Assemblée nationale, Sénat', '#veille');
     page('Salle de presse', 'Les communiqués du SLBC', '#presse');
     page('Actualités', 'L’information du syndicat', '#actualites');
@@ -473,7 +465,6 @@
     DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title, sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with }));
     DATA.actus.forEach((a) => idx.push({ type: 'Actualité', title: a.title, sub: longDate(a.date), href: '#actualites', section: 'ac-' + a.id, text: a.excerpt + ' ' + a.cat }));
     BUREAU.forEach((b) => idx.push({ type: 'Bureau', title: b[1], sub: b[0], href: '#syndicat', section: 'bureau', text: '' }));
-    EXPERTS.forEach((e) => idx.push({ type: 'Expert', title: e.n, sub: e.s, href: '#adherer', section: null, text: e.d }));
     INSTANCES.forEach((i) => idx.push({ type: 'Instance', title: i.n, sub: i.r, href: '#syndicat', section: 'representants', text: i.reps.join(' ') }));
     NABM.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Nomenclature des actes', href: '#documentation', section: 'doc-nabm', text: d.s || '' }));
     TEXTES.forEach((g) => g.items.forEach((t) => idx.push({ type: 'Document', title: t, sub: g.theme, href: '#documentation', section: 'doc-textes', text: '' })));

@@ -12,7 +12,7 @@ Site actuel du SLBC :
 - Statuts : https://www.slbc.fr/le-syndicat/les-statuts-du-slbc/
 - NABM : https://www.slbc.fr/documentation/chab/
 - Documentation professionnelle : https://www.slbc.fr/documentation/professionnel/
-- Experts : https://www.slbc.fr/nos-experts/
+- Experts : https://www.slbc.fr/nos-experts/ (retirés de la maquette : ils conseillent le syndicat, pas les adhérents)
 - Partenaires : https://www.slbc.fr/nos-experts/nos-partenaires/
 - Bilan et état financier : https://www.slbc.fr/bilan-et-etat-financier/
 
@@ -44,4 +44,5 @@ Veille réglementaire (exemple du 4 novembre 2026) :
 8. **Protocole 2027-2029** : vérifier la date de signature et la liste des signataires sur le communiqué officiel, et remplacer le lien du relais par celui d’ameli.fr s’il existe.
 9. **Page LinkedIn du SLBC** : https://www.linkedin.com/company/slbc-syndicat-des-laboratoires-de-biologie-clinique/ (adresse fournie par Isabelle Eimer le 5 novembre 2026, page « SLBC - Syndicat des Laboratoires de Biologie Clinique »). Reliée au pied de page et à la salle de presse ; la page utilise encore l’ancien logo. Un compte X du SLBC apparaît aussi dans les résultats de recherche (@SLBConline, https://x.com/slbconline ; page non ouverte, à confirmer par le bureau), non relié au site.
 10. **Devise et missions** : rédigées avec Isabelle Eimer le 5 novembre 2026 ; à valider par le bureau. Restent à revoir : la charte du SLBC (4 engagements, dont « sans intervention des financiers ») et le chapeau de la page Adhérer (« attachés à l’indépendance de la profession »).
+11. **Comptes publiés** : la maquette affiche les exercices 2021 à 2023, repris du site actuel. Si le SLBC publie ses comptes sur son site (et non sur celui de la DILA), ajouter les exercices suivants (art. L2135-5 du code du travail).
 
