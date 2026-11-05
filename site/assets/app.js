@@ -117,23 +117,23 @@
     { t: 'Faire reconnaître le biologiste comme acteur de santé', d: 'Un médecin ou un pharmacien spécialiste, au cœur du parcours de soins, dont le métier mérite d’être connu.' },
     { t: 'Préparer l’avenir du métier', d: 'Attirer et former les jeunes biologistes, accompagner l’innovation diagnostique et faire vivre la fierté de la profession.' }
   ];
-  /* Représentants des six premières instances communiqués par Isabelle Eimer le 5 novembre 2026. */
+  /* Représentants communiqués par Isabelle Eimer le 5 novembre 2026 ; les autres sièges sont à désigner. */
   const INSTANCES = [
     { n: 'Commission de hiérarchisation des actes de biologie', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'],
-      sub: [['Groupe AMP', ['Alain Lemeur']], ['Groupe biochimie', []], ['Groupe cytogénétique', ['Alain Lemeur']], ['Groupe hématologie', ['Christophe Uguen']]] },
+      sub: [['Groupe AMP', []], ['Groupe biochimie', []], ['Groupe cytogénétique', []], ['Groupe hématologie', []]] },
     { n: 'Commission conventionnelle paritaire nationale', r: 'Convention avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
     { n: 'Commission nationale de biologie médicale', r: 'Conditions d’exercice de la profession', reps: [] },
     { n: 'Cofrac', r: 'Commission technique d’accréditation', reps: [] },
     { n: 'Ministère chargé de la santé', r: 'Relations avec la tutelle', reps: ['Thierry Bouchet', 'Nicolas Roquigny'] },
     { n: 'Commission sociale paritaire', r: 'Dialogue social de la branche', reps: ['Thierry Bouchet'] },
-    { n: 'Commission biologie européenne', r: 'Représentation de la profession en Europe', reps: ['Simone Zerah', 'Jean-Philippe Brochet'] },
+    { n: 'Commission biologie européenne', r: 'Représentation de la profession en Europe', reps: [] },
     { n: 'Agence de la biomédecine', r: 'AMP, génétique, prélèvement et greffe', reps: [] },
     { n: 'Santé publique France', r: 'Surveillance sanitaire, ex-InVS', reps: [] },
     { n: 'Société française de biologie clinique', r: 'Société savante', reps: [] },
-    { n: 'Bio Qualité', r: 'Conseil d’administration', reps: ['François Thomas', 'Jean-François Rousselle'] },
-    { n: 'Centre national des professions de santé', r: 'Interprofession libérale', reps: ['Thierry Bouchet'] },
-    { n: 'Agence nationale du DPC', r: 'Développement professionnel continu', reps: ['Hala Sarmini'] },
-    { n: 'Klesia', r: 'Prévoyance de la branche', reps: ['Thierry Bouchet', 'Christian Aymard'] }
+    { n: 'Bio Qualité', r: 'Conseil d’administration', reps: [] },
+    { n: 'Centre national des professions de santé', r: 'Interprofession libérale', reps: [] },
+    { n: 'Agence nationale du DPC', r: 'Développement professionnel continu', reps: [] },
+    { n: 'Klesia', r: 'Prévoyance de la branche', reps: [] }
   ];
   const CA = [
     ['Auvergne-Rhône-Alpes et Bourgogne-Franche-Comté', ['Nicolas Roquigny', 'Éric Flatin', 'François Targe', 'Benoît Dumont', 'Marc Thome', 'Fabienne Moulinier']],
@@ -284,7 +284,7 @@
     $('#protocole-list').textContent = PROTOCOLE.join(', ');
     $('#ca-list').innerHTML = CA.map((r) => '<details class="region"><summary><span>' + esc(r[0]) + '</span><span class="count">' + r[1].length + ' administrateur' + (r[1].length > 1 ? 's' : '') + '</span></summary><p>' + esc(r[1].join(', ')) + '</p></details>').join('');
     $('#inst-list').innerHTML = INSTANCES.map((i) => {
-      const sub = i.sub ? '<div class="inst-sub">' + i.sub.map((g) => '<div><strong>' + esc(g[0]) + '</strong>' + namesOr(g[1], 'À désigner') + '</div>').join('') + '</div>' : '';
+      const sub = i.sub ? '<div class="inst-sub">' + i.sub.map((g) => '<div><strong>' + esc(g[0]) + '</strong>' + namesOr(g[1], 'Représentant à désigner') + '</div>').join('') + '</div>' : '';
       return '<div class="inst-row"><div><p class="inst-name">' + esc(i.n) + '</p><p class="inst-role">' + esc(i.r) + '</p></div><p class="inst-reps">' + namesOr(i.reps, 'Représentant à désigner') + '</p>' + sub + '</div>';
     }).join('');
     $('#urps-list').innerHTML = URPS.map((u) => '<div class="urps-item"><p class="urps-region">' + esc(u[0]) + '</p><p class="urps-names">' + namesOr(u[1], 'Poste non pourvu') + '</p></div>').join('');
