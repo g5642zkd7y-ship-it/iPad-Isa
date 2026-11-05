@@ -203,6 +203,12 @@
   const STORE_KEY = 'slbc-maquette-publications';
   const loadDemo = () => { try { const raw = localStorage.getItem(STORE_KEY); const list = raw ? JSON.parse(raw) : []; return Array.isArray(list) ? list : []; } catch (e) { return []; } };
   const saveDemo = (list) => { try { localStorage.setItem(STORE_KEY, JSON.stringify(list)); } catch (e) { /* stockage indisponible : la démonstration reste en mémoire */ } };
+  const SUB_KEY = 'slbc-maquette-abonnes';
+  const SENT_KEY = 'slbc-maquette-envois';
+  const loadList = (key) => { try { const raw = localStorage.getItem(key); const list = raw ? JSON.parse(raw) : []; return Array.isArray(list) ? list : []; } catch (e) { return []; } };
+  const saveList = (key, list) => { try { localStorage.setItem(key, JSON.stringify(list)); } catch (e) { /* stockage indisponible : la démonstration reste en mémoire */ } };
+  let subscribers = loadList(SUB_KEY).filter((x) => typeof x === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x));
+  let sentLog = loadList(SENT_KEY).filter((x) => x && typeof x.subject === 'string' && typeof x.date === 'string' && typeof x.n === 'number');
   let demoPosts = loadDemo().filter((p) => p && DATA[p.kind] && p.item && typeof p.item.title === 'string' && typeof p.item.date === 'string');
   demoPosts.forEach((p) => { if (p.item.url && !isHttp(p.item.url)) p.item.url = null; });
   demoPosts.slice().reverse().forEach((p) => { if (!DATA[p.kind].some((x) => x.id === p.item.id)) DATA[p.kind].unshift(p.item); });
@@ -448,6 +454,7 @@
     page('Les URPS', 'La représentation des biologistes en région', '#syndicat', 'urps');
     page('Statuts et comptes', 'Les statuts du SLBC, comptes 2021 à 2023', '#syndicat', 'comptes');
     page('Veille réglementaire', 'Journal officiel, Assemblée nationale, Sénat', '#veille');
+    page('Lettre d’information', 'La veille et les nouvelles publications par e-mail', '#veille', 'abonnement');
     page('Salle de presse', 'Les communiqués du SLBC', '#presse');
     page('Actualités', 'L’information du syndicat', '#actualites');
     page('Nomenclature des actes (NABM)', 'Arrêtés et décisions de l’UNCAM', '#documentation', 'doc-nabm');
@@ -533,9 +540,21 @@
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   $('#abonnement').addEventListener('submit', (e) => {
     e.preventDefault();
-    const em = $('#sub-email'); const er = $('#sub-error'); const ok = $('#sub-ok');
-    if (!EMAIL_RE.test(em.value.trim())) { er.textContent = 'Saisissez une adresse e-mail valide, par exemple nom@laboratoire.fr.'; er.hidden = false; ok.hidden = true; em.setAttribute('aria-invalid', 'true'); em.focus(); return; }
-    er.hidden = true; em.removeAttribute('aria-invalid'); ok.hidden = false;
+    const em = $('#sub-email'); const er = $('#sub-error'); const ok = $('#sub-ok'); const consent = $('#sub-consent');
+    const fail = (msg, el) => { er.textContent = msg; er.hidden = false; ok.hidden = true; el.setAttribute('aria-invalid', 'true'); el.focus(); };
+    em.removeAttribute('aria-invalid'); consent.removeAttribute('aria-invalid');
+    const addr = em.value.trim().toLowerCase();
+    if (!EMAIL_RE.test(addr)) { fail('Saisissez une adresse e-mail valide, par exemple nom@laboratoire.fr.', em); return; }
+    if (!consent.checked) { fail('Cochez la case pour confirmer votre inscription.', consent); return; }
+    er.hidden = true;
+    if (subscribers.includes(addr)) { ok.textContent = 'Cette adresse est déjà inscrite.'; ok.hidden = false; return; }
+    subscribers.push(addr);
+    saveList(SUB_KEY, subscribers);
+    renderNewsletter();
+    updatePreview();
+    ok.textContent = 'Inscription enregistrée pour la démonstration.';
+    ok.hidden = false;
+    em.value = ''; consent.checked = false;
   });
 
   /* ---------- Documentation ---------- */
@@ -647,9 +666,24 @@
       '<p class="pv-title' + (title ? '' : ' is-empty') + '">' + esc(title || 'Titre de la publication') + '</p>' +
       '<p class="pv-resume">' + esc(resume || 'Le résumé s’affichera ici. C’est aussi le texte repris sur la page d’accueil.') + '</p>' +
       '<p class="pv-date">' + esc(longDate(date)) + '</p>';
-    $('#preview-where').textContent = PUB[pubType].where + ($('#f-mail').checked ? ' Les adhérents la recevront aussi par e-mail.' : '');
+    const mail = $('#f-mail').checked;
+    const n = subscribers.length;
+    $('#preview-where').textContent = PUB[pubType].where + (mail ? (n ? ' ' + abonnes(n, true) + ' la recevront aussi par e-mail.' : ' Aucun abonné pour l’instant : aucun e-mail ne partira.') : '');
+    $('#g-mail-subject').hidden = !mail;
+    $('#mail-preview-wrap').hidden = !mail;
+    if (mail) {
+      const subject = $('#f-subject').value.trim() || title;
+      $('#mp-meta').innerHTML = '<span><strong>De :</strong> SLBC</span><span><strong>À :</strong> ' + esc(n ? abonnes(n, false) + ' de la lettre d’information' : 'aucun abonné pour l’instant') + '</span>' +
+        '<span><strong>Objet :</strong> ' + esc(subject || 'Objet de l’e-mail') + '</span>';
+      $('#mp-body').innerHTML = '<p class="mp-type">' + esc(PUB[pubType].label) + (pubType === 'actu' ? ' · ' + esc($('#f-cat').value) : '') + '</p>' +
+        '<p class="mp-title">' + esc(title || 'Titre de la publication') + '</p>' +
+        '<p class="mp-text">' + esc(resume || 'Le résumé de la publication s’affichera ici.') + '</p>' +
+        '<span class="mp-btn">Lire sur le site</span>' +
+        ($('#f-members').checked ? '<p class="mp-note">Réservé aux adhérents : la lecture complète demande de se connecter.</p>' : '');
+    }
   }
-  ['f-title', 'f-resume', 'f-body', 'f-date', 'f-members', 'f-mail', 'f-src', 'f-impact', 'f-cat'].forEach((id) => {
+  const abonnes = (n, withArticle) => (withArticle ? 'Les ' : '') + n + ' abonné' + (n > 1 ? 's' : '');
+  ['f-title', 'f-resume', 'f-body', 'f-date', 'f-members', 'f-mail', 'f-subject', 'f-src', 'f-impact', 'f-cat'].forEach((id) => {
     const el = document.getElementById(id);
     el.addEventListener('input', updatePreview);
     el.addEventListener('change', updatePreview);
@@ -701,8 +735,17 @@
     demoPosts.unshift({ kind, item });
     saveDemo(demoPosts);
     renderDynamic();
-    showToast(PUB[pubType].toast + (mail ? ', envoi aux adhérents simulé' : ''), PUB[pubType].href, PUB[pubType].prefix + id);
-    ['f-title', 'f-resume', 'f-body', 'f-url', 'f-file'].forEach((fid) => { document.getElementById(fid).value = ''; });
+    let note = '';
+    if (mail && subscribers.length) {
+      sentLog.unshift({ date: todayISO(), subject: $('#f-subject').value.trim() || title, n: subscribers.length, type: PUB[pubType].label });
+      saveList(SENT_KEY, sentLog);
+      renderNewsletter();
+      note = ', e-mail envoyé à ' + abonnes(subscribers.length, false).toLowerCase() + ' (démonstration)';
+    } else if (mail) {
+      note = ', aucun abonné à qui l’envoyer';
+    }
+    showToast(PUB[pubType].toast + note, PUB[pubType].href, PUB[pubType].prefix + id);
+    ['f-title', 'f-resume', 'f-body', 'f-url', 'f-file', 'f-subject'].forEach((fid) => { document.getElementById(fid).value = ''; });
     updatePreview();
   });
   $('#pub-draft').addEventListener('click', () => showToast('Brouillon enregistré. Il n’est pas visible sur le site.', null, null));
@@ -712,6 +755,43 @@
     saveDemo(demoPosts);
     renderDynamic();
     showToast('Publications de démonstration effacées.', null, null);
+  });
+
+  /* ---------- Espace adhérent : lettre d'information ---------- */
+  function renderNewsletter() {
+    const n = subscribers.length;
+    $('#nl-count').textContent = '(' + n + ')';
+    $('#f-mail-count').textContent = n ? abonnes(n, false) : 'Aucun abonné pour l’instant';
+    $('#nl-list').innerHTML = n
+      ? subscribers.map((a) => '<li><span>' + esc(a) + '</span><button class="link-btn" type="button" data-remove="' + esc(a) + '" aria-label="Retirer ' + esc(a) + '">Retirer</button></li>').join('')
+      : '<li class="nl-empty">Aucun abonné pour l’instant. Les adhérents s’inscrivent depuis la page Veille.</li>';
+    $('#nl-sent').innerHTML = sentLog.length
+      ? sentLog.slice(0, 8).map((s) => '<li><span class="r-kind">' + esc(s.type || 'Envoi') + ', ' + esc(shortDate(s.date)) + ', ' + esc(abonnes(s.n, false)) + ', démonstration</span><span class="r-title">' + esc(s.subject) + '</span></li>').join('')
+      : '<li><span class="r-kind">Aucun envoi pour l’instant.</span></li>';
+  }
+  $('#nl-list').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-remove]');
+    if (!b) return;
+    subscribers = subscribers.filter((a) => a !== b.dataset.remove);
+    saveList(SUB_KEY, subscribers);
+    renderNewsletter();
+    updatePreview();
+    showToast('Adresse retirée de la liste.', null, null);
+  });
+  $('#nl-add-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const inp = $('#nl-add-email'); const er = $('#nl-add-err');
+    const addr = inp.value.trim().toLowerCase();
+    inp.removeAttribute('aria-invalid');
+    if (!EMAIL_RE.test(addr)) { er.textContent = 'Saisissez une adresse e-mail valide, par exemple nom@laboratoire.fr.'; er.hidden = false; inp.setAttribute('aria-invalid', 'true'); inp.focus(); return; }
+    if (subscribers.includes(addr)) { er.textContent = 'Cette adresse est déjà dans la liste.'; er.hidden = false; inp.focus(); return; }
+    er.hidden = true;
+    subscribers.push(addr);
+    saveList(SUB_KEY, subscribers);
+    inp.value = '';
+    renderNewsletter();
+    updatePreview();
+    showToast('Adresse ajoutée à la liste.', null, null);
   });
 
   /* ---------- Ouverture : les deux cellules se rejoignent ---------- */
@@ -748,6 +828,7 @@
   setupLinkedin();
   renderDynamic();
   renderPubType();
+  renderNewsletter();
   updatePreview();
   jShow(1);
   route();
