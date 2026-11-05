@@ -35,6 +35,9 @@ Objectifs exprimés pour le site :
 
 ## Règles de contenu
 
+- **Devise** : « Défendre la biologie, défendre les patients. » (grand titre de l’accueil, sous le logo, bannières). Dans les textes : « Défendre la biologie médicale, c’est défendre les patients. » Choisie avec Isabelle Eimer le 5 novembre 2026, à valider par le bureau.
+- **Missions** : 4 missions (représenter et défendre ; une biologie de qualité accessible à tous ; le biologiste acteur de santé ; préparer l’avenir du métier), en une seule liste qui remplace les anciennes missions et priorités. Le thème de l’indépendance face à la financiarisation a été retiré à la demande d’Isabelle Eimer.
+
 - **N’invente aucun fait** : chiffre, date, nom, texte de loi ou citation. Le contenu vient du site actuel ou de sources officielles (Légifrance, assemblee-nationale.fr, senat.fr). Ce qui manque reste un emplacement à compléter, signalé comme tel.
 - Le Dr Jean-François Perotto est décédé (actualité du 31 août 2026). Il a été retiré des listes ; ses sièges apparaissent « à désigner ».
 - Points à faire confirmer par le bureau : voir `docs/sources-et-verifications.md`.

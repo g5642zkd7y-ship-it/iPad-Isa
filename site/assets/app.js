@@ -113,17 +113,13 @@
   /* Page LinkedIn du SLBC (adresse fournie par Isabelle Eimer le 5 novembre 2026).
      Si elle est vidée, les liens LinkedIn signalent qu’elle reste à compléter. */
   const LINKEDIN_URL = 'https://www.linkedin.com/company/slbc-syndicat-des-laboratoires-de-biologie-clinique/';
+  /* Missions rédigées avec Isabelle Eimer le 5 novembre 2026, à valider par le bureau.
+     Elles remplacent les anciennes « missions » et « priorités ». */
   const MISSIONS = [
-    'Défendre l’éthique, la reconnaissance de la biologie comme discipline de santé publique et la recherche de l’excellence.',
-    'Accompagner la réforme de la biologie en préservant l’indépendance des biologistes, pharmaciens ou médecins, salariés ou associés.',
-    'Favoriser le regroupement des biologistes pour mutualiser leurs moyens.'
-  ];
-  const PRIORITES = [
-    'Faire reconnaître le rôle médical du biologiste.',
-    'Intégrer le biologiste dans le parcours de soins : premier recours, permanence des soins, dépistage.',
-    'Anticiper la concurrence européenne et les effets de la maîtrise des dépenses de biologie.',
-    'Promouvoir une politique qualité, dont l’accréditation est l’aboutissement.',
-    'Donner accès aux technologies avancées par la spécialisation et la mise en commun des moyens.'
+    { t: 'Représenter et défendre les biologistes', d: 'Porter la voix des biologistes médicaux auprès des pouvoirs publics et de l’Assurance maladie, et défendre leurs conditions d’exercice.' },
+    { t: 'Défendre une biologie de qualité, accessible à tous', d: 'Une biologie de proximité sur tout le territoire, pertinente et exigeante, au service des patients.' },
+    { t: 'Faire reconnaître le biologiste comme acteur de santé', d: 'Un médecin ou un pharmacien spécialiste, au cœur du parcours de soins, dont le métier mérite d’être connu.' },
+    { t: 'Préparer l’avenir du métier', d: 'Attirer et former les jeunes biologistes, accompagner l’innovation diagnostique et faire vivre la fierté de la profession.' }
   ];
   const CHARTE = [
     { t: 'Biologie libérale, indépendante et responsable', d: 'Les biologistes choisissent leurs méthodes et maîtrisent leurs investissements, leurs achats et leurs recrutements, sans intervention des financiers sur la profession.' },
@@ -298,8 +294,7 @@
     $('#synd-charte').innerHTML = charte;
     $('#home-benefits').innerHTML = BENEFITS.map((b) => '<li>' + ICON.check + '<span>' + esc(b.t) + '</span></li>').join('');
     $('#benefits-grid').innerHTML = BENEFITS.map((b) => '<div class="benefit">' + ICON[b.icon] + '<h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
-    $('#missions-list').innerHTML = MISSIONS.map((m) => '<li>' + esc(m) + '</li>').join('');
-    $('#priorites-list').innerHTML = PRIORITES.map((m) => '<li>' + esc(m) + '</li>').join('');
+    $('#missions-list').innerHTML = MISSIONS.map((m) => '<div class="charter-item"><h3 class="h-block">' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div>').join('');
     $('#bureau-list').innerHTML = BUREAU.map((b) => '<li class="person"><span class="person-role">' + esc(b[0]) + '</span><span class="person-name">' + esc(b[1]) + '</span></li>').join('');
     $('#protocole-list').textContent = PROTOCOLE.join(', ');
     $('#ca-list').innerHTML = CA.map((r) => '<details class="region"><summary><span>' + esc(r[0]) + '</span><span class="count">' + r[1].length + ' administrateur' + (r[1].length > 1 ? 's' : '') + '</span></summary><p>' + esc(r[1].join(', ')) + '</p></details>').join('');
