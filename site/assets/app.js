@@ -356,7 +356,7 @@
       .concat(DATA.actus.map((x) => ({ k: 'Actualité', d: x.date, l: null, t: x.title, demo: x.demo })))
       .sort((a, b) => b.d.localeCompare(a.d)).slice(0, 5);
     $('#recent').innerHTML = all.map((r) => '<li><span class="r-kind">' + esc(r.k) + ', ' + esc(r.l || shortDate(r.d)) + (r.demo ? ', démonstration' : '') + '</span><span class="r-title">' + esc(r.t) + '</span></li>').join('');
-    $('#reset-demo').hidden = !demoPosts.length;
+    $('#reset-demo').hidden = !demoPosts.length && !sentLog.length;
   }
   function renderDynamic() { renderShelf(); renderHomeActus(); renderActus(); renderVeille(); renderPresse(); renderRecent(); INDEX = buildIndex(); }
 
@@ -454,13 +454,13 @@
     page('Les URPS', 'La représentation des biologistes en région', '#syndicat', 'urps');
     page('Statuts et comptes', 'Les statuts du SLBC, comptes 2021 à 2023', '#syndicat', 'comptes');
     page('Veille réglementaire', 'Journal officiel, Assemblée nationale, Sénat', '#veille');
-    page('Lettre d’information', 'La veille et les nouvelles publications par e-mail', '#veille', 'abonnement');
+    idx.push({ type: 'Page', title: 'Lettre d’information', sub: 'La veille et les nouvelles publications par e-mail', href: '#veille', section: 'abonnement', text: 'newsletter abonnement abonner s’abonner s\'abonner désinscription e-mail' });
     page('Salle de presse', 'Les communiqués du SLBC', '#presse');
     page('Actualités', 'L’information du syndicat', '#actualites');
     page('Nomenclature des actes (NABM)', 'Arrêtés et décisions de l’UNCAM', '#documentation', 'doc-nabm');
     page('Textes réglementaires', 'Lois, décrets et arrêtés', '#documentation', 'doc-textes');
     page('Adhérer au SLBC', 'Demande d’adhésion en ligne', '#adherer');
-    page('Espace adhérent', 'Publier un communiqué ou la veille', '#espace');
+    page('Espace adhérent', 'Publier, envoyer la lettre d’information', '#espace');
     DATA.veille.forEach((v) => idx.push({ type: 'Veille', title: v.title, sub: v.when, href: '#veille', section: 'vi-' + v.id, text: v.resume }));
     DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title, sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with }));
     DATA.actus.forEach((a) => idx.push({ type: 'Actualité', title: a.title, sub: longDate(a.date), href: '#actualites', section: 'ac-' + a.id, text: a.excerpt + ' ' + a.cat }));
@@ -668,7 +668,7 @@
       '<p class="pv-date">' + esc(longDate(date)) + '</p>';
     const mail = $('#f-mail').checked;
     const n = subscribers.length;
-    $('#preview-where').textContent = PUB[pubType].where + (mail ? (n ? ' ' + abonnes(n, true) + ' la recevront aussi par e-mail.' : ' Aucun abonné pour l’instant : aucun e-mail ne partira.') : '');
+    $('#preview-where').textContent = PUB[pubType].where + (mail ? (n ? (n === 1 ? ' L’abonné la recevra aussi par e-mail.' : ' ' + abonnes(n, true) + ' la recevront aussi par e-mail.') : ' Aucun abonné pour l’instant : aucun e-mail ne partira.') : '');
     $('#g-mail-subject').hidden = !mail;
     $('#mail-preview-wrap').hidden = !mail;
     if (mail) {
@@ -740,7 +740,7 @@
       sentLog.unshift({ date: todayISO(), subject: $('#f-subject').value.trim() || title, n: subscribers.length, type: PUB[pubType].label });
       saveList(SENT_KEY, sentLog);
       renderNewsletter();
-      note = ', e-mail envoyé à ' + abonnes(subscribers.length, false).toLowerCase() + ' (démonstration)';
+      note = ', envoi simulé à ' + abonnes(subscribers.length, false).toLowerCase();
     } else if (mail) {
       note = ', aucun abonné à qui l’envoyer';
     }
@@ -753,8 +753,11 @@
     ['veille', 'presse', 'actus'].forEach((k) => { DATA[k] = DATA[k].filter((x) => !x.demo); });
     demoPosts = [];
     saveDemo(demoPosts);
+    sentLog = [];
+    saveList(SENT_KEY, sentLog);
+    renderNewsletter();
     renderDynamic();
-    showToast('Publications de démonstration effacées.', null, null);
+    showToast('Publications et envois de démonstration effacés.', null, null);
   });
 
   /* ---------- Espace adhérent : lettre d'information ---------- */
@@ -766,16 +769,19 @@
       ? subscribers.map((a) => '<li><span>' + esc(a) + '</span><button class="link-btn" type="button" data-remove="' + esc(a) + '" aria-label="Retirer ' + esc(a) + '">Retirer</button></li>').join('')
       : '<li class="nl-empty">Aucun abonné pour l’instant. Les adhérents s’inscrivent depuis la page Veille.</li>';
     $('#nl-sent').innerHTML = sentLog.length
-      ? sentLog.slice(0, 8).map((s) => '<li><span class="r-kind">' + esc(s.type || 'Envoi') + ', ' + esc(shortDate(s.date)) + ', ' + esc(abonnes(s.n, false)) + ', démonstration</span><span class="r-title">' + esc(s.subject) + '</span></li>').join('')
+      ? sentLog.slice(0, 8).map((s) => '<li><span class="r-kind">' + esc(s.type || 'Envoi') + ', ' + esc(shortDate(s.date)) + ', ' + esc(abonnes(s.n, false)) + '</span><span class="r-title">' + esc(s.subject) + '</span></li>').join('')
       : '<li><span class="r-kind">Aucun envoi pour l’instant.</span></li>';
   }
   $('#nl-list').addEventListener('click', (e) => {
     const b = e.target.closest('[data-remove]');
     if (!b) return;
+    const pos = subscribers.indexOf(b.dataset.remove);
     subscribers = subscribers.filter((a) => a !== b.dataset.remove);
     saveList(SUB_KEY, subscribers);
     renderNewsletter();
     updatePreview();
+    const btns = $$('#nl-list [data-remove]');
+    (btns[Math.min(pos, btns.length - 1)] || $('#nl-add-email')).focus();
     showToast('Adresse retirée de la liste.', null, null);
   });
   $('#nl-add-form').addEventListener('submit', (e) => {

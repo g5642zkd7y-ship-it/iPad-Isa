@@ -502,21 +502,23 @@
           </div>
           <p class="g-title" style="margin-top:16px">Publications récentes</p>
           <ul class="recent" id="recent"></ul>
-          <button class="link-btn" type="button" id="reset-demo" hidden>Effacer les publications de démonstration</button>
+          <button class="link-btn" type="button" id="reset-demo" hidden>Effacer les publications et envois de démonstration</button>
         </aside>
       </div>
       <div class="newsletter-admin" id="lettre">
         <h2 class="h-block-l">Lettre d’information</h2>
-        <p class="muted">Les adhérents s’inscrivent depuis la page Veille. Chaque publication peut leur être envoyée par e-mail.</p>
+        <p class="muted">Les adhérents s’inscrivent depuis la page Veille. Chaque publication peut leur être envoyée par e-mail. Démonstration : la liste reste dans ce navigateur et aucun e-mail n’est envoyé.</p>
         <div class="nl-grid">
           <div>
             <p class="g-title">Abonnés <span id="nl-count"></span></p>
             <div class="group">
               <ul class="nl-list" id="nl-list"></ul>
-              <form class="g-row nl-add" id="nl-add-form" novalidate>
-                <label class="sr-only" for="nl-add-email">Ajouter une adresse</label>
-                <input class="input" id="nl-add-email" type="email" placeholder="Ajouter une adresse : nom@laboratoire.fr" autocomplete="off">
-                <button class="btn btn-quiet" type="submit">Ajouter</button>
+              <form class="nl-add" id="nl-add-form" novalidate>
+                <label for="nl-add-email">Ajouter une adresse</label>
+                <div class="nl-add-row">
+                  <input class="input" id="nl-add-email" type="email" placeholder="nom@laboratoire.fr" autocomplete="off">
+                  <button class="btn btn-quiet" type="submit">Ajouter</button>
+                </div>
               </form>
             </div>
             <p class="field-error" id="nl-add-err" role="alert" hidden></p>

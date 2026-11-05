@@ -503,16 +503,18 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .nl-list li > span{min-width:0}
 .nl-list .link-btn{flex:0 0 auto;min-height:44px;align-self:center}
 .nl-list .nl-empty{padding-block:14px;color:var(--gris)}
-.nl-add{gap:12px}
-.nl-add .input{flex:1;min-width:0}
-.nl-add .btn{flex:0 0 auto}
+.nl-add{display:flex;flex-direction:column;gap:8px;padding:14px 18px}
+.nl-add > label{font-size:14px;font-weight:500;color:var(--gris)}
+.nl-add-row{display:flex;gap:12px}
+.nl-add-row .input{flex:1;min-width:0}
+.nl-add-row .btn{flex:0 0 auto}
 .side-dark .check-line{font-size:15px}
 .recent{list-style:none;margin:0;padding:0;overflow:hidden;border-radius:16px;background:#fff;box-shadow:0 0 0 1px var(--filet)}
 .recent li{display:flex;flex-direction:column;gap:2px;padding:14px 18px}
 .recent li + li{border-top:1px solid var(--filet)}
 .r-kind{font-size:14px;color:var(--gris)}
-.r-title{font-size:15px;font-weight:600;line-height:1.35;color:var(--encre)}
-.link-btn{align-self:flex-start;padding:8px 0;border:0;background:none;color:var(--vert);font:600 15px/1.2 var(--font);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.r-title{font-size:15px;font-weight:600;line-height:1.35;color:var(--encre);overflow-wrap:anywhere}
+.link-btn{align-self:flex-start;min-height:44px;padding:8px 0;border:0;background:none;color:var(--vert);font:600 15px/1.2 var(--font);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 
 /* ---------- Recherche ---------- */
 .search-scrim{position:fixed;inset:0;z-index:70;background:rgba(46,50,54,.32);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
