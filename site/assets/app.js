@@ -137,23 +137,22 @@
     { t: 'Préparer l’avenir du métier', d: 'Attirer et former les jeunes biologistes, accompagner l’innovation diagnostique et faire vivre la fierté de la profession.' }
   ];
   /* Représentants communiqués par Isabelle Eimer les 5 et 6 novembre 2026 ; les autres sièges sont à désigner.
-     a : sigle, affiché entre parenthèses après le nom ; reps : représentants nommés ;
+     a : sigle, affiché entre parenthèses après le nom ; r : descriptif, sous le nom ; reps : représentants nommés ;
      todo : sièges restant à pourvoir (texte affiché après les noms) ; groups : [libellé, noms, todo] quand l’instance a plusieurs collèges.
-     Le descriptif de chaque commission a été retiré le 6 novembre 2026 à la demande d’Isabelle Eimer ; le même jour, elle a demandé
-     de ne garder que les instances qu’elle a données (Agence de la biomédecine, Santé publique France, SFBC, Bio Qualité, CNPS,
-     Agence nationale du DPC et Klesia retirés). */
+     Le 6 novembre 2026, Isabelle Eimer a demandé de ne garder que les instances qu’elle a données (Agence de la biomédecine,
+     Santé publique France, SFBC, Bio Qualité, CNPS, Agence nationale du DPC, Klesia et Commission sociale paritaire retirés).
+     Les descriptifs, retirés un moment le même jour, ont été rétablis à sa demande. */
   const INSTANCES = [
-    { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
-    { n: 'Commission conventionnelle paritaire nationale', a: 'CPPNI', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
-    { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', reps: [],
+    { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
+    { n: 'Commission conventionnelle paritaire nationale', a: 'CPPNI', r: 'Convention avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
+    { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', r: 'Conditions d’exercice de la profession', reps: [],
       groups: [['Bureau', ['Thierry Bouchet'], 'un représentant à désigner'], ['Assemblée générale', ['Hala Sarmini'], 'deux représentants à désigner']] },
-    { n: 'Comité de suivi du protocole', reps: ['Thierry Bouchet', 'Isabelle Eimer', 'Nicolas Roquigny', 'Éric Flatin'] },
-    { n: 'Commission paritaire nationale des structures pluriprofessionnelles', a: 'CPNMSP', reps: ['Thierry Bouchet'], todo: 'un représentant à désigner' },
-    { n: 'Commission paritaire régionale des structures pluriprofessionnelles', a: 'CPRMSP', reps: [], todo: 'un titulaire et un suppléant à désigner' },
-    { n: 'Cofrac', reps: [] },
-    { n: 'Ministère chargé de la santé', reps: ['Thierry Bouchet', 'Nicolas Roquigny'] },
-    { n: 'Commission sociale paritaire', reps: ['Thierry Bouchet'] },
-    { n: 'Commission biologie européenne', reps: ['Jean-Philippe Brochet'] }
+    { n: 'Comité de suivi du protocole', r: 'Protocole 2027-2029 avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Isabelle Eimer', 'Nicolas Roquigny', 'Éric Flatin'] },
+    { n: 'Commission paritaire nationale des structures pluriprofessionnelles', a: 'CPNMSP', r: 'Accord conventionnel interprofessionnel de 2017', reps: ['Thierry Bouchet'], todo: 'un représentant à désigner' },
+    { n: 'Commission paritaire régionale des structures pluriprofessionnelles', a: 'CPRMSP', r: 'Accord conventionnel interprofessionnel de 2017, en région', reps: [], todo: 'un titulaire et un suppléant à désigner' },
+    { n: 'Cofrac', r: 'Commission technique d’accréditation', reps: [] },
+    { n: 'Ministère chargé de la santé', r: 'Relations avec la tutelle', reps: ['Thierry Bouchet', 'Nicolas Roquigny'] },
+    { n: 'Commission biologie européenne', r: 'Représentation de la profession en Europe', reps: ['Jean-Philippe Brochet'] }
   ];
   const CA = [
     ['Auvergne-Rhône-Alpes et Bourgogne-Franche-Comté', ['Nicolas Roquigny', 'Éric Flatin', 'François Targe', 'Benoît Dumont', 'Marc Thome', 'Fabienne Moulinier']],
@@ -318,7 +317,8 @@
     $('#protocole-list').textContent = PROTOCOLE.join(', ');
     $('#ca-list').innerHTML = CA.map((r) => '<details class="region"><summary><span>' + esc(r[0]) + '</span><span class="count">' + r[1].length + ' administrateur' + (r[1].length > 1 ? 's' : '') + '</span></summary><p>' + esc(r[1].join(', ')) + '</p></details>').join('');
     $('#inst-list').innerHTML = INSTANCES.map((i) =>
-      '<div class="inst-row"><p class="inst-name">' + esc(i.n) + (i.a ? ' <span class="inst-abbr">(' + esc(i.a) + ')</span>' : '') + '</p><div class="inst-reps">' +
+      '<div class="inst-row"><div><p class="inst-name">' + esc(i.n) + (i.a ? ' <span class="inst-abbr">(' + esc(i.a) + ')</span>' : '') + '</p>' +
+        (i.r ? '<p class="inst-role">' + esc(i.r) + '</p>' : '') + '</div><div class="inst-reps">' +
         (i.groups ? i.groups.map((g) => '<p><span class="inst-group">' + esc(g[0]) + '\u00a0:</span> ' + repsLine(g[1], g[2]) + '</p>').join('') : '<p>' + repsLine(i.reps, i.todo) + '</p>') +
       '</div></div>'
     ).join('');
@@ -538,7 +538,7 @@
     BUREAU.forEach((b) => idx.push({ type: 'Bureau', title: b[1], sub: b[0], href: '#syndicat', section: 'bureau', text: '' }));
     INSTANCES.forEach((i) => {
       const names = i.reps.concat(...(i.groups || []).map((g) => g[1]));
-      idx.push({ type: 'Instance', title: i.n + (i.a ? ' (' + i.a + ')' : ''), sub: names.join(', '), href: '#syndicat', section: 'representants', text: names.join(' ') });
+      idx.push({ type: 'Instance', title: i.n + (i.a ? ' (' + i.a + ')' : ''), sub: i.r, href: '#syndicat', section: 'representants', text: names.join(' ') });
     });
     NABM.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Nomenclature des actes', href: '#documentation', section: 'doc-nabm', text: d.s || '' }));
     TEXTES.forEach((g) => g.items.forEach((t) => idx.push({ type: 'Document', title: t, sub: g.theme, href: '#documentation', section: 'doc-textes', text: '' })));
