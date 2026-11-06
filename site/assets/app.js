@@ -407,7 +407,10 @@
           (doc ? '<a class="more" href="' + esc(p.url) + '" data-doc="' + esc(p.url) + '">' + esc(p.linkLabel || 'Lire le document') + '</a>' : '') +
         '</div>' +
       '</div>' +
-      (p.quote ? '<figure class="p-quote hcp-quote"><blockquote><p>' + esc(p.quote.text) + '</p></blockquote><figcaption>' + esc(p.quote.by) + '</figcaption></figure>' : '');
+      /* Colonne de droite : trois mascottes qui lisent le journal (demande d'Isabelle Eimer du 6 novembre 2026), puis la citation */
+      '<div class="hcp-side">' + $('#tpl-lecteurs').innerHTML +
+        (p.quote ? '<figure class="p-quote hcp-quote"><blockquote><p>' + esc(p.quote.text) + '</p></blockquote><figcaption>' + esc(p.quote.by) + '</figcaption></figure>' : '') +
+      '</div>';
   }
   function renderDynamic() { renderShelf(); renderHomeCp(); renderHomeActus(); renderActus(); renderVeille(); renderPresse(); renderRecent(); INDEX = buildIndex(); }
 
