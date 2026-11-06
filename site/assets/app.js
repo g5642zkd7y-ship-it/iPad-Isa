@@ -183,10 +183,21 @@
     { y: '2022', d: 'États financiers et rapport du commissaire aux comptes' },
     { y: '2021', d: 'Bilan et rapport du commissaire aux comptes' }
   ];
-  /* Études et rapports (Documentation). Source des deux rapports : federationbiologiemedicale.fr (mai 2026). */
+  /* Études et rapports (Documentation), classés par source (demande d'Isabelle Eimer du 6 novembre 2026).
+     d : date affichée ; url : page officielle (lien externe) ou document lu dans la liseuse (doc: true) ; src : site d'origine. */
   const ETUDES = [
-    { t: 'Observatoire de la biologie médicale, édition 2026 : version courte', s: 'Étude du secteur des laboratoires de biologie médicale libérale français, Roland Berger, mai 2026, 53 pages', url: 'documents/observatoire-biologie-2026-court.pdf' },
-    { t: 'Observatoire de la biologie médicale, édition 2026 : rapport complet', s: 'Même étude, version longue, 89 pages', url: 'documents/observatoire-biologie-2026-complet.pdf' }
+    { g: 'Assurance maladie', items: [
+      { d: 'Juillet 2026', t: 'Charges et produits pour 2027 : les propositions de l’Assurance maladie', s: 'Rapport annuel de propositions, présenté le 2 juillet 2026', url: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees/2026-rapport-propositions-pour-2027-charges-produits', src: 'ameli.fr' },
+      { d: 'Juin 2025', t: 'Charges et produits pour 2026 : les propositions de l’Assurance maladie', s: 'Rapport annuel de propositions, présenté le 24 juin 2025', url: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees/2025-rapport-propositions-pour-2026-charges-produits', src: 'ameli.fr' }
+    ] },
+    { g: 'Inspections générales (IGAS, IGF)', items: [
+      { d: 'Juillet 2025', t: 'Pertinence et efficience des dépenses de biologie médicale', s: 'Rapport IGAS-IGF, publié le 15 juillet 2025', url: 'https://igas.gouv.fr/pertinence-et-efficience-des-depenses-de-biologie-medicale', src: 'igas.gouv.fr' },
+      { d: 'Juillet 2025', t: 'Causes et effets de la financiarisation du système de santé', s: 'Rapport IGAS-IGF, publié le 9 juillet 2025 ; il couvre tout le système de santé, dont la biologie médicale', url: 'https://www.igas.gouv.fr/causes-et-effets-de-la-financiarisation-du-systeme-de-sante', src: 'igas.gouv.fr' }
+    ] },
+    { g: 'Études du secteur', items: [
+      { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : version courte', s: 'Étude du secteur des laboratoires de biologie médicale libérale français, Roland Berger ; source federationbiologiemedicale.fr', url: 'documents/observatoire-biologie-2026-court.pdf', doc: true },
+      { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : rapport complet', s: 'Même étude, version longue', url: 'documents/observatoire-biologie-2026-complet.pdf', doc: true }
+    ] }
   ];
   const NABM = [
     { t: 'Arrêté du 25 janvier 2024' }, { t: 'Arrêté du 5 janvier 2024' },
@@ -342,10 +353,16 @@
   function renderDocs(q) {
     const terms = norm(q).split(/\s+/).filter(Boolean);
     const ok = (s) => !terms.length || terms.every((t) => norm(s).includes(t));
-    const etudes = ETUDES.filter((d) => ok(d.t + ' ' + d.s + ' étude rapport observatoire roland berger'));
-    $('#doc-etudes-list').innerHTML = etudes.map((d) => '<li><a class="row-link" href="' + esc(d.url) + '" data-doc="' + esc(d.url) + '"><span class="row-date">Mai 2026</span><span class="row-title">' +
-      esc(d.t) + '<span class="row-sub">' + esc(d.s) + '</span></span><span class="row-cat">' + DOCS[d.url].pages + ' pages</span></a></li>').join('');
-    $('#doc-etudes').hidden = !etudes.length;
+    let etudes = 0;
+    $('#doc-etudes-list').innerHTML = ETUDES.map((grp) => {
+      const items = grp.items.filter((d) => ok(d.t + ' ' + d.s + ' ' + grp.g + ' ' + (d.src || '') + ' étude rapport'));
+      etudes += items.length;
+      if (!items.length) return '';
+      return '<p class="doc-theme">' + esc(grp.g) + '</p><ul class="rows">' + items.map((d) => '<li><a class="row-link" href="' + esc(d.url) + '"' +
+        (d.doc ? ' data-doc="' + esc(d.url) + '"' : ' target="_blank" rel="noopener"') + '><span class="row-date">' + esc(d.d) + '</span><span class="row-title">' +
+        esc(d.t) + '<span class="row-sub">' + esc(d.s) + '</span></span><span class="row-cat">' + (d.doc ? DOCS[d.url].pages + ' pages' : esc(d.src)) + '</span></a></li>').join('') + '</ul>';
+    }).join('');
+    $('#doc-etudes').hidden = !etudes;
     const nabm = NABM.filter((d) => ok(d.t + ' ' + (d.s || '') + ' nabm nomenclature'));
     $('#doc-nabm-list').innerHTML = nabm.map((d) => '<li><a class="row-link" href="https://www.slbc.fr/documentation/chab/" target="_blank" rel="noopener"><span class="row-date">NABM</span><span class="row-title">' + esc(d.t) + (d.s ? '<span class="row-sub">' + esc(d.s) + '</span>' : '') + '</span><span class="row-cat">slbc.fr</span></a></li>').join('');
     $('#doc-nabm').hidden = !nabm.length;
@@ -362,7 +379,7 @@
     const parts = PARTNERS.filter((p) => ok(p.n + ' ' + p.d + ' partenaire'));
     $('#partners-list').innerHTML = parts.map((p) => '<li><a href="' + esc(p.url) + '" target="_blank" rel="noopener"><strong>' + esc(p.n) + '</strong><span>' + esc(p.d) + '</span></a></li>').join('');
     $('#doc-partenaires').hidden = !parts.length;
-    $('#doc-empty').hidden = Boolean(etudes.length || nabm.length || count || parts.length);
+    $('#doc-empty').hidden = Boolean(etudes || nabm.length || count || parts.length);
   }
 
   /* ---------- Rendu du contenu publié ---------- */
@@ -560,7 +577,7 @@
     });
     NABM.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Nomenclature des actes', href: '#documentation', section: 'doc-nabm', text: d.s || '' }));
     TEXTES.forEach((g) => g.items.forEach((t) => idx.push({ type: 'Document', title: t, sub: g.theme, href: '#documentation', section: 'doc-textes', text: '' })));
-    ETUDES.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Études et rapports', href: '#documentation', section: 'doc-etudes', text: d.s + ' observatoire étude rapport' }));
+    ETUDES.forEach((grp) => grp.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: grp.g + ', ' + d.d, href: '#documentation', section: 'doc-etudes', text: d.s + ' ' + (d.src || '') + ' étude rapport' })));
     return idx;
   }
   const srItem = (it) =>
