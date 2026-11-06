@@ -15,6 +15,14 @@
   const todayISO = () => { const d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
   const isHttp = (u) => /^https?:\/\//i.test(String(u || ''));
   const isDoc = (u) => /^documents\/[\w.-]+\.pdf$/i.test(String(u || ''));
+  /* Documents lisibles dans la page : chaque page du PDF est une image (site/documents/<nom>/page-01.jpg…).
+     Dans claude.ai, la maquette est affichée dans un cadre qui bloque l’ouverture directe d’un PDF :
+     on lit donc les pages dans une liseuse, et « Enregistrer le PDF » passe par la fonction de
+     téléchargement de claude.ai (capacité downloads). Ailleurs, un simple lien de téléchargement. */
+  const DOCS = {
+    'documents/protocole-biologie-2027-2029.pdf': { title: 'Protocole d’accord 2027-2029, texte signé', pages: 13, w: 1240, h: 1754,
+      img: (n) => 'documents/protocole-biologie-2027-2029/page-' + String(n).padStart(2, '0') + '.jpg', file: 'protocole-biologie-2027-2029.pdf' }
+  };
 
   const sv = (w, body) => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
   const ICON = {
@@ -89,7 +97,7 @@
             'Ces perspectives ne valent pas mise en œuvre immédiate. Elles dépendent encore, selon les mesures, de textes législatifs ou réglementaires et de négociations conventionnelles. Le SLBC sera vigilant sur le financement intégral des nouvelles missions en dehors de l’enveloppe courante. Pour les futurs actes de santé publique, la part des dépenses affectée à l’enveloppe spécifique reste à négocier.'
           ] }
         ],
-        url: 'documents/protocole-biologie-2027-2029.pdf', linkLabel: 'Le protocole signé (PDF, 13 pages)' }
+        url: 'documents/protocole-biologie-2027-2029.pdf', linkLabel: 'Lire le protocole signé (13 pages)' }
     ],
     actus: [
       { id: 'a1', date: '2026-09-07', cat: 'Santé publique', title: 'Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', excerpt: 'Sur les 22 actions du plan, deux touchent les laboratoires, dont le déploiement de la biologie délocalisée.', url: 'https://www.slbc.fr/strategie-nationale-de-sante-sexuelle-2026-2030-le-texte-integral-du-ministere/' },
@@ -263,7 +271,8 @@
         p.body.map((sec) => (sec.h ? '<h3>' + esc(sec.h) + '</h3>' : '') + sec.ps.map((x) => '<p>' + esc(x) + '</p>').join('')).join('') + '</details>' : '') +
       (p.points && p.points.length ? '<h3 class="p-points-title">' + esc(p.pointsTitle || 'Points clés') + '</h3><dl class="p-points">' +
         p.points.map((x) => '<div><dt>' + esc(x[0]) + '</dt><dd>' + esc(x[1]) + '</dd></div>').join('') + '</dl>' : '') +
-      (p.url && (isHttp(p.url) || isDoc(p.url)) ? '<a class="more" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.linkLabel || 'Lire le communiqué') + '</a>'
+      (p.url && DOCS[p.url] ? '<a class="more" href="' + esc(p.url) + '" data-doc="' + esc(p.url) + '">' + esc(p.linkLabel || 'Lire le document') + '</a>'
+      : p.url && (isHttp(p.url) || isDoc(p.url)) ? '<a class="more" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.linkLabel || 'Lire le communiqué') + '</a>'
                               : '<span class="muted" style="font-size:15px">Publié depuis l’espace adhérent (démonstration).</span>') +
     '</article>';
 
@@ -545,7 +554,7 @@
   sScrim.addEventListener('click', () => closeSearch(false));
   sInput.addEventListener('input', () => renderSearch(sInput.value));
   sInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const first = $('#search-results .sr-link'); if (first) { e.preventDefault(); first.click(); } } });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (!sPanel.hidden) closeSearch(false); else closeMenu(); } });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (!$('#reader').hidden) closeReader(); else if (!sPanel.hidden) closeSearch(false); else closeMenu(); } });
 
   /* ---------- Copier ---------- */
   function selectText(el) { if (!el) return; const r = document.createRange(); r.selectNodeContents(el); const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); }
@@ -890,6 +899,78 @@
     }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
     $$('.pillar, .timeline').forEach((el) => io.observe(el));
   }
+
+  /* ---------- Liseuse de documents ---------- */
+  let downloadsApi = null;
+  if (window.claude && typeof window.claude.use === 'function') {
+    window.claude.use('downloads').then((d) => { downloadsApi = d; }).catch(() => {});
+  }
+  let readerDoc = null; let readerReturn = null; let readerIO = null;
+  function openReader(url, opener) {
+    const d = DOCS[url];
+    if (!d) return;
+    readerDoc = url; readerReturn = opener || document.activeElement;
+    $('#reader-title').textContent = d.title;
+    $('#reader-count').textContent = d.pages + ' pages';
+    const pages = $('#reader-pages');
+    pages.innerHTML = Array.from({ length: d.pages }, (_, i) =>
+      '<figure class="reader-page" data-n="' + (i + 1) + '"><img src="' + esc(d.img(i + 1)) + '" width="' + d.w + '" height="' + d.h + '" alt="Page ' + (i + 1) + ' sur ' + d.pages + '"' + (i > 1 ? ' loading="lazy"' : '') + '></figure>').join('');
+    pages.scrollTop = 0;
+    const save = $('#reader-save'); const link = $('#reader-link');
+    save.hidden = !downloadsApi; save.disabled = false;
+    link.hidden = !!downloadsApi; link.setAttribute('href', url); link.setAttribute('download', d.file);
+    $('#reader').hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    if (readerIO) readerIO.disconnect();
+    if ('IntersectionObserver' in window) {
+      readerIO = new IntersectionObserver((entries) => {
+        entries.forEach((en) => { if (en.isIntersecting) $('#reader-count').textContent = 'Page ' + en.target.dataset.n + ' sur ' + d.pages; });
+      }, { root: pages, rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      $$('.reader-page', pages).forEach((f) => readerIO.observe(f));
+    }
+    $('#reader-close').focus();
+  }
+  function closeReader() {
+    if ($('#reader').hidden) return;
+    $('#reader').hidden = true;
+    document.documentElement.style.overflow = '';
+    if (readerIO) { readerIO.disconnect(); readerIO = null; }
+    $('#reader-pages').innerHTML = '';
+    if (readerReturn && typeof readerReturn.focus === 'function') readerReturn.focus();
+    readerDoc = null; readerReturn = null;
+  }
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-doc]');
+    if (!a || !DOCS[a.dataset.doc]) return;
+    e.preventDefault();
+    openReader(a.dataset.doc, a);
+  });
+  $('#reader-close').addEventListener('click', closeReader);
+  /* Le focus reste dans la liseuse tant qu'elle est ouverte. */
+  $('#reader').addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const f = $$('#reader button:not([hidden]), #reader a:not([hidden]), #reader-pages').filter((x) => !x.hidden);
+    if (!f.length) return;
+    const first = f[0]; const last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+  $('#reader-save').addEventListener('click', async () => {
+    const d = DOCS[readerDoc]; const btn = $('#reader-save');
+    if (!d || !downloadsApi) return;
+    btn.disabled = true;
+    try {
+      const res = await fetch(readerDoc);
+      if (!res.ok) throw { code: 'fetch' };
+      await downloadsApi.save({ filename: d.file, data: await res.blob() });
+    } catch (err) {
+      const code = err && err.code;
+      if (code === 'declined') { /* le visiteur a refusé : rien à signaler */ }
+      else if (code === 'rate_limited') showToast('Un enregistrement est déjà en cours. Réessayez dans un instant.', null, null);
+      else { showToast('L’enregistrement du PDF n’est pas possible ici. Le document reste lisible dans cette page.', null, null); btn.hidden = true; }
+    }
+    btn.disabled = false;
+  });
 
   /* ---------- Démarrage ---------- */
   $('#f-date').value = todayISO();

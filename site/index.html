@@ -705,6 +705,20 @@
   </div>
 </footer>
 
+<div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="reader-title" hidden>
+  <div class="reader-bar">
+    <div class="reader-head"><p class="reader-title" id="reader-title"></p><p class="reader-count" id="reader-count" aria-live="polite"></p></div>
+    <div class="reader-tools">
+      <button class="reader-btn" type="button" id="reader-save" hidden>Enregistrer le PDF</button>
+      <a class="reader-btn" id="reader-link" href="#" download hidden>Enregistrer le PDF</a>
+      <button class="icon-btn" type="button" id="reader-close" aria-label="Fermer le document">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="reader-pages" id="reader-pages" tabindex="0" role="region" aria-label="Pages du document"></div>
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="toast-msg"></span><a id="toast-link" href="#accueil">Voir</a></div>
 
 <script src="assets/app.js"></script>
