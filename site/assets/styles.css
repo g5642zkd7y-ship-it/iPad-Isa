@@ -406,7 +406,10 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .p-chapo{max-width:42em;font-size:17px;line-height:1.6}
 .p-subtitle{display:block}
 /* Accueil : dernier communiqué sous la devise */
-.home-cp{border-top:1px solid var(--filet)}
+.home-cp{padding-top:0}
+.sep-sig{display:flex;align-items:center;gap:22px;margin-bottom:clamp(40px,5vw,64px)}
+.sep-line{flex:1 1 0;height:1px;background:var(--filet-fort)}
+.sep-mark{flex:0 0 auto;display:block;width:34px;height:34px;overflow:visible}
 .home-cp-in{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center}
 .hcp-main{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
 .hcp-title{max-width:22em;font-size:clamp(26px,2.6vw,34px);font-weight:700;line-height:1.15;letter-spacing:-.02em;color:var(--encre)}
@@ -655,26 +658,31 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
   .hero-intro .hero .display{animation:fadeUp .9s var(--ease) 1.3s both}
   /* Piliers : le filet vert se trace de gauche à droite, pilier après pilier */
   .js-motion .pillar{position:relative;border-top-color:transparent}
-  .js-motion .pillar::before{content:"";position:absolute;top:-4px;left:0;right:0;height:4px;background:var(--anis);transform:scaleX(0);transform-origin:left center;transition:transform 1.1s var(--ease-out) .15s}
-  .js-motion .pillar:nth-child(2)::before{transition-delay:.35s}
-  .js-motion .pillar:nth-child(3)::before{transition-delay:.55s}
-  .js-motion .pillar.drawn::before{transform:none}
+  .js-motion .pillar::before{content:"";position:absolute;top:-4px;left:0;right:0;height:4px;background:var(--anis);transform:scaleX(0);transform-origin:left center}
+  .js-motion .pillar.drawn::before{transform:none;transition:transform 1.1s var(--ease-out) .15s}
+  .js-motion .pillar.drawn:nth-child(2)::before{transition-delay:.35s}
+  .js-motion .pillar.drawn:nth-child(3)::before{transition-delay:.55s}
+  /* Séparateur sous la devise : le trait se déploie depuis les ronds du centre */
+  .js-motion .sep-l{transform:scaleX(0);transform-origin:right center}
+  .js-motion .sep-r{transform:scaleX(0);transform-origin:left center}
+  .js-motion .sep-sig.drawn .sep-line{transform:none;transition:transform 1.2s var(--ease-out)}
   /* Frise du protocole : les étapes se posent l'une après l'autre */
-  .js-motion .timeline li::before{transform:scaleX(0);transform-origin:left center;transition:transform .6s var(--ease-out)}
-  .js-motion .timeline li::after{transform:scale(0);transition:transform .5s var(--ease-out)}
-  .js-motion .timeline.drawn li::before,.js-motion .timeline.drawn li::after{transform:none}
-  .js-motion .timeline li:nth-child(1)::after{transition-delay:.25s}
-  .js-motion .timeline li:nth-child(1)::before{transition-delay:.4s}
-  .js-motion .timeline li:nth-child(2)::after{transition-delay:.85s}
-  .js-motion .timeline li:nth-child(2)::before{transition-delay:1s}
-  .js-motion .timeline li:nth-child(3)::after{transition-delay:1.45s}
-  .js-motion .timeline li:nth-child(3)::before{transition-delay:1.6s}
+  .js-motion .timeline li::before{transform:scaleX(0);transform-origin:left center}
+  .js-motion .timeline li::after{transform:scale(0)}
+  .js-motion .timeline.drawn li::before{transform:none;transition:transform .6s var(--ease-out)}
+  .js-motion .timeline.drawn li::after{transform:none;transition:transform .5s var(--ease-out)}
+  .js-motion .timeline.drawn li:nth-child(1)::after{transition-delay:.25s}
+  .js-motion .timeline.drawn li:nth-child(1)::before{transition-delay:.4s}
+  .js-motion .timeline.drawn li:nth-child(2)::after{transition-delay:.85s}
+  .js-motion .timeline.drawn li:nth-child(2)::before{transition-delay:1s}
+  .js-motion .timeline.drawn li:nth-child(3)::after{transition-delay:1.45s}
+  .js-motion .timeline.drawn li:nth-child(3)::before{transition-delay:1.6s}
 }
 @media (prefers-reduced-motion:no-preference) and (max-width:520px){
   .js-motion .timeline li::before{transform:scaleY(0);transform-origin:center top}
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-@media print{.pillar::before,.timeline li::before,.timeline li::after{transform:none!important}}
+@media print{.sep-line,.pillar::before,.timeline li::before,.timeline li::after{transform:none!important}}
 @keyframes viewIn{from{opacity:.4}to{opacity:1}}
 @keyframes fadeIn{from{opacity:.5}to{opacity:1}}
 @keyframes dropIn{from{opacity:.6;transform:translateY(-12px)}to{opacity:1;transform:none}}

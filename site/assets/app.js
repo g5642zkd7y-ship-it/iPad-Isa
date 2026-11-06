@@ -888,7 +888,7 @@
     });
   }
   const JOIN = { hero: { from: [56, 144], to: [84, 116], dur: 1500, delay: 250 }, sig: { from: [18, 102], to: [44, 76], dur: 1100, delay: 120 } };
-  function joinCircles(svg, k) {
+  function joinCircles(svg, k, extra) {
     if (!svg) return;
     const q = (n) => svg.querySelector('[data-c="' + n + '"]');
     const grey = q('grey'); const green = q('green'); const overlap = q('overlap'); const clip = q('clip');
@@ -901,7 +901,7 @@
     set(from[0], from[1]);
     let start = null;
     const frame = (ts) => {
-      if (start === null) start = ts + delay;
+      if (start === null) start = ts + delay + (extra || 0);
       const t = Math.min(1, Math.max(0, (ts - start) / dur));
       const e = ease(t);
       set(from[0] + (to[0] - from[0]) * e, from[1] + (to[1] - from[1]) * e);
@@ -957,14 +957,29 @@
   function setupMotion() {
     if (reduceMotion || !('IntersectionObserver' in window)) return;
     document.documentElement.classList.add('js-motion');
+    /* Séparateur sous la devise : les deux ronds se rejoignent, puis le trait se déploie de part et d'autre.
+       Juste après l'ouverture de la page, il attend la fin de l'animation des grands ronds. */
+    const sep = $('.sep-sig'); const sepMark = sep && sep.querySelector('.sep-mark');
+    if (sepMark) {
+      const q = (n) => sepMark.querySelector('[data-c="' + n + '"]');
+      const f = JOIN.sig.from;
+      ['grey', 'clip'].forEach((n) => q(n).setAttribute('cx', f[0]));
+      ['green', 'overlap'].forEach((n) => q(n).setAttribute('cx', f[1]));
+    }
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => {
         if (!en.isIntersecting) return;
-        en.target.classList.add('drawn');
         io.unobserve(en.target);
+        if (en.target === sep) {
+          const extra = performance.now() < 1800 ? 1400 : 0;
+          joinCircles(sepMark, 'sig', extra);
+          setTimeout(() => sep.classList.add('drawn'), 700 + extra);
+          return;
+        }
+        en.target.classList.add('drawn');
       });
     }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
-    $$('.pillar, .timeline').forEach((el) => io.observe(el));
+    $$('.pillar, .timeline, .sep-sig').forEach((el) => io.observe(el));
   }
 
   /* ---------- Liseuse de documents ---------- */
