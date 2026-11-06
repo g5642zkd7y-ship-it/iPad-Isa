@@ -23,7 +23,7 @@
     'documents/protocole-biologie-2027-2029.pdf': { title: 'Protocole d’accord 2027-2029, texte signé', pages: 13, w: 1240, h: 1754,
       img: (n) => 'documents/protocole-biologie-2027-2029/page-' + String(n).padStart(2, '0') + '.jpg', file: 'protocole-biologie-2027-2029.pdf' },
     /* Observatoire de la biologie médicale, édition 2026 (étude Roland Berger, mai 2026), envoyé par Isabelle Eimer le 6 novembre 2026 ;
-       source : federationbiologiemedicale.fr */
+       la source n'est pas affichée sur le site (demande d'Isabelle Eimer). */
     'documents/observatoire-biologie-2026-court.pdf': { title: 'Observatoire de la biologie médicale 2026, version courte', pages: 53, w: 1600, h: 900,
       img: (n) => 'documents/observatoire-biologie-2026-court/page-' + String(n).padStart(2, '0') + '.jpg', file: 'observatoire-biologie-2026-court.pdf' },
     'documents/observatoire-biologie-2026-complet.pdf': { title: 'Observatoire de la biologie médicale 2026, rapport complet', pages: 89, w: 1600, h: 900,
@@ -195,7 +195,7 @@
       { d: 'Juillet 2025', t: 'Causes et effets de la financiarisation du système de santé', s: 'Rapport IGAS-IGF, publié le 9 juillet 2025 ; il couvre tout le système de santé, dont la biologie médicale', url: 'https://www.igas.gouv.fr/causes-et-effets-de-la-financiarisation-du-systeme-de-sante', src: 'igas.gouv.fr' }
     ] },
     { g: 'Études du secteur', items: [
-      { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : version courte', s: 'Étude du secteur des laboratoires de biologie médicale libérale français, Roland Berger ; source federationbiologiemedicale.fr', url: 'documents/observatoire-biologie-2026-court.pdf', doc: true },
+      { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : version courte', s: 'Étude du secteur des laboratoires de biologie médicale libérale français, Roland Berger', url: 'documents/observatoire-biologie-2026-court.pdf', doc: true },
       { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : rapport complet', s: 'Même étude, version longue', url: 'documents/observatoire-biologie-2026-complet.pdf', doc: true }
     ] }
   ];
