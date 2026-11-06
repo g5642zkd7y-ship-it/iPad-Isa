@@ -25,6 +25,7 @@ Objectifs exprimés pour le site :
 - Version publiée de la maquette (privée) : https://claude.ai/artifact/Vse2Nq8YweogmxHKpnrjRR
 - `docs/contexte.md` : le syndicat, ses chantiers et l’état des dossiers législatifs (protocole, PLFSS), à jour au 4 novembre 2026.
 - Ajouter un communiqué : nouvelle entrée dans `DATA.presse` (`site/assets/app.js`) avec `id` unique (p4, p5…), `date` au format AAAA-MM-JJ (elle fixe l’ordre d’affichage), `year` (les 4 chiffres de la date, pour le filtre), `title`, `with`, `chapo`, `url` du PDF ou de la page, `linkLabel` ; `dateLabel` facultatif si seule l’année est connue. Puis republier la maquette.
+- Adresse du contact presse : constante `CONTACT_EMAIL` en tête de `site/assets/app.js`. Elle reçoit aussi les demandes d’adhésion (demande d’Isabelle Eimer du 6 novembre 2026) et s’affiche dans la salle de presse (contact et kit presse), à l’étape 3 et à la confirmation du formulaire d’adhésion, et dans les informations légales. Provisoirement `contact@slbc.fr` : remplacer par l’adresse définitive quand Isabelle Eimer la donne, puis republier. Si elle est vidée, la maquette affiche « adresse à compléter ».
 - Lien LinkedIn : constante `LINKEDIN_URL` en tête de `site/assets/app.js` (page https://www.linkedin.com/company/slbc-syndicat-des-laboratoires-de-biologie-clinique/), reliée au pied de page et au bloc « Contact presse ». Si elle est vidée, un clic affiche « Adresse de la page LinkedIn du SLBC à compléter. »
 
 ## Règles de marque (validées, ne pas modifier sans accord)

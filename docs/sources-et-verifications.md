@@ -38,7 +38,7 @@ Veille réglementaire (exemple du 4 novembre 2026) :
 2. **Noms d’instances modernisés** : « Institut national de veille sanitaire » remplacé par Santé publique France (fusion de 2016) ; « OG DPC » remplacé par Agence nationale du DPC ; « Commission nationale permanente de biologie médicale » écrite « Commission nationale de biologie médicale ». À confirmer.
 3. **Mentions T et S** des listes du site actuel (sans doute titulaire et suppléant) : non reprises, car leur sens n’est pas indiqué.
 4. **Communiqué de 2019** : l’année vient du nom du fichier en ligne ; la date exacte reste à confirmer.
-5. **Contact presse** : Laurent Kbaier (indiqué par Isabelle Eimer le 5 novembre 2026 ; orthographe reprise de la liste du conseil d’administration, fonction à préciser) et contact@slbc.fr.
+5. **Contact presse** : Laurent Kbaier (indiqué par Isabelle Eimer le 5 novembre 2026 ; orthographe reprise de la liste du conseil d’administration, fonction à préciser) et contact@slbc.fr. Le 6 novembre 2026, Isabelle Eimer a demandé que les demandes d’adhésion soient envoyées au même contact que la presse ; l’adresse définitive reste à fournir (provisoirement contact@slbc.fr, constante `CONTACT_EMAIL`).
 6. **Liste des URPS** : reprise telle quelle du site actuel ; vérifier qu’elle est à jour.
 7. **Cotisation** : aucun montant n’est indiqué sur le site actuel ; la page Adhérer n’en affiche pas.
 8. **Protocole 2027-2029** : vérifier la date de signature et la liste des signataires sur le communiqué officiel, et remplacer le lien du relais par celui d’ameli.fr s’il existe.

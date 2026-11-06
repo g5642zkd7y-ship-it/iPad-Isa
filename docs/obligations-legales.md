@@ -31,6 +31,7 @@ Tout doit être relu par un juriste avant la mise en ligne. Les textes de 2026 c
 | Point | Qui | Où |
 |---|---|---|
 | Téléphone du SLBC | Bureau | Mentions légales |
+| Adresse définitive du contact presse, qui reçoit aussi les demandes d'adhésion (provisoirement contact@slbc.fr) | Isabelle Eimer | Données personnelles, salle de presse, adhésion |
 | Directeur de la publication : le représentant légal désigné par les statuts (Thierry Bouchet, président, à confirmer) | Bureau | Mentions légales |
 | Hébergeur : nom, adresse, téléphone. Nommer celui qui stocke réellement le site, et Kstudio s'il revend l'hébergement | Kstudio | Mentions légales |
 | Numéro SIREN, s'il existe (à vérifier sur annuaire-entreprises.data.gouv.fr) | Bureau | Mentions légales |

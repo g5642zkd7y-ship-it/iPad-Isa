@@ -109,6 +109,10 @@
   /* Page LinkedIn du SLBC (adresse fournie par Isabelle Eimer le 5 novembre 2026).
      Si elle est vidée, les liens LinkedIn signalent qu’elle reste à compléter. */
   const LINKEDIN_URL = 'https://www.linkedin.com/company/slbc-syndicat-des-laboratoires-de-biologie-clinique/';
+  /* Adresse e-mail du contact presse. Elle reçoit aussi les demandes d’adhésion
+     (demande d’Isabelle Eimer du 6 novembre 2026). Provisoire : contact@slbc.fr,
+     en attendant l’adresse définitive. Si elle est vidée, la maquette affiche « adresse à compléter ». */
+  const CONTACT_EMAIL = 'contact@slbc.fr';
   /* Missions rédigées avec Isabelle Eimer le 5 novembre 2026, à valider par le bureau.
      Elles remplacent les anciennes « missions » et « priorités ». */
   const MISSIONS = [
@@ -832,10 +836,21 @@
     });
   }
 
+  /* ---------- Adresse du contact presse et des adhésions ---------- */
+  function setupContact() {
+    const okMail = EMAIL_RE.test(CONTACT_EMAIL);
+    $$('[data-contact]').forEach((el) => {
+      el.textContent = okMail ? CONTACT_EMAIL : 'adresse à compléter';
+      el.classList.toggle('pending', !okMail);
+    });
+    $$('[data-contact-copy]').forEach((b) => { b.dataset.copy = CONTACT_EMAIL; b.hidden = !okMail; });
+  }
+
   /* ---------- Démarrage ---------- */
   $('#f-date').value = todayISO();
   renderStatic();
   setupLinkedin();
+  setupContact();
   renderDynamic();
   renderPubType();
   renderNewsletter();
