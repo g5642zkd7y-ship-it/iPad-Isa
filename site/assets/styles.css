@@ -405,6 +405,15 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .p-title{max-width:30em;font-size:clamp(21px,1.9vw,24px);font-weight:700;line-height:1.22;letter-spacing:-.015em;color:var(--encre)}
 .p-chapo{max-width:42em;font-size:17px;line-height:1.6}
 .p-subtitle{display:block}
+/* Accueil : dernier communiqué sous la devise */
+.home-cp{border-top:1px solid var(--filet)}
+.home-cp-in{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center}
+.hcp-main{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.hcp-title{max-width:22em;font-size:clamp(26px,2.6vw,34px);font-weight:700;line-height:1.15;letter-spacing:-.02em;color:var(--encre)}
+.hcp-chapo{max-width:40em;font-size:18px;line-height:1.6}
+.hcp-quote{margin:0}
+.hcp-quote blockquote{font-size:20px;line-height:1.45}
+@media (max-width:900px){.home-cp-in{grid-template-columns:minmax(0,1fr)}}
 .p-quote{max-width:42em;margin:4px 0 0;padding:2px 0 2px 18px;border-left:3px solid var(--anis)}
 .p-quote blockquote{margin:0;font-size:18px;font-style:italic;line-height:1.5;color:var(--encre)}
 .p-quote figcaption{margin-top:6px;font-size:15px;color:var(--gris)}

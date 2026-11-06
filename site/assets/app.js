@@ -384,7 +384,26 @@
     $('#recent').innerHTML = all.map((r) => '<li><span class="r-kind">' + esc(r.k) + ', ' + esc(r.l || shortDate(r.d)) + (r.demo ? ', démonstration' : '') + '</span><span class="r-title">' + esc(r.t) + '</span></li>').join('');
     $('#reset-demo').hidden = !demoPosts.length && !sentLog.length;
   }
-  function renderDynamic() { renderShelf(); renderHomeActus(); renderActus(); renderVeille(); renderPresse(); renderRecent(); INDEX = buildIndex(); }
+  /* Accueil : le communiqué le plus récent, juste sous la devise (demande d'Isabelle Eimer du 6 novembre 2026).
+     Un nouveau communiqué le remplace de lui-même ; ceux réservés aux adhérents n'y figurent pas. */
+  function renderHomeCp() {
+    const p = DATA.presse.filter((x) => !x.members).sort(byDate)[0];
+    const sec = $('#home-cp');
+    if (!p) { sec.hidden = true; return; }
+    sec.hidden = false;
+    const doc = p.url && DOCS[p.url];
+    $('#home-cp-in').innerHTML =
+      '<div class="hcp-main">' +
+        '<p class="p-meta"><span class="p-date">' + esc(p.dateLabel || longDate(p.date)) + '</span><span>' + esc(p.with) + '</span></p>' +
+        '<h2 class="hcp-title" id="h-home-cp">' + esc(p.title) + (p.subtitle ? '<span class="p-subtitle">' + esc(p.subtitle) + '</span>' : '') + '</h2>' +
+        (p.chapo ? '<p class="hcp-chapo">' + esc(p.chapo) + '</p>' : '') +
+        '<div class="link-row"><a class="more" href="#presse" data-section="cp-' + esc(p.id) + '">Lire le communiqué</a>' +
+          (doc ? '<a class="more" href="' + esc(p.url) + '" data-doc="' + esc(p.url) + '">' + esc(p.linkLabel || 'Lire le document') + '</a>' : '') +
+        '</div>' +
+      '</div>' +
+      (p.quote ? '<figure class="p-quote hcp-quote"><blockquote><p>' + esc(p.quote.text) + '</p></blockquote><figcaption>' + esc(p.quote.by) + '</figcaption></figure>' : '');
+  }
+  function renderDynamic() { renderShelf(); renderHomeCp(); renderHomeActus(); renderActus(); renderVeille(); renderPresse(); renderRecent(); INDEX = buildIndex(); }
 
   /* ---------- Étagère de la veille ---------- */
   const shelf = $('#home-shelf');
@@ -682,7 +701,7 @@
 
   /* ---------- Espace adhérent : publier ---------- */
   const PUB = {
-    cp: { label: 'Communiqué', submit: 'Publier le communiqué', toast: 'Communiqué publié', href: '#presse', prefix: 'cp-', where: 'La publication apparaîtra en tête de la salle de presse.' },
+    cp: { label: 'Communiqué', submit: 'Publier le communiqué', toast: 'Communiqué publié', href: '#presse', prefix: 'cp-', where: 'La publication apparaîtra en tête de la salle de presse et, si elle n’est pas réservée aux adhérents, sous la devise de la page d’accueil.' },
     veille: { label: 'Veille', submit: 'Publier dans la veille', toast: 'Publié dans la veille', href: '#espace', prefix: 'vi-', where: 'La publication apparaîtra dans la veille réglementaire de l’espace adhérent et, pour les adhérents connectés, dans le bandeau de la page d’accueil.' },
     actu: { label: 'Actualité', submit: 'Publier l’actualité', toast: 'Actualité publiée', href: '#actualites', prefix: 'ac-', where: 'La publication apparaîtra dans les actualités et sur la page d’accueil.' }
   };
