@@ -31,7 +31,7 @@ Note de travail rédigée le 4 novembre 2026 à partir des artefacts existants s
 
 ## Le site : principe
 
-- Veille réglementaire chaque lundi : JO lu numéro par numéro + Assemblée + Sénat + CNAM/HAS. Résumé public, analyse réservée aux adhérents. Chaque synthèse publie un « contrôle de couverture » (numéros du JO lus).
+- Veille réglementaire chaque lundi : JO lu numéro par numéro + Assemblée + Sénat + CNAM/HAS. Réservée aux adhérents (espace adhérent) depuis le 6 novembre 2026. Chaque synthèse publie un « contrôle de couverture » (numéros du JO lus).
 - Classement de chaque texte : source (Journal officiel / Parlement / Hors JO) et impact (fort / à suivre / faible).
 - Espace d'administration pour publier communiqués, veille et actualités.
 

@@ -200,7 +200,7 @@
     { n: 'Klesia', d: 'Prévoyance', url: 'https://www.klesia.fr' }
   ];
   const BENEFITS = [
-    { t: 'La veille complète, chaque lundi', d: 'Le Journal officiel, l’Assemblée nationale et le Sénat, analysés pour votre laboratoire.' },
+    { t: 'La veille réglementaire, chaque lundi', d: 'Le Journal officiel, l’Assemblée nationale et le Sénat, analysés pour votre laboratoire.' },
     { t: 'Les groupes de travail', d: 'Faire évoluer la nomenclature avec vos pairs et renforcer vos compétences.' },
     { t: 'Une voix dans les instances', d: 'Nomenclature, convention avec l’Assurance maladie, accréditation, Europe.' }
   ];
@@ -410,11 +410,19 @@
 
   function goSection(id) {
     let t = document.getElementById(id);
-    if (t && t.closest('#member')) {
+    if (!t) {
+      state.veilleSrc = 'Tout'; state.actuCat = 'Toutes'; state.presseYear = 'Toutes';
+      renderVeille(); renderActus(); renderPresse();
+      t = document.getElementById(id);
+    }
+    if (!t) return;
+    if (t.closest('#member')) {
       if (!member) { wantPanel = panelOf(t); window.scrollTo(0, 0); return; }
       showPanel(panelOf(t));
+      /* Une rubrique entière : en haut de page, comme après la connexion. */
+      if (t.classList.contains('ea-panel')) { window.scrollTo(0, 0); $('#ea-tabs button[aria-pressed="true"]').focus({ preventScroll: true }); return; }
     }
-    if (!t || t.offsetParent === null) {
+    if (t.offsetParent === null) {
       state.veilleSrc = 'Tout'; state.actuCat = 'Toutes'; state.presseYear = 'Toutes';
       renderVeille(); renderActus(); renderPresse();
       t = document.getElementById(id);
@@ -531,7 +539,7 @@
     scored.sort((a, b) => b[0] - a[0]);
     box.innerHTML = scored.length
       ? '<p class="sr-title">' + scored.length + ' résultat' + (scored.length > 1 ? 's' : '') + '</p><ul class="sr-list">' + scored.slice(0, 12).map((x) => srItem(x[1])).join('') + '</ul>'
-      : '<p class="sr-empty">Aucun résultat pour « ' + esc(q) + ' ». Essayez « nomenclature », « PLFSS » ou « bureau ».</p>';
+      : '<p class="sr-empty">Aucun résultat pour « ' + esc(q) + ' ». Essayez « nomenclature », « protocole » ou « bureau ».</p>';
   }
   const sPanel = $('#search-panel');
   const sScrim = $('#search-scrim');
@@ -686,6 +694,8 @@
       updatePreview();
     });
     $('#g-veille').hidden = pubType !== 'veille';
+    /* La veille est toujours réservée aux adhérents : l'interrupteur ne concerne que communiqués et actualités. */
+    $('#f-members').closest('.g-row').hidden = pubType === 'veille';
     $('#g-actu').hidden = pubType !== 'actu';
     $('#pub-submit').textContent = PUB[pubType].submit;
   }
@@ -699,7 +709,7 @@
       tags += '<span class="impact impact-' + esc(imp) + '">' + esc(IMPACT[imp]) + '</span>';
     }
     if (pubType === 'actu') tags += '<span class="impact impact-suivre">' + esc($('#f-cat').value) + '</span>';
-    if ($('#f-members').checked) tags += '<span class="tag-members">' + ICON.lockS + 'Réservé aux adhérents</span>';
+    if (pubType === 'veille' || $('#f-members').checked) tags += '<span class="tag-members">' + ICON.lockS + 'Réservé aux adhérents</span>';
     const src = pubType === 'veille' ? '<span class="src src-light"><span class="dot dot-' + esc($('#f-src').value) + '" aria-hidden="true"></span>' + esc(SRC[$('#f-src').value]) + '</span>' : '';
     $('#preview').innerHTML = '<div class="pv-tags">' + tags + '</div>' + src +
       '<p class="pv-title' + (title ? '' : ' is-empty') + '">' + esc(title || 'Titre de la publication') + '</p>' +
@@ -718,7 +728,7 @@
         '<p class="mp-title">' + esc(title || 'Titre de la publication') + '</p>' +
         '<p class="mp-text">' + esc(resume || 'Le résumé de la publication s’affichera ici.') + '</p>' +
         '<span class="mp-btn">Lire sur le site</span>' +
-        ($('#f-members').checked ? '<p class="mp-note">Réservé aux adhérents : la lecture complète demande de se connecter.</p>' : '');
+        (pubType === 'veille' || $('#f-members').checked ? '<p class="mp-note">Réservé aux adhérents : la lecture complète demande de se connecter.</p>' : '');
     }
   }
   const abonnes = (n, withArticle) => (withArticle ? 'Les ' : '') + n + ' abonné' + (n > 1 ? 's' : '');
@@ -806,7 +816,7 @@
     $('#f-mail-count').textContent = n ? abonnes(n, false) : 'Aucun abonné pour l’instant';
     $('#nl-list').innerHTML = n
       ? subscribers.map((a) => '<li><span>' + esc(a) + '</span><button class="link-btn" type="button" data-remove="' + esc(a) + '" aria-label="Retirer ' + esc(a) + '">Retirer</button></li>').join('')
-      : '<li class="nl-empty">Aucun abonné pour l’instant. Les adhérents s’inscrivent depuis la page Veille.</li>';
+      : '<li class="nl-empty">Aucun abonné pour l’instant.</li>';
     $('#nl-sent').innerHTML = sentLog.length
       ? sentLog.slice(0, 8).map((s) => '<li><span class="r-kind">' + esc(s.type || 'Envoi') + ', ' + esc(shortDate(s.date)) + ', ' + esc(abonnes(s.n, false)) + '</span><span class="r-title">' + esc(s.subject) + '</span></li>').join('')
       : '<li><span class="r-kind">Aucun envoi pour l’instant.</span></li>';
@@ -1033,7 +1043,11 @@
     const label = (PANELS.find((p) => p[0] === name) || PANELS[0])[1];
     seg($('#ea-tabs'), PANELS.map((p) => p[1]), label, (l) => { showPanel(PANELS.find((p) => p[1] === l)[0]); });
     PANELS.forEach((p) => { $('#ea-' + p[0]).hidden = p[1] !== label; });
-    if (name === 'lettre' && member && !$('#sub-email').value) $('#sub-email').value = member;
+    if (name === 'lettre' && member) {
+      if (!$('#sub-email').value) $('#sub-email').value = member;
+      const inscrit = subscribers.includes(member.toLowerCase());
+      if (inscrit) { $('#sub-ok').textContent = 'Votre adresse ' + member + ' reçoit déjà la lettre d’information.'; $('#sub-ok').hidden = false; }
+    }
   }
   function applyMember() {
     const on = !!member;
