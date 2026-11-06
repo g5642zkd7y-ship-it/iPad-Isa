@@ -262,7 +262,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 /* ---------- Piliers (accueil) ---------- */
 /* Mascotte du SLBC à gauche du titre « Ce que nous défendons » (6 novembre 2026) */
-.piliers-head{display:flex;align-items:center;gap:clamp(20px,3vw,40px)}
+.piliers-head,.tete-mascotte{display:flex;align-items:center;gap:clamp(20px,3vw,40px)}
 .piliers-head > div{min-width:0}
 .piliers-head .h-section + .lead{margin-top:18px}
 /* Toutes les mascottes à la même échelle (demande d’Isabelle Eimer du 6 novembre 2026) : --mascotte-h est la hauteur
@@ -271,7 +271,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media (max-width:560px){:root{--mascotte-h:112px}}
 .mascotte{flex:none;display:block;width:auto;height:calc(var(--mascotte-h) * var(--vb-h, 210) / 210)}
 .veille-band-head .mascotte{height:calc(var(--mascotte-h) * 206 / 210)}
-@media (max-width:560px){.piliers-head,.veille-band-head{gap:16px}.veille-band-head{align-items:flex-start}}
+@media (max-width:560px){.piliers-head,.tete-mascotte,.veille-band-head{gap:16px}.veille-band-head{align-items:flex-start}}
 .pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 48px;margin-top:48px}
 .pillar{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:4px solid var(--anis)}
 .pillar p{max-width:34em;font-size:17px;line-height:1.6;color:var(--texte)}
@@ -448,6 +448,10 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .sep-sig{display:flex;align-items:center;gap:22px;margin-bottom:clamp(40px,5vw,64px)}
 .sep-line{flex:1 1 0;height:2px;border-radius:2px;background:var(--anis)}
 .sep-mark{flex:0 0 auto;display:block;width:34px;height:34px;overflow:visible}
+/* Filets ailleurs dans le site (6 novembre 2026) : sous le bandeau de chaque page, entre les rubriques de la Documentation */
+.section-tight > .container > .sep-sig:only-child{margin-bottom:clamp(28px,4vw,48px)}
+.doc-sec > .sep-sig{display:none;margin-bottom:clamp(28px,4vw,40px)}
+.doc-sec:not([hidden]) ~ .doc-sec > .sep-sig{display:flex}
 .home-cp-in{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center}
 .hcp-main{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
 .hcp-title{max-width:22em;font-size:clamp(26px,2.6vw,34px);font-weight:700;line-height:1.15;letter-spacing:-.02em;color:var(--encre)}

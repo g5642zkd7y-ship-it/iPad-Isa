@@ -969,26 +969,42 @@
   }
   /* Filet des piliers et frise du protocole : tracés quand ils arrivent à l'écran.
      Pas d'apparition en fondu des autres blocs (voir le bloc « Mouvement » de styles.css). */
+  /* ---------- Filets animés (séparateurs) ----------
+     Les deux ronds du logo entre deux traits vert anis. Un emplacement vide <div class="sep-sig"> reçoit ici son dessin ;
+     setupMotion() les anime à leur arrivée à l'écran (les ronds se rejoignent, puis les traits se déploient). */
+  function setupSeparators() {
+    $$('.sep-sig').forEach((s, i) => {
+      if (s.querySelector('.sep-mark')) return;
+      s.innerHTML = '<span class="sep-line sep-l"></span>' +
+        '<svg class="sep-mark" viewBox="0 0 120 120" focusable="false"><defs><clipPath id="clip-sep-' + i + '"><circle data-c="clip" cx="44" cy="44" r="36"/></clipPath></defs>' +
+        '<circle data-c="grey" cx="44" cy="44" r="36" fill="#5E6266"/><circle data-c="green" cx="76" cy="76" r="36" fill="#A3BE3C"/>' +
+        '<circle data-c="overlap" cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-sep-' + i + ')"/></svg>' +
+        '<span class="sep-line sep-r"></span>';
+    });
+  }
   function setupMotion() {
     if (reduceMotion || !('IntersectionObserver' in window)) return;
     document.documentElement.classList.add('js-motion');
     /* Séparateur sous la devise : les deux ronds se rejoignent, puis le trait se déploie de part et d'autre.
        Juste après l'ouverture de la page, il attend la fin de l'animation des grands ronds. */
-    const sep = $('.sep-sig'); const sepMark = sep && sep.querySelector('.sep-mark');
-    if (sepMark) {
-      const q = (n) => sepMark.querySelector('[data-c="' + n + '"]');
+    const seps = $$('.sep-sig');
+    seps.forEach((s) => {
+      const mark = s.querySelector('.sep-mark');
+      if (!mark) return;
+      const q = (n) => mark.querySelector('[data-c="' + n + '"]');
       const f = JOIN.sig.from;
       ['grey', 'clip'].forEach((n) => q(n).setAttribute('cx', f[0]));
       ['green', 'overlap'].forEach((n) => q(n).setAttribute('cx', f[1]));
-    }
+    });
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => {
         if (!en.isIntersecting) return;
         io.unobserve(en.target);
-        if (en.target === sep) {
-          const extra = performance.now() < 1800 ? 1400 : 0;
-          joinCircles(sepMark, 'sig', extra);
-          setTimeout(() => sep.classList.add('drawn'), 700 + extra);
+        if (en.target.classList.contains('sep-sig')) {
+          /* le premier filet de l'accueil attend la fin de l'animation des grands ronds */
+          const extra = en.target === seps[0] && performance.now() < 1800 ? 1400 : 0;
+          joinCircles(en.target.querySelector('.sep-mark'), 'sig', extra);
+          setTimeout(() => en.target.classList.add('drawn'), 700 + extra);
           return;
         }
         en.target.classList.add('drawn');
@@ -1212,6 +1228,7 @@
   updatePreview();
   jShow(1);
   setupHeader();
+  setupSeparators();
   setupMotion();
   setupScrollLife();
   setupSignatures();
