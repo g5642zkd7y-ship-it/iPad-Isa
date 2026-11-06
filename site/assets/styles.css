@@ -333,6 +333,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .lnav-in{display:flex;align-items:center;gap:24px;min-height:54px}
 .lnav-title{font-size:20px;font-weight:700;letter-spacing:-.015em;color:var(--encre);white-space:nowrap}
 .lnav-links{display:flex;gap:6px;min-width:0;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+/* Sous-menu sans titre (Le syndicat, 6 novembre 2026 : le titre redisait celui de la page) : rubriques centrées */
+.lnav-centre .lnav-links{margin-inline:auto}
 .lnav-links::-webkit-scrollbar{display:none}
 .lnav-links a{padding:16px 8px;font-size:17px;color:var(--texte);text-decoration:none;white-space:nowrap}
 .lnav-links a:hover{color:var(--vert)}
@@ -351,8 +353,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .person-name{font-size:20px;font-weight:700;letter-spacing:-.01em;color:var(--encre)}
 @media (max-width:860px){.people{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.people{grid-template-columns:minmax(0,1fr)}}
-.wg{display:flex;flex-direction:column;gap:8px;margin-top:40px;padding:28px;border-radius:var(--r-card);background:var(--fond)}
-.wg-names{font-size:18px;color:var(--texte)}
 .regions{margin-top:36px;border-top:1px solid var(--filet-fort)}
 .region{border-bottom:1px solid var(--filet-fort)}
 .region summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 4px;list-style:none;cursor:pointer;font-size:19px;font-weight:600;color:var(--encre)}

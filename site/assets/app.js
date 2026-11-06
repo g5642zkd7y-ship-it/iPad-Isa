@@ -119,7 +119,6 @@
     ['Vice-présidente', 'Isabelle Eimer'], ['Secrétaire général', 'Nicolas Roquigny'],
     ['Membre du bureau', 'Éric Flatin'], ['Membre du bureau', 'Alexandre Guiard']
   ];
-  const PROTOCOLE = ['Thierry Bouchet', 'Antoine Crinquette', 'Isabelle Eimer', 'Pascal Melin', 'Nicolas Roquigny'];
   /* Page LinkedIn du SLBC (adresse fournie par Isabelle Eimer le 5 novembre 2026).
      Si elle est vidée, les liens LinkedIn signalent qu’elle reste à compléter. */
   const LINKEDIN_URL = 'https://www.linkedin.com/company/slbc-syndicat-des-laboratoires-de-biologie-clinique/';
@@ -314,7 +313,6 @@
     $('#benefits-grid').innerHTML = BENEFITS.map((b) => '<div class="benefit"><h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
     $('#missions-list').innerHTML = MISSIONS.map((m) => '<div class="charter-item"><h3 class="h-block">' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div>').join('');
     $('#bureau-list').innerHTML = BUREAU.map((b) => '<li class="person"><span class="person-role">' + esc(b[0]) + '</span><span class="person-name">' + esc(b[1]) + '</span></li>').join('');
-    $('#protocole-list').textContent = PROTOCOLE.join(', ');
     $('#ca-list').innerHTML = CA.map((r) => '<details class="region"><summary><span>' + esc(r[0]) + '</span><span class="count">' + r[1].length + ' administrateur' + (r[1].length > 1 ? 's' : '') + '</span></summary><p>' + esc(r[1].join(', ')) + '</p></details>').join('');
     $('#inst-list').innerHTML = INSTANCES.map((i) =>
       '<div class="inst-row"><div><p class="inst-name">' + esc(i.n) + (i.a ? ' <span class="inst-abbr">(' + esc(i.a) + ')</span>' : '') + '</p>' +
