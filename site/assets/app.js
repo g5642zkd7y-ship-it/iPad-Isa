@@ -304,8 +304,6 @@
 
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
-    $('#home-missions').innerHTML = MISSIONS.map((m) => '<li><span class="tile-item">' + esc(m.t) + '</span></li>').join('');
-    $('#home-instances').innerHTML = INSTANCES.map((i) => '<li><span class="nw-name">' + esc(i.n) + '</span><span class="nw-role">' + esc(i.r) + '</span></li>').join('');
     $('#home-benefits').innerHTML = BENEFITS.map((b) => '<li><span>' + esc(b.t) + '</span></li>').join('');
     $('#benefits-grid').innerHTML = BENEFITS.map((b) => '<div class="benefit"><h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
     $('#missions-list').innerHTML = MISSIONS.map((m) => '<div class="charter-item"><h3 class="h-block">' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div>').join('');
