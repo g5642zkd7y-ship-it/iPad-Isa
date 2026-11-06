@@ -142,7 +142,7 @@
     ['Île-de-France et outre-mer', ['Thierry Bouchet', 'Pascal Melin', 'Hala Sarmini', 'Alexandre Guiard', 'Ahmed Aboubacar', 'Sophie Beria']],
     ['Nouvelle-Aquitaine', ['Jean-Philippe Brochet']],
     ['Ouest', ['Laurent Perrot']],
-    ['Provence-Alpes-Côte d’Azur, Languedoc et Corse', ['Guillaume Arimana', 'Sylvain Chambourlier', 'Laurent Kbaier']]
+    ['Provence-Alpes-Côte d’Azur, Languedoc et Corse', ['Guillaume Armana', 'Sylvain Chambourlier', 'Laurent Kbaier']]
   ];
   const URPS = [
     ['Auvergne-Rhône-Alpes', ['Jacques Pojer', 'Valérie Chepeaux']], ['Bourgogne-Franche-Comté', []],
