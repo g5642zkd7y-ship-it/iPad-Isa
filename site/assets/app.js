@@ -137,12 +137,14 @@
     { t: 'Préparer l’avenir du métier', d: 'Attirer et former les jeunes biologistes, accompagner l’innovation diagnostique et faire vivre la fierté de la profession.' }
   ];
   /* Représentants communiqués par Isabelle Eimer le 5 novembre 2026 ; les autres sièges sont à désigner.
-     a : sigle, affiché entre parenthèses après le nom (sigles, CNPBM et comité de suivi du protocole ajoutés le 6 novembre 2026). */
+     a : sigle, affiché entre parenthèses après le nom (sigles, CNPBM, comité de suivi du protocole et commissions des structures pluriprofessionnelles ajoutés le 6 novembre 2026). */
   const INSTANCES = [
     { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
     { n: 'Commission conventionnelle paritaire nationale', a: 'CCPNI', r: 'Convention avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
     { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', r: 'Conditions d’exercice de la profession', reps: [] },
     { n: 'Comité de suivi du protocole', r: 'Protocole 2027-2029 avec l’Assurance maladie', reps: [] },
+    { n: 'Commission paritaire nationale des structures pluriprofessionnelles', r: 'Accord conventionnel interprofessionnel de 2017', reps: [] },
+    { n: 'Commission paritaire régionale des structures pluriprofessionnelles', r: 'Accord conventionnel interprofessionnel de 2017, en région', reps: [] },
     { n: 'Cofrac', r: 'Commission technique d’accréditation', reps: [] },
     { n: 'Ministère chargé de la santé', r: 'Relations avec la tutelle', reps: ['Thierry Bouchet', 'Nicolas Roquigny'] },
     { n: 'Commission sociale paritaire', r: 'Dialogue social de la branche', reps: ['Thierry Bouchet'] },
