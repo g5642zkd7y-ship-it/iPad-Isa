@@ -139,10 +139,12 @@
   /* Représentants communiqués par Isabelle Eimer les 5 et 6 novembre 2026 ; les autres sièges sont à désigner.
      a : sigle, affiché entre parenthèses après le nom ; reps : représentants nommés ;
      todo : sièges restant à pourvoir (texte affiché après les noms) ; groups : [libellé, noms, todo] quand l’instance a plusieurs collèges.
-     Le descriptif de chaque commission a été retiré le 6 novembre 2026 à la demande d’Isabelle Eimer. */
+     Le descriptif de chaque commission a été retiré le 6 novembre 2026 à la demande d’Isabelle Eimer ; le même jour, elle a demandé
+     de ne garder que les instances qu’elle a données (Agence de la biomédecine, Santé publique France, SFBC, Bio Qualité, CNPS,
+     Agence nationale du DPC et Klesia retirés). */
   const INSTANCES = [
     { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
-    { n: 'Commission conventionnelle paritaire nationale', a: 'CCPNI', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
+    { n: 'Commission conventionnelle paritaire nationale', a: 'CPPNI', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
     { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', reps: [],
       groups: [['Bureau', ['Thierry Bouchet'], 'un représentant à désigner'], ['Assemblée générale', ['Hala Sarmini'], 'deux représentants à désigner']] },
     { n: 'Comité de suivi du protocole', reps: ['Thierry Bouchet', 'Isabelle Eimer', 'Nicolas Roquigny', 'Éric Flatin'] },
@@ -151,14 +153,7 @@
     { n: 'Cofrac', reps: [] },
     { n: 'Ministère chargé de la santé', reps: ['Thierry Bouchet', 'Nicolas Roquigny'] },
     { n: 'Commission sociale paritaire', reps: ['Thierry Bouchet'] },
-    { n: 'Commission biologie européenne', reps: ['Jean-Philippe Brochet'] },
-    { n: 'Agence de la biomédecine', reps: [] },
-    { n: 'Santé publique France', reps: [] },
-    { n: 'Société française de biologie clinique', reps: [] },
-    { n: 'Bio Qualité', reps: [] },
-    { n: 'Centre national des professions de santé', reps: [] },
-    { n: 'Agence nationale du DPC', reps: [] },
-    { n: 'Klesia', reps: [] }
+    { n: 'Commission biologie européenne', reps: ['Jean-Philippe Brochet'] }
   ];
   const CA = [
     ['Auvergne-Rhône-Alpes et Bourgogne-Franche-Comté', ['Nicolas Roquigny', 'Éric Flatin', 'François Targe', 'Benoît Dumont', 'Marc Thome', 'Fabienne Moulinier']],
