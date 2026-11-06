@@ -78,6 +78,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .menu-btn[aria-expanded="true"] .i-close{display:inline}
 @media (max-width:1200px){.gnav-links{gap:18px}}
 @media (max-width:1100px){.gnav-links,.gnav-member{display:none}.menu-btn{display:grid}}
+@media (max-width:420px){.gnav-in{gap:12px}.brand{gap:8px}.brand-mark{width:32px;height:32px}.brand-word{font-size:24px}.btn-nav{padding:0 14px;font-size:16px;margin-left:2px}}
+@media (max-width:340px){.gnav-in{gap:8px}.brand-mark{width:28px;height:28px}.brand-word{font-size:21px}.btn-nav{padding:0 12px;font-size:15px}}
 
 .mmenu{position:fixed;inset:0;z-index:45;background:var(--blanc);overflow-y:auto;padding-top:calc(env(safe-area-inset-top,0px) + 112px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 40px)}
 .mmenu-in{display:flex;flex-direction:column}
@@ -297,7 +299,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .lnav-links a{padding:16px 8px;font-size:17px;color:var(--texte);text-decoration:none;white-space:nowrap}
 .lnav-links a:hover{color:var(--vert)}
 .lnav-links a:focus-visible{outline-offset:-3px}
-@media (max-width:640px){.lnav-title{display:none}.lnav-links{margin-left:0}}
+@media (max-width:640px){.lnav-title{display:none}.lnav-links{margin-left:0}.lnav-links a{font-size:16px;padding-inline:6px}}
 
 .two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(32px,6vw,80px)}
 .two-col > div{display:flex;flex-direction:column;gap:20px}
