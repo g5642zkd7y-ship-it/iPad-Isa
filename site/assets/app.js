@@ -68,23 +68,28 @@
        Les communiqués de 2024, 2019 et 2014 ont été retirés. Le communiqué sur la signature du protocole
        2027-2029 et le commentaire publié par Nicolas sur LinkedIn sont attendus. */
     presse: [
-      /* Protocole signé, fourni par Isabelle Eimer le 6 novembre 2026 (site/documents/protocole-biologie-2027-2029.pdf).
-         Chaque point renvoie à un article du texte. */
-      { id: 'p4', date: '2026-11-02', year: '2026',
-        title: 'Le SLBC signe le protocole 2027-2029 sur les dépenses de biologie médicale',
-        with: 'Signé avec l’UNCAM, l’UNOCAM, Les Biologistes Médicaux (Biomed), le SDBIO et le SNMB',
-        chapo: 'Le 2 novembre 2026 à Paris, Thierry Bouchet, président du SLBC, a signé le protocole d’accord sur la maîtrise des dépenses de biologie médicale pour 2027 à 2029. Le texte fixe l’enveloppe des dépenses remboursées et les engagements des signataires pour trois ans.',
-        pointsTitle: 'Ce que prévoit le protocole',
-        points: [
-          ['Enveloppe des dépenses (article 1)', '4 034 M€ en 2027, 4 078 M€ en 2028 et 4 123 M€ en 2029, soit 12 235 M€ sur trois ans : une hausse de 1,1 % par an à partir d’une base de 3 990 M€.'],
-          ['Actes nouveaux (article 4)', 'Hors enveloppe, un objectif non limitatif de 100 M€ de dépenses nouvelles d’ici 2029. L’Assurance maladie vise moins de quatre mois pour inscrire à la nomenclature les actes votés en CHAB.'],
-          ['Santé publique (article 7 et annexe 1)', 'Hors enveloppe : les dépistages organisés des cancers du col de l’utérus et colorectal, dont la remise du kit de dépistage par le biologiste, et la vaccination. Sous réserve d’un outil d’éligibilité et de traçabilité : le calcul du score rénal sans prescription préalable et le suivi de l’HbA1c des patients diabétiques non observants.'],
-          ['Urgences et AMP (article 13 et annexe 2)', 'Revalorisation de 9 B des suppléments pour les actes réalisés en urgence la nuit, le samedi après 12 h, le dimanche et les jours fériés, et révision des cotations des actes d’assistance médicale à la procréation, soumises au vote de la CHAB. Après un vote favorable, la base de dépenses est relevée de 5 M€ dès 2027.'],
-          ['Maîtrise médicalisée (article 5)', 'Un objectif de 30 M€ en 2027, puis 10 M€ en 2028 et 10 M€ en 2029, selon un plan d’action à définir d’ici le 1er janvier 2027.'],
-          ['Suivi (articles 2, 9, 10 et 11)', 'Un comité de suivi paritaire se réunit en novembre et en juin. Les signataires suivent aussi la situation économique des laboratoires, l’accès aux laboratoires sur le territoire et les prescriptions de biologie des infirmières.'],
-          ['Avenant à la convention (article 14)', 'Des négociations s’ouvrent dès la signature, pour aboutir avant le 30 avril 2027. Elles traduiront aussi les mesures arbitrées par le gouvernement à la suite de la mission confiée à Laurent Habert sur l’avenir de la biologie médicale.']
+      /* Communiqué de presse du SLBC du 4 novembre 2026 (image envoyée par Isabelle Eimer le 6 novembre 2026),
+         repris mot pour mot. Le protocole signé est joint en PDF (site/documents/protocole-biologie-2027-2029.pdf). */
+      { id: 'p4', date: '2026-11-04', year: '2026',
+        title: 'Protocole d’accord pour la biologie médicale 2027-2029',
+        subtitle: 'Le SLBC signe et alerte sur la pression tarifaire',
+        with: 'Communiqué du SLBC',
+        chapo: 'Le Syndicat des Laboratoires de Biologie Clinique (SLBC) a signé le 2 novembre 2026, avec l’Assurance Maladie et les autres syndicats représentatifs, le protocole d’accord pour les années 2027-2029. Il reconnaît l’intérêt des dispositions relatives à la prévention et à l’innovation, mais alerte sur une trajectoire qui maintient la pression sur les tarifs des examens. Il a signé pour conserver sa place dans les instances de suivi et sa capacité d’intervention dans les discussions sur l’avenir de la profession.',
+        quote: { text: '«  Nous signons pour défendre les laboratoires dans les discussions à venir. Notre signature n’efface pas notre désaccord sur l’équilibre économique de cet accord »', by: 'Thierry Bouchet, président du SLBC' },
+        body: [
+          { h: 'Une enveloppe de dépenses autorisées qui laisse les tarifs sous pression', ps: [
+            'Face à une croissance des besoins en examens liée au vieillissement de la population et à l’augmentation des maladies chroniques, l’accord limite la croissance de l’enveloppe des actes courants à 1,1 % chaque année. La dernière estimation de la CNAM fait état d’une croissance des volumes de 4,1 % en 2026. À tarifs et à structure d’activité constants, la hausse annuelle de l’enveloppe permettrait de financer une progression des volumes de 1,1 %. Le SLBC anticipe une baisse tarifaire d’au moins 2 %, pouvant atteindre 2,5 % selon les hypothèses d’activité retenues.',
+            'En métropole, la lettre clé B est passée de 0,27 € à 0,26 € le 1er février 2023, puis à 0,25 € le 15 janvier 2024. Une nouvelle baisse d’un centime au 1er janvier 2027 la ramènerait à 0,24 €, soit un recul cumulé de 11,1 % en moins de quatre ans, auxquels s’ajoute des diminutions de cotations des actes représentant plus de 19% de baisses tarifaires totales, dans un contexte de hausse des charges des laboratoires.',
+            'Le partage du risque reste très déséquilibré. Le mécanisme de régulation prévoit un premier ajustement tarifaire couvrant 100 % de l’écart prévisionnel dès le mois de janvier, puis une prise en charge par la profession de 80 % du dépassement en juillet, contre 20 % pour l’Assurance Maladie.',
+            'Les dépenses de biologie délocalisée sont intégrées à l’enveloppe courante. Un suivi spécifique est prévu, mais sans seuil chiffré déclenchant une renégociation de leur financement. Le SLBC a alerté la CNAM sur le risque de dépassement lié à ces dépenses. Il sera vigilant sur leur évolution et sur l’efficacité du suivi prévu par le protocole.',
+            'Pour le SLBC, cette trajectoire fragilisera l’équilibre économique des laboratoires et leur capacité à maintenir l’accès des patients aux examens sur tout le territoire.'
+          ] },
+          { h: 'Des missions de prévention dont les moyens restent à sécuriser', ps: [
+            'Le protocole prévoit une enveloppe non limitative de 100 millions d’euros sur trois ans, dédiée aux actes nouveaux et une enveloppe spécifique pour les missions de santé publique. Un soutien aux activités d’assistance médicale à la procréation est également prévu. Le SLBC en reconnaît l’intérêt. La vaccination et la remise de kits de dépistage du cancer colorectal figurent parmi les perspectives mises en avant, de même que le suivi du diabète et le dépistage de la maladie rénale chronique.',
+            'Ces perspectives ne valent pas mise en œuvre immédiate. Elles dépendent encore, selon les mesures, de textes législatifs ou réglementaires et de négociations conventionnelles. Le SLBC sera vigilant sur le financement intégral des nouvelles missions en dehors de l’enveloppe courante. Pour les futurs actes de santé publique, la part des dépenses affectée à l’enveloppe spécifique reste à négocier.'
+          ] }
         ],
-        url: 'documents/protocole-biologie-2027-2029.pdf', linkLabel: 'Lire le protocole signé (PDF, 13 pages)' }
+        url: 'documents/protocole-biologie-2027-2029.pdf', linkLabel: 'Le protocole signé (PDF, 13 pages)' }
     ],
     actus: [
       { id: 'a1', date: '2026-09-07', cat: 'Santé publique', title: 'Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', excerpt: 'Sur les 22 actions du plan, deux touchent les laboratoires, dont le déploiement de la biologie délocalisée.', url: 'https://www.slbc.fr/strategie-nationale-de-sante-sexuelle-2026-2030-le-texte-integral-du-ministere/' },
@@ -251,8 +256,11 @@
     '<article class="pitem" id="cp-' + esc(p.id) + '">' +
       '<p class="p-meta"><span class="p-date">' + esc(p.dateLabel || longDate(p.date)) + '</span><span>' + esc(p.with) + '</span>' +
         (p.members ? '<span class="tag-members">' + ICON.lockS + 'Adhérents</span>' : '') + '</p>' +
-      '<h2 class="p-title">' + esc(p.title) + '</h2>' +
+      '<h2 class="p-title">' + esc(p.title) + (p.subtitle ? '<span class="p-subtitle">' + esc(p.subtitle) + '</span>' : '') + '</h2>' +
       (p.chapo ? '<p class="p-chapo">' + esc(p.chapo) + '</p>' : '') +
+      (p.quote ? '<figure class="p-quote"><blockquote><p>' + esc(p.quote.text) + '</p></blockquote><figcaption>' + esc(p.quote.by) + '</figcaption></figure>' : '') +
+      (p.body && p.body.length ? '<details class="p-full"><summary>Lire le communiqué en entier</summary>' +
+        p.body.map((sec) => (sec.h ? '<h3>' + esc(sec.h) + '</h3>' : '') + sec.ps.map((x) => '<p>' + esc(x) + '</p>').join('')).join('') + '</details>' : '') +
       (p.points && p.points.length ? '<h3 class="p-points-title">' + esc(p.pointsTitle || 'Points clés') + '</h3><dl class="p-points">' +
         p.points.map((x) => '<div><dt>' + esc(x[0]) + '</dt><dd>' + esc(x[1]) + '</dd></div>').join('') + '</dl>' : '') +
       (p.url && (isHttp(p.url) || isDoc(p.url)) ? '<a class="more" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.linkLabel || 'Lire le communiqué') + '</a>'
@@ -478,7 +486,7 @@
     idx.push({ type: 'Page', title: 'Données personnelles', sub: 'Usages, durées de conservation, vos droits', href: '#mentions', section: 'donnees', text: 'RGPD confidentialité vie privée CNIL droits' });
     idx.push({ type: 'Page', title: 'Cookies', sub: 'Aucun cookie de mesure d’audience ni de publicité', href: '#mentions', section: 'cookies', text: 'traceurs bandeau' });
     DATA.veille.forEach((v) => idx.push({ type: 'Veille', title: v.title, sub: v.when, href: '#veille', section: 'vi-' + v.id, text: v.resume }));
-    DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title, sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with + ' ' + (p.points || []).map((x) => x.join(' ')).join(' ') }));
+    DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title + (p.subtitle ? ' : ' + p.subtitle : ''), sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with + ' ' + (p.quote ? p.quote.text : '') + ' ' + (p.body || []).map((sec) => sec.h + ' ' + sec.ps.join(' ')).join(' ') + ' ' + (p.points || []).map((x) => x.join(' ')).join(' ') }));
     DATA.actus.forEach((a) => idx.push({ type: 'Actualité', title: a.title, sub: longDate(a.date), href: '#actualites', section: 'ac-' + a.id, text: a.excerpt + ' ' + a.cat }));
     BUREAU.forEach((b) => idx.push({ type: 'Bureau', title: b[1], sub: b[0], href: '#syndicat', section: 'bureau', text: '' }));
     INSTANCES.forEach((i) => idx.push({ type: 'Instance', title: i.n, sub: i.r, href: '#syndicat', section: 'representants', text: i.reps.join(' ') }));
