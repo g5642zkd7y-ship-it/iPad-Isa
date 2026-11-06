@@ -144,7 +144,7 @@
      Les descriptifs, retirés un moment le même jour, ont été rétablis à sa demande. */
   const INSTANCES = [
     { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
-    { n: 'Commission conventionnelle paritaire nationale', a: 'CPPNI', r: 'Convention avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
+    { n: 'Commission conventionnelle paritaire nationale', a: 'CPPNI', r: 'Convention avec l’Assurance maladie', reps: ['Antoine Crinquette', 'Éric Flatin'] },
     { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', r: 'Conditions d’exercice de la profession', reps: [],
       groups: [['Bureau', ['Thierry Bouchet'], 'un représentant à désigner'], ['Assemblée générale', ['Hala Sarmini'], 'deux représentants à désigner']] },
     { n: 'Comité de suivi du protocole', r: 'Protocole 2027-2029 avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Isabelle Eimer', 'Nicolas Roquigny', 'Éric Flatin'] },
