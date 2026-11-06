@@ -105,7 +105,7 @@
     ['Vice-présidente', 'Isabelle Eimer'], ['Secrétaire général', 'Nicolas Roquigny'],
     ['Membre du bureau', 'Éric Flatin'], ['Membre du bureau', 'Alexandre Guiard']
   ];
-  const PROTOCOLE = ['Thierry Bouchet', 'Antoine Crinquette', 'Isabelle Eimer', 'Pascal Melin'];
+  const PROTOCOLE = ['Thierry Bouchet', 'Antoine Crinquette', 'Isabelle Eimer', 'Pascal Melin', 'Nicolas Roquigny'];
   /* Page LinkedIn du SLBC (adresse fournie par Isabelle Eimer le 5 novembre 2026).
      Si elle est vidée, les liens LinkedIn signalent qu’elle reste à compléter. */
   const LINKEDIN_URL = 'https://www.linkedin.com/company/slbc-syndicat-des-laboratoires-de-biologie-clinique/';
