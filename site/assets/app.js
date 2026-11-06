@@ -136,26 +136,29 @@
     { t: 'Faire reconnaître le biologiste comme acteur de santé', d: 'Un médecin ou un pharmacien spécialiste, au cœur du parcours de soins, dont le métier mérite d’être connu.' },
     { t: 'Préparer l’avenir du métier', d: 'Attirer et former les jeunes biologistes, accompagner l’innovation diagnostique et faire vivre la fierté de la profession.' }
   ];
-  /* Représentants communiqués par Isabelle Eimer le 5 novembre 2026 ; les autres sièges sont à désigner.
-     a : sigle, affiché entre parenthèses après le nom (sigles, CNPBM, comité de suivi du protocole et commissions des structures pluriprofessionnelles ajoutés le 6 novembre 2026). */
+  /* Représentants communiqués par Isabelle Eimer les 5 et 6 novembre 2026 ; les autres sièges sont à désigner.
+     a : sigle, affiché entre parenthèses après le nom ; reps : représentants nommés ;
+     todo : sièges restant à pourvoir (texte affiché après les noms) ; groups : [libellé, noms, todo] quand l’instance a plusieurs collèges.
+     Le descriptif de chaque commission a été retiré le 6 novembre 2026 à la demande d’Isabelle Eimer. */
   const INSTANCES = [
-    { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
-    { n: 'Commission conventionnelle paritaire nationale', a: 'CCPNI', r: 'Convention avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
-    { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', r: 'Conditions d’exercice de la profession', reps: [] },
-    { n: 'Comité de suivi du protocole', r: 'Protocole 2027-2029 avec l’Assurance maladie', reps: [] },
-    { n: 'Commission paritaire nationale des structures pluriprofessionnelles', r: 'Accord conventionnel interprofessionnel de 2017', reps: [] },
-    { n: 'Commission paritaire régionale des structures pluriprofessionnelles', r: 'Accord conventionnel interprofessionnel de 2017, en région', reps: [] },
-    { n: 'Cofrac', r: 'Commission technique d’accréditation', reps: [] },
-    { n: 'Ministère chargé de la santé', r: 'Relations avec la tutelle', reps: ['Thierry Bouchet', 'Nicolas Roquigny'] },
-    { n: 'Commission sociale paritaire', r: 'Dialogue social de la branche', reps: ['Thierry Bouchet'] },
-    { n: 'Commission biologie européenne', r: 'Représentation de la profession en Europe', reps: [] },
-    { n: 'Agence de la biomédecine', r: 'AMP, génétique, prélèvement et greffe', reps: [] },
-    { n: 'Santé publique France', r: 'Surveillance sanitaire, ex-InVS', reps: [] },
-    { n: 'Société française de biologie clinique', r: 'Société savante', reps: [] },
-    { n: 'Bio Qualité', r: 'Conseil d’administration', reps: [] },
-    { n: 'Centre national des professions de santé', r: 'Interprofession libérale', reps: [] },
-    { n: 'Agence nationale du DPC', r: 'Développement professionnel continu', reps: [] },
-    { n: 'Klesia', r: 'Prévoyance de la branche', reps: [] }
+    { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
+    { n: 'Commission conventionnelle paritaire nationale', a: 'CCPNI', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
+    { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', reps: [],
+      groups: [['Bureau', ['Thierry Bouchet'], 'un représentant à désigner'], ['Assemblée générale', ['Hala Sarmini'], 'deux représentants à désigner']] },
+    { n: 'Comité de suivi du protocole', reps: ['Thierry Bouchet', 'Isabelle Eimer', 'Nicolas Roquigny', 'Éric Flatin'] },
+    { n: 'Commission paritaire nationale des structures pluriprofessionnelles', a: 'CPNMSP', reps: ['Thierry Bouchet'], todo: 'un représentant à désigner' },
+    { n: 'Commission paritaire régionale des structures pluriprofessionnelles', a: 'CPRMSP', reps: [], todo: 'un titulaire et un suppléant à désigner' },
+    { n: 'Cofrac', reps: [] },
+    { n: 'Ministère chargé de la santé', reps: ['Thierry Bouchet', 'Nicolas Roquigny'] },
+    { n: 'Commission sociale paritaire', reps: ['Thierry Bouchet'] },
+    { n: 'Commission biologie européenne', reps: ['Jean-Philippe Brochet'] },
+    { n: 'Agence de la biomédecine', reps: [] },
+    { n: 'Santé publique France', reps: [] },
+    { n: 'Société française de biologie clinique', reps: [] },
+    { n: 'Bio Qualité', reps: [] },
+    { n: 'Centre national des professions de santé', reps: [] },
+    { n: 'Agence nationale du DPC', reps: [] },
+    { n: 'Klesia', reps: [] }
   ];
   const CA = [
     ['Auvergne-Rhône-Alpes et Bourgogne-Franche-Comté', ['Nicolas Roquigny', 'Éric Flatin', 'François Targe', 'Benoît Dumont', 'Marc Thome', 'Fabienne Moulinier']],
@@ -294,6 +297,12 @@
     '</li>';
 
   const namesOr = (names, empty) => (names.length ? esc(names.join(', ')) : '<span class="pending">' + esc(empty) + '</span>');
+  /* Représentants d’une instance : « Thierry Bouchet et un représentant à désigner », ou « Représentant à désigner » s’il n’y a personne. */
+  const repsLine = (names, todo) => {
+    if (!todo) return namesOr(names, 'Représentant à désigner');
+    if (!names.length) return '<span class="pending">' + esc(todo.charAt(0).toUpperCase() + todo.slice(1)) + '</span>';
+    return esc(names.join(', ')) + ' et <span class="pending">' + esc(todo) + '</span>';
+  };
 
   /* ---------- Commande segmentée ---------- */
   function seg(el, options, current, onPick) {
@@ -314,7 +323,9 @@
     $('#protocole-list').textContent = PROTOCOLE.join(', ');
     $('#ca-list').innerHTML = CA.map((r) => '<details class="region"><summary><span>' + esc(r[0]) + '</span><span class="count">' + r[1].length + ' administrateur' + (r[1].length > 1 ? 's' : '') + '</span></summary><p>' + esc(r[1].join(', ')) + '</p></details>').join('');
     $('#inst-list').innerHTML = INSTANCES.map((i) =>
-      '<div class="inst-row"><div><p class="inst-name">' + esc(i.n) + (i.a ? ' <span class="inst-abbr">(' + esc(i.a) + ')</span>' : '') + '</p><p class="inst-role">' + esc(i.r) + '</p></div><p class="inst-reps">' + namesOr(i.reps, 'Représentant à désigner') + '</p></div>'
+      '<div class="inst-row"><p class="inst-name">' + esc(i.n) + (i.a ? ' <span class="inst-abbr">(' + esc(i.a) + ')</span>' : '') + '</p><div class="inst-reps">' +
+        (i.groups ? i.groups.map((g) => '<p><span class="inst-group">' + esc(g[0]) + '\u00a0:</span> ' + repsLine(g[1], g[2]) + '</p>').join('') : '<p>' + repsLine(i.reps, i.todo) + '</p>') +
+      '</div></div>'
     ).join('');
     $('#urps-list').innerHTML = URPS.map((u) => '<div class="urps-item"><p class="urps-region">' + esc(u[0]) + '</p><p class="urps-names">' + namesOr(u[1], 'Représentant à désigner') + '</p></div>').join('');
     $('#comptes-list').innerHTML = '<li><a class="row-link" href="https://www.slbc.fr/le-syndicat/les-statuts-du-slbc/" target="_blank" rel="noopener"><span class="row-date">Statuts</span><span class="row-title">Les statuts du SLBC</span><span class="row-cat">slbc.fr</span></a></li>' +
@@ -530,7 +541,10 @@
     DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title + (p.subtitle ? ' : ' + p.subtitle : ''), sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with + ' ' + (p.quote ? p.quote.text : '') + ' ' + (p.body || []).map((sec) => sec.h + ' ' + sec.ps.join(' ')).join(' ') + ' ' + (p.points || []).map((x) => x.join(' ')).join(' ') }));
     DATA.actus.forEach((a) => idx.push({ type: 'Actualité', title: a.title, sub: longDate(a.date), href: '#actualites', section: 'ac-' + a.id, text: a.excerpt + ' ' + a.cat }));
     BUREAU.forEach((b) => idx.push({ type: 'Bureau', title: b[1], sub: b[0], href: '#syndicat', section: 'bureau', text: '' }));
-    INSTANCES.forEach((i) => idx.push({ type: 'Instance', title: i.n + (i.a ? ' (' + i.a + ')' : ''), sub: i.r, href: '#syndicat', section: 'representants', text: i.reps.join(' ') }));
+    INSTANCES.forEach((i) => {
+      const names = i.reps.concat(...(i.groups || []).map((g) => g[1]));
+      idx.push({ type: 'Instance', title: i.n + (i.a ? ' (' + i.a + ')' : ''), sub: names.join(', '), href: '#syndicat', section: 'representants', text: names.join(' ') });
+    });
     NABM.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Nomenclature des actes', href: '#documentation', section: 'doc-nabm', text: d.s || '' }));
     TEXTES.forEach((g) => g.items.forEach((t) => idx.push({ type: 'Document', title: t, sub: g.theme, href: '#documentation', section: 'doc-textes', text: '' })));
     return idx;
