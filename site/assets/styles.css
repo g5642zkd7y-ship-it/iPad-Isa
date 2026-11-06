@@ -400,6 +400,12 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .p-meta time,.p-meta .p-date{font-weight:600;color:var(--encre);font-variant-numeric:tabular-nums}
 .p-title{max-width:30em;font-size:clamp(21px,1.9vw,24px);font-weight:700;line-height:1.22;letter-spacing:-.015em;color:var(--encre)}
 .p-chapo{max-width:42em;font-size:17px;line-height:1.6}
+.p-points-title{margin-top:8px;font-size:17px;font-weight:700;color:var(--encre)}
+.p-points{align-self:stretch;max-width:46em;margin:0;border-top:1px solid var(--filet)}
+.p-points div{display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr);gap:4px 24px;padding:14px 0;border-bottom:1px solid var(--filet)}
+.p-points dt{font-size:15px;font-weight:600;line-height:1.45;color:var(--encre)}
+.p-points dd{margin:0;font-size:16px;line-height:1.55}
+@media (max-width:640px){.p-points div{grid-template-columns:minmax(0,1fr)}}
 .copy-line{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 14px;border-radius:12px;background:#fff;font-weight:600;color:var(--encre);overflow-wrap:anywhere}
 .copy-line a{color:inherit;text-underline-offset:2px}
 .btn-copy{flex:0 0 auto;min-height:36px;padding:0 14px;border:0;border-radius:999px;background:var(--neutre);color:var(--encre);font:600 14px/1 var(--font);cursor:pointer}

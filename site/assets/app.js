@@ -14,6 +14,7 @@
   const pad = (n) => String(n).padStart(2, '0');
   const todayISO = () => { const d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
   const isHttp = (u) => /^https?:\/\//i.test(String(u || ''));
+  const isDoc = (u) => /^documents\/[\w.-]+\.pdf$/i.test(String(u || ''));
 
   const sv = (w, body) => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
   const ICON = {
@@ -32,7 +33,7 @@
         teaser: 'Tous les syndicats représentatifs de biologistes médicaux le signent, dont le SLBC.',
         resume: 'L’Assurance maladie et l’ensemble des syndicats représentatifs de biologistes médicaux, dont le SLBC, ont signé le 2 novembre 2026 un nouveau protocole d’accord pour la période 2027-2029. Il prend le relais de l’accord du 20 décembre 2024, qui gèle la nomenclature jusqu’en décembre 2026.',
         impact: 'fort',
-        facts: [['Signature', '2 novembre 2026'], ['Période couverte', '2027 à 2029'], ['Signataires', 'Assurance maladie, UNOCAM et syndicats représentatifs de biologistes médicaux, dont le SLBC']],
+        facts: [['Signature', '2 novembre 2026'], ['Période couverte', '2027 à 2029'], ['Signataires', 'UNCAM, UNOCAM, Les Biologistes Médicaux (Biomed), SDBIO, SLBC et SNMB']],
         url: 'https://toute-la.veille-acteurs-sante.fr/246686/lassurance-maladie-et-lensemble-des-syndicats-representatifs-de-biologistes-medicaux-signent-un-nouveau-protocole-daccord-pour-la-periode-2027-2029/', linkLabel: 'Lire le communiqué, relayé par La Veille Acteurs de Santé' },
       { id: 'v1', src: 'jo', where: 'Journal officiel', date: '2026-10-30', when: 'JO du 30 octobre 2026',
         title: 'Décret n° 2026-1009 du 28 octobre 2026 sur la transmission obligatoire de données à l’autorité sanitaire',
@@ -66,7 +67,25 @@
     /* Salle de presse : seulement les communiqués de 2026 (décision d’Isabelle Eimer du 6 novembre 2026).
        Les communiqués de 2024, 2019 et 2014 ont été retirés. Le communiqué sur la signature du protocole
        2027-2029 et le commentaire publié par Nicolas sur LinkedIn sont attendus. */
-    presse: [],
+    presse: [
+      /* Protocole signé, fourni par Isabelle Eimer le 6 novembre 2026 (site/documents/protocole-biologie-2027-2029.pdf).
+         Chaque point renvoie à un article du texte. */
+      { id: 'p4', date: '2026-11-02', year: '2026',
+        title: 'Le SLBC signe le protocole 2027-2029 sur les dépenses de biologie médicale',
+        with: 'Signé avec l’UNCAM, l’UNOCAM, Les Biologistes Médicaux (Biomed), le SDBIO et le SNMB',
+        chapo: 'Le 2 novembre 2026 à Paris, Thierry Bouchet, président du SLBC, a signé le protocole d’accord sur la maîtrise des dépenses de biologie médicale pour 2027 à 2029. Le texte fixe l’enveloppe des dépenses remboursées et les engagements des signataires pour trois ans.',
+        pointsTitle: 'Ce que prévoit le protocole',
+        points: [
+          ['Enveloppe des dépenses (article 1)', '4 034 M€ en 2027, 4 078 M€ en 2028 et 4 123 M€ en 2029, soit 12 235 M€ sur trois ans : une hausse de 1,1 % par an à partir d’une base de 3 990 M€.'],
+          ['Actes nouveaux (article 4)', 'Hors enveloppe, un objectif non limitatif de 100 M€ de dépenses nouvelles d’ici 2029. L’Assurance maladie vise moins de quatre mois pour inscrire à la nomenclature les actes votés en CHAB.'],
+          ['Santé publique (article 7 et annexe 1)', 'Hors enveloppe : les dépistages organisés des cancers du col de l’utérus et colorectal, dont la remise du kit de dépistage par le biologiste, et la vaccination. Sous réserve d’un outil d’éligibilité et de traçabilité : le calcul du score rénal sans prescription préalable et le suivi de l’HbA1c des patients diabétiques non observants.'],
+          ['Urgences et AMP (article 13 et annexe 2)', 'Revalorisation de 9 B des suppléments pour les actes réalisés en urgence la nuit, le samedi après 12 h, le dimanche et les jours fériés, et révision des cotations des actes d’assistance médicale à la procréation, soumises au vote de la CHAB. Après un vote favorable, la base de dépenses est relevée de 5 M€ dès 2027.'],
+          ['Maîtrise médicalisée (article 5)', 'Un objectif de 30 M€ en 2027, puis 10 M€ en 2028 et 10 M€ en 2029, selon un plan d’action à définir d’ici le 1er janvier 2027.'],
+          ['Suivi (articles 2, 9, 10 et 11)', 'Un comité de suivi paritaire se réunit en novembre et en juin. Les signataires suivent aussi la situation économique des laboratoires, l’accès aux laboratoires sur le territoire et les prescriptions de biologie des infirmières.'],
+          ['Avenant à la convention (article 14)', 'Des négociations s’ouvrent dès la signature, pour aboutir avant le 30 avril 2027. Elles traduiront aussi les mesures arbitrées par le gouvernement à la suite de la mission confiée à Laurent Habert sur l’avenir de la biologie médicale.']
+        ],
+        url: 'documents/protocole-biologie-2027-2029.pdf', linkLabel: 'Lire le protocole signé (PDF, 13 pages)' }
+    ],
     actus: [
       { id: 'a1', date: '2026-09-07', cat: 'Santé publique', title: 'Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', excerpt: 'Sur les 22 actions du plan, deux touchent les laboratoires, dont le déploiement de la biologie délocalisée.', url: 'https://www.slbc.fr/strategie-nationale-de-sante-sexuelle-2026-2030-le-texte-integral-du-ministere/' },
       { id: 'a2', date: '2026-09-07', cat: 'Santé publique', title: 'Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle', excerpt: 'La feuille de route prévoit le déploiement de la biologie médicale délocalisée.', url: 'https://www.slbc.fr/feuille-de-route-2026-2030-de-la-strategie-nationale-de-sante-sexuelle/' },
@@ -234,7 +253,9 @@
         (p.members ? '<span class="tag-members">' + ICON.lockS + 'Adhérents</span>' : '') + '</p>' +
       '<h2 class="p-title">' + esc(p.title) + '</h2>' +
       (p.chapo ? '<p class="p-chapo">' + esc(p.chapo) + '</p>' : '') +
-      (p.url && isHttp(p.url) ? '<a class="more" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.linkLabel || 'Lire le communiqué') + '</a>'
+      (p.points && p.points.length ? '<h3 class="p-points-title">' + esc(p.pointsTitle || 'Points clés') + '</h3><dl class="p-points">' +
+        p.points.map((x) => '<div><dt>' + esc(x[0]) + '</dt><dd>' + esc(x[1]) + '</dd></div>').join('') + '</dl>' : '') +
+      (p.url && (isHttp(p.url) || isDoc(p.url)) ? '<a class="more" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.linkLabel || 'Lire le communiqué') + '</a>'
                               : '<span class="muted" style="font-size:15px">Publié depuis l’espace adhérent (démonstration).</span>') +
     '</article>';
 
@@ -337,7 +358,7 @@
     $('#presse-seg').hidden = years.length <= 2;
     const items = DATA.presse.slice().sort(byDate).filter((p) => state.presseYear === 'Toutes' || p.year === state.presseYear);
     $('#presse-list').innerHTML = items.length ? items.map(pitem).join('')
-      : '<p class="empty">Aucun communiqué pour l’instant. Le communiqué sur la signature du protocole 2027-2029 sera publié ici.</p>';
+      : '<p class="empty">Aucun communiqué pour l’instant.</p>';
   }
   function renderRecent() {
     const all = []
@@ -457,7 +478,7 @@
     idx.push({ type: 'Page', title: 'Données personnelles', sub: 'Usages, durées de conservation, vos droits', href: '#mentions', section: 'donnees', text: 'RGPD confidentialité vie privée CNIL droits' });
     idx.push({ type: 'Page', title: 'Cookies', sub: 'Aucun cookie de mesure d’audience ni de publicité', href: '#mentions', section: 'cookies', text: 'traceurs bandeau' });
     DATA.veille.forEach((v) => idx.push({ type: 'Veille', title: v.title, sub: v.when, href: '#veille', section: 'vi-' + v.id, text: v.resume }));
-    DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title, sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with }));
+    DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title, sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with + ' ' + (p.points || []).map((x) => x.join(' ')).join(' ') }));
     DATA.actus.forEach((a) => idx.push({ type: 'Actualité', title: a.title, sub: longDate(a.date), href: '#actualites', section: 'ac-' + a.id, text: a.excerpt + ' ' + a.cat }));
     BUREAU.forEach((b) => idx.push({ type: 'Bureau', title: b[1], sub: b[0], href: '#syndicat', section: 'bureau', text: '' }));
     INSTANCES.forEach((i) => idx.push({ type: 'Instance', title: i.n, sub: i.r, href: '#syndicat', section: 'representants', text: i.reps.join(' ') }));
