@@ -109,13 +109,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .section{padding-block:clamp(64px,8vw,104px)}
 .section-tight{padding-block:clamp(48px,6vw,72px)}
 .page-hero{padding-block:clamp(48px,6vw,80px) clamp(32px,4vw,48px)}
-/* Page Le syndicat : grand titre et deux ronds animés, puis les cinq mascottes juste en dessous (6 novembre 2026) */
-.bureau-ill{display:block;width:calc(var(--mascotte-h) * 660 / 210);max-width:100%;height:auto;margin-top:8px}
-/* Actualités et Salle de presse : une mascotte à droite du titre */
-.page-hero.hero-mascotte .container{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(24px,4vw,64px);row-gap:20px;align-items:start}
-.page-hero.hero-mascotte .container > :not(.mascotte){grid-column:1}
-.page-hero.hero-mascotte .container > .mascotte{grid-column:2;grid-row:1 / span 3;align-self:center}
-@media (max-width:640px){.page-hero.hero-mascotte .container{grid-template-columns:minmax(0,1fr)}.page-hero.hero-mascotte .container > .mascotte{grid-column:1;grid-row:auto}}
+/* Pages Le syndicat, Veille, Actualités, Salle de presse, Documentation : la mascotte juste à côté du grand titre (6 novembre 2026) */
+.page-hero .container.hero-split{flex-direction:row;align-items:center;justify-content:flex-start;gap:clamp(24px,4vw,64px)}
+.hero-text{display:flex;flex-direction:column;gap:20px;min-width:0;flex:0 1 auto}
+.hero-split > .mascotte{flex:none}
+.bureau-ill{display:block;flex:0 1 auto;width:calc(var(--mascotte-h) * 660 / 210);max-width:100%;height:auto}
+@media (max-width:760px){.syndicat-hero .hero-split{flex-wrap:wrap}}
+@media (max-width:560px){.page-hero .container.hero-split{gap:16px}}
 .page-hero + .section-tight{padding-top:clamp(32px,4vw,56px)}
 .page-hero + .section-tight.bg-fond{padding-top:clamp(48px,6vw,72px)}
 .page-hero.bg-encre{padding-bottom:clamp(48px,6vw,72px)}
@@ -252,16 +252,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 /* ---------- Piliers (accueil) ---------- */
 /* Mascotte du SLBC à gauche du titre « Ce que nous défendons » (6 novembre 2026) */
-.piliers-head,.veille-head{display:flex;align-items:center;gap:clamp(20px,3vw,40px)}
-.piliers-head > div,.veille-head > div{min-width:0}
-.piliers-head .h-section + .lead,.veille-head .h-section + .lead{margin-top:18px}
+.piliers-head{display:flex;align-items:center;gap:clamp(20px,3vw,40px)}
+.piliers-head > div{min-width:0}
+.piliers-head .h-section + .lead{margin-top:18px}
 /* Toutes les mascottes à la même échelle (demande d’Isabelle Eimer du 6 novembre 2026) : --mascotte-h est la hauteur
    d’un dessin de 210 unités (la mascotte de l’accueil) ; chaque dessin prend la taille de son viewBox rapportée à 210. */
 :root{--mascotte-h:clamp(130px,14vw,190px)}
 @media (max-width:560px){:root{--mascotte-h:112px}}
-.mascotte{flex:none;display:block;width:auto;height:var(--mascotte-h)}
-.veille-head .mascotte,.veille-band-head .mascotte{height:calc(var(--mascotte-h) * 206 / 210)}
-@media (max-width:560px){.piliers-head,.veille-head,.veille-band-head{gap:16px}.veille-band-head{align-items:flex-start}}
+.mascotte{flex:none;display:block;width:auto;height:calc(var(--mascotte-h) * var(--vb-h, 210) / 210)}
+.veille-band-head .mascotte{height:calc(var(--mascotte-h) * 206 / 210)}
+@media (max-width:560px){.piliers-head,.veille-band-head{gap:16px}.veille-band-head{align-items:flex-start}}
 .pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 48px;margin-top:48px}
 .pillar{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:4px solid var(--anis)}
 .pillar p{max-width:34em;font-size:17px;line-height:1.6;color:var(--texte)}

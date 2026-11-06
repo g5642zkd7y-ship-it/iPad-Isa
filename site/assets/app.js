@@ -896,7 +896,7 @@
   function setupSignatures() {
     $('#member-sig').innerHTML = sigSVG('membre', false);
     $$('.view').forEach((v) => {
-      const hero = v.querySelector('.page-hero .container');
+      const hero = v.querySelector('.page-hero .hero-text') || v.querySelector('.page-hero .container');
       if (hero) hero.insertAdjacentHTML('afterbegin', sigSVG(v.dataset.view, v.querySelector('.page-hero').classList.contains('bg-encre')));
     });
   }
