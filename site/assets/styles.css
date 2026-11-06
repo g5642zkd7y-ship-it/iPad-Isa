@@ -241,6 +241,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media (max-width:560px){.name-wall{grid-template-columns:minmax(0,1fr)}}
 
 /* ---------- Piliers (accueil) ---------- */
+/* Mascotte du SLBC à gauche du titre « Ce que nous défendons » (6 novembre 2026) */
+.piliers-head{display:flex;align-items:center;gap:clamp(20px,3vw,40px)}
+.piliers-head > div{min-width:0}
+.piliers-head .h-section + .lead{margin-top:18px}
+.mascotte{flex:none;display:block;width:auto;height:clamp(130px,14vw,190px)}
+@media (max-width:560px){.piliers-head{gap:16px}.mascotte{height:112px}}
 .pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 48px;margin-top:48px}
 .pillar{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:4px solid var(--anis)}
 .pillar p{max-width:34em;font-size:17px;line-height:1.6;color:var(--texte)}
