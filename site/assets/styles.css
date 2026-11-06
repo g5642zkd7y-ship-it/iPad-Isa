@@ -415,7 +415,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 /* Accueil : dernier communiqué sous la devise */
 .home-cp{padding-top:0}
 .sep-sig{display:flex;align-items:center;gap:22px;margin-bottom:clamp(40px,5vw,64px)}
-.sep-line{flex:1 1 0;height:1px;background:var(--filet-fort)}
+.sep-line{flex:1 1 0;height:2px;border-radius:2px;background:var(--anis)}
 .sep-mark{flex:0 0 auto;display:block;width:34px;height:34px;overflow:visible}
 .home-cp-in{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center}
 .hcp-main{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
