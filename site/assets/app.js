@@ -936,9 +936,16 @@
   /* ---------- Liseuse de documents ---------- */
   let downloadsApi = null;
   if (window.claude && typeof window.claude.use === 'function') {
-    window.claude.use('downloads').then((d) => { downloadsApi = d; }).catch(() => {});
+    window.claude.use('downloads').then((d) => { downloadsApi = d; if (readerDoc) setSaveUi(); }).catch(() => {});
   }
-  let readerDoc = null; let readerReturn = null; let readerIO = null;
+  let readerDoc = null; let readerReturn = null; let readerIO = null; let saving = false;
+  /* « Enregistrer le PDF » : par claude.ai si sa fonction de téléchargement répond ; sinon un lien
+     ordinaire, seulement hors d'un cadre (un cadre protégé bloquerait ce lien sans rien dire). */
+  function setSaveUi() {
+    const framed = window.top !== window.self;
+    $('#reader-save').hidden = !downloadsApi;
+    $('#reader-link').hidden = !!downloadsApi || framed;
+  }
   function openReader(url, opener) {
     const d = DOCS[url];
     if (!d) return;
@@ -949,9 +956,9 @@
     pages.innerHTML = Array.from({ length: d.pages }, (_, i) =>
       '<figure class="reader-page" data-n="' + (i + 1) + '"><img src="' + esc(d.img(i + 1)) + '" width="' + d.w + '" height="' + d.h + '" alt="Page ' + (i + 1) + ' sur ' + d.pages + '"' + (i > 1 ? ' loading="lazy"' : '') + '></figure>').join('');
     pages.scrollTop = 0;
-    const save = $('#reader-save'); const link = $('#reader-link');
-    save.hidden = !downloadsApi; save.disabled = false;
-    link.hidden = !!downloadsApi; link.setAttribute('href', url); link.setAttribute('download', d.file);
+    const link = $('#reader-link');
+    link.setAttribute('href', url); link.setAttribute('download', d.file);
+    setSaveUi();
     $('#reader').hidden = false;
     document.documentElement.style.overflow = 'hidden';
     if (readerIO) readerIO.disconnect();
@@ -961,7 +968,8 @@
       }, { root: pages, rootMargin: '-45% 0px -45% 0px', threshold: 0 });
       $$('.reader-page', pages).forEach((f) => readerIO.observe(f));
     }
-    $('#reader-close').focus();
+    /* Focus sur les pages : Espace, flèches et Page suivante font défiler ; Échap ferme. */
+    $('#reader-pages').focus({ preventScroll: true });
   }
   function closeReader() {
     if ($('#reader').hidden) return;
@@ -982,18 +990,19 @@
   /* Changer de page (lien, bouton Précédent du navigateur) referme la liseuse. */
   window.addEventListener('hashchange', closeReader);
   /* Le focus reste dans la liseuse tant qu'elle est ouverte. */
-  $('#reader').addEventListener('keydown', (e) => {
-    if (e.key !== 'Tab') return;
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || $('#reader').hidden) return;
     const f = $$('#reader button:not([hidden]), #reader a:not([hidden]), #reader-pages').filter((x) => !x.hidden);
     if (!f.length) return;
     const first = f[0]; const last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    if (!$('#reader').contains(document.activeElement)) { e.preventDefault(); (e.shiftKey ? last : first).focus(); }
+    else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
   $('#reader-save').addEventListener('click', async () => {
     const d = DOCS[readerDoc]; const btn = $('#reader-save');
-    if (!d || !downloadsApi) return;
-    btn.disabled = true;
+    if (!d || !downloadsApi || saving) return;
+    saving = true; btn.setAttribute('aria-busy', 'true');
     try {
       const res = await fetch(readerDoc);
       if (!res.ok) throw { code: 'fetch' };
@@ -1002,9 +1011,9 @@
       const code = err && err.code;
       if (code === 'declined') { /* le visiteur a refusé : rien à signaler */ }
       else if (code === 'rate_limited') showToast('Un enregistrement est déjà en cours. Réessayez dans un instant.', null, null);
-      else { showToast('L’enregistrement du PDF n’est pas possible ici. Le document reste lisible dans cette page.', null, null); btn.hidden = true; }
+      else { showToast('L’enregistrement du PDF n’est pas possible ici. Le document reste lisible dans cette page.', null, null); $('#reader-close').focus(); btn.hidden = true; }
     }
-    btn.disabled = false;
+    saving = false; btn.removeAttribute('aria-busy');
   });
 
   /* ---------- Démarrage ---------- */
