@@ -488,6 +488,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .news-meta time{font-weight:600;color:var(--encre);font-variant-numeric:tabular-nums}
 .news-title{max-width:32em;font-size:clamp(20px,1.8vw,23px);font-weight:700;line-height:1.25;letter-spacing:-.012em;color:var(--encre)}
 .news-excerpt{max-width:42em;font-size:17px;line-height:1.6}
+.news-links{display:flex;flex-wrap:wrap;gap:6px 28px}
 
 /* ---------- Documentation ---------- */
 .doc-search{display:flex;align-items:center;gap:12px;max-width:560px;min-height:52px;margin-top:8px;padding:0 16px;border-radius:14px;background:var(--neutre);color:var(--gris)}
@@ -499,6 +500,12 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .doc-theme{margin-top:12px;font-size:15px;font-weight:600;color:var(--gris)}
 #doc-etudes-list .doc-theme{margin-top:28px}
 #doc-etudes-list .doc-theme:first-child{margin-top:12px}
+#doc-textes-list{margin-top:12px;border-top:1px solid var(--filet-fort)}
+.doc-group .rows{margin:0 0 20px}
+.doc-group .row-link{padding:16px 4px}
+.doc-group .row-title{font-size:17px}
+.row-link.is-missing .row-title{color:var(--texte)}
+.row-link.is-missing .row-cat{font-style:italic}
 .partners{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .partners a{display:flex;flex-direction:column;gap:4px;height:100%;padding:20px;border-radius:16px;background:var(--fond);color:var(--texte);text-decoration:none}
 .partners strong{font-size:17px;color:var(--encre)}
@@ -681,7 +688,13 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .reader-pages:focus-visible{outline:3px solid var(--vert);outline-offset:-3px}
 .reader-page{margin:0;width:100%;max-width:880px;background:#fff;box-shadow:0 1px 3px rgba(46,50,54,.14)}
 .reader-page img{display:block;width:100%;height:auto}
-@media (max-width:520px){.reader-btn{padding:0 12px;font-size:14px}.reader-pages{padding-inline:8px;gap:10px}}
+.reader-page.is-pdf{position:relative}
+.reader-page.is-pdf canvas{display:block;width:100%;height:100%}
+.reader-page.is-pdf:not(.is-drawn)::after{content:"";position:absolute;top:50%;left:50%;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;border:3px solid var(--filet);border-top-color:var(--vert);animation:reader-spin 1s linear infinite}
+@keyframes reader-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.reader-page.is-pdf:not(.is-drawn)::after{animation:none;border-top-color:var(--filet)}}
+.reader-error{max-width:32em;margin:40px auto;padding:0 16px;font-size:17px;text-align:center;color:var(--encre)}
+@media (max-width:520px){.reader-btn{padding:0 12px;font-size:14px}.reader-pages{padding-inline:8px;gap:10px}.reader-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px}}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:95;display:flex;align-items:center;gap:18px;max-width:calc(100% - 32px);padding:14px 16px 14px 20px;border-radius:16px;background:var(--encre);color:#fff;font-size:15px;font-weight:500;box-shadow:0 14px 34px rgba(0,0,0,.24);transform:translateX(-50%)}
 .toast a{color:var(--vert-clair);font-weight:700;white-space:nowrap}
 

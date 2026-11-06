@@ -15,7 +15,8 @@
   const todayISO = () => { const d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
   const isHttp = (u) => /^https?:\/\//i.test(String(u || ''));
   const isDoc = (u) => /^documents\/[\w.-]+\.pdf$/i.test(String(u || ''));
-  /* Documents lisibles dans la page : chaque page du PDF est une image (site/documents/<nom>/page-01.jpg…).
+  /* Documents lisibles dans la page. Mode images : chaque page du PDF est une image (site/documents/<nom>/page-01.jpg…).
+     Mode PDF (registre PDFS plus bas) : le PDF lui-même, dessiné par pdf.js.
      Dans claude.ai, la maquette est affichée dans un cadre qui bloque l’ouverture directe d’un PDF :
      on lit donc les pages dans une liseuse, et « Enregistrer le PDF » passe par la fonction de
      téléchargement de claude.ai (capacité downloads). Ailleurs, un simple lien de téléchargement. */
@@ -29,6 +30,97 @@
     'documents/observatoire-biologie-2026-complet.pdf': { title: 'Observatoire de la biologie médicale 2026, rapport complet', pages: 89, w: 1600, h: 900,
       img: (n) => 'documents/observatoire-biologie-2026-complet/page-' + String(n).padStart(2, '0') + '.jpg', file: 'observatoire-biologie-2026-complet.pdf' }
   };
+
+  /* PDF lus avec pdf.js (liseuse, mode PDF) : chemin → [titre, pages, largeur et hauteur de la première page en points].
+     Documents recopiés de l'ancien site slbc.fr le 6 novembre 2026 (actualités, statuts, comptes, textes réglementaires). */
+  const PDFS = {
+    'documents/textes/42-loi-2013-442-portant-reforme-de-la-biologie-medicale-ratifia.pdf': ['Loi n° 2013-442 portant réforme de la biologie médicale, ratifiant l’ordonnance de 2010', 16, 595, 842],
+    'documents/textes/41-loi-2016-41-modernisation-de-notre-systeme-de-sante.pdf': ['Loi n° 2016-41 modernisation de notre système de santé', 206, 595, 842],
+    'documents/textes/54-decret-2016-46-relatif-a-la-biologie-medicale.pdf': ['Décret n° 2016-46 relatif à la biologie médicale', 16, 595, 842],
+    'documents/textes/56-decret-2016-44-societes-exploitant-un-lbm-prive-et-societes.pdf': ['Décret n° 2016-44 sociétés exploitant un LBM privé et sociétés à participation financière de professions libérales de biologie médicale', 11, 595, 842],
+    'documents/textes/52-decret-n-2016-839-relatif-aux-conditions-et-modalites-dexerc.pdf': ['Décret n° 2016-839 relatif aux conditions et modalités d’exercice des biologistes médicaux et portant création de la Commission nationale de biologie médicale', 6, 595, 842],
+    'documents/textes/57-decret-2015-1152-relatif-aux-conditions-et-modalites-dexerci.pdf': ['Décret n° 2015-1152 relatif aux conditions et modalités d’exercice des biologistes médicaux et portant création de la CNBM', 6, 595, 842],
+    'documents/textes/21-decret-no-2021-293-fixant-les-missions-et-les-modalites-de-d.pdf': ['Décret n° 2021-293 fixant les missions et les modalités de désignation des laboratoires de biologie médicale de référence', 1, 595, 842],
+    'documents/textes/07-arrete-du-18-janvier-2022-laboratoires-de-reference.pdf': ['Arrêté du 18 janvier 2022 : laboratoires de référence', 2, 595, 842],
+    'documents/textes/65-arrete-fixant-la-composition-de-la-commission-nationale-de-b.pdf': ['Arrêté du 22 février 2016 fixant la composition de la Commission nationale de biologie médicale', 2, 595, 842],
+    'documents/textes/48-decret-no-2017-414-relatif-aux-sanctions-administratives-app.pdf': ['Décret n° 2017-414 relatif aux sanctions administratives applicables en matière de biologie médicale', 2, 595, 842],
+    'documents/textes/46-decret-no-2017-1520-relatif-a-la-reconnaissance-des-qualific.pdf': ['Décret n° 2017-1520 relatif à la reconnaissance des qualifications professionnelles dans le domaine de la santé', 15, 595, 842],
+    'documents/textes/60-decret-2014-606-relatif-aux-conditions-de-remplacement-des-b.pdf': ['Décret n° 2014-606 relatif aux conditions de remplacement des biologistes médicaux par des internes en médecine et en pharmacie', 2, 595, 842],
+    'documents/textes/59-decret-2015-150-fixant-les-criteres-de-competence-des-pratic.pdf': ['Décret n° 2015-150 fixant les critères de compétence des praticiens exerçant au sein de structures autorisées pour pratiquer des activités d’AMP', 3, 595, 842],
+    'documents/textes/61-decret-2011-2119-transmissions-biologiques-entre-laboratoire.pdf': ['Décret n° 2011-2119 transmissions biologiques entre laboratoires de biologie médicale', 3, 595, 842],
+    'documents/textes/62-decret-2011-1268-fixant-les-regles-dactivite-dun-labm-et-le.pdf': ['Décret n° 2011-1268 fixant les règles d’activité d’un LABM et le % max. d’échantillons biologiques pouvant être transmis entre LABM', 2, 595, 842],
+    'documents/textes/66-arrete-du-30-decembre-2014-relatif-a-lattestation-de-formati.pdf': ['Arrêté du 30 décembre 2014 relatif à l’attestation de formation aux gestes et soins d’urgence', 12, 595, 842],
+    'documents/textes/19-arrete-du-8-mars-2021-fixant-les-examens-representatifs-et-l.pdf': ['Arrêté du 8 mars 2021 fixant les examens représentatifs et les compétences associées pour l’accréditation des lignes de portée des examens de biologie médicale', 7, 595, 842],
+    'documents/textes/49-decret-no-2016-1430-relatif-aux-modalites-daccreditation-des.pdf': ['Décret n° 2016-1430 relatif aux modalités d’accréditation des laboratoires de biologie médicale', 1, 595, 842],
+    'documents/textes/55-decret-2016-45-modalites-specifiques-procedure-d-accreditati.pdf': ['Décret n° 2016-45 : modalités spécifiques de la procédure d’accréditation des LBM en Guadeloupe, Guyane, Martinique', 2, 595, 842],
+    'documents/textes/58-decret-2015-205-relatif-aux-modalites-de-depot-des-demandes.pdf': ['Décret n° 2015-205 relatif aux modalités de dépôt des demandes d’accréditation des LABM : étape 2016', 1, 595, 842],
+    'documents/textes/68-arrete-du-17-octobre-2012-definissant-les-conditions-justifi.pdf': ['Arrêté du 17 octobre 2012 définissant les conditions justificatives de l’entrée effective d’un laboratoire de biologie médicale dans une démarche d’accréditation', 4, 595, 842],
+    'documents/textes/40-nabm-baisses-au-6-avril-2018.pdf': ['Baisses de la NABM au 6 avril 2018 (décision de l’UNCAM du 12 mars 2018)', 4, 595, 842],
+    'documents/textes/45-decision-du-24-mai-2017-de-lunion-nationale-des-caisses-dass.pdf': ['Décision du 24 mai 2017 de l’Union nationale des caisses d’assurance maladie relative à la liste des actes et prestations pris en charge par l’assurance maladie', 3, 595, 842],
+    'documents/textes/44-instruction-n-dgos-pf4-dss-1a-2018-101-du-16-avril-2018-rela.pdf': ['Instruction n° DGOS/PF4/DSS/1A/2018/101 du 16 avril 2018 relative aux actes de biologie médicale et d’anatomopathologie hors nomenclatures', 9, 595, 842],
+    'documents/textes/69-instruction-dgos-2015-258-relative-aux-modalites-didentifica.pdf': ['Instruction DGOS 2015-258 relative aux modalités d’identification, de recueil des actes de biologie médicale et d’anatomocytopathologie hors nomenclature éligibles au financement au titre de la MERRI G03', 25, 595, 842],
+    'documents/textes/43-arrete-du-15-mai-2018-fixant-les-conditions-de-realisation-d.pdf': ['Arrêté du 15 mai 2018 fixant les conditions de réalisation des examens de biologie médicale d’immuno-hématologie érythrocytaire', 7, 595, 842],
+    'documents/textes/47-decret-no-2017-808-relatif-a-lintroduction-dans-la-liste-des.pdf': ['Décret n° 2017-808 relatif à l’introduction dans la liste des examens de diagnostic prénatal des examens de génétique portant sur l’ADN foetal libre circulant dans le sang maternel', 2, 595, 842],
+    'documents/textes/53-decret-no-2016-545-relatif-a-levaluation-et-au-controle-de-q.pdf': ['Décret n° 2016-545 relatif à l’évaluation et au contrôle de qualité des examens de diagnostic prénatal', 2, 595, 842],
+    'documents/textes/35-arrete-10-oct-2019-relatif-a-la-rougeole.pdf': ['Arrêté du 16 octobre 2019 relatif à la rougeole', 2, 595, 842],
+    'documents/textes/36-arrete-du-4-octobre-2019-relatif-aux-avk.pdf': ['Arrêté du 4 octobre 2019 relatif aux AVK', 45, 595, 842],
+    'documents/textes/37-arrete-du-26-juin-2019-depistage-hepatite-c-en-officine.pdf': ['Arrêté du 26 juin 2019 : dépistage de l’hépatite C en officine', 17, 595, 842],
+    'documents/textes/34-arrete-du-30-janvier-2020-fixant-les-tests-de-diagnostic-rap.pdf': ['Arrêté du 30 janvier 2020 fixant les tests de diagnostic rapide pouvant être réalisés par les pharmaciens', 1, 595, 842],
+    'documents/textes/67-arrete-du-11-juin-2013-determinant-la-liste-des-tests-recuei.pdf': ['Arrêté du 11 juin 2013 déterminant la liste des tests, recueils et traitements de signaux biologiques qui ne constituent pas un examen de biologie médicale, les catégories de personnes pouvant les réaliser et les conditions de réalisation de certains de ces tests, recueils et traitements de signaux biologiques', 7, 595, 842],
+    'documents/textes/09-loi-no-2021-1754-du-23-decembre-2021-de-financement-de-la-se.pdf': ['Loi n° 2021-1754 du 23 décembre 2021 de financement de la sécurité sociale pour 2022', 68, 595, 842],
+    'documents/textes/23-loi-no-2020-1576-du-14-decembre-2020-de-financement-de-la-se.pdf': ['Loi n° 2020-1576 du 14 décembre 2020 de financement de la sécurité sociale pour 2021', 65, 595, 842],
+    'documents/textes/39-loi-2018-493-du-20-juin-2018-relative-a-la-protection-des-do.pdf': ['Loi n° 2018-493 du 20 juin 2018 relative à la protection des données personnelles', 218, 595, 842],
+    'documents/textes/51-decret-n-2016-942-relatif-a-lorganisation-du-dpc-des-profess.pdf': ['Décret n° 2016-942 relatif à l’organisation du DPC des professionnels de santé', 10, 595, 842],
+    'documents/textes/50-decret-no-2016-1024-relatif-aux-territoires-de-democratie-sa.pdf': ['Décret n° 2016-1024 relatif aux territoires de démocratie sanitaire aux zones des schémas régionaux de santé et aux conseils territoriaux de santé', 4, 595, 842],
+    'documents/textes/63-decret-2010-585-relatif-aux-unions-regionales-de-professionn.pdf': ['Décret n° 2010-585 relatif aux unions régionales de professionnels de santé', 14, 595, 842],
+    'documents/textes/64-decret-2010-514-relatif-au-projet-regional-de-sante.pdf': ['Décret n° 2010-514 relatif au projet régional de santé', 3, 595, 842],
+    'documents/textes/01-labm-rapport-de-branche-2021.pdf': ['Rapport de branche 2021 des laboratoires de biologie médicale extra-hospitaliers (données 2020)', 97, 850, 595],
+    'documents/textes/02-2022-grille-salaires-au-1er-mai.pdf': ['Grille des salaires minima au 1er mai 2022 (accord du 27 avril 2022)', 4, 595, 842],
+    'documents/textes/03-arrete-du-15-mars-sur-le-criblage.pdf': ['Arrêté du 15 mars 2022 sur le criblage', 1, 595, 842],
+    'documents/textes/05-decret-du-12-mars-mesures-generales-necessaires-a-la-gestion.pdf': ['Décret n° 2022-352 du 12 mars 2022 : mesures générales nécessaires à la gestion de la sortie de crise sanitaire', 4, 595, 842],
+    'documents/textes/06-arrete-du-1er-fevrier-modifiant-la-liste-des-actes-et-presta.pdf': ['Arrêté du 1er février 2022 modifiant la liste des actes et prestations mentionnée à l’article L. 162-1-7 du code de la sécurité sociale et l’arrêté du 12 décembre 2020 portant modification des conditions de remboursement de l’acte de détection du génome du SARS-CoV-2 par amplification génique', 1, 595, 842],
+    'documents/textes/08-arrete-du-27-decembre-2021-modifiant-larrete-du-1er-juin-202.pdf': ['Arrêté du 27 décembre 2021 modifiant l’arrêté du 1er juin 2021 prescrivant les mesures générales nécessaires à la gestion de la sortie de crise sanitaire', 1, 595, 842],
+    'documents/textes/10-loi-no-2021-1465-du-10-novembre-2021-portant-diverses-dispos.pdf': ['Loi n° 2021-1465 du 10 novembre 2021 portant diverses dispositions de vigilance sanitaire', 7, 595, 842],
+    'documents/textes/11-arrete-du-9-octobre-2021-prescrivant-les-mesures-necessaires.pdf': ['Arrêté du 9 octobre 2021 prescrivant les mesures nécessaires à la sortie de crise sanitaire', 2, 595, 842],
+    'documents/textes/12-arrete-du-17-juillet-portant-modification-des-conditions-de.pdf': ['Arrêté du 17 juillet 2021 portant modification des conditions de remboursement de l’acte de détection du génome du SARS-CoV-2 par amplification génique', 2, 595, 842],
+    'documents/textes/13-decret-no-2021-930-du-13-juillet-2021-modifiant-le-decret-no.pdf': ['Décret n° 2021-930 du 13 juillet 2021 modifiant le décret n° 2020-551 du 12 mai 2020 relatif aux systèmes d’information mentionnés à l’article 11 de la loi n° 2020-546 du 11 mai 2020 prorogeant l’état d’urgence sanitaire et complétant ses dispositions et le décret n° 2020-1690 du 25 décembre 2020 autorisant la création d’un traitement de données à caractère personnel relatif aux vaccinations contre la covid-19', 3, 595, 842],
+    'documents/textes/14-arrete-du-7-juillet-2021-modifiant-larrete-du-1er-juin-2021.pdf': ['Arrêté du 7 juillet 2021 modifiant l’arrêté du 1er juin 2021 prescrivant les mesures générales nécessaires à la gestion de la sortie de crise sanitaire', 4, 595, 842],
+    'documents/textes/15-arrete-du-6-juillet-2021-modifiant-larrete-du-1er-juin-2021.pdf': ['Arrêté du 6 juillet 2021 modifiant l’arrêté du 1er juin 2021 prescrivant les mesures générales nécessaires à la gestion de la sortie de crise sanitaire', 1, 595, 842],
+    'documents/textes/17-arrete-du-10-avril-2021-prescrivant-les-mesures-dorganisatio.pdf': ['Arrêté du 10 avril 2021 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', 4, 595, 842],
+    'documents/textes/18-arrete-du-23-mars-2021-prescrivant-les-mesures-necessaires-p.pdf': ['Arrêté du 23 mars 2021 prescrivant les mesures nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', 2, 595, 842],
+    'documents/textes/20-loi-no-2021-160-du-15-fevrier-2021-prorogeant-letat-durgence.pdf': ['Loi n° 2021-160 du 15 février 2021 prorogeant l’état d’urgence sanitaire', 2, 595, 842],
+    'documents/textes/22-arrete-du-23-janvier-2021-modifiant-larrete-du-10-juillet-20.pdf': ['Arrêté du 23 janvier 2021 modifiant l’arrêté du 10 juillet 2020 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', 2, 595, 842],
+    'documents/textes/24-arrete-du-10-aout-2020-modifiant-larrete-du-10-juillet-2020.pdf': ['Arrêté du 10 août 2020 modifiant l’arrêté du 10 juillet 2020 prescrivant les mesures générales nécessaires pour faire face à l’épidémie de covid-19 dans les territoires sortis de l’état d’urgence sanitaire et dans ceux où il a été prorogé', 2, 595, 842],
+    'documents/textes/26-arrete-du-25-juin-2020-completant-larrete-du-23-mars-2020-pr.pdf': ['Arrêté du 25 juin 2020 complétant l’arrêté du 23 mars 2020 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', 1, 595, 842],
+    'documents/textes/27-arrete-du-27-mai-2020-portant-modification-de-la-liste-des-a.pdf': ['Arrêté du 27 mai 2020 portant modification de la liste des actes et prestations mentionnée à l’article L. 162-1-7 du code de la sécurité sociale (diagnostic biologique de l’infection par le SARS-CoV-2)', 3, 595, 842],
+    'documents/textes/28-decret-no-2020-637-modifiant-le-decret-n-2020-73-portant-ado.pdf': ['Décret n° 2020-637 modifiant le décret n° 2020-73 portant adoption de conditions adaptées pour le bénéfice des prestations en espèces pour les personnes exposées au coronavirus', 2, 595, 842],
+    'documents/textes/29-decret-n-2020-434-relatif-a-ladaptation-temporaire-des-delai.pdf': ['Décret n° 2020-434 relatif à l’adaptation temporaire des délais et modalités de versement de l’indemnité complémentaire prévue à l’article L. 1226-1 du code du travail', 2, 595, 842],
+    'documents/textes/30-arrete-du-20-mai-2020-completant-larrete-du-23-mars-2020-pre.pdf': ['Arrêté du 20 mai 2020 complétant l’arrêté du 23 mars 2020 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', 2, 595, 842],
+    'documents/textes/31-arrete-du-5-avril-2020-completant-larrete-du-23-mars-2020-pr.pdf': ['Arrêté du 5 avril 2020 complétant l’arrêté du 23 mars 2020 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire.', 2, 595, 842],
+    'documents/textes/32-decret-n-2020-293-prescrivant-les-mesures-generales-necessai.pdf': ['Décret n° 2020-293 prescrivant les mesures générales nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', 6, 595, 842],
+    'documents/textes/33-arrete-du-16-mars-2020-completant-larrete-du-14-mars-2020-po.pdf': ['Arrêté du 16 mars 2020 complétant l’arrêté du 14 mars 2020 portant diverses mesures relatives à la lutte contre la propagation du virus covid-19', 2, 595, 842],
+    'documents/textes/38-dgos-et-cnam-references-juridiques-en-biologie-medicale-mise.pdf': ['Références juridiques en biologie médicale, DGOS et CNAM, mise à jour de novembre 2018', 222, 595, 842],
+    'documents/actualites/2026-09-07-strategie-sante-sexuelle-texte-integral.pdf': ['Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', 2, 595, 842],
+    'documents/actualites/feuille-de-route-sante-sexuelle-2026-2030.pdf': ['Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle (ministère de la Santé)', 72, 595, 839],
+    'documents/actualites/2026-09-07-feuille-de-route-sante-sexuelle.pdf': ['Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle', 1, 595, 842],
+    'documents/actualites/depeche-apmnews-2026-09-07-feuille-de-route-sante-sexuelle.pdf': ['Dépêche APMnews du 7 septembre 2026', 2, 595, 842],
+    'documents/actualites/2026-08-31-rapport-beaudeux-bouvier.pdf': ['Rapport Beaudeux-Bouvier : biologistes médicaux et assistance médicale à la procréation', 1, 595, 842],
+    'documents/actualites/rapport-mission-biologistes-amp-beaudeux-bouvier.pdf': ['Rapport de la mission Beaudeux-Bouvier : biologistes médicaux et AMP', 19, 595, 842],
+    'documents/actualites/2026-08-31-deces-jean-francois-perotto.pdf': ['Décès du Docteur Jean-François Perotto', 1, 595, 842],
+    'documents/actualites/2026-07-01-negociations-salariales-grille-2026.pdf': ['Négociations salariales : recommandation patronale et grille 2026', 1, 595, 842],
+    'documents/actualites/2026-06-09-appel-candidatures-pnmr4.pdf': ['Appel à candidatures PNMR4 pour les tests fonctionnels', 1, 595, 842],
+    'documents/actualites/2026-05-04-greve-nationale-salaries-laboratoires.pdf': ['Grève nationale historique des salariés des laboratoires', 1, 595, 842],
+    'documents/actualites/2026-04-16-deploiement-rihn-2-0.pdf': ['Innovation diagnostique : déploiement du RIHN 2.0', 1, 595, 842],
+    'documents/actualites/programme-campagne-slbc-2026.pdf': ['Programme de campagne du SLBC : « Une ambition commune : valoriser notre expertise médicale »', 2, 597, 843],
+    'documents/actualites/2026-02-04-radiation-vs-nabm.pdf': ['Radiation de la vitesse de sédimentation (VS) de la NABM', 1, 595, 842],
+    'documents/syndicat/statuts-slbc.pdf': ['Statuts du SLBC', 4, 595, 842],
+    'documents/comptes/comptes-2023-rapport-cac.pdf': ['Comptes 2023 : bilan et rapport du commissaire aux comptes', 17, 595, 842],
+    'documents/comptes/comptes-2022-etats-financiers.pdf': ['Comptes 2022 : états financiers', 17, 596, 843],
+    'documents/comptes/comptes-2022-rapport-cac.pdf': ['Comptes 2022 : rapport du commissaire aux comptes', 18, 595, 841],
+    'documents/comptes/comptes-2020-rapport-cac.pdf': ['Comptes 2020 : rapport du commissaire aux comptes', 14, 595, 842]
+  };
+  Object.keys(PDFS).forEach((u) => { const [title, pages, w, h] = PDFS[u]; DOCS[u] = { title, pages, w, h, pdf: true, file: u.split('/').pop() }; });
+  const nPages = (u) => DOCS[u].pages + ' page' + (DOCS[u].pages > 1 ? 's' : '');
 
   const sv = (w, body) => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
   const ICON = {
@@ -106,16 +198,16 @@
         url: 'documents/protocole-biologie-2027-2029.pdf', linkLabel: 'Lire le protocole signé (13 pages)' }
     ],
     actus: [
-      { id: 'a1', date: '2026-09-07', cat: 'Santé publique', title: 'Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', excerpt: 'Sur les 22 actions du plan, deux touchent les laboratoires, dont le déploiement de la biologie délocalisée.', url: 'https://www.slbc.fr/strategie-nationale-de-sante-sexuelle-2026-2030-le-texte-integral-du-ministere/' },
-      { id: 'a2', date: '2026-09-07', cat: 'Santé publique', title: 'Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle', excerpt: 'La feuille de route prévoit le déploiement de la biologie médicale délocalisée.', url: 'https://www.slbc.fr/feuille-de-route-2026-2030-de-la-strategie-nationale-de-sante-sexuelle/' },
-      { id: 'a3', date: '2026-08-31', cat: 'Exercice', title: 'Rapport Beaudeux-Bouvier : biologistes médicaux et assistance médicale à la procréation', excerpt: 'Une mission ministérielle propose de reconnaître et de rémunérer les consultations des biologistes médicaux en assistance médicale à la procréation.', url: 'https://www.slbc.fr/rapport-beaudeux-bouvier-biologistes-medicaux-et-assistance-medicale-a-la-procreation/' },
-      { id: 'a4', date: '2026-08-31', cat: 'Vie du syndicat', title: 'Décès du Docteur Jean-François Perotto', excerpt: '', url: 'https://www.slbc.fr/deces-du-docteur-jean-francois-perotto/' },
-      { id: 'a5', date: '2026-07-01', cat: 'Social', title: 'Négociations salariales : recommandation patronale et grille 2026', excerpt: 'Les organisations patronales, dont le SLBC, ont émis une recommandation le 15 décembre 2025.', url: 'https://www.slbc.fr/negociations-salariales-recommandation-patronale-et-grille-2026/' },
-      { id: 'a6', date: '2026-06-09', cat: 'Appels à projets', title: 'Appel à candidatures PNMR4 pour les tests fonctionnels', excerpt: 'La DGOS a lancé le 9 juin 2026 un appel à candidatures dans le cadre du 4e plan national maladies rares.', url: 'https://www.slbc.fr/appel-a-candidatures-pnmr4-pour-les-tests-fonctionnels/' },
-      { id: 'a7', date: '2026-05-04', cat: 'Social', title: 'Grève nationale historique des salariés des laboratoires', excerpt: '', url: 'https://www.slbc.fr/actualites/' },
-      { id: 'a8', date: '2026-04-16', cat: 'Nomenclature', title: 'Innovation diagnostique : déploiement du RIHN 2.0', excerpt: '', url: 'https://www.slbc.fr/actualites/' },
-      { id: 'a9', date: '2026-02-05', cat: 'Vie du syndicat', title: 'Une ambition commune : valoriser notre expertise médicale', excerpt: '', url: 'https://www.slbc.fr/actualites/' },
-      { id: 'a10', date: '2026-02-04', cat: 'Nomenclature', title: 'Radiation de la vitesse de sédimentation (VS) de la NABM', excerpt: '', url: 'https://www.slbc.fr/actualites/' }
+      { id: 'a1', date: '2026-09-07', cat: 'Santé publique', title: 'Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', excerpt: 'Sur les 22 actions du plan, deux touchent les laboratoires, dont le déploiement de la biologie délocalisée.', doc: 'documents/actualites/2026-09-07-strategie-sante-sexuelle-texte-integral.pdf', att: { url: 'documents/actualites/feuille-de-route-sante-sexuelle-2026-2030.pdf', label: 'La feuille de route' } },
+      { id: 'a2', date: '2026-09-07', cat: 'Santé publique', title: 'Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle', excerpt: 'La feuille de route prévoit le déploiement de la biologie médicale délocalisée.', doc: 'documents/actualites/2026-09-07-feuille-de-route-sante-sexuelle.pdf', att: { url: 'documents/actualites/depeche-apmnews-2026-09-07-feuille-de-route-sante-sexuelle.pdf', label: 'La dépêche APMnews' } },
+      { id: 'a3', date: '2026-08-31', cat: 'Exercice', title: 'Rapport Beaudeux-Bouvier : biologistes médicaux et assistance médicale à la procréation', excerpt: 'Une mission ministérielle propose de reconnaître et de rémunérer les consultations des biologistes médicaux en assistance médicale à la procréation.', doc: 'documents/actualites/2026-08-31-rapport-beaudeux-bouvier.pdf', att: { url: 'documents/actualites/rapport-mission-biologistes-amp-beaudeux-bouvier.pdf', label: 'Le rapport' } },
+      { id: 'a4', date: '2026-08-31', cat: 'Vie du syndicat', title: 'Décès du Docteur Jean-François Perotto', excerpt: '', doc: 'documents/actualites/2026-08-31-deces-jean-francois-perotto.pdf' },
+      { id: 'a5', date: '2026-07-01', cat: 'Social', title: 'Négociations salariales : recommandation patronale et grille 2026', excerpt: 'Les organisations patronales, dont le SLBC, ont émis une recommandation le 15 décembre 2025.', doc: 'documents/actualites/2026-07-01-negociations-salariales-grille-2026.pdf' },
+      { id: 'a6', date: '2026-06-09', cat: 'Appels à projets', title: 'Appel à candidatures PNMR4 pour les tests fonctionnels', excerpt: 'La DGOS a lancé le 9 juin 2026 un appel à candidatures dans le cadre du 4e plan national maladies rares.', doc: 'documents/actualites/2026-06-09-appel-candidatures-pnmr4.pdf' },
+      { id: 'a7', date: '2026-05-04', cat: 'Social', title: 'Grève nationale historique des salariés des laboratoires', excerpt: '', doc: 'documents/actualites/2026-05-04-greve-nationale-salaries-laboratoires.pdf' },
+      { id: 'a8', date: '2026-04-16', cat: 'Nomenclature', title: 'Innovation diagnostique : déploiement du RIHN 2.0', excerpt: '', doc: 'documents/actualites/2026-04-16-deploiement-rihn-2-0.pdf' },
+      { id: 'a9', date: '2026-02-05', cat: 'Vie du syndicat', title: 'Une ambition commune : valoriser notre expertise médicale', excerpt: '', doc: 'documents/actualites/programme-campagne-slbc-2026.pdf', docLabel: 'Lire le programme de campagne' },
+      { id: 'a10', date: '2026-02-04', cat: 'Nomenclature', title: 'Radiation de la vitesse de sédimentation (VS) de la NABM', excerpt: '', doc: 'documents/actualites/2026-02-04-radiation-vs-nabm.pdf' }
     ]
   };
 
@@ -178,10 +270,14 @@
     ['Guadeloupe', ['Frédéric Leroy']], ['Guyane', []], ['Martinique', ['Gérard Cherchel']],
     ['La Réunion', ['Paul Emile Gin']], ['Mayotte', ['Ahmed Aboubacar']]
   ];
+  /* Statuts et comptes, recopiés de l'ancien site (6 novembre 2026). Le document présenté comme « Bilan 2021 » sur l'ancien site
+     porte sur l'exercice clos le 31 décembre 2020 : affiché ici sous 2020 (point 25 de docs/sources-et-verifications.md). */
+  const STATUTS = 'documents/syndicat/statuts-slbc.pdf';
   const COMPTES = [
-    { y: '2023', d: 'Bilan et rapport du commissaire aux comptes' },
-    { y: '2022', d: 'États financiers et rapport du commissaire aux comptes' },
-    { y: '2021', d: 'Bilan et rapport du commissaire aux comptes' }
+    { y: '2023', d: 'Bilan et rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2023-rapport-cac.pdf' },
+    { y: '2022', d: 'États financiers', url: 'documents/comptes/comptes-2022-etats-financiers.pdf' },
+    { y: '2022', d: 'Rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2022-rapport-cac.pdf' },
+    { y: '2020', d: 'Rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2020-rapport-cac.pdf' }
   ];
   /* Études et rapports (Documentation), classés par source (demande d'Isabelle Eimer du 6 novembre 2026).
      d : date affichée ; url : page officielle (lien externe) ou document lu dans la liseuse (doc: true) ; src : site d'origine. */
@@ -199,16 +295,106 @@
       { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : rapport complet', s: 'Même étude, version longue', url: 'documents/observatoire-biologie-2026-complet.pdf', doc: true }
     ] }
   ];
+  /* Nomenclature : liens repris de l'ancienne page CHAB de slbc.fr (Légifrance, Journal officiel hébergé par la FHF).
+     Les aides à la prescription n'avaient pas de document sur l'ancien site : à fournir. */
   const NABM = [
-    { t: 'Arrêté du 25 janvier 2024' }, { t: 'Arrêté du 5 janvier 2024' },
-    { t: 'Décision de l’UNCAM du 7 mars 2023' }, { t: 'Arrêté du 26 janvier 2023' },
+    { t: 'Arrêté du 25 janvier 2024', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049040708', src: 'Légifrance' },
+    { t: 'Arrêté du 5 janvier 2024', s: 'Journal officiel du 10 janvier 2024', href: 'https://www.fhf.fr/sites/default/files/2024-01/joe_20240110_0007_0010.pdf', src: 'fhf.fr' },
+    { t: 'Décision de l’UNCAM du 7 mars 2023', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047388021', src: 'Légifrance' },
+    { t: 'Arrêté du 26 janvier 2023', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047074801', src: 'Légifrance' },
     { t: 'Aides à la prescription', s: 'Thyroïde, vitamine D, groupe sanguin (RAI)' }
   ];
+  /* Textes réglementaires : documents de l’ancienne page « Documentation professionnelle » de slbc.fr, recopiés dans documents/textes/
+     (6 novembre 2026, demande d’Isabelle Eimer). url : PDF lu dans la liseuse ; href : texte sur Légifrance (fichier absent ou erroné sur
+     l’ancien site) ; ni l’un ni l’autre : document introuvable. Voir le point 25 de docs/sources-et-verifications.md. */
   const TEXTES = [
-    { theme: 'Branche et rémunération', short: 'Branche', items: ['Rapport de branche des laboratoires de biologie médicale 2021', 'Grille de salaires au 1er mai 2022'] },
-    { theme: 'Exercice et réforme de la biologie', short: 'Exercice', items: ['Loi n° 2013-442 portant réforme de la biologie médicale', 'Loi n° 2016-41 de modernisation de notre système de santé', 'Décret n° 2021-293 sur les laboratoires de biologie médicale de référence', 'Arrêté du 8 mars 2021 sur l’accréditation des examens de biologie médicale'] },
-    { theme: 'Crise sanitaire', short: 'Covid-19', items: ['Lois, décrets et arrêtés relatifs à la covid-19, de 2020 à 2022'] },
-    { theme: 'Guide de référence', short: 'Guide', items: ['« Références juridiques : biologie médicale », DGOS et CNAM, novembre 2018'] }
+    { theme: 'Exercice et organisation de la biologie médicale', items: [
+      { t: 'Loi n° 2013-442 portant réforme de la biologie médicale, ratifiant l’ordonnance de 2010', y: '2013', url: 'documents/textes/42-loi-2013-442-portant-reforme-de-la-biologie-medicale-ratifia.pdf' },
+      { t: 'Loi n° 2016-41 modernisation de notre système de santé', y: '2016', url: 'documents/textes/41-loi-2016-41-modernisation-de-notre-systeme-de-sante.pdf' },
+      { t: 'Décret n° 2016-46 relatif à la biologie médicale', y: '2016', url: 'documents/textes/54-decret-2016-46-relatif-a-la-biologie-medicale.pdf' },
+      { t: 'Décret n° 2016-44 sociétés exploitant un LBM privé et sociétés à participation financière de professions libérales de biologie médicale', y: '2016', url: 'documents/textes/56-decret-2016-44-societes-exploitant-un-lbm-prive-et-societes.pdf' },
+      { t: 'Décret n° 2016-839 relatif aux conditions et modalités d’exercice des biologistes médicaux et portant création de la Commission nationale de biologie médicale', y: '2016', url: 'documents/textes/52-decret-n-2016-839-relatif-aux-conditions-et-modalites-dexerc.pdf' },
+      { t: 'Décret n° 2015-1152 relatif aux conditions et modalités d’exercice des biologistes médicaux et portant création de la CNBM', y: '2015', url: 'documents/textes/57-decret-2015-1152-relatif-aux-conditions-et-modalites-dexerci.pdf' },
+      { t: 'Décret n° 2021-293 fixant les missions et les modalités de désignation des laboratoires de biologie médicale de référence', y: '2021', url: 'documents/textes/21-decret-no-2021-293-fixant-les-missions-et-les-modalites-de-d.pdf' },
+      { t: 'Arrêté du 18 janvier 2022 : laboratoires de référence', y: '2022', url: 'documents/textes/07-arrete-du-18-janvier-2022-laboratoires-de-reference.pdf' },
+      { t: 'Arrêté du 22 février 2016 fixant la composition de la Commission nationale de biologie médicale', y: '2016', url: 'documents/textes/65-arrete-fixant-la-composition-de-la-commission-nationale-de-b.pdf' },
+      { t: 'Décret n° 2017-414 relatif aux sanctions administratives applicables en matière de biologie médicale', y: '2017', url: 'documents/textes/48-decret-no-2017-414-relatif-aux-sanctions-administratives-app.pdf' },
+      { t: 'Décret n° 2017-1520 relatif à la reconnaissance des qualifications professionnelles dans le domaine de la santé', y: '2017', url: 'documents/textes/46-decret-no-2017-1520-relatif-a-la-reconnaissance-des-qualific.pdf' },
+      { t: 'Décret n° 2014-606 relatif aux conditions de remplacement des biologistes médicaux par des internes en médecine et en pharmacie', y: '2014', url: 'documents/textes/60-decret-2014-606-relatif-aux-conditions-de-remplacement-des-b.pdf' },
+      { t: 'Décret n° 2015-150 fixant les critères de compétence des praticiens exerçant au sein de structures autorisées pour pratiquer des activités d’AMP', y: '2015', url: 'documents/textes/59-decret-2015-150-fixant-les-criteres-de-competence-des-pratic.pdf' },
+      { t: 'Décret n° 2011-2119 transmissions biologiques entre laboratoires de biologie médicale', y: '2011', url: 'documents/textes/61-decret-2011-2119-transmissions-biologiques-entre-laboratoire.pdf' },
+      { t: 'Décret n° 2011-1268 fixant les règles d’activité d’un LABM et le % max. d’échantillons biologiques pouvant être transmis entre LABM', y: '2011', url: 'documents/textes/62-decret-2011-1268-fixant-les-regles-dactivite-dun-labm-et-le.pdf' },
+      { t: 'Arrêté du 30 décembre 2014 relatif à l’attestation de formation aux gestes et soins d’urgence', y: '2014', url: 'documents/textes/66-arrete-du-30-decembre-2014-relatif-a-lattestation-de-formati.pdf' }
+    ] },
+    { theme: 'Accréditation', items: [
+      { t: 'Arrêté du 8 mars 2021 fixant les examens représentatifs et les compétences associées pour l’accréditation des lignes de portée des examens de biologie médicale', y: '2021', url: 'documents/textes/19-arrete-du-8-mars-2021-fixant-les-examens-representatifs-et-l.pdf' },
+      { t: 'Décret n° 2016-1430 relatif aux modalités d’accréditation des laboratoires de biologie médicale', y: '2016', url: 'documents/textes/49-decret-no-2016-1430-relatif-aux-modalites-daccreditation-des.pdf' },
+      { t: 'Décret n° 2016-45 : modalités spécifiques de la procédure d’accréditation des LBM en Guadeloupe, Guyane, Martinique', y: '2016', url: 'documents/textes/55-decret-2016-45-modalites-specifiques-procedure-d-accreditati.pdf' },
+      { t: 'Décret n° 2015-205 relatif aux modalités de dépôt des demandes d’accréditation des LABM : étape 2016', y: '2015', url: 'documents/textes/58-decret-2015-205-relatif-aux-modalites-de-depot-des-demandes.pdf' },
+      { t: 'Arrêté du 17 octobre 2012 définissant les conditions justificatives de l’entrée effective d’un laboratoire de biologie médicale dans une démarche d’accréditation', y: '2012', url: 'documents/textes/68-arrete-du-17-octobre-2012-definissant-les-conditions-justifi.pdf' }
+    ] },
+    { theme: 'Nomenclature et prise en charge', items: [
+      { t: 'Baisses de la NABM au 6 avril 2018 (décision de l’UNCAM du 12 mars 2018)', y: '2018', url: 'documents/textes/40-nabm-baisses-au-6-avril-2018.pdf' },
+      { t: 'Décision du 24 mai 2017 de l’Union nationale des caisses d’assurance maladie relative à la liste des actes et prestations pris en charge par l’assurance maladie', y: '2017', url: 'documents/textes/45-decision-du-24-mai-2017-de-lunion-nationale-des-caisses-dass.pdf' },
+      { t: 'Instruction n° DGOS/PF4/DSS/1A/2018/101 du 16 avril 2018 relative aux actes de biologie médicale et d’anatomopathologie hors nomenclatures', y: '2018', url: 'documents/textes/44-instruction-n-dgos-pf4-dss-1a-2018-101-du-16-avril-2018-rela.pdf' },
+      { t: 'Instruction DGOS 2015-258 relative aux modalités d’identification, de recueil des actes de biologie médicale et d’anatomocytopathologie hors nomenclature éligibles au financement au titre de la MERRI G03', y: '2015', url: 'documents/textes/69-instruction-dgos-2015-258-relative-aux-modalites-didentifica.pdf' }
+    ] },
+    { theme: 'Examens et dépistage', items: [
+      { t: 'Arrêté du 15 mai 2018 fixant les conditions de réalisation des examens de biologie médicale d’immuno-hématologie érythrocytaire', y: '2018', url: 'documents/textes/43-arrete-du-15-mai-2018-fixant-les-conditions-de-realisation-d.pdf' },
+      { t: 'Décret n° 2017-808 relatif à l’introduction dans la liste des examens de diagnostic prénatal des examens de génétique portant sur l’ADN foetal libre circulant dans le sang maternel', y: '2017', url: 'documents/textes/47-decret-no-2017-808-relatif-a-lintroduction-dans-la-liste-des.pdf' },
+      { t: 'Décret n° 2016-545 relatif à l’évaluation et au contrôle de qualité des examens de diagnostic prénatal', y: '2016', url: 'documents/textes/53-decret-no-2016-545-relatif-a-levaluation-et-au-controle-de-q.pdf' },
+      { t: 'Arrêté du 16 octobre 2019 relatif à la rougeole', y: '2019', url: 'documents/textes/35-arrete-10-oct-2019-relatif-a-la-rougeole.pdf' },
+      { t: 'Arrêté du 4 octobre 2019 relatif aux AVK', y: '2019', url: 'documents/textes/36-arrete-du-4-octobre-2019-relatif-aux-avk.pdf' },
+      { t: 'Arrêté du 26 juin 2019 : dépistage de l’hépatite C en officine', y: '2019', url: 'documents/textes/37-arrete-du-26-juin-2019-depistage-hepatite-c-en-officine.pdf' },
+      { t: 'Arrêté du 30 janvier 2020 fixant les tests de diagnostic rapide pouvant être réalisés par les pharmaciens', y: '2020', url: 'documents/textes/34-arrete-du-30-janvier-2020-fixant-les-tests-de-diagnostic-rap.pdf' },
+      { t: 'Arrêté du 11 juin 2013 déterminant la liste des tests, recueils et traitements de signaux biologiques qui ne constituent pas un examen de biologie médicale, les catégories de personnes pouvant les réaliser et les conditions de réalisation de certains de ces tests, recueils et traitements de signaux biologiques', y: '2013', url: 'documents/textes/67-arrete-du-11-juin-2013-determinant-la-liste-des-tests-recuei.pdf' }
+    ] },
+    { theme: 'Lois de financement de la sécurité sociale', items: [
+      { t: 'Loi n° 2021-1754 du 23 décembre 2021 de financement de la sécurité sociale pour 2022', y: '2021', url: 'documents/textes/09-loi-no-2021-1754-du-23-decembre-2021-de-financement-de-la-se.pdf' },
+      { t: 'Loi n° 2020-1576 du 14 décembre 2020 de financement de la sécurité sociale pour 2021', y: '2020', url: 'documents/textes/23-loi-no-2020-1576-du-14-decembre-2020-de-financement-de-la-se.pdf' }
+    ] },
+    { theme: 'Système de santé', items: [
+      { t: 'Loi n° 2018-493 du 20 juin 2018 relative à la protection des données personnelles', y: '2018', url: 'documents/textes/39-loi-2018-493-du-20-juin-2018-relative-a-la-protection-des-do.pdf' },
+      { t: 'Décret n° 2016-942 relatif à l’organisation du DPC des professionnels de santé', y: '2016', url: 'documents/textes/51-decret-n-2016-942-relatif-a-lorganisation-du-dpc-des-profess.pdf' },
+      { t: 'Décret n° 2016-1024 relatif aux territoires de démocratie sanitaire aux zones des schémas régionaux de santé et aux conseils territoriaux de santé', y: '2016', url: 'documents/textes/50-decret-no-2016-1024-relatif-aux-territoires-de-democratie-sa.pdf' },
+      { t: 'Décret n° 2010-585 relatif aux unions régionales de professionnels de santé', y: '2010', url: 'documents/textes/63-decret-2010-585-relatif-aux-unions-regionales-de-professionn.pdf' },
+      { t: 'Décret n° 2010-514 relatif au projet régional de santé', y: '2010', url: 'documents/textes/64-decret-2010-514-relatif-au-projet-regional-de-sante.pdf' }
+    ] },
+    { theme: 'Branche et rémunération', items: [
+      { t: 'Rapport de branche 2021 des laboratoires de biologie médicale extra-hospitaliers (données 2020)', y: '2021', url: 'documents/textes/01-labm-rapport-de-branche-2021.pdf' },
+      { t: 'Grille des salaires minima au 1er mai 2022 (accord du 27 avril 2022)', y: '2022', url: 'documents/textes/02-2022-grille-salaires-au-1er-mai.pdf' }
+    ] },
+    { theme: 'Crise sanitaire (covid-19)', items: [
+      { t: 'Arrêté du 15 mars 2022 sur le criblage', y: '2022', url: 'documents/textes/03-arrete-du-15-mars-sur-le-criblage.pdf' },
+      { t: 'DGS-Urgent du 14 mars 2022 : évolution de la lutte contre la covid-19', y: '2022' },
+      { t: 'Décret n° 2022-352 du 12 mars 2022 : mesures générales nécessaires à la gestion de la sortie de crise sanitaire', y: '2022', url: 'documents/textes/05-decret-du-12-mars-mesures-generales-necessaires-a-la-gestion.pdf' },
+      { t: 'Arrêté du 1er février 2022 modifiant la liste des actes et prestations mentionnée à l’article L. 162-1-7 du code de la sécurité sociale et l’arrêté du 12 décembre 2020 portant modification des conditions de remboursement de l’acte de détection du génome du SARS-CoV-2 par amplification génique', y: '2022', url: 'documents/textes/06-arrete-du-1er-fevrier-modifiant-la-liste-des-actes-et-presta.pdf' },
+      { t: 'Arrêté du 27 décembre 2021 modifiant l’arrêté du 1er juin 2021 prescrivant les mesures générales nécessaires à la gestion de la sortie de crise sanitaire', y: '2021', url: 'documents/textes/08-arrete-du-27-decembre-2021-modifiant-larrete-du-1er-juin-202.pdf' },
+      { t: 'Loi n° 2021-1465 du 10 novembre 2021 portant diverses dispositions de vigilance sanitaire', y: '2021', url: 'documents/textes/10-loi-no-2021-1465-du-10-novembre-2021-portant-diverses-dispos.pdf' },
+      { t: 'Arrêté du 9 octobre 2021 prescrivant les mesures nécessaires à la sortie de crise sanitaire', y: '2021', url: 'documents/textes/11-arrete-du-9-octobre-2021-prescrivant-les-mesures-necessaires.pdf' },
+      { t: 'Arrêté du 17 juillet 2021 portant modification des conditions de remboursement de l’acte de détection du génome du SARS-CoV-2 par amplification génique', y: '2021', url: 'documents/textes/12-arrete-du-17-juillet-portant-modification-des-conditions-de.pdf' },
+      { t: 'Décret n° 2021-930 du 13 juillet 2021 modifiant le décret n° 2020-551 du 12 mai 2020 relatif aux systèmes d’information mentionnés à l’article 11 de la loi n° 2020-546 du 11 mai 2020 prorogeant l’état d’urgence sanitaire et complétant ses dispositions et le décret n° 2020-1690 du 25 décembre 2020 autorisant la création d’un traitement de données à caractère personnel relatif aux vaccinations contre la covid-19', y: '2021', url: 'documents/textes/13-decret-no-2021-930-du-13-juillet-2021-modifiant-le-decret-no.pdf' },
+      { t: 'Arrêté du 7 juillet 2021 modifiant l’arrêté du 1er juin 2021 prescrivant les mesures générales nécessaires à la gestion de la sortie de crise sanitaire', y: '2021', url: 'documents/textes/14-arrete-du-7-juillet-2021-modifiant-larrete-du-1er-juin-2021.pdf' },
+      { t: 'Arrêté du 6 juillet 2021 modifiant l’arrêté du 1er juin 2021 prescrivant les mesures générales nécessaires à la gestion de la sortie de crise sanitaire', y: '2021', url: 'documents/textes/15-arrete-du-6-juillet-2021-modifiant-larrete-du-1er-juin-2021.pdf' },
+      { t: 'Arrêté du 29 mai 2021 portant modification de la liste des actes et prestations mentionnée à l’article L. 162-1-7 du code de la sécurité sociale et portant modification de l’arrêté du 12 décembre 2020 portant modification des conditions de remboursement de l’acte de détection du génome du SARS-CoV-2 par amplification génique', y: '2021', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000043558149' },
+      { t: 'Arrêté du 10 avril 2021 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', y: '2021', url: 'documents/textes/17-arrete-du-10-avril-2021-prescrivant-les-mesures-dorganisatio.pdf' },
+      { t: 'Arrêté du 23 mars 2021 prescrivant les mesures nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', y: '2021', url: 'documents/textes/18-arrete-du-23-mars-2021-prescrivant-les-mesures-necessaires-p.pdf' },
+      { t: 'Loi n° 2021-160 du 15 février 2021 prorogeant l’état d’urgence sanitaire', y: '2021', url: 'documents/textes/20-loi-no-2021-160-du-15-fevrier-2021-prorogeant-letat-durgence.pdf' },
+      { t: 'Arrêté du 23 janvier 2021 modifiant l’arrêté du 10 juillet 2020 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', y: '2021', url: 'documents/textes/22-arrete-du-23-janvier-2021-modifiant-larrete-du-10-juillet-20.pdf' },
+      { t: 'Arrêté du 10 août 2020 modifiant l’arrêté du 10 juillet 2020 prescrivant les mesures générales nécessaires pour faire face à l’épidémie de covid-19 dans les territoires sortis de l’état d’urgence sanitaire et dans ceux où il a été prorogé', y: '2020', url: 'documents/textes/24-arrete-du-10-aout-2020-modifiant-larrete-du-10-juillet-2020.pdf' },
+      { t: 'Arrêté du 10 juillet 2020 prescrivant les mesures générales nécessaires pour faire face à l’épidémie de covid-19 dans les territoires sortis de l’état d’urgence sanitaire et dans ceux où il a été prorogé', y: '2020', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000042106233' },
+      { t: 'Arrêté du 25 juin 2020 complétant l’arrêté du 23 mars 2020 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', y: '2020', url: 'documents/textes/26-arrete-du-25-juin-2020-completant-larrete-du-23-mars-2020-pr.pdf' },
+      { t: 'Arrêté du 27 mai 2020 portant modification de la liste des actes et prestations mentionnée à l’article L. 162-1-7 du code de la sécurité sociale (diagnostic biologique de l’infection par le SARS-CoV-2)', y: '2020', url: 'documents/textes/27-arrete-du-27-mai-2020-portant-modification-de-la-liste-des-a.pdf' },
+      { t: 'Décret n° 2020-637 modifiant le décret n° 2020-73 portant adoption de conditions adaptées pour le bénéfice des prestations en espèces pour les personnes exposées au coronavirus', y: '2020', url: 'documents/textes/28-decret-no-2020-637-modifiant-le-decret-n-2020-73-portant-ado.pdf' },
+      { t: 'Décret n° 2020-434 relatif à l’adaptation temporaire des délais et modalités de versement de l’indemnité complémentaire prévue à l’article L. 1226-1 du code du travail', y: '2020', url: 'documents/textes/29-decret-n-2020-434-relatif-a-ladaptation-temporaire-des-delai.pdf' },
+      { t: 'Arrêté du 20 mai 2020 complétant l’arrêté du 23 mars 2020 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', y: '2020', url: 'documents/textes/30-arrete-du-20-mai-2020-completant-larrete-du-23-mars-2020-pre.pdf' },
+      { t: 'Arrêté du 5 avril 2020 complétant l’arrêté du 23 mars 2020 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire.', y: '2020', url: 'documents/textes/31-arrete-du-5-avril-2020-completant-larrete-du-23-mars-2020-pr.pdf' },
+      { t: 'Décret n° 2020-293 prescrivant les mesures générales nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', y: '2020', url: 'documents/textes/32-decret-n-2020-293-prescrivant-les-mesures-generales-necessai.pdf' },
+      { t: 'Arrêté du 16 mars 2020 complétant l’arrêté du 14 mars 2020 portant diverses mesures relatives à la lutte contre la propagation du virus covid-19', y: '2020', url: 'documents/textes/33-arrete-du-16-mars-2020-completant-larrete-du-14-mars-2020-po.pdf' }
+    ] },
+    { theme: 'Guide de référence', items: [
+      { t: 'Références juridiques en biologie médicale, DGOS et CNAM, mise à jour de novembre 2018', y: '2018', url: 'documents/textes/38-dgos-et-cnam-references-juridiques-en-biologie-medicale-mise.pdf' }
+    ] }
   ];
   const PARTNERS = [
     { n: 'Cofrac', d: 'Comité français d’accréditation', url: 'https://www.cofrac.fr' },
@@ -302,13 +488,23 @@
       '<span class="row-cat">' + esc(a.cat) + '</span>' +
     '</a></li>';
 
+  /* Liens d'une actualité : l'article et sa pièce jointe s'ouvrent dans la liseuse ; une publication de démonstration
+     peut renvoyer vers une page extérieure. */
+  const docLink = (u, label, n) => '<a class="more" href="' + esc(u) + '" data-doc="' + esc(u) + '">' + esc(label) + (n ? ' (' + nPages(u) + ')' : '') + '</a>';
+  const actuLinks = (a) => {
+    const l = [];
+    if (a.doc && DOCS[a.doc]) l.push(docLink(a.doc, a.docLabel || 'Lire l’article', !!a.docLabel));
+    if (a.att && DOCS[a.att.url]) l.push(docLink(a.att.url, a.att.label, true));
+    if (!l.length && a.url && isHttp(a.url)) l.push('<a class="more" href="' + esc(a.url) + '" target="_blank" rel="noopener">Lire la suite</a>');
+    return l.length ? '<p class="news-links">' + l.join('') + '</p>' : '';
+  };
   const anews = (a) =>
     '<li class="news-item" id="ac-' + esc(a.id) + '">' +
       '<p class="news-meta"><time datetime="' + esc(a.date) + '">' + esc(longDate(a.date)) + '</time><span>' + esc(a.cat) + '</span>' +
         (a.members ? '<span class="tag-members">' + ICON.lockS + 'Adhérents</span>' : '') + '</p>' +
       '<h2 class="news-title">' + esc(a.title) + '</h2>' +
       (a.excerpt ? '<p class="news-excerpt">' + esc(a.excerpt) + '</p>' : '') +
-      (a.url && isHttp(a.url) ? '<a class="more" href="' + esc(a.url) + '" target="_blank" rel="noopener">Lire sur slbc.fr</a>' : '') +
+      actuLinks(a) +
     '</li>';
 
   const namesOr = (names, empty) => (names.length ? esc(names.join(', ')) : '<span class="pending">' + esc(empty) + '</span>');
@@ -343,13 +539,19 @@
       '</div></div>'
     ).join('');
     $('#urps-list').innerHTML = URPS.map((u) => '<div class="urps-item"><p class="urps-region">' + esc(u[0]) + '</p><p class="urps-names">' + namesOr(u[1], 'Représentant à désigner') + '</p></div>').join('');
-    $('#comptes-list').innerHTML = '<li><a class="row-link" href="https://www.slbc.fr/le-syndicat/les-statuts-du-slbc/" target="_blank" rel="noopener"><span class="row-date">Statuts</span><span class="row-title">Les statuts du SLBC</span><span class="row-cat">slbc.fr</span></a></li>' +
-      COMPTES.map((c) => '<li><a class="row-link" href="https://www.slbc.fr/bilan-et-etat-financier/" target="_blank" rel="noopener"><span class="row-date">Exercice ' + esc(c.y) + '</span><span class="row-title">' + esc(c.d) + '</span><span class="row-cat">slbc.fr</span></a></li>').join('');
+    $('#comptes-list').innerHTML = docRow({ t: 'Les statuts du SLBC', s: 'Paris, le 16 novembre 2013', url: STATUTS }, 'Statuts') +
+      COMPTES.map((c) => docRow({ t: c.d, url: c.url }, 'Exercice ' + c.y)).join('');
     $('#trackers').innerHTML = TRACKERS.map((t) => '<p class="track-title">' + esc(t.title) + '</p><ol class="track">' + t.steps.map((s) => '<li class="' + (s.done ? 'done' : '') + '"><span class="step-name">' + esc(s.n) + '</span><span class="step-when">' + esc(s.w) + '</span></li>').join('') + '</ol>').join('');
     $('#foot-partners').innerHTML = PARTNERS.slice(0, 5).map((p) => '<li><a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.n) + '</a></li>').join('');
     renderDocs('');
   }
 
+  const docRow = (d, date, cat) => {
+    const inner = '<span class="row-date">' + esc(date) + '</span><span class="row-title">' + esc(d.t) + (d.s ? '<span class="row-sub">' + esc(d.s) + '</span>' : '') + '</span>';
+    if (d.url && DOCS[d.url]) return '<li><a class="row-link" href="' + esc(d.url) + '" data-doc="' + esc(d.url) + '">' + inner + '<span class="row-cat">' + esc(cat || nPages(d.url)) + '</span></a></li>';
+    if (d.href) return '<li><a class="row-link" href="' + esc(d.href) + '" target="_blank" rel="noopener">' + inner + '<span class="row-cat">' + esc(d.src || 'Légifrance') + '</span></a></li>';
+    return '<li><div class="row-link is-missing">' + inner + '<span class="row-cat">Document à fournir</span></div></li>';
+  };
   function renderDocs(q) {
     const terms = norm(q).split(/\s+/).filter(Boolean);
     const ok = (s) => !terms.length || terms.every((t) => norm(s).includes(t));
@@ -364,15 +566,17 @@
     }).join('');
     $('#doc-etudes').hidden = !etudes;
     const nabm = NABM.filter((d) => ok(d.t + ' ' + (d.s || '') + ' nabm nomenclature'));
-    $('#doc-nabm-list').innerHTML = nabm.map((d) => '<li><a class="row-link" href="https://www.slbc.fr/documentation/chab/" target="_blank" rel="noopener"><span class="row-date">NABM</span><span class="row-title">' + esc(d.t) + (d.s ? '<span class="row-sub">' + esc(d.s) + '</span>' : '') + '</span><span class="row-cat">slbc.fr</span></a></li>').join('');
+    $('#doc-nabm-list').innerHTML = nabm.map((d) => docRow(d, 'NABM')).join('');
     $('#doc-nabm').hidden = !nabm.length;
     let html = '';
     let count = 0;
-    TEXTES.forEach((g) => {
-      const items = g.items.filter((t) => ok(t + ' ' + g.theme));
+    /* Un groupe dépliable par thème ; une recherche ouvre les groupes qui ont des résultats. */
+    TEXTES.forEach((g, gi) => {
+      const items = g.items.filter((d) => ok(d.t + ' ' + g.theme + ' ' + d.y)).sort((a, b) => b.y.localeCompare(a.y));
       if (!items.length) return;
       count += items.length;
-      html += '<p class="doc-theme">' + esc(g.theme) + '</p><ul class="rows">' + items.map((t) => '<li><a class="row-link" href="https://www.slbc.fr/documentation/professionnel/" target="_blank" rel="noopener"><span class="row-date">' + esc(g.short) + '</span><span class="row-title">' + esc(t) + '</span><span class="row-cat">slbc.fr</span></a></li>').join('') + '</ul>';
+      html += '<details class="region doc-group" id="doc-t' + gi + '"' + (terms.length ? ' open' : '') + '><summary><span>' + esc(g.theme) + '</span><span class="count">' + items.length + ' texte' + (items.length > 1 ? 's' : '') + '</span></summary><ul class="rows">' +
+        items.map((d) => docRow(d, d.y)).join('') + '</ul></details>';
     });
     $('#doc-textes-list').innerHTML = html;
     $('#doc-textes').hidden = !count;
@@ -472,6 +676,7 @@
     if (!t) {
       state.veilleSrc = 'Tout'; state.actuCat = 'Toutes'; state.presseYear = 'Toutes';
       renderVeille(); renderActus(); renderPresse();
+      if ($('#doc-q')) { $('#doc-q').value = ''; renderDocs(''); }
       t = document.getElementById(id);
     }
     if (!t) return;
@@ -554,7 +759,7 @@
     page('Conseil d’administration', 'Les administrateurs par région', '#syndicat', 'conseil');
     page('Nos représentants', 'Nomenclature, convention, accréditation, Europe', '#syndicat', 'representants');
     page('Les URPS', 'La représentation des biologistes en région', '#syndicat', 'urps');
-    page('Statuts et comptes', 'Les statuts du SLBC, comptes 2021 à 2023', '#syndicat', 'comptes');
+    page('Statuts et comptes', 'Les statuts du SLBC, comptes des exercices 2020, 2022 et 2023', '#syndicat', 'comptes');
     page('Veille réglementaire', 'Réservée aux adhérents : Journal officiel, Assemblée nationale, Sénat', '#veille');
     idx.push({ type: 'Page', title: 'Lettre d’information', sub: 'La veille et les nouvelles publications par e-mail', href: '#espace', section: 'ea-lettre', text: 'newsletter abonnement abonner s’abonner s\'abonner désinscription e-mail' });
     idx.push({ type: 'Page', title: 'Salle de presse', sub: 'Les communiqués du SLBC', href: '#presse', section: null, text: 'contact presse journaliste kit presse logo' });
@@ -576,7 +781,7 @@
       idx.push({ type: 'Instance', title: i.n + (i.a ? ' (' + i.a + ')' : ''), sub: i.r, href: '#syndicat', section: 'representants', text: names.join(' ') });
     });
     NABM.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Nomenclature des actes', href: '#documentation', section: 'doc-nabm', text: d.s || '' }));
-    TEXTES.forEach((g) => g.items.forEach((t) => idx.push({ type: 'Document', title: t, sub: g.theme, href: '#documentation', section: 'doc-textes', text: '' })));
+    TEXTES.forEach((g, gi) => g.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: g.theme, href: '#documentation', section: 'doc-t' + gi, text: d.y })));
     ETUDES.forEach((grp) => grp.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: grp.g + ', ' + d.d, href: '#documentation', section: 'doc-etudes', text: d.s + ' ' + (d.src || '') + ' étude rapport' })));
     return idx;
   }
@@ -1137,6 +1342,58 @@
     window.claude.use('downloads').then((d) => { downloadsApi = d; if (readerDoc) setSaveUi(); }).catch(() => {});
   }
   let readerDoc = null; let readerReturn = null; let readerIO = null; let saving = false;
+  /* Mode PDF : pdf.js est chargé à la première ouverture, sans « worker » séparé (le cadre protégé de claude.ai peut les
+     bloquer) ; chaque page est dessinée quand elle approche de l'écran, puis effacée quand elle s'en éloigne (mémoire des tablettes). */
+  const PDFJS = 'assets/pdfjs/';
+  let pdfjsReady = null; let readerPdf = null; let readerTask = null; let drawIO = null;
+  const loadScript = (src) => new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = () => rej(new Error(src)); document.head.appendChild(s); });
+  const loadPdfjs = () => pdfjsReady || (pdfjsReady = loadScript(PDFJS + 'pdf.worker.min.js').then(() => loadScript(PDFJS + 'pdf.min.js')).then(() => {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(PDFJS + 'pdf.worker.min.js', document.baseURI).href;
+    return window.pdfjsLib;
+  }).catch((err) => { pdfjsReady = null; throw err; }));
+  const freePage = (fig) => { const cv = fig.querySelector('canvas'); if (cv) { cv.width = 0; cv.height = 0; } fig.classList.remove('is-drawn'); fig._drawn = false; };
+  function drawPage(fig) {
+    fig._want = true;
+    if (fig._busy || fig._drawn || !readerPdf) return;
+    const pdf = readerPdf; fig._busy = true;
+    pdf.getPage(+fig.dataset.n).then((pg) => {
+      if (pdf !== readerPdf || !fig._want) return null;
+      const base = pg.getViewport({ scale: 1 });
+      fig.style.aspectRatio = base.width + ' / ' + base.height;
+      const px = Math.min((fig.clientWidth || 880) * Math.min(window.devicePixelRatio || 1, 2), 1800);
+      const vp = pg.getViewport({ scale: px / base.width });
+      const cv = fig.querySelector('canvas');
+      cv.width = Math.floor(vp.width); cv.height = Math.floor(vp.height);
+      fig._task = pg.render({ canvasContext: cv.getContext('2d'), viewport: vp });
+      return fig._task.promise.then(() => { fig._drawn = true; fig.classList.add('is-drawn'); });
+    }).catch(() => { freePage(fig); }).then(() => { fig._busy = false; fig._task = null; if (!fig._want) freePage(fig); });
+  }
+  function hidePage(fig) { fig._want = false; if (fig._task) fig._task.cancel(); else if (!fig._busy) freePage(fig); }
+  function openPdf(url, d, pages) {
+    pages.innerHTML = Array.from({ length: d.pages }, (_, i) =>
+      '<figure class="reader-page is-pdf" data-n="' + (i + 1) + '" style="aspect-ratio:' + d.w + ' / ' + d.h + '" role="img" aria-label="Page ' + (i + 1) + ' sur ' + d.pages + '"><canvas></canvas></figure>').join('');
+    $('#reader-count').textContent = 'Ouverture du document…';
+    const mine = url;
+    loadPdfjs().then((lib) => {
+      if (readerDoc !== mine) return null;
+      readerTask = lib.getDocument({ url: new URL(url, document.baseURI).href, isEvalSupported: false });
+      return readerTask.promise;
+    }).then((pdf) => {
+      if (!pdf) return;
+      if (readerDoc !== mine) { pdf.destroy(); return; }
+      readerPdf = pdf;
+      $('#reader-count').textContent = d.pages + ' pages';
+      if ('IntersectionObserver' in window) {
+        drawIO = new IntersectionObserver((entries) => entries.forEach((en) => (en.isIntersecting ? drawPage(en.target) : hidePage(en.target))),
+          { root: pages, rootMargin: '120% 0px', threshold: 0 });
+        $$('.reader-page', pages).forEach((f) => drawIO.observe(f));
+      } else $$('.reader-page', pages).slice(0, 20).forEach(drawPage);
+    }).catch(() => {
+      if (readerDoc !== mine) return;
+      $('#reader-count').textContent = '';
+      pages.innerHTML = '<p class="reader-error">Ce document ne peut pas s’afficher ici.' + ($('#reader-save').hidden && $('#reader-link').hidden ? '' : ' Vous pouvez l’enregistrer avec le bouton « Enregistrer le PDF ».') + '</p>';
+    });
+  }
   /* « Enregistrer le PDF » : par claude.ai si sa fonction de téléchargement répond ; sinon un lien
      ordinaire, seulement hors d'un cadre (un cadre protégé bloquerait ce lien sans rien dire). */
   function setSaveUi() {
@@ -1151,12 +1408,13 @@
     $('#reader-title').textContent = d.title;
     $('#reader-count').textContent = d.pages + ' pages';
     const pages = $('#reader-pages');
-    pages.innerHTML = Array.from({ length: d.pages }, (_, i) =>
-      '<figure class="reader-page" data-n="' + (i + 1) + '"><img src="' + esc(d.img(i + 1)) + '" width="' + d.w + '" height="' + d.h + '" alt="Page ' + (i + 1) + ' sur ' + d.pages + '"' + (i > 1 ? ' loading="lazy"' : '') + '></figure>').join('');
-    pages.scrollTop = 0;
     const link = $('#reader-link');
     link.setAttribute('href', url); link.setAttribute('download', d.file);
     setSaveUi();
+    if (d.pdf) openPdf(url, d, pages);
+    else pages.innerHTML = Array.from({ length: d.pages }, (_, i) =>
+      '<figure class="reader-page" data-n="' + (i + 1) + '"><img src="' + esc(d.img(i + 1)) + '" width="' + d.w + '" height="' + d.h + '" alt="Page ' + (i + 1) + ' sur ' + d.pages + '"' + (i > 1 ? ' loading="lazy"' : '') + '></figure>').join('');
+    pages.scrollTop = 0;
     $('#reader').hidden = false;
     document.documentElement.style.overflow = 'hidden';
     if (readerIO) readerIO.disconnect();
@@ -1174,6 +1432,9 @@
     $('#reader').hidden = true;
     document.documentElement.style.overflow = '';
     if (readerIO) { readerIO.disconnect(); readerIO = null; }
+    if (drawIO) { drawIO.disconnect(); drawIO = null; }
+    if (readerTask) { readerTask.destroy(); readerTask = null; }
+    readerPdf = null;
     $('#reader-pages').innerHTML = '';
     if (readerReturn && typeof readerReturn.focus === 'function') readerReturn.focus();
     readerDoc = null; readerReturn = null;
