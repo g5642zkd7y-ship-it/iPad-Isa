@@ -432,8 +432,10 @@
       if (on && changed && current !== null) { el.classList.remove('entering'); void el.offsetWidth; el.classList.add('entering'); }
     });
     $$('[data-nav]').forEach((a) => { if (a.dataset.nav === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    const first = current === null;
     current = v;
     closeMenu();
+    if (changed || first) playSignature(v);
     if (v === 'accueil') requestAnimationFrame(updateShelf);
     if (pendingSection) {
       const id = pendingSection;
@@ -833,29 +835,60 @@
     showToast('Adresse ajoutée à la liste.', null, null);
   });
 
-  /* ---------- Ouverture : les deux cellules se rejoignent ---------- */
-  function heroIntro() {
-    const grey = $('#hero-grey'); const green = $('#hero-green'); const overlap = $('#hero-overlap'); const clip = $('#hero-clip');
-    if (!grey || !green || !overlap || !clip || reduceMotion) return;
-    if (current !== 'accueil') return;
-    /* Le nom et la devise n'apparaissent en fondu qu'à cette première ouverture (pas à chaque retour sur l'accueil). */
-    const root = document.documentElement;
-    root.classList.add('hero-intro');
-    setTimeout(() => root.classList.remove('hero-intro'), 2400);
+  /* ---------- Signature : les deux ronds se rejoignent à l'ouverture de chaque page ----------
+     Demande d'Isabelle Eimer du 6 novembre 2026. Sur l'accueil, ce sont les grands ronds sous le menu ;
+     sur les autres pages, une petite signature au-dessus du titre (couleurs du logo pour fond sombre
+     sur la Veille, comme marque/symbole-fond-sombre.svg). Couleurs écrites en attributs fill. */
+  function sigSVG(id, dark) {
+    const c = dark ? ['#FFFFFF', '#A3BE3C', '#D6E4A6'] : ['#5E6266', '#A3BE3C', '#5F7A2B'];
+    return '<svg class="sig-mark" viewBox="0 0 120 120" aria-hidden="true" focusable="false">' +
+      '<defs><clipPath id="clip-sig-' + id + '"><circle data-c="clip" cx="44" cy="44" r="36"/></clipPath></defs>' +
+      '<circle data-c="grey" cx="44" cy="44" r="36" fill="' + c[0] + '"/>' +
+      '<circle data-c="green" cx="76" cy="76" r="36" fill="' + c[1] + '"/>' +
+      '<circle data-c="overlap" cx="76" cy="76" r="36" fill="' + c[2] + '" clip-path="url(#clip-sig-' + id + ')"/></svg>';
+  }
+  function setupSignatures() {
+    $$('.view').forEach((v) => {
+      const hero = v.querySelector('.page-hero .container');
+      if (hero) hero.insertAdjacentHTML('afterbegin', sigSVG(v.dataset.view, v.querySelector('.page-hero').classList.contains('bg-encre')));
+    });
+  }
+  const JOIN = { hero: { from: [56, 144], to: [84, 116], dur: 1500, delay: 250 }, sig: { from: [18, 102], to: [44, 76], dur: 1100, delay: 120 } };
+  function joinCircles(svg, k) {
+    if (!svg) return;
+    const q = (n) => svg.querySelector('[data-c="' + n + '"]');
+    const grey = q('grey'); const green = q('green'); const overlap = q('overlap'); const clip = q('clip');
+    if (!grey || !green || !overlap || !clip) return;
     const set = (a, b) => { grey.setAttribute('cx', a); clip.setAttribute('cx', a); green.setAttribute('cx', b); overlap.setAttribute('cx', b); };
-    const from = [56, 144];
-    const to = [84, 116];
+    const { from, to, dur, delay } = JOIN[k];
+    if (svg._join) cancelAnimationFrame(svg._join);
+    if (reduceMotion) { set(to[0], to[1]); return; }
     const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
     set(from[0], from[1]);
     let start = null;
     const frame = (ts) => {
-      if (start === null) start = ts + 250;
-      const t = Math.min(1, Math.max(0, (ts - start) / 1500));
-      const k = ease(t);
-      set(from[0] + (to[0] - from[0]) * k, from[1] + (to[1] - from[1]) * k);
-      if (t < 1) requestAnimationFrame(frame);
+      if (start === null) start = ts + delay;
+      const t = Math.min(1, Math.max(0, (ts - start) / dur));
+      const e = ease(t);
+      set(from[0] + (to[0] - from[0]) * e, from[1] + (to[1] - from[1]) * e);
+      svg._join = t < 1 ? requestAnimationFrame(frame) : null;
     };
-    requestAnimationFrame(frame);
+    svg._join = requestAnimationFrame(frame);
+  }
+  function playSignature(v) {
+    const view = document.querySelector('.view[data-view="' + v + '"]');
+    if (!view) return;
+    if (v === 'accueil') joinCircles(view.querySelector('.hero-mark'), 'hero');
+    else joinCircles(view.querySelector('.sig-mark'), 'sig');
+  }
+
+  /* ---------- Ouverture : les deux cellules se rejoignent ---------- */
+  function heroIntro() {
+    if (reduceMotion || current !== 'accueil') return;
+    /* Le nom et la devise n'apparaissent en fondu qu'à cette première ouverture (pas à chaque retour sur l'accueil). */
+    const root = document.documentElement;
+    root.classList.add('hero-intro');
+    setTimeout(() => root.classList.remove('hero-intro'), 2400);
   }
 
   /* ---------- Lien LinkedIn ---------- */
@@ -986,6 +1019,7 @@
   jShow(1);
   setupHeader();
   setupMotion();
+  setupSignatures();
   route();
   heroIntro();
 })();
