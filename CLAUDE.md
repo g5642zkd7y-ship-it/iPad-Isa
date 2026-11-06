@@ -72,6 +72,6 @@ Objectifs exprimés pour le site :
 - Charte graphique : https://claude.ai/artifact/EhTqyWrkSQibEFKKZiydUK
 - Présentation du nouveau logo au bureau : https://claude.ai/artifact/KCR59a2h3UqryejFXh9NNE
 - Planche des pistes de logo : https://claude.ai/artifact/5XjHgFR5MJBjyEWxmWh8LC
-- Quatre pistes graphiques pour l’accueil (6 novembre 2026 ; palette et logo conservés : éditoriale, rigueur scientifique, couleur affirmée, les deux cercles) : https://claude.ai/artifact/PE61R8Fy1wYjHGFckEHqbq
+- Quatre pistes graphiques pour l’accueil (6 novembre 2026 ; palette et logo conservés : éditoriale, rigueur scientifique, couleur affirmée, les deux cercles), avec à gauche une capture de l’accueil de la maquette actuelle pour comparaison : https://claude.ai/artifact/PE61R8Fy1wYjHGFckEHqbq
 
 
