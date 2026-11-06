@@ -109,13 +109,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .section{padding-block:clamp(64px,8vw,104px)}
 .section-tight{padding-block:clamp(48px,6vw,72px)}
 .page-hero{padding-block:clamp(48px,6vw,80px) clamp(32px,4vw,48px)}
-/* Pages Le syndicat, Veille, Actualités, Salle de presse, Documentation : la mascotte juste à côté du grand titre (6 novembre 2026) */
-.page-hero .container.hero-split{flex-direction:row;align-items:center;justify-content:flex-start;gap:clamp(24px,4vw,64px)}
-.hero-text{display:flex;flex-direction:column;gap:20px;min-width:0;flex:0 1 auto}
-.hero-split > .mascotte{flex:none}
-.bureau-ill{display:block;flex:0 1 auto;width:calc(var(--mascotte-h) * 660 / 210);max-width:100%;height:auto}
-@media (max-width:760px){.syndicat-hero .hero-split{flex-wrap:wrap}}
-@media (max-width:560px){.page-hero .container.hero-split{gap:16px}}
+/* Haut des pages (6 novembre 2026) : les deux ronds, le titre et la mascotte sur une même ligne, le tout centré ;
+   le groupe du syndicat, centré sous le titre */
+.page-hero .container{align-items:center;text-align:center}
+.hero-title{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px clamp(14px,2vw,28px)}
+.page-name{display:flex;align-items:center;justify-content:center;gap:clamp(14px,2vw,24px);min-width:0;flex:0 1 auto}
+.page-name .sig-mark{margin:0;flex:none}
+.page-name .display{min-width:0}
+.page-hero .lead{margin-inline:auto}
+.page-hero .doc-search{width:100%;margin-inline:auto;text-align:left}
+.bureau-ill{display:block;width:calc(var(--mascotte-h) * 660 / 210);max-width:100%;height:auto;margin-top:4px}
 .page-hero + .section-tight{padding-top:clamp(32px,4vw,56px)}
 .page-hero + .section-tight.bg-fond{padding-top:clamp(48px,6vw,72px)}
 .page-hero.bg-encre{padding-bottom:clamp(48px,6vw,72px)}
@@ -667,6 +670,23 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:95;display:flex;align-items:center;gap:18px;max-width:calc(100% - 32px);padding:14px 16px 14px 20px;border-radius:16px;background:var(--encre);color:#fff;font-size:15px;font-weight:500;box-shadow:0 14px 34px rgba(0,0,0,.24);transform:translateX(-50%)}
 .toast a{color:var(--vert-clair);font-weight:700;white-space:nowrap}
 
+/* ---------- Le site bouge avec le visiteur (6 novembre 2026) ----------
+   Variables posées par setupScrollLife() pendant le défilement : --sway (élan, de -1,2 à 1,2), --swayabs (sa valeur
+   absolue), --turn (rotation des engrenages, en degrés). Tout revient à zéro à l'arrêt. */
+body{overflow-x:clip}
+svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
+.lnav-links a[aria-current="true"]{color:var(--vert);box-shadow:inset 0 -2px 0 var(--anis)}
+.js-life svg.mascotte{transform-origin:50% 100%;transform:rotate(calc(var(--sway,0) * -6deg)) scaleY(calc(1 + var(--swayabs,0) * .05))}
+.js-life .perso{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(calc(var(--sway,0) * -6deg)) scaleY(calc(1 + var(--swayabs,0) * .05))}
+.js-life .drapeau{transform-box:fill-box;transform:skewY(calc(var(--sway,0) * 9deg))}
+.js-life .drapeau-left{transform-origin:0 50%}
+.js-life .drapeau-right{transform-origin:100% 50%}
+.js-life .ondes{transform-box:fill-box;transform-origin:0 50%;transform:scaleX(calc(1 + var(--swayabs,0) * .8))}
+.js-life .bulle{transform:translateY(calc(var(--sway,0) * -7px))}
+.js-life .vapeur{transform:translateY(calc(var(--swayabs,0) * -6px))}
+.js-life .engrenage{transform-box:fill-box;transform-origin:50% 50%;transform:rotate(calc(var(--turn,0) * 1deg))}
+.js-life .engrenage-inverse{transform:rotate(calc(var(--turn,0) * -1.35deg))}
+@media print{.js-life svg.mascotte,.js-life .perso,.pillar,.charter-item,.person,.urps-item,.benefit,.vcard{transform:none!important}}
 /* ---------- Mouvement ----------
    Peu d'animations, et seulement celles qui ont un sens pour le SLBC (demande d'Isabelle Eimer du
    6 novembre 2026 : « attractif mais professionnel », « pas IA like ») : les deux ronds du logo qui se

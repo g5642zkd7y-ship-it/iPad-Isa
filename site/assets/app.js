@@ -483,6 +483,7 @@
     } else if (changed) {
       window.scrollTo(0, 0);
     }
+    requestAnimationFrame(kickLife);
   }
 
   document.addEventListener('click', (e) => {
@@ -896,7 +897,7 @@
   function setupSignatures() {
     $('#member-sig').innerHTML = sigSVG('membre', false);
     $$('.view').forEach((v) => {
-      const hero = v.querySelector('.page-hero .hero-text') || v.querySelector('.page-hero .container');
+      const hero = v.querySelector('.page-hero .page-name') || v.querySelector('.page-hero .container');
       if (hero) hero.insertAdjacentHTML('afterbegin', sigSVG(v.dataset.view, v.querySelector('.page-hero').classList.contains('bg-encre')));
     });
   }
@@ -993,6 +994,93 @@
       });
     }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
     $$('.pillar, .timeline, .sep-sig').forEach((el) => io.observe(el));
+  }
+
+  /* ---------- Le site bouge avec le visiteur (demande d'Isabelle Eimer du 6 novembre 2026) ----------
+     Quand on fait défiler la page, sur téléphone comme sur ordinateur :
+     - les mascottes réagissent à la vitesse, comme montées sur ressort, puis reviennent en place ;
+       les drapeaux flottent, les ondes du porte-voix s'allongent, la bulle se soulève ;
+     - les engrenages de la Documentation tournent avec la page ;
+     - les blocs (piliers, missions, bureau, URPS, avantages, cartes de veille) se posent à mesure qu'ils entrent
+       dans l'écran, colonne après colonne, et redescendent si l'on remonte ;
+     - le sous-menu de la page (Le syndicat, Informations légales) suit la lecture.
+     Rien ne bouge à l'arrêt : la boucle s'arrête dès que la page et les ressorts sont immobiles.
+     Animations réduites demandées par le visiteur : seul le sous-menu suit la lecture. */
+  let lifeKick = null;
+  function kickLife() { if (lifeKick) lifeKick(); }
+  function setupScrollLife() {
+    const live = !reduceMotion;
+    if (live) document.documentElement.classList.add('js-life');
+    const DRIFT = '.pillar, .charter-item, .person, .urps-item, .benefit, .vcard';
+    const springs = new WeakMap();
+    let lastY = window.scrollY; let lastT = performance.now(); let vel = 0; let raf = 0;
+    const shown = (el) => el.getClientRects().length > 0;
+
+    function actors() { return $$('.view:not([hidden]) svg.mascotte, .view:not([hidden]) .perso'); }
+
+    function columns(el) {
+      const sibs = Array.from(el.parentElement.children).filter((x) => x.matches(DRIFT));
+      const lefts = Array.from(new Set(sibs.map((x) => x.offsetLeft))).sort((a, b) => a - b);
+      return lefts.indexOf(el.offsetLeft);
+    }
+    function drift() {
+      const vh = window.innerHeight;
+      $$(DRIFT).forEach((el) => {
+        if (!shown(el)) return;
+        const r = el.getBoundingClientRect();
+        const top = r.top - (el._off || 0);
+        if (top > vh + 120 || r.bottom < -120) return;
+        const p = Math.max(0, Math.min(1, (vh - top) / (vh * 0.42)));
+        const ease = 1 - Math.pow(1 - p, 3);
+        const col = el.closest('.shelf') ? 0 : Math.max(0, columns(el));
+        const off = (1 - ease) * (26 + col * 14);
+        el._off = off > 0.4 ? off : 0;
+        el.style.transform = el._off ? 'translate3d(0,' + el._off.toFixed(1) + 'px,0)' : '';
+      });
+    }
+    let spied = null;
+    function spy() {
+      const nav = $('.view:not([hidden]) .lnav');
+      if (!nav) return;
+      const links = $$('a[data-section]', nav);
+      const line = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 64) + 80 + window.innerHeight * 0.2;
+      let cur = null;
+      links.forEach((a) => { const sec = document.getElementById(a.dataset.section); if (sec && shown(sec) && sec.getBoundingClientRect().top <= line) cur = a; });
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4 && links.length) cur = links[links.length - 1];
+      if (cur === spied) return;
+      spied = cur;
+      links.forEach((a) => { if (a === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      if (cur) { const box = cur.parentElement; const x = cur.offsetLeft - 12; if (x < box.scrollLeft || cur.offsetLeft + cur.offsetWidth > box.scrollLeft + box.clientWidth) box.scrollLeft = x; }
+    }
+    function frame(t) {
+      const y = window.scrollY;
+      const dt = Math.min(0.05, Math.max(0.004, (t - lastT) / 1000));
+      let inst = (y - lastY) / dt;
+      if (Math.abs(y - lastY) > window.innerHeight) { inst = 0; vel = 0; } /* changement de page ou saut : pas d'élan */
+      vel += (inst - vel) * Math.min(1, dt * 14);
+      lastY = y; lastT = t;
+      let moving = Math.abs(vel) > 6;
+      if (live) {
+        const target = Math.max(-1, Math.min(1, vel / 1600));
+        actors().forEach((el, i) => {
+          let s = springs.get(el);
+          if (!s) { s = { x: 0, v: 0, k: 70 + (i % 3) * 24, d: 6.5 + (i % 2) * 2 }; springs.set(el, s); }
+          const a = -s.k * (s.x - target) - s.d * s.v;
+          s.v += a * dt; s.x += s.v * dt;
+          if (Math.abs(s.x) > 0.003 || Math.abs(s.v) > 0.01) moving = true; else { s.x = 0; s.v = 0; }
+          const x = Math.max(-1.2, Math.min(1.2, s.x));
+          el.style.setProperty('--sway', x.toFixed(3));
+          el.style.setProperty('--swayabs', Math.min(1, Math.abs(x)).toFixed(3));
+          el.style.setProperty('--turn', (y * 0.6).toFixed(1));
+        });
+        drift();
+      }
+      spy();
+      if (moving) raf = requestAnimationFrame(frame); else { raf = 0; vel = 0; }
+    }
+    lifeKick = () => { if (!raf) { lastT = performance.now(); raf = requestAnimationFrame(frame); } };
+    window.addEventListener('scroll', lifeKick, { passive: true });
+    window.addEventListener('resize', lifeKick);
   }
 
   /* ---------- Liseuse de documents ---------- */
@@ -1124,6 +1212,7 @@
   jShow(1);
   setupHeader();
   setupMotion();
+  setupScrollLife();
   setupSignatures();
   showPanel('veille');
   applyMember();
