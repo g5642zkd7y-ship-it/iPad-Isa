@@ -21,7 +21,13 @@
      téléchargement de claude.ai (capacité downloads). Ailleurs, un simple lien de téléchargement. */
   const DOCS = {
     'documents/protocole-biologie-2027-2029.pdf': { title: 'Protocole d’accord 2027-2029, texte signé', pages: 13, w: 1240, h: 1754,
-      img: (n) => 'documents/protocole-biologie-2027-2029/page-' + String(n).padStart(2, '0') + '.jpg', file: 'protocole-biologie-2027-2029.pdf' }
+      img: (n) => 'documents/protocole-biologie-2027-2029/page-' + String(n).padStart(2, '0') + '.jpg', file: 'protocole-biologie-2027-2029.pdf' },
+    /* Observatoire de la biologie médicale, édition 2026 (étude Roland Berger, mai 2026), envoyé par Isabelle Eimer le 6 novembre 2026 ;
+       source : federationbiologiemedicale.fr */
+    'documents/observatoire-biologie-2026-court.pdf': { title: 'Observatoire de la biologie médicale 2026, version courte', pages: 53, w: 1600, h: 900,
+      img: (n) => 'documents/observatoire-biologie-2026-court/page-' + String(n).padStart(2, '0') + '.jpg', file: 'observatoire-biologie-2026-court.pdf' },
+    'documents/observatoire-biologie-2026-complet.pdf': { title: 'Observatoire de la biologie médicale 2026, rapport complet', pages: 89, w: 1600, h: 900,
+      img: (n) => 'documents/observatoire-biologie-2026-complet/page-' + String(n).padStart(2, '0') + '.jpg', file: 'observatoire-biologie-2026-complet.pdf' }
   };
 
   const sv = (w, body) => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
@@ -177,6 +183,11 @@
     { y: '2022', d: 'États financiers et rapport du commissaire aux comptes' },
     { y: '2021', d: 'Bilan et rapport du commissaire aux comptes' }
   ];
+  /* Études et rapports (Documentation). Source des deux rapports : federationbiologiemedicale.fr (mai 2026). */
+  const ETUDES = [
+    { t: 'Observatoire de la biologie médicale, édition 2026 : version courte', s: 'Étude du secteur des laboratoires de biologie médicale libérale français, Roland Berger, mai 2026, 53 pages', url: 'documents/observatoire-biologie-2026-court.pdf' },
+    { t: 'Observatoire de la biologie médicale, édition 2026 : rapport complet', s: 'Même étude, version longue, 89 pages', url: 'documents/observatoire-biologie-2026-complet.pdf' }
+  ];
   const NABM = [
     { t: 'Arrêté du 25 janvier 2024' }, { t: 'Arrêté du 5 janvier 2024' },
     { t: 'Décision de l’UNCAM du 7 mars 2023' }, { t: 'Arrêté du 26 janvier 2023' },
@@ -331,6 +342,10 @@
   function renderDocs(q) {
     const terms = norm(q).split(/\s+/).filter(Boolean);
     const ok = (s) => !terms.length || terms.every((t) => norm(s).includes(t));
+    const etudes = ETUDES.filter((d) => ok(d.t + ' ' + d.s + ' étude rapport observatoire roland berger'));
+    $('#doc-etudes-list').innerHTML = etudes.map((d) => '<li><a class="row-link" href="' + esc(d.url) + '" data-doc="' + esc(d.url) + '"><span class="row-date">Mai 2026</span><span class="row-title">' +
+      esc(d.t) + '<span class="row-sub">' + esc(d.s) + '</span></span><span class="row-cat">' + DOCS[d.url].pages + ' pages</span></a></li>').join('');
+    $('#doc-etudes').hidden = !etudes.length;
     const nabm = NABM.filter((d) => ok(d.t + ' ' + (d.s || '') + ' nabm nomenclature'));
     $('#doc-nabm-list').innerHTML = nabm.map((d) => '<li><a class="row-link" href="https://www.slbc.fr/documentation/chab/" target="_blank" rel="noopener"><span class="row-date">NABM</span><span class="row-title">' + esc(d.t) + (d.s ? '<span class="row-sub">' + esc(d.s) + '</span>' : '') + '</span><span class="row-cat">slbc.fr</span></a></li>').join('');
     $('#doc-nabm').hidden = !nabm.length;
@@ -347,7 +362,7 @@
     const parts = PARTNERS.filter((p) => ok(p.n + ' ' + p.d + ' partenaire'));
     $('#partners-list').innerHTML = parts.map((p) => '<li><a href="' + esc(p.url) + '" target="_blank" rel="noopener"><strong>' + esc(p.n) + '</strong><span>' + esc(p.d) + '</span></a></li>').join('');
     $('#doc-partenaires').hidden = !parts.length;
-    $('#doc-empty').hidden = Boolean(nabm.length || count || parts.length);
+    $('#doc-empty').hidden = Boolean(etudes.length || nabm.length || count || parts.length);
   }
 
   /* ---------- Rendu du contenu publié ---------- */
@@ -545,6 +560,7 @@
     });
     NABM.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Nomenclature des actes', href: '#documentation', section: 'doc-nabm', text: d.s || '' }));
     TEXTES.forEach((g) => g.items.forEach((t) => idx.push({ type: 'Document', title: t, sub: g.theme, href: '#documentation', section: 'doc-textes', text: '' })));
+    ETUDES.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Études et rapports', href: '#documentation', section: 'doc-etudes', text: d.s + ' observatoire étude rapport' }));
     return idx;
   }
   const srItem = (it) =>
