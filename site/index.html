@@ -310,28 +310,30 @@
     <div class="container">
       <h2 class="h-section">Le bureau exécutif</h2>
       <p class="lead">Le conseil d’administration est élu pour quatre ans. Son président constitue le bureau exécutif.</p>
-      <ul class="people" id="bureau-list"></ul>
+      <div class="org" id="bureau-list"></div>
+      <p class="org-note">Sous chaque nom, sa région au conseil d’administration et les instances où siège ce membre du bureau.</p>
     </div>
   </section>
   <section class="section-tight bg-fond" id="conseil">
     <div class="container">
       <h2 class="h-section">Le conseil d’administration</h2>
-      <p class="lead">Les administrateurs du syndicat, région par région.</p>
-      <div class="regions" id="ca-list"></div>
+      <p class="lead">Les administrateurs du syndicat, région par région<span id="ca-total"></span>.</p>
+      <div class="reg-grid ca-grid" id="ca-list"></div>
     </div>
   </section>
   <section class="section-tight" id="representants">
     <div class="container">
       <h2 class="h-section">Nos représentants</h2>
-      <p class="lead">Les instances où siègent les élus du SLBC, et leurs représentants.</p>
-      <div class="inst-table" id="inst-list"></div>
+      <p class="lead">Les instances où siègent les élus du SLBC, et leurs représentants, classées par domaine.</p>
+      <p class="inst-key"><span><span class="swatch swatch-bureau" aria-hidden="true"></span>Membre du bureau exécutif</span><span><span class="swatch swatch-open" aria-hidden="true"></span>Siège à pourvoir</span></p>
+      <div class="poles" id="inst-list"></div>
     </div>
   </section>
   <section class="section-tight bg-fond" id="urps">
     <div class="container">
       <h2 class="h-section">Les URPS</h2>
       <p class="lead">Les unions régionales des professions de santé rassemblent, dans chaque région, les représentants des professionnels libéraux. Elles participent au projet régional de santé, à la permanence des soins et au développement professionnel continu.</p>
-      <div class="urps-grid" id="urps-list"></div>
+      <div class="urps-groups" id="urps-list"></div>
     </div>
   </section>
   <section class="section-tight" id="comptes">
@@ -945,7 +947,7 @@
     <div class="foot-legal">
       <span>Copyright © 2026 SLBC. Tous droits réservés.</span>
       <nav aria-label="Informations légales"><a href="#mentions">Mentions légales</a><a href="#mentions" data-section="donnees">Données personnelles</a><a href="#mentions" data-section="cookies">Cookies</a></nav>
-      <span>Maquette de travail. Les liens externes ouvrent les pages du site actuel.</span>
+      <span>Maquette de travail.</span>
     </div>
   </div>
 </footer>
