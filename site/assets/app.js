@@ -848,7 +848,7 @@
     $$('[data-contact-copy]').forEach((b) => { b.dataset.copy = CONTACT_EMAIL; b.hidden = !okMail; });
   }
 
-  /* ---------- Mouvement : en-tête et apparition des blocs au défilement ---------- */
+  /* ---------- Mouvement : ombre de l’en-tête, piliers et frise ---------- */
   function setupHeader() {
     const nav = $('.gnav');
     if (!nav) return;
@@ -856,50 +856,19 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   }
-  /* Blocs qui apparaissent un par un ; listes dont les éléments apparaissent en cascade ;
-     conteneurs de mise en page que l'on traverse. L'espace adhérent (outil de travail) reste fixe. */
-  const MOTION_GROUPS = '.pillars, .tiles, .name-wall, .join-list, .doc-links, .rows, .people, .charter, .benefits, .regions, .urps-grid, .partners, .legal-list';
-  /* Bandeaux qui défilent de côté : leurs cartes hors champ ne croisent jamais l'écran ;
-     c'est le bandeau entier qui déclenche l'apparition de toutes ses cartes, en cascade. */
-  const MOTION_SHELVES = '.shelf';
-  const MOTION_WRAPS = '.split, .join, .join-layout, .press-layout, .veille-layout, .press-main, .side-col';
+  /* Filet des piliers et frise du protocole : tracés quand ils arrivent à l'écran.
+     Pas d'apparition en fondu des autres blocs (voir le bloc « Mouvement » de styles.css). */
   function setupMotion() {
     if (reduceMotion || !('IntersectionObserver' in window)) return;
     document.documentElement.classList.add('js-motion');
-    const leaves = []; const shelves = [];
-    const walk = (el) => {
-      if (el.matches(MOTION_SHELVES)) { shelves.push(el); return; }
-      if (el.matches(MOTION_GROUPS)) { Array.from(el.children).forEach((c) => leaves.push(c)); return; }
-      if (el.matches(MOTION_WRAPS)) { Array.from(el.children).forEach(walk); return; }
-      leaves.push(el);
-    };
-    $$('.view:not([data-view="espace"]) section:not(.hero)').forEach((sec) => {
-      const c = sec.querySelector(':scope > .container');
-      if (!c) return;
-      if (c.matches(MOTION_GROUPS) || c.matches(MOTION_WRAPS)) walk(c);
-      else Array.from(c.children).forEach(walk);
-    });
-    const draws = $$('.pillar, .timeline');
     const io = new IntersectionObserver((entries) => {
-      let i = 0;
       entries.forEach((en) => {
         if (!en.isIntersecting) return;
-        const el = en.target;
-        io.unobserve(el);
-        if (el.matches('.pillar, .timeline')) el.classList.add('drawn');
-        const show = (x) => {
-          const d = Math.min(i++, 6) * 0.08;
-          x.style.setProperty('--d', d + 's');
-          x.classList.add('is-in');
-          setTimeout(() => x.classList.remove('reveal', 'is-in'), 1300 + d * 1000);
-        };
-        if (el.matches(MOTION_SHELVES)) { Array.from(el.children).forEach((c) => { if (c.classList.contains('reveal')) show(c); }); return; }
-        if (el.classList.contains('reveal')) show(el);
+        en.target.classList.add('drawn');
+        io.unobserve(en.target);
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
-    leaves.forEach((el) => { el.classList.add('reveal'); io.observe(el); });
-    shelves.forEach((sh) => { Array.from(sh.children).forEach((c) => c.classList.add('reveal')); io.observe(sh); });
-    draws.forEach((el) => io.observe(el));
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+    $$('.pillar, .timeline').forEach((el) => io.observe(el));
   }
 
   /* ---------- Démarrage ---------- */

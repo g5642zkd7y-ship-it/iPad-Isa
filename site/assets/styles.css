@@ -63,7 +63,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .gnav-links a[aria-current="page"]{color:var(--encre);font-weight:600}
 .gnav-links a{position:relative}
 .gnav-links a::after{content:"";position:absolute;left:0;right:0;bottom:14px;height:2px;border-radius:2px;background:var(--vert);transform:scaleX(0)}
-.gnav-links a:hover::after,.gnav-links a[aria-current="page"]::after{transform:none}
+.gnav-links a[aria-current="page"]::after{transform:none}
 .gnav.is-scrolled{border-bottom-color:rgba(46,50,54,.12);box-shadow:0 6px 24px rgba(46,50,54,.07)}
 .gnav-tools{display:flex;align-items:center;gap:4px;margin-left:auto}
 .icon-btn{width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--encre);display:grid;place-items:center;cursor:pointer}
@@ -579,10 +579,13 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .toast a{color:var(--vert-clair);font-weight:700;white-space:nowrap}
 
 /* ---------- Mouvement ----------
-   Animations sobres demandées par Isabelle Eimer le 6 novembre 2026 : ouverture du logo puis du titre,
-   apparition douce des blocs au défilement, filets des piliers et frise du protocole qui se tracent,
-   soulignement du menu, ombre de l'en-tête. La classe js-motion n'est posée que si le visiteur
-   n'a pas demandé à réduire les animations : sans elle, tout s'affiche directement. */
+   Peu d'animations, et seulement celles qui ont un sens pour le SLBC (demande d'Isabelle Eimer du
+   6 novembre 2026 : « attractif mais professionnel », « pas IA like ») : les deux ronds du logo qui se
+   rejoignent, puis le nom et la devise ; le filet vert des trois piliers ; la frise du protocole qui
+   avance dans le temps ; l'onglet du menu de la page en cours ; l'ombre de l'en-tête au défilement.
+   Volontairement absents, car typiques des sites générés ou des modèles tout faits : apparition en
+   fondu de chaque bloc au défilement, cascades, cartes qui se soulèvent, halos et pulsations.
+   La classe js-motion n'est posée que si le visiteur n'a pas demandé à réduire les animations. */
 :root{--ease-out:cubic-bezier(.16,1,.3,1)}
 @media (prefers-reduced-motion:no-preference){
   .view.entering{animation:viewIn .4s var(--ease)}
@@ -591,18 +594,14 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
   .toast:not([hidden]){animation:toastIn .3s var(--ease)}
   .gnav{transition:box-shadow .35s var(--ease),border-color .35s var(--ease)}
   .gnav-links a::after{transition:transform .35s var(--ease-out)}
-  .vcard{transition:background-color .2s var(--ease),transform .45s var(--ease-out)}
-  .vcard:hover{transform:translateY(-4px)}
-  .btn:active,.btn-nav:active{transform:scale(.98)}
-  /* Ouverture de l'accueil : le nom puis la devise montent pendant que les ronds se rejoignent */
-  .js-motion .hero-name{animation:riseIn .9s var(--ease-out) .95s both}
-  .js-motion .hero .display{animation:riseIn 1.1s var(--ease-out) 1.15s both}
-  /* Apparition au défilement */
-  .js-motion .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease-out) var(--d,0s),transform 1s var(--ease-out) var(--d,0s)}
-  .js-motion .reveal.is-in{opacity:1;transform:none}
-  /* Piliers : le filet vert se trace de gauche à droite */
+  /* Ouverture de l'accueil : le nom puis la devise apparaissent quand les ronds se rejoignent */
+  .js-motion .hero-name{animation:fadeUp .8s var(--ease) 1.1s both}
+  .js-motion .hero .display{animation:fadeUp .9s var(--ease) 1.3s both}
+  /* Piliers : le filet vert se trace de gauche à droite, pilier après pilier */
   .js-motion .pillar{position:relative;border-top-color:transparent}
-  .js-motion .pillar::before{content:"";position:absolute;top:-4px;left:0;right:0;height:4px;background:var(--anis);transform:scaleX(0);transform-origin:left center;transition:transform 1.2s var(--ease-out) calc(var(--d,0s) + .2s)}
+  .js-motion .pillar::before{content:"";position:absolute;top:-4px;left:0;right:0;height:4px;background:var(--anis);transform:scaleX(0);transform-origin:left center;transition:transform 1.1s var(--ease-out) .15s}
+  .js-motion .pillar:nth-child(2)::before{transition-delay:.35s}
+  .js-motion .pillar:nth-child(3)::before{transition-delay:.55s}
   .js-motion .pillar.drawn::before{transform:none}
   /* Frise du protocole : les étapes se posent l'une après l'autre */
   .js-motion .timeline li::before{transform:scaleX(0);transform-origin:left center;transition:transform .6s var(--ease-out)}
@@ -614,14 +613,12 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
   .js-motion .timeline li:nth-child(2)::before{transition-delay:1s}
   .js-motion .timeline li:nth-child(3)::after{transition-delay:1.45s}
   .js-motion .timeline li:nth-child(3)::before{transition-delay:1.6s}
-  .js-motion .timeline.drawn .is-next::after{animation:halo 1.8s ease-out 2s 2}
 }
 @media (prefers-reduced-motion:no-preference) and (max-width:520px){
   .js-motion .timeline li::before{transform:scaleY(0);transform-origin:center top}
 }
-@keyframes riseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-@keyframes halo{0%,100%{box-shadow:0 0 0 4px rgba(163,190,60,.28)}50%{box-shadow:0 0 0 10px rgba(163,190,60,0)}}
-@media print{.reveal{opacity:1!important;transform:none!important}.pillar::before,.timeline li::before,.timeline li::after{transform:none!important}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media print{.pillar::before,.timeline li::before,.timeline li::after{transform:none!important}}
 @keyframes viewIn{from{opacity:.4}to{opacity:1}}
 @keyframes fadeIn{from{opacity:.5}to{opacity:1}}
 @keyframes dropIn{from{opacity:.6;transform:translateY(-12px)}to{opacity:1;transform:none}}
