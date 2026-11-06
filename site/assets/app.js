@@ -946,6 +946,8 @@
     openReader(a.dataset.doc, a);
   });
   $('#reader-close').addEventListener('click', closeReader);
+  /* Changer de page (lien, bouton Précédent du navigateur) referme la liseuse. */
+  window.addEventListener('hashchange', closeReader);
   /* Le focus reste dans la liseuse tant qu'elle est ouverte. */
   $('#reader').addEventListener('keydown', (e) => {
     if (e.key !== 'Tab') return;

@@ -607,7 +607,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .reader-page{margin:0;width:100%;max-width:880px;background:#fff;box-shadow:0 1px 3px rgba(46,50,54,.14)}
 .reader-page img{display:block;width:100%;height:auto}
 @media (max-width:520px){.reader-btn{padding:0 12px;font-size:14px}.reader-pages{padding-inline:8px;gap:10px}}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:80;display:flex;align-items:center;gap:18px;max-width:calc(100% - 32px);padding:14px 16px 14px 20px;border-radius:16px;background:var(--encre);color:#fff;font-size:15px;font-weight:500;box-shadow:0 14px 34px rgba(0,0,0,.24);transform:translateX(-50%)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:95;display:flex;align-items:center;gap:18px;max-width:calc(100% - 32px);padding:14px 16px 14px 20px;border-radius:16px;background:var(--encre);color:#fff;font-size:15px;font-weight:500;box-shadow:0 14px 34px rgba(0,0,0,.24);transform:translateX(-50%)}
 .toast a{color:var(--vert-clair);font-weight:700;white-space:nowrap}
 
 /* ---------- Mouvement ----------
