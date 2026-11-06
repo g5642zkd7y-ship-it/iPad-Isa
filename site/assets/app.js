@@ -136,11 +136,13 @@
     { t: 'Faire reconnaître le biologiste comme acteur de santé', d: 'Un médecin ou un pharmacien spécialiste, au cœur du parcours de soins, dont le métier mérite d’être connu.' },
     { t: 'Préparer l’avenir du métier', d: 'Attirer et former les jeunes biologistes, accompagner l’innovation diagnostique et faire vivre la fierté de la profession.' }
   ];
-  /* Représentants communiqués par Isabelle Eimer le 5 novembre 2026 ; les autres sièges sont à désigner. */
+  /* Représentants communiqués par Isabelle Eimer le 5 novembre 2026 ; les autres sièges sont à désigner.
+     a : sigle, affiché entre parenthèses après le nom (sigles, CNPBM et comité de suivi du protocole ajoutés le 6 novembre 2026). */
   const INSTANCES = [
-    { n: 'Commission de hiérarchisation des actes de biologie', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
-    { n: 'Commission conventionnelle paritaire nationale', r: 'Convention avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
-    { n: 'Commission nationale de biologie médicale', r: 'Conditions d’exercice de la profession', reps: [] },
+    { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
+    { n: 'Commission conventionnelle paritaire nationale', a: 'CCPNI', r: 'Convention avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
+    { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', r: 'Conditions d’exercice de la profession', reps: [] },
+    { n: 'Comité de suivi du protocole', r: 'Protocole 2027-2029 avec l’Assurance maladie', reps: [] },
     { n: 'Cofrac', r: 'Commission technique d’accréditation', reps: [] },
     { n: 'Ministère chargé de la santé', r: 'Relations avec la tutelle', reps: ['Thierry Bouchet', 'Nicolas Roquigny'] },
     { n: 'Commission sociale paritaire', r: 'Dialogue social de la branche', reps: ['Thierry Bouchet'] },
@@ -310,7 +312,7 @@
     $('#protocole-list').textContent = PROTOCOLE.join(', ');
     $('#ca-list').innerHTML = CA.map((r) => '<details class="region"><summary><span>' + esc(r[0]) + '</span><span class="count">' + r[1].length + ' administrateur' + (r[1].length > 1 ? 's' : '') + '</span></summary><p>' + esc(r[1].join(', ')) + '</p></details>').join('');
     $('#inst-list').innerHTML = INSTANCES.map((i) =>
-      '<div class="inst-row"><div><p class="inst-name">' + esc(i.n) + '</p><p class="inst-role">' + esc(i.r) + '</p></div><p class="inst-reps">' + namesOr(i.reps, 'Représentant à désigner') + '</p></div>'
+      '<div class="inst-row"><div><p class="inst-name">' + esc(i.n) + (i.a ? ' <span class="inst-abbr">(' + esc(i.a) + ')</span>' : '') + '</p><p class="inst-role">' + esc(i.r) + '</p></div><p class="inst-reps">' + namesOr(i.reps, 'Représentant à désigner') + '</p></div>'
     ).join('');
     $('#urps-list').innerHTML = URPS.map((u) => '<div class="urps-item"><p class="urps-region">' + esc(u[0]) + '</p><p class="urps-names">' + namesOr(u[1], 'Représentant à désigner') + '</p></div>').join('');
     $('#comptes-list').innerHTML = '<li><a class="row-link" href="https://www.slbc.fr/le-syndicat/les-statuts-du-slbc/" target="_blank" rel="noopener"><span class="row-date">Statuts</span><span class="row-title">Les statuts du SLBC</span><span class="row-cat">slbc.fr</span></a></li>' +
@@ -526,7 +528,7 @@
     DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title + (p.subtitle ? ' : ' + p.subtitle : ''), sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with + ' ' + (p.quote ? p.quote.text : '') + ' ' + (p.body || []).map((sec) => sec.h + ' ' + sec.ps.join(' ')).join(' ') + ' ' + (p.points || []).map((x) => x.join(' ')).join(' ') }));
     DATA.actus.forEach((a) => idx.push({ type: 'Actualité', title: a.title, sub: longDate(a.date), href: '#actualites', section: 'ac-' + a.id, text: a.excerpt + ' ' + a.cat }));
     BUREAU.forEach((b) => idx.push({ type: 'Bureau', title: b[1], sub: b[0], href: '#syndicat', section: 'bureau', text: '' }));
-    INSTANCES.forEach((i) => idx.push({ type: 'Instance', title: i.n, sub: i.r, href: '#syndicat', section: 'representants', text: i.reps.join(' ') }));
+    INSTANCES.forEach((i) => idx.push({ type: 'Instance', title: i.n + (i.a ? ' (' + i.a + ')' : ''), sub: i.r, href: '#syndicat', section: 'representants', text: i.reps.join(' ') }));
     NABM.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Nomenclature des actes', href: '#documentation', section: 'doc-nabm', text: d.s || '' }));
     TEXTES.forEach((g) => g.items.forEach((t) => idx.push({ type: 'Document', title: t, sub: g.theme, href: '#documentation', section: 'doc-textes', text: '' })));
     return idx;
