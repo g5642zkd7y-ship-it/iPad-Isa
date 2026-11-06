@@ -378,7 +378,7 @@
   window.addEventListener('resize', updateShelf);
 
   /* ---------- Navigation entre les vues ---------- */
-  const VIEWS = ['accueil', 'syndicat', 'veille', 'presse', 'actualites', 'documentation', 'adherer', 'espace'];
+  const VIEWS = ['accueil', 'syndicat', 'veille', 'presse', 'actualites', 'documentation', 'adherer', 'espace', 'mentions'];
   let current = null;
   let pendingSection = null;
 
@@ -462,6 +462,9 @@
     page('Textes réglementaires', 'Lois, décrets et arrêtés', '#documentation', 'doc-textes');
     page('Adhérer au SLBC', 'Demande d’adhésion en ligne', '#adherer');
     page('Espace adhérent', 'Publier, envoyer la lettre d’information', '#espace');
+    idx.push({ type: 'Page', title: 'Mentions légales', sub: 'Éditeur, directeur de la publication, hébergeur', href: '#mentions', section: null, text: 'informations légales éditeur hébergeur droit de réponse' });
+    idx.push({ type: 'Page', title: 'Données personnelles', sub: 'Usages, durées de conservation, vos droits', href: '#mentions', section: 'donnees', text: 'RGPD confidentialité vie privée CNIL droits' });
+    idx.push({ type: 'Page', title: 'Cookies', sub: 'Aucun cookie de mesure d’audience ni de publicité', href: '#mentions', section: 'cookies', text: 'traceurs bandeau' });
     DATA.veille.forEach((v) => idx.push({ type: 'Veille', title: v.title, sub: v.when, href: '#veille', section: 'vi-' + v.id, text: v.resume }));
     DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title, sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with }));
     DATA.actus.forEach((a) => idx.push({ type: 'Actualité', title: a.title, sub: longDate(a.date), href: '#actualites', section: 'ac-' + a.id, text: a.excerpt + ' ' + a.cat }));

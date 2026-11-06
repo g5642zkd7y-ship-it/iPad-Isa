@@ -456,6 +456,31 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .done-panel{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
 .done-icon{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--vert-clair);color:var(--vert)}
 
+/* ---------- Informations légales ---------- */
+.legal-dl{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);margin-top:32px;border-top:1px solid var(--filet)}
+.legal-dl dt,.legal-dl dd{padding:18px 0;border-bottom:1px solid var(--filet)}
+.legal-dl dt{padding-right:24px;font-weight:600;color:var(--encre)}
+.legal-dl dd{margin:0;color:var(--texte);overflow-wrap:anywhere}
+@media (max-width:640px){.legal-dl{grid-template-columns:minmax(0,1fr)}.legal-dl dt{padding-bottom:2px;border-bottom:0}.legal-dl dd{padding-top:0}}
+.legal-list{list-style:none;margin:32px 0 0;padding:0;border-top:1px solid var(--filet-fort)}
+.legal-list > li{padding:24px 0;border-bottom:1px solid var(--filet-fort)}
+.legal-kv{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.legal-kv div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px}
+.legal-kv dt{font-size:15px;color:var(--gris)}
+.legal-kv dd{margin:0}
+@media (max-width:640px){.legal-kv div{grid-template-columns:minmax(0,1fr);gap:0}}
+.legal-prose{max-width:46em}
+.legal-prose h3{margin:36px 0 10px}
+.legal-prose h3:first-child{margin-top:0}
+.legal-prose p + p{margin-top:14px}
+#donnees .legal-prose{margin-top:40px}
+.h-section + .legal-prose{margin-top:28px}
+.legal-note{padding:16px 20px;border-left:4px solid var(--anis);border-radius:4px;background:#fff}
+.legal-note strong{color:var(--encre)}
+.form-note{font-size:14px;line-height:1.5;color:var(--gris)}
+.side-dark .form-note{color:var(--sombre-texte)}
+.side-dark .form-note a{color:var(--vert-clair)}
+
 /* ---------- Espace adhérent ---------- */
 .login-wrap{display:flex;justify-content:center}
 .login-card{display:flex;flex-direction:column;gap:18px;width:100%;max-width:440px;padding:clamp(28px,5vw,48px);border-radius:var(--r-tile);background:#fff;box-shadow:0 1px 2px rgba(46,50,54,.06)}

@@ -19,7 +19,8 @@ La maquette simule tout le circuit. Aucun e-mail n’est réellement envoyé : l
 | Inscription | Double confirmation recommandée : un e-mail de confirmation à cliquer avant l’inscription définitive. |
 | Désinscription | Un lien de désinscription dans chaque e-mail, qui fonctionne en un clic. |
 | Consentement (RGPD) | Informer dès le formulaire : une phrase sous la case (qui envoie, dans quel but, comment se désinscrire) et un lien vers la politique de confidentialité. Garder, pour chaque inscription, la date, l’origine, le texte de la case acceptée et l’heure de la confirmation. |
-| Expéditeur | Envoi depuis une adresse du domaine slbc.fr, authentifiée (SPF, DKIM, et DMARC recommandé) pour ne pas tomber en indésirables. |
+| Expéditeur | Envoi depuis une adresse du domaine slbc.fr, authentifiée (SPF, DKIM, et DMARC recommandé) pour ne pas tomber en indésirables. Nom du SLBC et adresse postale en pied d’e-mail. |
+| Suivi | Aucun pixel d’ouverture ni suivi des clics : à désactiver dans l’outil d’envoi (sinon, un consentement séparé est nécessaire ; voir `docs/obligations-legales.md`). |
 | Modèle d’e-mail | Aux couleurs de la charte graphique : symbole du logo, titre, résumé, bouton « Lire sur le site ». |
 | Contenu réservé | Pour une publication « réservée aux adhérents », l’e-mail renvoie vers le site, où la lecture demande une connexion. |
 

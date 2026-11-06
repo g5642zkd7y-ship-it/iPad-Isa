@@ -303,6 +303,7 @@
           <label class="check-line"><input type="checkbox" id="sub-consent"><span>J’accepte de recevoir la lettre d’information du SLBC. Je peux me désinscrire à tout moment.</span></label>
           <button class="btn btn-light" type="submit">M’abonner</button>
           <p class="form-ok" id="sub-ok" role="status" hidden></p>
+          <p class="form-note">Votre e-mail sert seulement à l’envoi de la lettre. Chaque envoi contient un lien de désinscription. <a href="#mentions" data-section="donnees">Vos données personnelles</a></p>
         </form>
       </aside>
     </div>
@@ -404,9 +405,12 @@
           </ol>
           <fieldset data-panel="1">
             <legend>Vous</legend>
-            <div class="radio-seg" role="radiogroup" aria-label="Civilité">
-              <label><input type="radio" name="civ" value="Madame" checked><span>Madame</span></label>
-              <label><input type="radio" name="civ" value="Monsieur"><span>Monsieur</span></label>
+            <div class="field">
+              <span class="field-label" id="civ-label">Civilité (facultatif)</span>
+              <div class="radio-seg" role="radiogroup" aria-labelledby="civ-label">
+                <label><input type="radio" name="civ" value="Madame"><span>Madame</span></label>
+                <label><input type="radio" name="civ" value="Monsieur"><span>Monsieur</span></label>
+              </div>
             </div>
             <div class="field-row">
               <div class="field"><label class="field-label" for="j-prenom">Prénom</label><input class="input" id="j-prenom" autocomplete="given-name" data-req="Indiquez votre prénom."><p class="field-error" id="j-prenom-err" hidden></p></div>
@@ -434,6 +438,7 @@
             <button class="btn btn-primary" type="submit" id="join-next">Continuer</button>
             <button class="btn btn-quiet" type="button" id="join-prev" hidden>Retour</button>
           </div>
+          <p class="form-note">Vos informations servent seulement à examiner votre demande, puis à gérer votre adhésion. Seul le syndicat y a accès, avec ses prestataires techniques. Vous pouvez les consulter, les corriger ou les faire effacer en écrivant à contact@slbc.fr. <a href="#mentions" data-section="donnees">Vos données personnelles</a></p>
         </div>
         <div class="done-panel" id="join-done" hidden>
           <span class="done-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"/></svg></span>
@@ -442,6 +447,112 @@
           <button class="btn btn-quiet" type="button" id="join-restart">Nouvelle demande</button>
         </div>
       </form>
+    </div>
+  </section>
+</div>
+
+<!-- ================= INFORMATIONS LÉGALES ================= -->
+<div class="view" data-view="mentions" hidden>
+  <nav class="lnav" aria-label="Rubriques des informations légales">
+    <div class="container lnav-in">
+      <span class="lnav-title">Informations légales</span>
+      <div class="lnav-links">
+        <a href="#mentions" data-section="mentions-legales">Mentions légales</a>
+        <a href="#mentions" data-section="donnees">Vos données</a>
+        <a href="#mentions" data-section="cookies">Cookies</a>
+      </div>
+    </div>
+  </nav>
+  <section class="page-hero">
+    <div class="container narrow">
+      <h1 class="display">Informations légales</h1>
+      <p class="lead">Mentions légales, données personnelles et cookies. Textes proposés, à valider par le bureau et à faire relire par un juriste avant la mise en ligne.</p>
+    </div>
+  </section>
+  <section class="section-tight" id="mentions-legales">
+    <div class="container narrow">
+      <h2 class="h-section">Mentions légales</h2>
+      <dl class="legal-dl">
+        <dt>Éditeur du site</dt>
+        <dd>Syndicat des Laboratoires de Biologie Clinique (SLBC), syndicat professionnel.<br>6 place de la Madeleine, 75008 Paris.<br>Téléphone : <span class="pending">à compléter</span>.<br>E-mail : contact@slbc.fr</dd>
+        <dt>Directeur de la publication</dt>
+        <dd>Thierry Bouchet, président du SLBC <span class="pending">(à confirmer selon les statuts)</span>.</dd>
+        <dt>Hébergeur</dt>
+        <dd>Nom, adresse et téléphone de l’hébergeur : <span class="pending">à compléter</span>.</dd>
+        <dt>Droit de réponse</dt>
+        <dd>Toute personne nommée ou désignée sur ce site peut demander l’insertion d’une réponse. Elle l’adresse au directeur de la publication, à contact@slbc.fr.</dd>
+        <dt>Propriété intellectuelle</dt>
+        <dd>Le logo et les textes du site appartiennent au SLBC, sauf mention contraire. Leur reproduction demande son accord. Pour les textes officiels cités, la source et la date sont indiquées.</dd>
+      </dl>
+    </div>
+  </section>
+  <section class="section-tight bg-fond" id="donnees">
+    <div class="container narrow">
+      <h2 class="h-section">Données personnelles</h2>
+      <p class="lead">Le SLBC est responsable des données recueillies sur ce site. Il les utilise seulement pour les usages décrits ici et ne les vend pas.</p>
+      <ul class="legal-list">
+        <li>
+          <h3 class="h-block">Demande d’adhésion</h3>
+          <dl class="legal-kv">
+            <div><dt>Données</dt><dd>Nom, prénom, e-mail, laboratoire, ville, mode d’exercice ; civilité, téléphone et message s’ils sont indiqués.</dd></div>
+            <div><dt>Usage</dt><dd>Examiner votre demande, puis gérer votre adhésion.</dd></div>
+            <div><dt>Base légale</dt><dd>Les démarches préalables à l’adhésion, puis l’adhésion elle-même.</dd></div>
+            <div><dt>Durée</dt><dd><span class="pending">À fixer par le bureau.</span></dd></div>
+          </dl>
+        </li>
+        <li>
+          <h3 class="h-block">Lettre d’information</h3>
+          <dl class="legal-kv">
+            <div><dt>Données</dt><dd>E-mail, date et texte de votre accord.</dd></div>
+            <div><dt>Usage</dt><dd>Vous envoyer la veille réglementaire et les nouvelles publications du SLBC.</dd></div>
+            <div><dt>Base légale</dt><dd>Votre consentement, que vous pouvez retirer à tout moment par le lien présent dans chaque e-mail.</dd></div>
+            <div><dt>Durée</dt><dd>Jusqu’à votre désinscription. La preuve de votre accord : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
+          </dl>
+        </li>
+        <li>
+          <h3 class="h-block">Espace adhérent</h3>
+          <dl class="legal-kv">
+            <div><dt>Données</dt><dd>Identifiant, mot de passe, journal des connexions.</dd></div>
+            <div><dt>Usage</dt><dd>Donner accès aux contenus réservés aux adhérents et protéger les comptes.</dd></div>
+            <div><dt>Base légale</dt><dd>L’adhésion ; la sécurité du site, intérêt légitime du SLBC.</dd></div>
+            <div><dt>Durée</dt><dd>Compte : le temps de l’adhésion. Journal des connexions : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
+          </dl>
+        </li>
+        <li>
+          <h3 class="h-block">Élus et représentants</h3>
+          <dl class="legal-kv">
+            <div><dt>Données</dt><dd>Nom, fonction, région ou instance.</dd></div>
+            <div><dt>Usage</dt><dd>Faire connaître les personnes qui représentent le syndicat.</dd></div>
+            <div><dt>Base légale</dt><dd>L’accord des personnes concernées.</dd></div>
+            <div><dt>Durée</dt><dd>Le temps du mandat.</dd></div>
+          </dl>
+        </li>
+      </ul>
+      <div class="legal-prose">
+        <h3 class="h-block">Qui a accès à vos données</h3>
+        <p>Les personnes chargées de l’adhésion et de la communication au SLBC. Ses prestataires techniques, qui agissent pour son compte et selon ses instructions : hébergeur du site et outil d’envoi des e-mails, <span class="pending">à compléter</span>. Si l’un d’eux traite des données hors de l’Union européenne, les garanties prévues seront indiquées ici.</p>
+        <h3 class="h-block">Appartenance au syndicat</h3>
+        <p>Votre adhésion au SLBC est une information protégée. Le SLBC ne publie pas la liste de ses adhérents et ne la communique pas en dehors du syndicat, sauf à ses prestataires techniques.</p>
+        <h3 class="h-block">Vos droits</h3>
+        <p>Vous pouvez accéder à vos données, les corriger, les faire effacer, en limiter l’usage et les récupérer. Vous pouvez retirer votre accord à tout moment.</p>
+        <p class="legal-note"><strong>Droit d’opposition.</strong> Vous pouvez à tout moment vous opposer à un usage de vos données fondé sur l’intérêt légitime du SLBC.</p>
+        <p>Pour exercer ces droits, écrivez à contact@slbc.fr (adresse dédiée : <span class="pending">à compléter</span>). Le SLBC vous répond dans un délai d’un mois. Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL, sur cnil.fr.</p>
+        <h3 class="h-block">Après un décès</h3>
+        <p>Vous pouvez indiquer au SLBC si vous souhaitez que vos données soient communiquées, ou non, à une personne que vous désignez après votre décès. Vous pouvez aussi laisser des directives sur leur conservation, leur effacement et leur communication (article 85 de la loi Informatique et Libertés).</p>
+        <h3 class="h-block">Délégué à la protection des données</h3>
+        <p><span class="pending">Désignation à décider par le bureau.</span></p>
+      </div>
+    </div>
+  </section>
+  <section class="section-tight" id="cookies">
+    <div class="container narrow">
+      <h2 class="h-section">Cookies</h2>
+      <div class="legal-prose">
+        <p>Le site ne dépose aucun cookie de mesure d’audience, de publicité ou de réseau social. Il n’utilise que ce qui est nécessaire à son fonctionnement, comme le maintien de votre connexion à l’espace adhérent. C’est pourquoi aucun bandeau ne vous demande votre accord.</p>
+        <p>Les liens vers la page LinkedIn du SLBC sont de simples liens : LinkedIn ne reçoit rien tant que vous ne cliquez pas.</p>
+        <p>Les polices de caractères sont hébergées sur le serveur du site : votre adresse n’est pas transmise à un service extérieur. <span class="pending">(À mettre en place lors de l’intégration.)</span></p>
+        <p>Les e-mails de la lettre d’information ne contiennent aucun outil de suivi des ouvertures ou des clics.</p>
+      </div>
     </div>
   </section>
 </div>
@@ -518,7 +629,7 @@
               <div class="mp-meta" id="mp-meta"></div>
               <div class="mp-head"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="clip-mail"><circle cx="44" cy="44" r="36"/></clipPath></defs><circle cx="44" cy="44" r="36" fill="#5E6266"/><circle cx="76" cy="76" r="36" fill="#A3BE3C"/><circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-mail)"/></svg><span class="mp-brand">SLBC</span></div>
               <div class="mp-body" id="mp-body"></div>
-              <p class="mp-foot">Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBC. <span class="mp-link">Se désinscrire</span></p>
+              <p class="mp-foot">SLBC, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBC. <span class="mp-link">Se désinscrire</span></p>
             </div>
           </div>
           <p class="g-title" style="margin-top:16px">Publications récentes</p>
@@ -589,7 +700,7 @@
     </div>
     <div class="foot-legal">
       <span>Copyright © 2026 SLBC. Tous droits réservés.</span>
-      <nav aria-label="Informations légales"><a href="#accueil">Mentions légales</a><a href="#accueil">Confidentialité</a><a href="#accueil">CGU</a></nav>
+      <nav aria-label="Informations légales"><a href="#mentions">Mentions légales</a><a href="#mentions" data-section="donnees">Données personnelles</a><a href="#mentions" data-section="cookies">Cookies</a></nav>
       <span>Maquette de travail. Les liens externes ouvrent les pages du site actuel.</span>
     </div>
   </div>

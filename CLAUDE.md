@@ -15,12 +15,13 @@ Objectifs exprimés pour le site :
 
 ## État actuel
 
-- `site/index.html` : page unique ; navigation par ancre (`#accueil`, `#syndicat`, `#veille`, `#presse`, `#actualites`, `#documentation`, `#adherer`, `#espace`).
+- `site/index.html` : page unique ; navigation par ancre (`#accueil`, `#syndicat`, `#veille`, `#presse`, `#actualites`, `#documentation`, `#adherer`, `#espace`, `#mentions`).
 - `site/assets/styles.css` : styles, avec les jetons de couleur et de typographie dans `:root`.
 - `site/assets/app.js` : contenu (tableaux `DATA`, `BUREAU`, `INSTANCES`, `CA`, `URPS`, etc. en tête de fichier), rendu, routeur, recherche, formulaires.
 - HTML, CSS et JavaScript simples, **sans outil de construction**. Pour prévisualiser : ouvrir `site/index.html` dans un navigateur, ou lancer `python3 -m http.server` dans `site/`.
 - L’« Espace adhérent » est une **démonstration** : la connexion accepte n’importe quel identifiant, et les publications sont gardées uniquement dans le navigateur (`localStorage`, clé `slbc-maquette-publications`). Aucune donnée n’est envoyée.
 - **Lettre d’information** (démonstration) : inscription avec consentement sur la page Veille, envoi optionnel aux abonnés à chaque publication (objet, aperçu de l’e-mail), rubrique « Lettre d’information » de l’espace adhérent (abonnés, derniers envois). Données gardées dans le navigateur (clés `slbc-maquette-abonnes`, `slbc-maquette-envois`) ; aucun e-mail n’est envoyé. Mise en place réelle : `docs/lettre-information.md`.
+- **Informations légales** (`#mentions`, reliée au pied de page) : mentions légales, données personnelles, cookies. Textes proposés, à valider par le bureau et à faire relire par un juriste ; les éléments manquants sont marqués « à compléter ». Mentions courtes sous les formulaires d’adhésion et de lettre d’information ; civilité facultative. Synthèse des obligations, sources et liste de ce qui reste à fournir : `docs/obligations-legales.md`.
 - Version publiée de la maquette (privée) : https://claude.ai/artifact/Vse2Nq8YweogmxHKpnrjRR
 - `docs/contexte.md` : le syndicat, ses chantiers et l’état des dossiers législatifs (protocole, PLFSS), à jour au 4 novembre 2026.
 - Ajouter un communiqué : nouvelle entrée dans `DATA.presse` (`site/assets/app.js`) avec `id` unique (p4, p5…), `date` au format AAAA-MM-JJ (elle fixe l’ordre d’affichage), `year` (les 4 chiffres de la date, pour le filtre), `title`, `with`, `chapo`, `url` du PDF ou de la page, `linkLabel` ; `dateLabel` facultatif si seule l’année est connue. Puis republier la maquette.
