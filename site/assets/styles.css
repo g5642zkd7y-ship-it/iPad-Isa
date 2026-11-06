@@ -121,7 +121,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .bureau-ill{display:block;width:calc(var(--mascotte-h) * 660 / 210);max-width:100%;height:auto;margin-top:4px}
 .page-hero + .section-tight{padding-top:clamp(32px,4vw,56px)}
 .page-hero + .section-tight.bg-fond{padding-top:clamp(48px,6vw,72px)}
-.page-hero.bg-encre{padding-bottom:clamp(48px,6vw,72px)}
+.page-hero.bg-encre,.page-hero.bg-vert,.page-hero.bg-vert-clair,.page-hero.bg-neutre{padding-bottom:clamp(48px,6vw,72px)}
+/* Bandeaux de couleur des pages (6 novembre 2026) : le contenu qui suit reprend de l'air */
+.page-hero.bg-encre + .section-tight,.page-hero.bg-vert + .section-tight,.page-hero.bg-vert-clair + .section-tight,.page-hero.bg-neutre + .section-tight{padding-top:clamp(40px,5vw,64px)!important}
 .page-hero .container{display:flex;flex-direction:column;gap:20px}
 .sig-mark{display:block;width:52px;height:52px;overflow:visible;margin-bottom:2px}
 .sig-login{width:56px;height:56px;margin-bottom:0}
@@ -129,6 +131,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .bg-encre{background:var(--encre);color:var(--sombre-texte)}
 .bg-encre h1,.bg-encre h2,.bg-encre h3{color:#fff}
 .bg-vert{background:var(--vert);color:#fff}
+.bg-vert h1{color:#fff}
+.bg-vert-clair{background:var(--vert-clair)}
+.bg-vert-clair .lead{color:var(--texte)}
+.bg-neutre{background:var(--neutre)}
+.bg-neutre .doc-search{background:#fff}
 .bg-vert h2{color:#fff}
 .display{font-size:clamp(34px,3.9vw,48px);line-height:1.08;letter-spacing:-.025em;font-weight:800}
 .h-section{font-size:clamp(28px,2.8vw,36px);line-height:1.1;letter-spacing:-.02em;font-weight:800}

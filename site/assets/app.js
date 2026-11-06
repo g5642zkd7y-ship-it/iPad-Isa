@@ -898,7 +898,7 @@
     $('#member-sig').innerHTML = sigSVG('membre', false);
     $$('.view').forEach((v) => {
       const hero = v.querySelector('.page-hero .page-name') || v.querySelector('.page-hero .container');
-      if (hero) hero.insertAdjacentHTML('afterbegin', sigSVG(v.dataset.view, v.querySelector('.page-hero').classList.contains('bg-encre')));
+      if (hero) hero.insertAdjacentHTML('afterbegin', sigSVG(v.dataset.view, /bg-encre|bg-vert(\s|$)/.test(v.querySelector('.page-hero').className)));
     });
   }
   const JOIN = { hero: { from: [56, 144], to: [84, 116], dur: 1500, delay: 250 }, sig: { from: [18, 102], to: [44, 76], dur: 1100, delay: 120 } };
