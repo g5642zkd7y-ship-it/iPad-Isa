@@ -15,7 +15,7 @@ Objectifs exprimés pour le site :
 
 ## État actuel
 
-- `site/index.html` : page unique ; navigation par ancre (`#accueil`, `#syndicat`, `#veille`, `#presse`, `#actualites`, `#documentation`, `#adherer`, `#espace`, `#mentions`).
+- `site/index.html` : page unique ; menu du haut avec un onglet « Accueil » (6 novembre 2026) ; navigation par ancre (`#accueil`, `#syndicat`, `#veille`, `#presse`, `#actualites`, `#documentation`, `#adherer`, `#espace`, `#mentions`).
 - `site/assets/styles.css` : styles, avec les jetons de couleur et de typographie dans `:root`.
 - `site/assets/app.js` : contenu (tableaux `DATA`, `BUREAU`, `INSTANCES`, `CA`, `URPS`, etc. en tête de fichier), rendu, routeur, recherche, formulaires.
 - HTML, CSS et JavaScript simples, **sans outil de construction**. Pour prévisualiser : ouvrir `site/index.html` dans un navigateur, ou lancer `python3 -m http.server` dans `site/`.
@@ -51,7 +51,7 @@ Objectifs exprimés pour le site :
 ## Conventions de conception
 
 - Une idée par section ; alternance fond blanc, fond clair et sections sombres ; listes à filets fins plutôt que piles de cartes.
-- Une seule animation à l’ouverture (les deux ronds qui se rejoignent) ; respecter `prefers-reduced-motion`.
+- Animations sobres (demande d’Isabelle Eimer du 6 novembre 2026, « attractif mais professionnel ») : ouverture de l’accueil (les deux ronds se rejoignent, puis le nom et la devise montent), apparition douce des blocs au défilement (en cascade dans les listes), filets des piliers et frise du protocole qui se tracent, soulignement vert de l’onglet du menu, légère ombre de l’en-tête au défilement. Tout est réglé dans le bloc « Mouvement » de `styles.css` et dans `setupMotion()` de `app.js`. Rien d’autre en mouvement continu ; respecter `prefers-reduced-motion` (sans la classe `js-motion`, tout s’affiche directement). L’espace adhérent reste fixe.
 - Accessibilité : contraste d’au moins 4,5:1, focus clavier visible, vrais `<button>` et `<a href>`, libellés sur tous les champs.
 - Le site doit fonctionner à la largeur d’un téléphone (390 px) sans défilement horizontal.
 
