@@ -161,6 +161,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 /* ---------- Bandeau veille ---------- */
 .band-head{display:flex;flex-direction:column;gap:18px;max-width:52rem;margin-bottom:48px}
+/* Accueil, bandeau de la veille : mascotte aux jumelles à gauche du titre (6 novembre 2026) */
+.veille-band-head{display:flex;align-items:center;gap:clamp(20px,3vw,40px);margin-bottom:48px}
+.veille-band-head .band-head{margin-bottom:0;min-width:0}
 .shelf{display:flex;gap:16px;margin:-2px;padding:2px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
 .shelf::-webkit-scrollbar{display:none}
 .vcard{flex:0 0 min(360px,86%);scroll-snap-align:start;display:flex;flex-direction:column;gap:14px;min-height:300px;padding:28px;border-radius:var(--r-card);background:var(--sombre-carte);color:var(--sombre-texte);text-decoration:none;transition:background-color .2s var(--ease)}
@@ -253,8 +256,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 :root{--mascotte-h:clamp(130px,14vw,190px)}
 @media (max-width:560px){:root{--mascotte-h:112px}}
 .mascotte{flex:none;display:block;width:auto;height:var(--mascotte-h)}
-.veille-head .mascotte{height:calc(var(--mascotte-h) * 206 / 210)}
-@media (max-width:560px){.piliers-head,.veille-head{gap:16px}}
+.veille-head .mascotte,.veille-band-head .mascotte{height:calc(var(--mascotte-h) * 206 / 210)}
+@media (max-width:560px){.piliers-head,.veille-head,.veille-band-head{gap:16px}.veille-band-head{align-items:flex-start}}
 .pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 48px;margin-top:48px}
 .pillar{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:4px solid var(--anis)}
 .pillar p{max-width:34em;font-size:17px;line-height:1.6;color:var(--texte)}
