@@ -111,7 +111,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .page-hero{padding-block:clamp(48px,6vw,80px) clamp(32px,4vw,48px)}
 /* Page Le syndicat : cinq mascottes qui discutent, à la place de la bannière (6 novembre 2026) */
 .syndicat-ill{padding-block:clamp(40px,5vw,64px) clamp(32px,4vw,48px)}
-.bureau-ill{display:block;width:100%;max-width:760px;height:auto;margin-inline:auto}
+.bureau-ill{display:block;width:calc(var(--mascotte-h) * 660 / 210);max-width:100%;height:auto;margin-inline:auto}
 .page-hero + .section-tight{padding-top:clamp(32px,4vw,56px)}
 .page-hero + .section-tight.bg-fond{padding-top:clamp(48px,6vw,72px)}
 .page-hero.bg-encre{padding-bottom:clamp(48px,6vw,72px)}
@@ -248,8 +248,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .piliers-head,.veille-head{display:flex;align-items:center;gap:clamp(20px,3vw,40px)}
 .piliers-head > div,.veille-head > div{min-width:0}
 .piliers-head .h-section + .lead,.veille-head .h-section + .lead{margin-top:18px}
-.mascotte{flex:none;display:block;width:auto;height:clamp(130px,14vw,190px)}
-@media (max-width:560px){.piliers-head,.veille-head{gap:16px}.mascotte{height:112px}}
+/* Toutes les mascottes à la même échelle (demande d’Isabelle Eimer du 6 novembre 2026) : --mascotte-h est la hauteur
+   d’un dessin de 210 unités (la mascotte de l’accueil) ; chaque dessin prend la taille de son viewBox rapportée à 210. */
+:root{--mascotte-h:clamp(130px,14vw,190px)}
+@media (max-width:560px){:root{--mascotte-h:112px}}
+.mascotte{flex:none;display:block;width:auto;height:var(--mascotte-h)}
+.veille-head .mascotte{height:calc(var(--mascotte-h) * 206 / 210)}
+@media (max-width:560px){.piliers-head,.veille-head{gap:16px}}
 .pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 48px;margin-top:48px}
 .pillar{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:4px solid var(--anis)}
 .pillar p{max-width:34em;font-size:17px;line-height:1.6;color:var(--texte)}
@@ -431,7 +436,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .hcp-title{max-width:22em;font-size:clamp(26px,2.6vw,34px);font-weight:700;line-height:1.15;letter-spacing:-.02em;color:var(--encre)}
 .hcp-chapo{max-width:40em;font-size:18px;line-height:1.6}
 .hcp-side{display:flex;flex-direction:column;gap:28px;min-width:0}
-.hcp-ill{display:block;width:100%;max-width:440px;height:auto}
+.hcp-ill{display:block;width:calc(var(--mascotte-h) * 384 / 210);max-width:100%;height:auto}
 .p-quote.hcp-quote{margin:0}
 .p-quote.hcp-quote blockquote{font-size:20px;line-height:1.45}
 @media (max-width:900px){.home-cp-in{grid-template-columns:minmax(0,1fr)}}
