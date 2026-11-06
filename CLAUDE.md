@@ -78,3 +78,4 @@ Objectifs exprimés pour le site :
 - Quatre pistes graphiques pour l’accueil (6 novembre 2026 ; palette et logo conservés : éditoriale, rigueur scientifique, couleur affirmée, les deux cercles), avec à gauche une capture de l’accueil de la maquette actuelle pour comparaison : https://claude.ai/artifact/PE61R8Fy1wYjHGFckEHqbq
 
 
+- Mascotte (6 novembre 2026) : petit biologiste en blouse, lunettes, tube à essai et porte-voix, inspiré de deux exemples envoyés par Isabelle Eimer (dessins de bonshommes « sympas et ludiques »). Quatre styles à comparer (marqueur, crayon fin, aplats verts, pastille), pas encore choisis ni intégrés au site : https://claude.ai/artifact/8DSpGXc8gu8UCZFg1M6GqL
