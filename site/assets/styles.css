@@ -512,6 +512,17 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 /* ---------- Espace adhérent ---------- */
 .login-wrap{display:flex;justify-content:center}
 .login-card{display:flex;flex-direction:column;gap:18px;width:100%;max-width:440px;padding:clamp(28px,5vw,48px);border-radius:var(--r-tile);background:#fff;box-shadow:0 1px 2px rgba(46,50,54,.06)}
+.member-id{display:flex;align-items:center;gap:16px}
+.member-id .sig-mark{margin:0}
+.ea-panel{margin-top:32px}
+@media (max-width:560px){#ea-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%}#ea-tabs button{white-space:normal;min-height:52px;padding:6px 8px;line-height:1.2;text-align:center}}
+.ea-intro{margin-bottom:28px}
+.ea-intro .muted{margin-top:6px;max-width:46em}
+.ea-lettre{max-width:560px}
+.ea-panel .side-block:not(.side-dark){background:var(--fond)}
+.veille-public{display:flex;flex-direction:column;gap:20px;max-width:46em}
+.veille-public .cta-row{margin-top:4px}
+.login-join{font-size:15px;color:var(--texte)}
 .admin-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:32px}
 .admin-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
 @media (max-width:960px){.admin-grid{grid-template-columns:minmax(0,1fr)}}

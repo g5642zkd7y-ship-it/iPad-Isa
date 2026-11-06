@@ -6,7 +6,7 @@ Fiche de travail du 5 novembre 2026, à partager avec l’agence Kstudio. À val
 
 La maquette simule tout le circuit. Aucun e-mail n’est réellement envoyé : les adresses et l’historique des envois restent dans le navigateur de la personne qui teste (clés `slbc-maquette-abonnes` et `slbc-maquette-envois`).
 
-1. **Inscription** (page Veille, bloc « Recevoir la lettre d’information ») : adresse e-mail et case de consentement obligatoire. Une adresse déjà inscrite est signalée.
+1. **Inscription** (espace adhérent, rubrique « Lettre d’information » ; la veille est réservée aux adhérents depuis le 6 novembre 2026) : adresse e-mail et case de consentement obligatoire. Une adresse déjà inscrite est signalée.
 2. **Publication** (Espace adhérent) : l’interrupteur « Envoyer aux abonnés de la lettre d’information » indique le nombre d’abonnés. Un champ « Objet de l’e-mail » (repris du titre s’il reste vide) et un aperçu de l’e-mail apparaissent quand l’envoi est activé.
 3. **Gestion** (Espace adhérent, rubrique « Lettre d’information ») : liste des abonnés, ajout et retrait d’une adresse, historique des derniers envois.
 

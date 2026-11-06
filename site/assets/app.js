@@ -234,7 +234,7 @@
 
   /* ---------- Gabarits ---------- */
   const vcard = (v) =>
-    '<a class="vcard" href="#veille" data-section="vi-' + esc(v.id) + '">' +
+    '<a class="vcard" href="#espace" data-section="vi-' + esc(v.id) + '">' +
       '<span class="src"><span class="dot dot-' + esc(v.src) + '" aria-hidden="true"></span>' + esc(v.where || SRC[v.src]) + '</span>' +
       '<h3>' + esc(v.title) + '</h3>' +
       '<p>' + esc(v.teaser || v.resume) + '</p>' +
@@ -248,7 +248,6 @@
           '<span class="src src-light"><span class="dot dot-' + esc(v.src) + '" aria-hidden="true"></span>' + esc(v.where || SRC[v.src]) + '</span>' +
           '<span>' + esc(v.when) + '</span>' +
           '<span class="impact impact-' + esc(v.impact) + '">' + esc(IMPACT[v.impact]) + '</span>' +
-          (v.members ? '<span class="tag-members">' + ICON.lockS + 'Adhérents</span>' : '') +
         '</span><span class="v-title">' + esc(v.title) + '</span></span>' +
         '<span class="v-plus" aria-hidden="true"></span>' +
       '</summary><div class="v-body">' +
@@ -256,7 +255,6 @@
         (facts ? '<dl class="v-facts">' + facts + '</dl>' : '') +
         '<div class="link-row">' +
           (v.url && isHttp(v.url) ? '<a class="more" href="' + esc(v.url) + '" target="_blank" rel="noopener">' + esc(v.linkLabel || 'Texte officiel') + '</a>' : '') +
-          '<span class="members-only">' + ICON.lock + 'Analyse détaillée réservée aux adhérents</span>' +
         '</div></div></details>';
   };
 
@@ -412,6 +410,10 @@
 
   function goSection(id) {
     let t = document.getElementById(id);
+    if (t && t.closest('#member')) {
+      if (!member) { wantPanel = panelOf(t); window.scrollTo(0, 0); return; }
+      showPanel(panelOf(t));
+    }
     if (!t || t.offsetParent === null) {
       state.veilleSrc = 'Tout'; state.actuCat = 'Toutes'; state.presseYear = 'Toutes';
       renderVeille(); renderActus(); renderPresse();
@@ -484,19 +486,19 @@
     page('Nos représentants', 'Nomenclature, convention, accréditation, Europe', '#syndicat', 'representants');
     page('Les URPS', 'La représentation des biologistes en région', '#syndicat', 'urps');
     page('Statuts et comptes', 'Les statuts du SLBC, comptes 2021 à 2023', '#syndicat', 'comptes');
-    page('Veille réglementaire', 'Journal officiel, Assemblée nationale, Sénat', '#veille');
-    idx.push({ type: 'Page', title: 'Lettre d’information', sub: 'La veille et les nouvelles publications par e-mail', href: '#veille', section: 'abonnement', text: 'newsletter abonnement abonner s’abonner s\'abonner désinscription e-mail' });
+    page('Veille réglementaire', 'Réservée aux adhérents : Journal officiel, Assemblée nationale, Sénat', '#veille');
+    idx.push({ type: 'Page', title: 'Lettre d’information', sub: 'La veille et les nouvelles publications par e-mail', href: '#espace', section: 'ea-lettre', text: 'newsletter abonnement abonner s’abonner s\'abonner désinscription e-mail' });
     idx.push({ type: 'Page', title: 'Salle de presse', sub: 'Les communiqués du SLBC', href: '#presse', section: null, text: 'contact presse journaliste kit presse logo' });
     idx.push({ type: 'Page', title: 'Contacter le SLBC', sub: 'Adresse e-mail et adresse postale', href: '#mentions', section: 'mentions-legales', text: 'contact contacter nous contacter écrire e-mail courriel adresse téléphone' });
     page('Actualités', 'L’information du syndicat', '#actualites');
     page('Nomenclature des actes (NABM)', 'Arrêtés et décisions de l’UNCAM', '#documentation', 'doc-nabm');
     page('Textes réglementaires', 'Lois, décrets et arrêtés', '#documentation', 'doc-textes');
     page('Adhérer au SLBC', 'Demande d’adhésion en ligne', '#adherer');
-    page('Espace adhérent', 'Publier, envoyer la lettre d’information', '#espace');
+    page('Espace adhérent', 'Veille réglementaire, lettre d’information, publications', '#espace');
     idx.push({ type: 'Page', title: 'Mentions légales', sub: 'Éditeur, directeur de la publication, hébergeur', href: '#mentions', section: null, text: 'informations légales éditeur hébergeur droit de réponse' });
     idx.push({ type: 'Page', title: 'Données personnelles', sub: 'Usages, durées de conservation, vos droits', href: '#mentions', section: 'donnees', text: 'RGPD confidentialité vie privée CNIL droits' });
     idx.push({ type: 'Page', title: 'Cookies', sub: 'Aucun cookie de mesure d’audience ni de publicité', href: '#mentions', section: 'cookies', text: 'traceurs bandeau' });
-    DATA.veille.forEach((v) => idx.push({ type: 'Veille', title: v.title, sub: v.when, href: '#veille', section: 'vi-' + v.id, text: v.resume }));
+    if (member) DATA.veille.forEach((v) => idx.push({ type: 'Veille', title: v.title, sub: v.when, href: '#espace', section: 'vi-' + v.id, text: v.resume }));
     DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title + (p.subtitle ? ' : ' + p.subtitle : ''), sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with + ' ' + (p.quote ? p.quote.text : '') + ' ' + (p.body || []).map((sec) => sec.h + ' ' + sec.ps.join(' ')).join(' ') + ' ' + (p.points || []).map((x) => x.join(' ')).join(' ') }));
     DATA.actus.forEach((a) => idx.push({ type: 'Actualité', title: a.title, sub: longDate(a.date), href: '#actualites', section: 'ac-' + a.id, text: a.excerpt + ' ' + a.cat }));
     BUREAU.forEach((b) => idx.push({ type: 'Bureau', title: b[1], sub: b[0], href: '#syndicat', section: 'bureau', text: '' }));
@@ -662,16 +664,18 @@
     const em = $('#login-email'); const er = $('#login-err');
     if (!em.value.trim()) { er.textContent = 'Saisissez votre e-mail.'; er.hidden = false; em.setAttribute('aria-invalid', 'true'); em.focus(); return; }
     er.hidden = true; em.removeAttribute('aria-invalid');
-    $('#login').hidden = true; $('#admin').hidden = false;
+    setMember(em.value.trim());
+    showPanel(wantPanel || 'veille'); wantPanel = null;
     window.scrollTo(0, 0);
-    $('#f-title').focus({ preventScroll: true });
+    playSignature('espace');
+    $('#ea-tabs button[aria-pressed="true"]').focus({ preventScroll: true });
   });
-  $('#logout').addEventListener('click', () => { $('#admin').hidden = true; $('#login').hidden = false; window.scrollTo(0, 0); });
+  $('#logout').addEventListener('click', () => { setMember(null); showPanel('veille'); window.scrollTo(0, 0); $('#login-email').focus({ preventScroll: true }); });
 
   /* ---------- Espace adhérent : publier ---------- */
   const PUB = {
     cp: { label: 'Communiqué', submit: 'Publier le communiqué', toast: 'Communiqué publié', href: '#presse', prefix: 'cp-', where: 'La publication apparaîtra en tête de la salle de presse.' },
-    veille: { label: 'Veille', submit: 'Publier dans la veille', toast: 'Publié dans la veille', href: '#veille', prefix: 'vi-', where: 'La publication apparaîtra dans la veille réglementaire et dans le bandeau de la page d’accueil.' },
+    veille: { label: 'Veille', submit: 'Publier dans la veille', toast: 'Publié dans la veille', href: '#espace', prefix: 'vi-', where: 'La publication apparaîtra dans la veille réglementaire de l’espace adhérent et, pour les adhérents connectés, dans le bandeau de la page d’accueil.' },
     actu: { label: 'Actualité', submit: 'Publier l’actualité', toast: 'Actualité publiée', href: '#actualites', prefix: 'ac-', where: 'La publication apparaîtra dans les actualités et sur la page d’accueil.' }
   };
   let pubType = 'cp';
@@ -848,6 +852,7 @@
       '<circle data-c="overlap" cx="76" cy="76" r="36" fill="' + c[2] + '" clip-path="url(#clip-sig-' + id + ')"/></svg>';
   }
   function setupSignatures() {
+    $('#member-sig').innerHTML = sigSVG('membre', false);
     $$('.view').forEach((v) => {
       const hero = v.querySelector('.page-hero .container');
       if (hero) hero.insertAdjacentHTML('afterbegin', sigSVG(v.dataset.view, v.querySelector('.page-hero').classList.contains('bg-encre')));
@@ -879,7 +884,7 @@
     const view = document.querySelector('.view[data-view="' + v + '"]');
     if (!view) return;
     if (v === 'accueil') joinCircles(view.querySelector('.hero-mark'), 'hero');
-    else joinCircles(view.querySelector('.sig-mark'), 'sig');
+    else joinCircles(Array.from(view.querySelectorAll('.sig-mark')).find((s) => s.getClientRects().length), 'sig');
   }
 
   /* ---------- Ouverture : les deux cellules se rejoignent ---------- */
@@ -1016,6 +1021,36 @@
     saving = false; btn.removeAttribute('aria-busy');
   });
 
+  /* ---------- Espace adhérent : session de démonstration et rubriques ----------
+     La veille réglementaire est réservée aux adhérents (demande d'Isabelle Eimer du 6 novembre 2026).
+     Démonstration : la connexion accepte tout identifiant et reste valable jusqu'à la fermeture de l'onglet. */
+  const SESSION_KEY = 'slbc-maquette-session';
+  let member = null; let wantPanel = null;
+  try { member = sessionStorage.getItem(SESSION_KEY) || null; } catch (e) { member = null; }
+  const PANELS = [['veille', 'Veille réglementaire'], ['lettre', 'Lettre d’information'], ['publier', 'Publier']];
+  const panelOf = (el) => { const p = el.closest('.ea-panel'); return p ? p.id.replace('ea-', '') : 'veille'; };
+  function showPanel(name) {
+    const label = (PANELS.find((p) => p[0] === name) || PANELS[0])[1];
+    seg($('#ea-tabs'), PANELS.map((p) => p[1]), label, (l) => { showPanel(PANELS.find((p) => p[1] === l)[0]); });
+    PANELS.forEach((p) => { $('#ea-' + p[0]).hidden = p[1] !== label; });
+    if (name === 'lettre' && member && !$('#sub-email').value) $('#sub-email').value = member;
+  }
+  function applyMember() {
+    const on = !!member;
+    document.documentElement.classList.toggle('is-member', on);
+    $('#login').hidden = on; $('#member').hidden = !on;
+    $('#member-who').textContent = on ? member : '';
+    $$('[data-guest]').forEach((el) => { el.hidden = on; });
+    $$('[data-member]').forEach((el) => { el.hidden = !on; });
+    if (on) requestAnimationFrame(updateShelf);
+    INDEX = buildIndex();
+  }
+  function setMember(email) {
+    member = email || null;
+    try { if (member) sessionStorage.setItem(SESSION_KEY, member); else sessionStorage.removeItem(SESSION_KEY); } catch (e) { /* stockage indisponible */ }
+    applyMember();
+  }
+
   /* ---------- Démarrage ---------- */
   $('#f-date').value = todayISO();
   renderStatic();
@@ -1029,6 +1064,8 @@
   setupHeader();
   setupMotion();
   setupSignatures();
+  showPanel('veille');
+  applyMember();
   route();
   heroIntro();
 })();
