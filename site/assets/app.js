@@ -400,6 +400,7 @@
     const doc = p.url && DOCS[p.url];
     $('#home-cp-in').innerHTML =
       '<div class="hcp-main">' +
+        '<p class="hcp-kicker">Flash Info</p>' +
         '<p class="p-meta"><span class="p-date">' + esc(p.dateLabel || longDate(p.date)) + '</span><span>' + esc(p.with) + '</span></p>' +
         '<h2 class="hcp-title" id="h-home-cp">' + esc(p.title) + (p.subtitle ? '<span class="p-subtitle">' + esc(p.subtitle) + '</span>' : '') + '</h2>' +
         (p.chapo ? '<p class="hcp-chapo">' + esc(p.chapo) + '</p>' : '') +
