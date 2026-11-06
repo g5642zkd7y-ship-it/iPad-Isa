@@ -63,23 +63,10 @@
         facts: [['Texte', 'Arrêté du 22 octobre 2026 modifiant l’arrêté du 17 septembre 2026']],
         url: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000055018337', linkLabel: 'Lire l’arrêté sur Légifrance' }
     ],
-    presse: [
-      { id: 'p1', date: '2024-12-20', year: '2024',
-        title: 'L’Assurance maladie et trois syndicats de biologistes médicaux signent un accord pour stabiliser la trajectoire économique des laboratoires pendant deux ans',
-        with: 'Communiqué commun du SNMB, du SDBIO et du SLBC',
-        chapo: 'Revalorisation de cotations trop fortement baissées en septembre 2024, gel de la nomenclature jusqu’en décembre 2026, transparence sur les dépenses de biologie : les trois syndicats signataires lèvent leur consigne de fermeture de fin d’année.',
-        url: 'https://snmbio.com/files/COMMUNIQUE%20DE%20PRESSE%20SDBIO%20-%20SLBC%20et%20SNMB%20-%20Signature%20accord%20CNAM.pdf', linkLabel: 'Lire le communiqué (PDF)' },
-      { id: 'p2', date: '2019-01-01', dateLabel: '2019', year: '2019',
-        title: 'Laboratoires de biologie médicale en grève : et si demain les laboratoires de proximité disparaissaient ?',
-        with: 'Communiqué commun du SDB, du SNMB, du SLBC et du SJBM',
-        chapo: 'Les syndicats de biologistes dénoncent les baisses de tarifs imposées sur une sélection d’actes parmi les plus prescrits, et leurs conséquences pour les laboratoires de proximité.',
-        url: 'https://www.le-crestois.fr/images/breves_2019/CP_APBM_VF.pdf', linkLabel: 'Lire le communiqué (PDF)' },
-      { id: 'p3', date: '2014-09-25', year: '2014',
-        title: 'Appel unitaire à la fermeture des laboratoires de biologie médicale le 30 septembre',
-        with: 'Communiqué commun du SDB, du SLBC, du SNMB, du SJBM et de la FNSIP-BM',
-        chapo: 'Les syndicats refusent que la biologie médicale soit traitée comme un service marchand et dénoncent la remise en cause de la réforme de 2013.',
-        url: 'https://lesbiologistesmedicaux.fr/la-biologie-medicale-2~/communique-de-presse-sjbm~/appel-unitaire-a-la-fermeture-des-laboratoires-de-biologie-medicale-le-30-septembre-prochain', linkLabel: 'Lire le communiqué' }
-    ],
+    /* Salle de presse : seulement les communiqués de 2026 (décision d’Isabelle Eimer du 6 novembre 2026).
+       Les communiqués de 2024, 2019 et 2014 ont été retirés. Le communiqué sur la signature du protocole
+       2027-2029 et le commentaire publié par Nicolas sur LinkedIn sont attendus. */
+    presse: [],
     actus: [
       { id: 'a1', date: '2026-09-07', cat: 'Santé publique', title: 'Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', excerpt: 'Sur les 22 actions du plan, deux touchent les laboratoires, dont le déploiement de la biologie délocalisée.', url: 'https://www.slbc.fr/strategie-nationale-de-sante-sexuelle-2026-2030-le-texte-integral-du-ministere/' },
       { id: 'a2', date: '2026-09-07', cat: 'Santé publique', title: 'Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle', excerpt: 'La feuille de route prévoit le déploiement de la biologie médicale délocalisée.', url: 'https://www.slbc.fr/feuille-de-route-2026-2030-de-la-strategie-nationale-de-sante-sexuelle/' },
@@ -347,7 +334,10 @@
   function renderPresse() {
     const years = ['Toutes'].concat(Array.from(new Set(DATA.presse.map((p) => p.year))).sort((a, b) => b.localeCompare(a)));
     seg($('#presse-seg'), years, state.presseYear, (y) => { state.presseYear = y; renderPresse(); });
-    $('#presse-list').innerHTML = DATA.presse.slice().sort(byDate).filter((p) => state.presseYear === 'Toutes' || p.year === state.presseYear).map(pitem).join('');
+    $('#presse-seg').hidden = years.length <= 2;
+    const items = DATA.presse.slice().sort(byDate).filter((p) => state.presseYear === 'Toutes' || p.year === state.presseYear);
+    $('#presse-list').innerHTML = items.length ? items.map(pitem).join('')
+      : '<p class="empty">Aucun communiqué pour l’instant. Le communiqué sur la signature du protocole 2027-2029 sera publié ici.</p>';
   }
   function renderRecent() {
     const all = []

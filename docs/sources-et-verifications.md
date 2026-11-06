@@ -16,7 +16,7 @@ Site actuel du SLBC :
 - Partenaires : https://www.slbc.fr/nos-experts/nos-partenaires/
 - Bilan et état financier : https://www.slbc.fr/bilan-et-etat-financier/
 
-Communiqués de presse :
+Communiqués de presse (retirés de la salle de presse le 6 novembre 2026 : seuls les communiqués de 2026 sont affichés) :
 - 20 décembre 2024, accord avec l’Assurance maladie (SNMB, SDBIO, SLBC) : https://toute-la.veille-acteurs-sante.fr/228034/lassurance-maladie-et-trois-syndicats-de-biologistes-medicaux-signent-un-accord-pour-stabiliser-la-trajectoire-economique-des-laboratoires-de-biologie-medicale-pendant-deux-ans-communique/
 - 2019, laboratoires en grève : https://www.le-crestois.fr/images/breves_2019/CP_APBM_VF.pdf
 - 25 septembre 2014, appel unitaire à la fermeture : https://lesbiologistesmedicaux.fr/la-biologie-medicale-2~/communique-de-presse-sjbm~/appel-unitaire-a-la-fermeture-des-laboratoires-de-biologie-medicale-le-30-septembre-prochain
@@ -37,7 +37,7 @@ Veille réglementaire (exemple du 4 novembre 2026) :
 1. **Dr Jean-François Perotto** : retiré des listes après l’annonce de son décès. Sièges affichés « à désigner » : groupe biochimie de la CHAB, Société française de biologie clinique, Agence de la biomédecine, Santé publique France. Il n’apparaît plus non plus au conseil d’administration ni aux URPS de Nouvelle-Aquitaine.
 2. **Noms d’instances modernisés** : « Institut national de veille sanitaire » remplacé par Santé publique France (fusion de 2016) ; « OG DPC » remplacé par Agence nationale du DPC ; « Commission nationale permanente de biologie médicale » écrite « Commission nationale de biologie médicale ». À confirmer.
 3. **Mentions T et S** des listes du site actuel (sans doute titulaire et suppléant) : non reprises, car leur sens n’est pas indiqué.
-4. **Communiqué de 2019** : l’année vient du nom du fichier en ligne ; la date exacte reste à confirmer.
+4. **Communiqué de 2019** : sans objet depuis le 6 novembre 2026 (communiqué retiré de la salle de presse, qui ne garde que 2026).
 5. **Contact presse** : Laurent Kbaier (indiqué par Isabelle Eimer le 5 novembre 2026 ; orthographe reprise de la liste du conseil d’administration, fonction à préciser) et contact@slbc.fr. Le 6 novembre 2026, Isabelle Eimer a demandé que les demandes d’adhésion soient envoyées au même contact que la presse ; l’adresse définitive reste à fournir (provisoirement contact@slbc.fr, constante `CONTACT_EMAIL`).
 6. **Liste des URPS** : reprise telle quelle du site actuel ; vérifier qu’elle est à jour.
 7. **Cotisation** : aucun montant n’est indiqué sur le site actuel ; la page Adhérer n’en affiche pas.
@@ -49,3 +49,4 @@ Veille réglementaire (exemple du 4 novembre 2026) :
 14. **Textes repris de la note de positionnement communication** (10 septembre 2026, document de travail à valider par Thierry Bouchet et le bureau) : trois piliers de l’accueil, introductions des pages Le syndicat, Veille et Adhérer. Ils devront être confirmés avec la note.
 11. **Comptes publiés** : la maquette affiche les exercices 2021 à 2023, repris du site actuel. Si le SLBC publie ses comptes sur son site (et non sur celui de la DILA), ajouter les exercices suivants (art. L2135-5 du code du travail).
 15. **Informations légales** (6 novembre 2026) : décisions d’Isabelle Eimer le même jour : pas de téléphone, un lien de contact unique à la place (le même que le contact presse et l’adhésion) ; directeur de la publication Thierry Bouchet, président ; pas de délégué à la protection des données ; adhésions annuelles. Reste à fournir avant la mise en ligne : adresse de contact définitive, hébergeur, SIREN éventuel, durées de conservation (piste : veille et communiqués en ligne environ 5 ans), accord des élus nommés sur le site, prestataires. À soumettre au juriste : l’absence de téléphone, que la loi cite parmi les mentions de l’éditeur. Détail et sources dans `docs/obligations-legales.md`.
+16. **Salle de presse** (6 novembre 2026) : seulement les communiqués de 2026. À publier dès réception : le communiqué sur la signature du protocole 2027-2029 et le commentaire publié par Nicolas sur LinkedIn (documents annoncés par Isabelle Eimer).
