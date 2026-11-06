@@ -268,6 +268,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .lockup-sub{font-size:12.5px;font-weight:700;line-height:1.25;color:var(--gris)}
 .lockup-sub span{color:var(--vert)}
 .foot-address{font-style:normal;font-size:14px;line-height:1.6;color:var(--texte)}
+.foot-address a{color:inherit;text-underline-offset:2px}
 .social-link{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-size:16px;font-weight:600;color:var(--texte);text-decoration:none}
 .social-link svg{flex:0 0 auto;color:var(--encre)}
 .social-link:hover,.social-link:hover svg{color:var(--vert)}

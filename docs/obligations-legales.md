@@ -25,19 +25,23 @@ Tout doit être relu par un juriste avant la mise en ligne. Les textes de 2026 c
 - **Aperçu de l'e-mail** : l'expéditeur est identifié (SLBC et son adresse postale) et un lien de désinscription figure dans chaque envoi.
 - **Civilité facultative** dans la demande d'adhésion. Le Conseil d'État a jugé qu'une civilité non indispensable ne peut pas être imposée : CE, 31 juillet 2025, n° 452850, association Mousse (extrait de recherche).
 - **Aucun traceur** : la maquette ne charge aucune ressource tierce, sauf Google Fonts (voir 4).
+- **Décisions d'Isabelle Eimer du 6 novembre 2026**, appliquées sur la page :
+  - pas de téléphone ; un lien de contact à la place ;
+  - une seule adresse de contact (contact général, presse, adhésion, droit de réponse, droits sur les données) ;
+  - directeur de la publication : Thierry Bouchet, président ;
+  - pas de délégué à la protection des données ;
+  - adhésions annuelles : les données de l'adhérent sont gardées le temps de l'adhésion.
 
 ## 2. À compléter avant la mise en ligne
 
 | Point | Qui | Où |
 |---|---|---|
-| Téléphone du SLBC | Bureau | Mentions légales |
-| Adresse définitive du contact presse, qui reçoit aussi les demandes d'adhésion (provisoirement contact@slbc.fr) | Isabelle Eimer | Données personnelles, salle de presse, adhésion |
-| Directeur de la publication : le représentant légal désigné par les statuts (Thierry Bouchet, président, à confirmer) | Bureau | Mentions légales |
+| Téléphone : le SLBC n'en affiche pas (décision du 6 novembre 2026). La loi demande pourtant un numéro de téléphone à l'éditeur personne morale (voir 3.1) : à faire confirmer par le juriste | Bureau, juriste | Mentions légales |
+| Adresse de contact définitive, unique pour le contact général, la presse et l'adhésion (provisoirement contact@slbc.fr) | Isabelle Eimer | Tout le site |
 | Hébergeur : nom, adresse, téléphone. Nommer celui qui stocke réellement le site, et Kstudio s'il revend l'hébergement | Kstudio | Mentions légales |
 | Numéro SIREN, s'il existe (à vérifier sur annuaire-entreprises.data.gouv.fr) | Bureau | Mentions légales |
-| Durées de conservation : demandes d'adhésion, fichier des adhérents après départ, preuve du consentement, journal des connexions | Bureau | Données personnelles |
-| Adresse dédiée aux demandes sur les données (ou contact@slbc.fr) | Bureau | Données personnelles |
-| Délégué à la protection des données : désigner ou non (voir 3.6) | Bureau | Données personnelles |
+| Durées de conservation : fichier des adhérents après la fin de l'adhésion, demandes non abouties, preuve du consentement, journal des connexions. Piste évoquée le 6 novembre 2026 : garder la veille et les communiqués en ligne environ 5 ans | Bureau | Données personnelles |
+| Délégué à la protection des données : décision de ne pas en désigner (6 novembre 2026). Garder une trace écrite de l'analyse (voir 3.2) | Bureau | Registre des traitements |
 | Prestataires : hébergeur, outil d'envoi des e-mails, et transferts hors de l'Union européenne éventuels | Kstudio | Données personnelles |
 | Accord des élus et représentants pour la publication de leur nom (ou information et droit d'opposition) | Bureau | Le syndicat |
 | Héberger les polices Figtree et Nunito sur le serveur du site | Kstudio | Technique |
@@ -62,9 +66,12 @@ Statuts utilisés :
 
 L'exception d'anonymat ne vise que les éditeurs non professionnels : elle ne concerne pas le SLBC.
 
+Choix du SLBC (6 novembre 2026) : pas de téléphone, un lien de contact à la place. Le texte cite pourtant le numéro de téléphone parmi les mentions de l'éditeur personne morale (article 1-1, repris de l'ancien article 6, III, 1 de la LCEN ; non relu sur Légifrance). Un formulaire ou une adresse e-mail ne le remplace pas d'après la lettre du texte. Point à soumettre au juriste ; un numéro de secrétariat ou de messagerie suffirait.
+
 **Directeur de la publication** (obligatoire) :
 - texte : LCEN, article 1-1, I, 3° ; loi n° 82-652 du 29 juillet 1982, article 93-2 ;
 - pour une personne morale, c'est le représentant légal, désigné par les statuts du syndicat ;
+- choix du SLBC (6 novembre 2026) : Thierry Bouchet, président ;
 - une mention inexacte est sanctionnée : Cass. crim., 22 janvier 2019, n° 18-81.779, d'après un résultat de recherche.
 
 **Hébergeur** (obligatoire) :
@@ -169,11 +176,13 @@ L'exception d'anonymat ne vise que les éditeurs non professionnels : elle ne co
 - informer du sort des données, permettre de désigner une personne et de laisser des directives ;
 - l'applicabilité est discutée faute de décret, mais la mention ne coûte rien.
 
-**Délégué à la protection des données** (non tranché) :
+**Délégué à la protection des données** (décision du SLBC : pas de délégué) :
 - texte : RGPD, article 37 ;
 - le guide de la CNIL de 2023 juge la désignation obligatoire « pour la plupart des organisations syndicales » de salariés ;
 - pour le SLBC, cela dépend de l'article 9 et du volume (« grande échelle ») ;
-- deux options : désigner un délégué volontairement (mutualisé ou externe), ou interroger la CNIL.
+- décision d'Isabelle Eimer du 6 novembre 2026 : pas de délégué ;
+- la question ne dépend pas du site mais des fichiers du syndicat : l'obligation vise un suivi ou un traitement de données sensibles « à grande échelle » (article 37, § 1). Un fichier d'adhérents de taille modeste n'y entre probablement pas ;
+- garder une trace écrite de cette analyse dans le registre des traitements, comme le recommande la CNIL.
 
 **Sous-traitants** (obligatoire) :
 - texte : RGPD, article 28 ;
