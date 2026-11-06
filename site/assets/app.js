@@ -138,8 +138,7 @@
   ];
   /* Représentants communiqués par Isabelle Eimer le 5 novembre 2026 ; les autres sièges sont à désigner. */
   const INSTANCES = [
-    { n: 'Commission de hiérarchisation des actes de biologie', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'],
-      sub: [['Groupe AMP', []], ['Groupe biochimie', []], ['Groupe cytogénétique', []], ['Groupe hématologie', []]] },
+    { n: 'Commission de hiérarchisation des actes de biologie', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
     { n: 'Commission conventionnelle paritaire nationale', r: 'Convention avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Nicolas Roquigny', 'Éric Flatin'] },
     { n: 'Commission nationale de biologie médicale', r: 'Conditions d’exercice de la profession', reps: [] },
     { n: 'Cofrac', r: 'Commission technique d’accréditation', reps: [] },
@@ -310,10 +309,9 @@
     $('#bureau-list').innerHTML = BUREAU.map((b) => '<li class="person"><span class="person-role">' + esc(b[0]) + '</span><span class="person-name">' + esc(b[1]) + '</span></li>').join('');
     $('#protocole-list').textContent = PROTOCOLE.join(', ');
     $('#ca-list').innerHTML = CA.map((r) => '<details class="region"><summary><span>' + esc(r[0]) + '</span><span class="count">' + r[1].length + ' administrateur' + (r[1].length > 1 ? 's' : '') + '</span></summary><p>' + esc(r[1].join(', ')) + '</p></details>').join('');
-    $('#inst-list').innerHTML = INSTANCES.map((i) => {
-      const sub = i.sub ? '<div class="inst-sub">' + i.sub.map((g) => '<div><strong>' + esc(g[0]) + '</strong>' + namesOr(g[1], 'Représentant à désigner') + '</div>').join('') + '</div>' : '';
-      return '<div class="inst-row"><div><p class="inst-name">' + esc(i.n) + '</p><p class="inst-role">' + esc(i.r) + '</p></div><p class="inst-reps">' + namesOr(i.reps, 'Représentant à désigner') + '</p>' + sub + '</div>';
-    }).join('');
+    $('#inst-list').innerHTML = INSTANCES.map((i) =>
+      '<div class="inst-row"><div><p class="inst-name">' + esc(i.n) + '</p><p class="inst-role">' + esc(i.r) + '</p></div><p class="inst-reps">' + namesOr(i.reps, 'Représentant à désigner') + '</p></div>'
+    ).join('');
     $('#urps-list').innerHTML = URPS.map((u) => '<div class="urps-item"><p class="urps-region">' + esc(u[0]) + '</p><p class="urps-names">' + namesOr(u[1], 'Représentant à désigner') + '</p></div>').join('');
     $('#comptes-list').innerHTML = '<li><a class="row-link" href="https://www.slbc.fr/le-syndicat/les-statuts-du-slbc/" target="_blank" rel="noopener"><span class="row-date">Statuts</span><span class="row-title">Les statuts du SLBC</span><span class="row-cat">slbc.fr</span></a></li>' +
       COMPTES.map((c) => '<li><a class="row-link" href="https://www.slbc.fr/bilan-et-etat-financier/" target="_blank" rel="noopener"><span class="row-date">Exercice ' + esc(c.y) + '</span><span class="row-title">' + esc(c.d) + '</span><span class="row-cat">slbc.fr</span></a></li>').join('');
