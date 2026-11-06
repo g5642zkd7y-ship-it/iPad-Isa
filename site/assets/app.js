@@ -17,13 +17,8 @@
 
   const sv = (w, body) => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
   const ICON = {
-    check: sv(22, '<path d="M4.5 12.5l4.5 4.5L19.5 6.5"/>'),
     lock: sv(16, '<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
-    lockS: sv(13, '<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
-    doc: sv(30, '<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/>'),
-    scale: sv(30, '<path d="M12 4v16M6 20h12M5 7h14"/><path d="M5 7l-3 6a3.5 3.5 0 0 0 6 0zM19 7l-3 6a3.5 3.5 0 0 0 6 0z"/>'),
-    people: sv(30, '<circle cx="9" cy="8.5" r="3.5"/><path d="M2.5 20c.7-3.5 3.3-5.5 6.5-5.5s5.8 2 6.5 5.5"/><circle cx="17.5" cy="9.5" r="2.5"/><path d="M17.5 14.5c2.2 0 3.7 1.4 4.2 4"/>'),
-    columns: sv(30, '<path d="M3 9.5L12 4l9 5.5"/><path d="M5.5 10v8M10 10v8M14 10v8M18.5 10v8"/><path d="M3 20.5h18"/>')
+    lockS: sv(13, '<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>')
   };
 
   /* ---------- Contenu (repris du site actuel et des sources officielles) ---------- */
@@ -186,9 +181,9 @@
     { n: 'Klesia', d: 'Prévoyance', url: 'https://www.klesia.fr' }
   ];
   const BENEFITS = [
-    { icon: 'doc', t: 'La veille complète, chaque lundi', d: 'Le Journal officiel, l’Assemblée nationale et le Sénat, analysés pour votre laboratoire.' },
-    { icon: 'people', t: 'Les groupes de travail', d: 'Faire évoluer la nomenclature avec vos pairs et renforcer vos compétences.' },
-    { icon: 'columns', t: 'Une voix dans les instances', d: 'Nomenclature, convention avec l’Assurance maladie, accréditation, Europe.' }
+    { t: 'La veille complète, chaque lundi', d: 'Le Journal officiel, l’Assemblée nationale et le Sénat, analysés pour votre laboratoire.' },
+    { t: 'Les groupes de travail', d: 'Faire évoluer la nomenclature avec vos pairs et renforcer vos compétences.' },
+    { t: 'Une voix dans les instances', d: 'Nomenclature, convention avec l’Assurance maladie, accréditation, Europe.' }
   ];
   const TRACKERS = [
     { title: 'PLFSS 2027', steps: [
@@ -288,8 +283,8 @@
   function renderStatic() {
     $('#home-missions').innerHTML = MISSIONS.map((m) => '<li><span class="tile-item">' + esc(m.t) + '</span></li>').join('');
     $('#home-instances').innerHTML = INSTANCES.map((i) => '<li><span class="nw-name">' + esc(i.n) + '</span><span class="nw-role">' + esc(i.r) + '</span></li>').join('');
-    $('#home-benefits').innerHTML = BENEFITS.map((b) => '<li>' + ICON.check + '<span>' + esc(b.t) + '</span></li>').join('');
-    $('#benefits-grid').innerHTML = BENEFITS.map((b) => '<div class="benefit">' + ICON[b.icon] + '<h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
+    $('#home-benefits').innerHTML = BENEFITS.map((b) => '<li><span>' + esc(b.t) + '</span></li>').join('');
+    $('#benefits-grid').innerHTML = BENEFITS.map((b) => '<div class="benefit"><h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
     $('#missions-list').innerHTML = MISSIONS.map((m) => '<div class="charter-item"><h3 class="h-block">' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div>').join('');
     $('#bureau-list').innerHTML = BUREAU.map((b) => '<li class="person"><span class="person-role">' + esc(b[0]) + '</span><span class="person-name">' + esc(b[1]) + '</span></li>').join('');
     $('#protocole-list').textContent = PROTOCOLE.join(', ');
@@ -461,7 +456,8 @@
     page('Statuts et comptes', 'Les statuts du SLBC, comptes 2021 à 2023', '#syndicat', 'comptes');
     page('Veille réglementaire', 'Journal officiel, Assemblée nationale, Sénat', '#veille');
     idx.push({ type: 'Page', title: 'Lettre d’information', sub: 'La veille et les nouvelles publications par e-mail', href: '#veille', section: 'abonnement', text: 'newsletter abonnement abonner s’abonner s\'abonner désinscription e-mail' });
-    page('Salle de presse', 'Les communiqués du SLBC', '#presse');
+    idx.push({ type: 'Page', title: 'Salle de presse', sub: 'Les communiqués du SLBC', href: '#presse', section: null, text: 'contact presse journaliste kit presse logo' });
+    idx.push({ type: 'Page', title: 'Contacter le SLBC', sub: 'Adresse e-mail et adresse postale', href: '#mentions', section: 'mentions-legales', text: 'contact contacter nous contacter écrire e-mail courriel adresse téléphone' });
     page('Actualités', 'L’information du syndicat', '#actualites');
     page('Nomenclature des actes (NABM)', 'Arrêtés et décisions de l’UNCAM', '#documentation', 'doc-nabm');
     page('Textes réglementaires', 'Lois, décrets et arrêtés', '#documentation', 'doc-textes');
@@ -813,6 +809,11 @@
   function heroIntro() {
     const grey = $('#hero-grey'); const green = $('#hero-green'); const overlap = $('#hero-overlap'); const clip = $('#hero-clip');
     if (!grey || !green || !overlap || !clip || reduceMotion) return;
+    if (current !== 'accueil') return;
+    /* Le nom et la devise n'apparaissent en fondu qu'à cette première ouverture (pas à chaque retour sur l'accueil). */
+    const root = document.documentElement;
+    root.classList.add('hero-intro');
+    setTimeout(() => root.classList.remove('hero-intro'), 2400);
     const set = (a, b) => { grey.setAttribute('cx', a); clip.setAttribute('cx', a); green.setAttribute('cx', b); overlap.setAttribute('cx', b); };
     const from = [56, 144];
     const to = [84, 116];

@@ -77,7 +77,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .menu-btn[aria-expanded="true"] .i-open{display:none}
 .menu-btn[aria-expanded="true"] .i-close{display:inline}
 @media (max-width:1100px){.gnav-links{gap:18px}}
-@media (max-width:980px){.gnav-links,.gnav-member{display:none}.menu-btn{display:grid}}
+@media (max-width:1000px){.gnav-links,.gnav-member{display:none}.menu-btn{display:grid}}
 
 .mmenu{position:fixed;inset:0;z-index:45;background:var(--blanc);overflow-y:auto;padding-top:calc(env(safe-area-inset-top,0px) + 112px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 40px)}
 .mmenu-in{display:flex;flex-direction:column}
@@ -247,7 +247,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .join-list{list-style:none;margin:0;padding:0}
 .join-list li{display:flex;align-items:flex-start;gap:14px;padding:18px 0;border-top:1px solid rgba(255,255,255,.28);font-size:19px;font-weight:600;line-height:1.35;color:#fff}
 .join-list li:last-child{border-bottom:1px solid rgba(255,255,255,.28)}
-.join-list svg{flex:0 0 auto;margin-top:2px;color:var(--vert-clair)}
 @media (max-width:900px){.join{grid-template-columns:minmax(0,1fr)}}
 
 /* ---------- Documentation (accueil) ---------- */
@@ -402,6 +401,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .p-title{max-width:30em;font-size:clamp(21px,1.9vw,24px);font-weight:700;line-height:1.22;letter-spacing:-.015em;color:var(--encre)}
 .p-chapo{max-width:42em;font-size:17px;line-height:1.6}
 .copy-line{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 14px;border-radius:12px;background:#fff;font-weight:600;color:var(--encre);overflow-wrap:anywhere}
+.copy-line a{color:inherit;text-underline-offset:2px}
 .btn-copy{flex:0 0 auto;min-height:36px;padding:0 14px;border:0;border-radius:999px;background:var(--neutre);color:var(--encre);font:600 14px/1 var(--font);cursor:pointer}
 .news{list-style:none;margin:28px 0 0;padding:0;border-top:1px solid var(--filet)}
 .news-item{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:28px 4px;border-bottom:1px solid var(--filet)}
@@ -427,8 +427,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 
 /* ---------- Adhérer ---------- */
 .benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,40px)}
-.benefit{display:flex;flex-direction:column;gap:12px}
-.benefit svg{color:var(--vert)}
+.benefit{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:1px solid var(--filet-fort)}
 .benefit h2{font-size:20px;font-weight:700;line-height:1.25;letter-spacing:-.01em}
 .benefit p{font-size:16px;line-height:1.55}
 @media (max-width:760px){.benefits{grid-template-columns:minmax(0,1fr)}}
@@ -595,8 +594,8 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
   .gnav{transition:box-shadow .35s var(--ease),border-color .35s var(--ease)}
   .gnav-links a::after{transition:transform .35s var(--ease-out)}
   /* Ouverture de l'accueil : le nom puis la devise apparaissent quand les ronds se rejoignent */
-  .js-motion .hero-name{animation:fadeUp .8s var(--ease) 1.1s both}
-  .js-motion .hero .display{animation:fadeUp .9s var(--ease) 1.3s both}
+  .hero-intro .hero-name{animation:fadeUp .8s var(--ease) 1.1s both}
+  .hero-intro .hero .display{animation:fadeUp .9s var(--ease) 1.3s both}
   /* Piliers : le filet vert se trace de gauche à droite, pilier après pilier */
   .js-motion .pillar{position:relative;border-top-color:transparent}
   .js-motion .pillar::before{content:"";position:absolute;top:-4px;left:0;right:0;height:4px;background:var(--anis);transform:scaleX(0);transform-origin:left center;transition:transform 1.1s var(--ease-out) .15s}

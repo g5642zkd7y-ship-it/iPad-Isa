@@ -47,6 +47,7 @@ Objectifs exprimés pour le site :
 - Le Dr Jean-François Perotto est décédé (actualité du 31 août 2026). Il a été retiré des listes ; ses sièges apparaissent « à désigner ».
 - Points à faire confirmer par le bureau : voir `docs/sources-et-verifications.md`.
 - Ton : sobre, phrases courtes, voix active, sans majuscules décoratives.
+- Pas de rendu « généré par IA » (rappel d’Isabelle Eimer du 6 novembre 2026) : pas de pictogrammes décoratifs ni de listes à coches, pas de titres-slogans (« Là où se décide… », « les instances qui comptent »), pas de formules chiffrées ou exagérées (« Trois étapes, deux minutes », « en temps réel »). Titres descriptifs, faits vérifiables.
 
 ## Conventions de conception
 
