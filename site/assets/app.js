@@ -448,6 +448,7 @@
     }
     if (!t) return;
     if (t.tagName === 'DETAILS') t.open = true;
+    else if (t.classList.contains('pitem')) { const full = t.querySelector('.p-full'); if (full) full.open = true; }
     t.scrollIntoView({ behavior: smooth(), block: 'start' });
   }
 

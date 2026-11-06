@@ -414,8 +414,8 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .hcp-main{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
 .hcp-title{max-width:22em;font-size:clamp(26px,2.6vw,34px);font-weight:700;line-height:1.15;letter-spacing:-.02em;color:var(--encre)}
 .hcp-chapo{max-width:40em;font-size:18px;line-height:1.6}
-.hcp-quote{margin:0}
-.hcp-quote blockquote{font-size:20px;line-height:1.45}
+.p-quote.hcp-quote{margin:0}
+.p-quote.hcp-quote blockquote{font-size:20px;line-height:1.45}
 @media (max-width:900px){.home-cp-in{grid-template-columns:minmax(0,1fr)}}
 .p-quote{max-width:42em;margin:4px 0 0;padding:2px 0 2px 18px;border-left:3px solid var(--anis)}
 .p-quote blockquote{margin:0;font-size:18px;font-style:italic;line-height:1.5;color:var(--encre)}
