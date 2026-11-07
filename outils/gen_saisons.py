@@ -313,7 +313,7 @@ def bouee_tore(bx, sol, R=24.0, r=9.0, k=0.6, elev=38, rayures=8, decal=math.pi 
             f'<path d="{sous}" fill="{INK}" stroke="{INK}" stroke-width="{trait * 2:g}" stroke-linejoin="round"/>'
             + peint(0) + dessus + peint(1) + peint(2) + reflet + '</g>')
 
-BOUEE_GEO = dict(R=24, r=10, k=.8, elev=44)   # forme commune aux deux bouées : anneau bien gonflé vu de trois quarts,
+BOUEE_GEO = dict(R=24, r=10, k=.8, elev=44)   # forme de la bouée rayée : anneau bien gonflé vu de trois quarts,
                                               # d'après les exemples de bouée canard envoyés par Isabelle Eimer
 
 def bouee_rayee(bx, sol):
@@ -325,40 +325,35 @@ def bouee_rayee(bx, sol):
 CANARD_OMBRE = '#E0A92B'
 
 def bouee_canard(bx, sol):
-    """Bouée canard jaune, d'après les deux exemples envoyés par Isabelle Eimer : le même anneau que la bouée rayée ;
+    """Bouée canard jaune, version choisie par Isabelle Eimer le 7 novembre 2026 sur capture (anneau plus fin et cou
+    étroit que la version gonflée), d'après les deux exemples qu'elle avait envoyés : le même anneau que la bouée rayée ;
     le cou et la tête sortent du boudin à l'arrière droite (bec orange vers la droite, œil, reflets), une petite queue
     pointe à l'arrière gauche ; le cou et la queue font corps avec l'anneau (pas de trait à la jonction)."""
     def decor(P):
         f = lambda p: '%.1f %.1f' % p
-        bord = lambda a: math.degrees(math.atan(BOUEE_GEO['k'] * math.sin(math.radians(a)) / math.tan(math.radians(BOUEE_GEO['elev']))))  # contour extérieur
-        # queue : sur le dessus du boudin, à l'arrière gauche ; l'anneau en cache le pied
-        q1, q2 = P(172, 90), P(138, 90)
-        pointe = (q1[0] - 7, q1[1] - 17)
-        queue = (f'<path d="M{f(q2)} C{f((q2[0] - 1, q2[1] - 9))} {f((pointe[0] + 5, pointe[1] + 1))} {f(pointe)} '
-                 f'C{f((pointe[0] - 2, pointe[1] + 7))} {f((q1[0] - 4, q1[1] - 3))} {f(q1)} '
-                 + ' '.join('L' + f(P(a, 115)) for a in range(172, 137, -6)) +
-                 f' Z" fill="{CANARD}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>')
-        # cou et tête : le cou part du dessus du boudin à l'arrière (b1) et rejoint le bord extérieur de l'anneau à
-        # droite (b2), comme sur les exemples ; le devant du boudin en cache le pied
-        b1, b2 = P(78, 95), P(22, bord(22))
-        H = (b2[0] - 10, b1[1] - 26)                                # centre de la tête
+        # queue : posée sur le dessus du boudin, à l'arrière gauche ; l'anneau en cache le pied
+        q1, q2 = P(160, 90), P(136, 90)
+        pointe = (q1[0] - 9, q1[1] - 13)
+        queue = (f'<path d="M{f(q2)} Q{f((q2[0] - 3, q2[1] - 10))} {f(pointe)} Q{f((q1[0] - 2, q1[1] - 4))} {f(q1)} '
+                 f'L{f(P(160, 120))} L{f(P(136, 120))} Z" fill="{CANARD}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>')
+        # cou et tête : sortent du dessus du boudin, à l'arrière droite ; le devant du boudin en cache le pied
+        b1, b2 = P(66, 90), P(28, 90)
+        m = ((b1[0] + b2[0]) / 2, (b1[1] + b2[1]) / 2)
+        H = (m[0] + 4, m[1] - 25)                                   # centre de la tête
         h = lambda dx, dy: (H[0] + dx, H[1] + dy)
-        cou = (f'M{f(b1)} C{f((b1[0] + .5, b1[1] - 10))} {f(h(-12, 9))} {f(h(-11, 3))} '
-               f'C{f(h(-11, -8))} {f(h(-5, -13))} {f(h(1, -13))} '
-               f'C{f(h(8, -13))} {f(h(12, -7))} {f(h(12, -1))} '
-               f'C{f(h(12, 6))} {f(h(7, 9))} {f(h(7, 15))} '
-               f'C{f(h(7, 22))} {f((b2[0] + 1, b2[1] - 5))} {f(b2)}')
-        pied = ' '.join('L' + f(P(a, 112)) for a in range(22, 79, 8)) + ' Z'   # caché sous le devant du boudin
-        # le cou est rempli jusqu'à son pied, mais son trait s'arrête sur l'anneau : pas de trait à la jonction
-        tete = (f'<path d="{cou} {pied}" fill="{CANARD}" stroke="none"/>'
-                f'<path d="{cou}" stroke="{INK}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>'
-                f'<path d="M{f(h(9, -4))} Q{f(h(23, -6))} {f(h(24, 0))} Q{f(h(23, 5))} {f(h(9, 3.5))} Q{f(h(7.5, -.5))} {f(h(9, -4))} Z" fill="{BEC}" stroke="{INK}" stroke-width="2.6" stroke-linejoin="round"/>'
-                f'<path d="M{f(h(13, -2.5))} Q{f(h(18, -3.5))} {f(h(21, -1.5))}" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="1.6" stroke-linecap="round" fill="none"/>'
-                f'<circle cx="{H[0] + 3:.1f}" cy="{H[1] - 4:.1f}" r="2.6" fill="{INK}" stroke="none"/>'
-                f'<circle cx="{H[0] + 3.8:.1f}" cy="{H[1] - 4.9:.1f}" r=".9" fill="#FFFFFF" stroke="none"/>'
-                f'<path d="M{f(h(-7.5, -5))} Q{f(h(-6.5, -9.5))} {f(h(-2, -10.5))}" stroke="#FFFFFF" stroke-opacity=".8" stroke-width="1.8" stroke-linecap="round" fill="none"/>')
+        cou = (f'M{f(b1)} C{f((b1[0] - 2, b1[1] - 9))} {f(h(-12, 7))} {f(h(-10, 0))} '
+               f'C{f(h(-10, -8))} {f(h(-4, -11))} {f(h(1, -11))} '
+               f'C{f(h(8, -11))} {f(h(11, -5))} {f(h(10, 1))} '
+               f'C{f(h(7, 8))} {f((b2[0] + 1, b2[1] - 12))} {f(b2)} '
+               f'L{f(P(28, 120))} L{f(P(66, 120))} Z')
+        tete = (f'<path d="{cou}" fill="{CANARD}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>'
+                f'<path d="M{f(h(8, -3))} Q{f(h(20, -4))} {f(h(20, 1))} Q{f(h(18, 5))} {f(h(8, 4))} Z" fill="{BEC}" stroke="{INK}" stroke-width="2.6" stroke-linejoin="round"/>'
+                f'<path d="M{f(h(12, -1.5))} Q{f(h(16, -2.5))} {f(h(18, -1))}" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="1.6" stroke-linecap="round" fill="none"/>'
+                f'<circle cx="{H[0] + 3:.1f}" cy="{H[1] - 3:.1f}" r="2.4" fill="{INK}" stroke="none"/>'
+                f'<circle cx="{H[0] + 3.7:.1f}" cy="{H[1] - 3.8:.1f}" r=".8" fill="#FFFFFF" stroke="none"/>'
+                f'<path d="M{f(h(-6.5, -5))} Q{f(h(-5.5, -8.5))} {f(h(-2, -9.5))}" stroke="#FFFFFF" stroke-opacity=".8" stroke-width="1.8" stroke-linecap="round" fill="none"/>')
         return queue, tete
-    return bouee_tore(bx, sol, ombre_deg=0, teintes=[(CANARD, CANARD_OMBRE)], decor=decor, **BOUEE_GEO,
+    return bouee_tore(bx, sol, R=24, r=9, k=.6, elev=34, ombre_deg=0, teintes=[(CANARD, CANARD_OMBRE)], decor=decor,
                       reflet_a=(200, 236))
 
 def bouee_taille():
