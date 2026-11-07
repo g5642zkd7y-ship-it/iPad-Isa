@@ -1237,6 +1237,32 @@
     if (!view) return;
     if (v === 'accueil') joinCircles(view.querySelector('.hero-mark'), 'hero');
     else joinCircles(Array.from(view.querySelectorAll('.sig-mark')).find((s) => s.getClientRects().length), 'sig');
+    if (v === 'espace') shakeHands(view.querySelector('.mascotte-accueil'), 350);
+  }
+  /* Espace adhérent (7 novembre 2026, demande d'Isabelle Eimer) : les deux biologistes se serrent la main, trois secousses
+     qui s'amortissent, pendant que celui de gauche fait un signe de bienvenue ; à l'ouverture de la page et à la connexion,
+     puis plus rien ne bouge. Chaque bras pivote autour de son épaule (106, 117 dans le dessin ; le bras de droite est dessiné
+     en miroir, le même angle le fait descendre du même côté) et les mains serrées suivent la même hauteur. */
+  function shakeHands(svg, delay) {
+    if (!svg || reduceMotion) return;
+    const arms = svg.querySelectorAll('.bras-poignee'); const clasp = svg.querySelector('.poignee'); const wave = svg.querySelector('.bras-salut');
+    if (!arms.length || !clasp) return;
+    const set = (a, w) => {
+      arms.forEach((g) => g.setAttribute('transform', 'rotate(' + a.toFixed(2) + ' 106 117)'));
+      clasp.setAttribute('transform', 'translate(0 ' + (33 * Math.sin(a * Math.PI / 180)).toFixed(2) + ')');
+      if (wave) wave.setAttribute('transform', 'rotate(' + w.toFixed(2) + ' 80 116)');
+    };
+    if (svg._shake) cancelAnimationFrame(svg._shake);
+    clearTimeout(svg._shakeWait);
+    const T = 1400; let t0 = 0;
+    const frame = (now) => {
+      if (!t0) t0 = now;
+      const t = Math.min(1, (now - t0) / T);
+      const damp = 1 - t * t;
+      set(7 * Math.sin(t * Math.PI * 6) * damp, 9 * Math.sin(t * Math.PI * 4) * damp);
+      svg._shake = t < 1 ? requestAnimationFrame(frame) : null;
+    };
+    svg._shakeWait = setTimeout(() => { svg._shake = requestAnimationFrame(frame); }, delay || 0);
   }
 
   /* ---------- Ouverture : les deux cellules se rejoignent ---------- */
