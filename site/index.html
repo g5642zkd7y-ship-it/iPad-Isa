@@ -662,7 +662,7 @@
           <fieldset data-panel="3" hidden>
             <legend>Vérifiez et envoyez</legend>
             <dl class="recap" id="j-recap"></dl>
-            <p class="join-dest">Votre demande sera envoyée par e-mail au SLBC (<strong><span data-contact>contact@slbc.fr</span></strong>).</p>
+            <p class="join-dest">Votre demande sera envoyée au bureau du SLBC, à <strong><span data-adhesion>bureau@slbc.fr</span></strong>. En cliquant sur « Envoyer ma demande », votre messagerie s’ouvre avec l’e-mail déjà rédigé : il ne reste qu’à l’envoyer.</p>
           </fieldset>
           <div class="form-actions">
             <button class="btn btn-primary" type="submit" id="join-next">Continuer</button>
@@ -672,9 +672,13 @@
         </div>
         <div class="done-panel" id="join-done" hidden>
           <span class="done-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"/></svg></span>
-          <h3 class="h-tile">Demande prête</h3>
-          <p>Démonstration : aucune donnée n’est transmise. Sur le site final, la demande sera envoyée par e-mail au SLBC (<strong><span data-contact>contact@slbc.fr</span></strong>).</p>
-          <button class="btn btn-quiet" type="button" id="join-restart">Nouvelle demande</button>
+          <h3 class="h-tile" id="join-done-title" tabindex="-1">Dernière étape : envoyez l’e-mail</h3>
+          <p>Votre messagerie s’ouvre avec votre demande, adressée à <strong><span data-adhesion>bureau@slbc.fr</span></strong>. Vérifiez-la, puis cliquez sur « Envoyer ».</p>
+          <p class="join-fallback">Votre messagerie ne s’est pas ouverte ? Ouvrez-la avec le bouton ci-dessous, ou copiez la demande et collez-la dans un nouvel e-mail.</p>
+          <div class="cta-row"><a class="btn btn-primary" id="join-mailto" href="mailto:bureau@slbc.fr" target="_blank" rel="noopener">Ouvrir ma messagerie</a><button class="btn btn-quiet" type="button" id="join-copy">Copier la demande</button></div>
+          <p class="form-ok" id="join-copy-ok" role="status" hidden></p>
+          <details class="join-texte"><summary>Voir le texte de la demande</summary><pre id="join-mailtext"></pre></details>
+          <button class="link-btn" type="button" id="join-restart">Nouvelle demande</button>
         </div>
       </form>
     </div>
@@ -730,7 +734,7 @@
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>Nom, prénom, e-mail, laboratoire, ville, mode d’exercice ; civilité, téléphone et message s’ils sont indiqués.</dd></div>
             <div><dt>Usage</dt><dd>Examiner votre demande, puis gérer votre adhésion.</dd></div>
-            <div><dt>Destinataire</dt><dd>La demande est envoyée par e-mail au SLBC (<span data-contact>contact@slbc.fr</span>).</dd></div>
+            <div><dt>Destinataire</dt><dd>La demande est envoyée par e-mail, depuis votre messagerie, au bureau du SLBC (<span data-adhesion>bureau@slbc.fr</span>).</dd></div>
             <div><dt>Base légale</dt><dd>Les démarches préalables à l’adhésion, puis l’adhésion elle-même.</dd></div>
             <div><dt>Durée</dt><dd>Le temps de l’adhésion, renouvelée chaque année. Après la fin de l’adhésion, ou si la demande n’aboutit pas : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
           </dl>

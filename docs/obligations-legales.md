@@ -27,7 +27,7 @@ Tout doit être relu par un juriste avant la mise en ligne. Les textes de 2026 c
 - **Aucun traceur** : la maquette ne charge aucune ressource tierce, sauf Google Fonts (voir 4).
 - **Décisions d'Isabelle Eimer du 6 novembre 2026**, appliquées sur la page :
   - pas de téléphone ; un lien de contact à la place ;
-  - une seule adresse de contact (contact général, presse, adhésion, droit de réponse, droits sur les données) ;
+  - une seule adresse de contact (contact général, presse, droit de réponse, droits sur les données) ; les demandes d’adhésion partent vers bureau@slbc.fr (décision d’Isabelle Eimer du 7 novembre 2026) ;
   - directeur de la publication : Thierry Bouchet, président ;
   - pas de délégué à la protection des données ;
   - adhésions annuelles : les données de l'adhérent sont gardées le temps de l'adhésion.
@@ -37,7 +37,7 @@ Tout doit être relu par un juriste avant la mise en ligne. Les textes de 2026 c
 | Point | Qui | Où |
 |---|---|---|
 | Téléphone : le SLBC n'en affiche pas (décision du 6 novembre 2026). La loi demande pourtant un numéro de téléphone à l'éditeur personne morale (voir 3.1) : à faire confirmer par le juriste | Bureau, juriste | Mentions légales |
-| Adresse de contact définitive, unique pour le contact général, la presse et l'adhésion (provisoirement contact@slbc.fr) | Isabelle Eimer | Tout le site |
+| Adresse de contact définitive, unique pour le contact général et la presse (provisoirement contact@slbc.fr ; les demandes d'adhésion vont à bureau@slbc.fr depuis le 7 novembre 2026) | Isabelle Eimer | Tout le site |
 | Hébergeur : nom, adresse, téléphone. Nommer celui qui stocke réellement le site, et Kstudio s'il revend l'hébergement | Kstudio | Mentions légales |
 | Numéro SIREN, s'il existe (à vérifier sur annuaire-entreprises.data.gouv.fr) | Bureau | Mentions légales |
 | Durées de conservation : fichier des adhérents après la fin de l'adhésion, demandes non abouties, preuve du consentement, journal des connexions. Piste évoquée le 6 novembre 2026 : garder la veille et les communiqués en ligne environ 5 ans | Bureau | Données personnelles |
@@ -322,3 +322,11 @@ Sources consultées en extrait, ou citées sans avoir pu être ouvertes depuis l
 - **Comptes des syndicats** : https://code.travail.gouv.fr/fiche-ministere-travail/comptes-des-organisations-syndicales-et-professionnelles et https://comptes-syndicats.journal-officiel.gouv.fr/
 - **Accessibilité** : https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32019L0882 et https://accessibilite.numerique.gouv.fr/
 - **Réutilisation des informations publiques** : https://www.etalab.gouv.fr/licence-ouverte-open-licence/
+
+## Envoi des demandes d’adhésion (7 novembre 2026)
+
+Décision d’Isabelle Eimer : les demandes d’adhésion arrivent sur bureau@slbc.fr.
+
+- **Dans la maquette** : il n’y a pas de serveur, et une page publiée sur claude.ai ne peut pas envoyer d’e-mail. À l’envoi, la messagerie du visiteur s’ouvre avec l’e-mail déjà rédigé pour bureau@slbc.fr ; le visiteur clique sur « Envoyer ». Si sa messagerie ne s’ouvre pas, il peut copier la demande et la coller dans un nouvel e-mail. Aucun service extérieur n’intervient : la demande part de la messagerie du visiteur.
+- **Sur le site réel** (à demander à Kstudio) : le formulaire doit envoyer la demande lui-même, sans passer par la messagerie du visiteur. Avec WordPress, une extension de formulaire courante le fait ; l’envoi doit passer par un serveur d’envoi authentifié du domaine slbc.fr (enregistrements SPF et DKIM), pour que les messages ne tombent pas en indésirables. À prévoir aussi : une protection contre les robots, un accusé de réception au demandeur, et la mise à jour de la partie « Données personnelles » si un prestataire d’envoi est utilisé (il devient destinataire des données).
+

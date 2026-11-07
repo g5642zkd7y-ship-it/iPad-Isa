@@ -226,6 +226,8 @@
      Provisoire : contact@slbc.fr, en attendant l’adresse définitive.
      Si elle est vidée, la maquette affiche « adresse à compléter ». */
   const CONTACT_EMAIL = 'contact@slbc.fr';
+  /* Les demandes d'adhésion partent vers le bureau (décision d'Isabelle Eimer du 7 novembre 2026). */
+  const ADHESION_EMAIL = 'bureau@slbc.fr';
   /* Missions rédigées avec Isabelle Eimer le 5 novembre 2026, à valider par le bureau.
      Elles remplacent les anciennes « missions » et « priorités ». */
   const MISSIONS = [
@@ -1004,8 +1006,42 @@
       if (f) f.focus({ preventScroll: true });
       return;
     }
+    /* Envoi : la messagerie du visiteur s'ouvre avec l'e-mail rédigé, adressé au bureau. Dans la page publiée sur claude.ai
+       (un cadre), dans un nouvel onglet ; sur le site, directement. Repli : « Ouvrir ma messagerie » et « Copier la demande ». */
+    const mail = joinMail();
+    const url = 'mailto:' + ADHESION_EMAIL + '?subject=' + encodeURIComponent(mail.subject) + '&body=' + encodeURIComponent(mail.body.replace(/\n/g, '\r\n'));
+    const okAdh = EMAIL_RE.test(ADHESION_EMAIL);
+    $('#join-mailto').href = okAdh ? url : '#adherer'; $('#join-mailto').hidden = !okAdh;
+    $('#join-mailtext').textContent = 'À : ' + (okAdh ? ADHESION_EMAIL : 'adresse à compléter') + '\nObjet : ' + mail.subject + '\n\n' + mail.body;
+    $('#join-copy-ok').hidden = true; $('#join-copy-ok').textContent = ''; $('.join-texte').open = false;
     $('#join-wrap').hidden = true;
     $('#join-done').hidden = false;
+    $('#join-done-title').focus({ preventScroll: true });
+    if (okAdh) openMail(url);
+  });
+  function joinMail() {
+    const civ = jf.querySelector('input[name="civ"]:checked');
+    const prenom = $('#j-prenom').value.trim(); const nom = $('#j-nom').value.trim(); const labo = $('#j-labo').value.trim();
+    const qui = ((civ ? civ.value + ' ' : '') + prenom + ' ' + nom).trim();
+    const lines = ['Bonjour,', '', 'Je souhaite adhérer au SLBC. Voici ma demande.', '',
+      'Nom : ' + qui, 'E-mail : ' + $('#j-email').value.trim(), 'Téléphone : ' + ($('#j-tel').value.trim() || 'non renseigné'),
+      'Laboratoire : ' + labo, 'Ville : ' + $('#j-ville').value.trim(), 'Exercice : ' + $('#j-statut').value];
+    const msg = $('#j-msg').value.trim();
+    if (msg) lines.push('', 'Message :', msg);
+    lines.push('', 'Cordialement,', (prenom + ' ' + nom).trim());
+    return { subject: 'Demande d’adhésion au SLBC : ' + (prenom + ' ' + nom).trim() + ' (' + labo + ')', body: lines.join('\n') };
+  }
+  function openMail(url) {
+    try { if (window.top !== window.self) window.open(url, '_blank', 'noopener'); else window.location.href = url; } catch (err) { /* le repli reste affiché */ }
+  }
+  $('#join-copy').addEventListener('click', () => {
+    const okEl = $('#join-copy-ok'); const pre = $('#join-mailtext');
+    const done = () => { okEl.textContent = 'Demande copiée. Collez-la dans un nouvel e-mail adressé à ' + ADHESION_EMAIL + '.'; okEl.hidden = false; };
+    const fallback = () => { $('.join-texte').open = true; selectText(pre); okEl.textContent = 'Le texte est sélectionné : copiez-le, puis collez-le dans un nouvel e-mail adressé à ' + ADHESION_EMAIL + '.'; okEl.hidden = false; };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(pre.textContent).then(done).catch(fallback);
+      else fallback();
+    } catch (err) { fallback(); }
   });
   $('#join-prev').addEventListener('click', () => jShow(Math.max(1, jStep - 1)));
   $('#join-restart').addEventListener('click', () => { jf.reset(); $('#join-wrap').hidden = false; $('#join-done').hidden = true; jShow(1); });
@@ -1307,6 +1343,8 @@
       if (el.tagName === 'A') { if (okMail) el.href = 'mailto:' + CONTACT_EMAIL; else el.removeAttribute('href'); }
     });
     $$('[data-contact-copy]').forEach((b) => { b.dataset.copy = CONTACT_EMAIL; b.hidden = !okMail; });
+    const okAdh = EMAIL_RE.test(ADHESION_EMAIL);
+    $$('[data-adhesion]').forEach((el) => { el.textContent = okAdh ? ADHESION_EMAIL : 'adresse à compléter'; el.classList.toggle('pending', !okAdh); });
   }
 
   /* ---------- Mouvement : ombre de l’en-tête, piliers et frise ---------- */
