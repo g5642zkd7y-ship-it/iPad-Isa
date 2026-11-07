@@ -126,15 +126,25 @@ REFLETS = ('<path d="M94 61 Q97 58 101 59" stroke="#FFFFFF" stroke-width="2" fil
 CASQUETTES = [('#F6C945', '#E0A21B'), ('#9FD3EC', '#4F9CC4')]   # jaune, bleu ciel (calotte, visière)
 def casquette(k=0):
     calotte, visiere = CASQUETTES[k % 2]
-    return (f'<path d="M62 47 C61 24 77 11 96 11 C115 11 130 24 130 45 Q96 59 62 47 Z" fill="{calotte}"/>'
-            f'<path d="M117 49 Q138 41 158 48 Q151 57 120 56 Z" fill="{visiere}"/>'
-            f'<path d="M96 12 Q99 32 97 52" stroke="{visiere}" stroke-width="2" fill="none"/>'
-            f'<circle cx="96" cy="11" r="3.5" fill="{visiere}"/>')
+    # basculée vers l'arrière : le bas de la calotte descend sur l'arrière du crâne, la visière reste au-dessus des yeux
+    return (f'<path d="M57 62 C52 32 72 9 98 9 C119 9 132 24 131 45 Q99 49 60 66 Z" fill="{calotte}"/>'
+            f'<path d="M118 48 Q139 40 159 47 Q152 56 121 55 Z" fill="{visiere}"/>'
+            f'<path d="M98 10 Q95 34 86 56" stroke="{visiere}" stroke-width="2" fill="none"/>'
+            f'<circle cx="98" cy="9" r="3.5" fill="{visiere}"/>')
 def chapeau():
     return (f'<path d="M48 44 Q95 30 142 44 Q146 50 138 52 Q95 62 52 52 Q44 50 48 44 Z" fill="{PAILLE}"/>'
             f'<path d="M70 45 C70 22 82 13 95 13 C108 13 120 22 120 45 Q95 52 70 45 Z" fill="{PAILLE}"/>'
             f'<path d="M71 36 Q95 42 119 36 L120 44 Q95 51 70 44 Z" fill="{VERT}" stroke="none"/>'
             f'<path d="M78 24 Q95 20 112 24" stroke="#C9A24A" stroke-width="1.6"/>')
+
+BOUEE_TAILLE = {'defendons': 0, 'veille': 0, 'hanches': 0}   # qui porte la bouée à la taille ; les autres l'ont posée au sol
+def bouee_taille():
+    return (f'<ellipse cx="96" cy="151" rx="37" ry="12.5" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
+            f'<ellipse cx="96" cy="148" rx="21" ry="5.5" fill="#FFFFFF" stroke="{INK}" stroke-width="2.6"/>'
+            '<path d="M65 146 Q60 152 66 158" stroke="#FFFFFF" stroke-width="2.4" fill="none"/>'
+            f'<path d="M126 147 C121 137 123 122 134 120 C145 118 151 127 146 135 C144 139 142 143 142 147 Z" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
+            f'<path d="M147 125 Q158 125 157 130 Q154 133 146 131 Z" fill="{BEC}" stroke="{INK}" stroke-width="2.4"/>'
+            f'<circle cx="139" cy="126" r="2.4" fill="{INK}" stroke="none"/>')
 
 def ete(key, svg):
     s = clean(sans_sourcils_caches(sans_meches(svg)))
@@ -142,7 +152,8 @@ def ete(key, svg):
     n = [0]
     def tete(m):
         k = n[0]; n[0] += 1
-        return HEAD + LUNETTES + (casquette(k // 2) if k % 2 == 0 else chapeau())
+        extra = bouee_taille() if BOUEE_TAILLE.get(key) == k else ''
+        return HEAD + LUNETTES + (casquette(k // 2) if k % 2 == 0 else chapeau()) + extra
     s = s.replace(HEAD, '\0')
     s = re.sub('\0', tete, s)
     # les lunettes de vue deviennent des lunettes de soleil (verres foncés, reflet)
@@ -156,6 +167,8 @@ def ete(key, svg):
         s = s.replace('<text x="384" y="40"', '<text x="398" y="32"', 1)
     if key == 'bienvenue':
         s = re.sub(r'<path class="mot-main" d="[^"]*"', '<path class="mot-main" d="' + TXT_ETE + '"', s, count=1)
+    if key in BOUEE_TAILLE:
+        return s
     # la bouée canard, posée au sol à droite du dessin
     m, (x, y, w, hh) = viewbox(s)
     sol = y + hh - 6
