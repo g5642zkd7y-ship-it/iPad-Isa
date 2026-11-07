@@ -37,7 +37,7 @@ Tout doit être relu par un juriste avant la mise en ligne. Les textes de 2026 c
 | Point | Qui | Où |
 |---|---|---|
 | Téléphone : le SLBC n'en affiche pas (décision du 6 novembre 2026). La loi demande pourtant un numéro de téléphone à l'éditeur personne morale (voir 3.1) : à faire confirmer par le juriste | Bureau, juriste | Mentions légales |
-| Adresse de contact définitive, unique pour le contact général et la presse (provisoirement contact@slbc.fr ; les demandes d'adhésion vont à bureau@slbc.fr depuis le 7 novembre 2026) | Isabelle Eimer | Tout le site |
+| Adresse de contact définitive, unique pour le contact général et la presse (provisoirement contact@slbc.fr ; les demandes d'adhésion vont à bureau@slbc.fr depuis le 7 novembre 2026). Les deux adresses sont à créer sur la messagerie du domaine slbc.fr (Isabelle Eimer, 7 novembre 2026) | Isabelle Eimer | Tout le site |
 | Hébergeur : nom, adresse, téléphone. Nommer celui qui stocke réellement le site, et Kstudio s'il revend l'hébergement | Kstudio | Mentions légales |
 | Numéro SIREN, s'il existe (à vérifier sur annuaire-entreprises.data.gouv.fr) | Bureau | Mentions légales |
 | Durées de conservation : fichier des adhérents après la fin de l'adhésion, demandes non abouties, preuve du consentement, journal des connexions. Piste évoquée le 6 novembre 2026 : garder la veille et les communiqués en ligne environ 5 ans | Bureau | Données personnelles |
