@@ -102,6 +102,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .btn-primary{background:var(--vert);color:#fff}
 .btn-primary:hover{background:var(--vert-fonce);color:#fff}
 .btn-light{background:#fff;color:var(--encre)}
+/* Bouton « Adhérer » sur un fond vert foncé : vert anis, texte encre (contraste 6,3:1), pour rester vert partout. */
+.btn-anis{background:var(--anis);color:var(--encre)}
+.btn-anis:hover{background:#B4CD52;color:var(--encre)}
 .btn-light:hover{background:var(--fond);color:var(--encre)}
 .btn-quiet{background:var(--neutre);color:var(--encre)}
 .btn-quiet:hover{background:#E2E5DC}

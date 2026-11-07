@@ -1370,12 +1370,13 @@
      en miroir, le même angle le fait descendre du même côté) et les mains serrées suivent la même hauteur. */
   function shakeHands(svg, delay) {
     if (!svg || reduceMotion) return;
-    const arms = svg.querySelectorAll('.bras-poignee'); const clasp = svg.querySelector('.poignee'); const wave = svg.querySelector('.bras-salut');
-    if (!arms.length || !clasp) return;
+    /* Le contour blanc du dessin (fond vert de l'espace adhérent) a ses propres bras et mains : tout bouge ensemble. */
+    const arms = svg.querySelectorAll('.bras-poignee'); const clasps = svg.querySelectorAll('.poignee'); const waves = svg.querySelectorAll('.bras-salut');
+    if (!arms.length || !clasps.length) return;
     const set = (a, w) => {
       arms.forEach((g) => g.setAttribute('transform', 'rotate(' + a.toFixed(2) + ' 106 117)'));
-      clasp.setAttribute('transform', 'translate(0 ' + (33 * Math.sin(a * Math.PI / 180)).toFixed(2) + ')');
-      if (wave) wave.setAttribute('transform', 'rotate(' + w.toFixed(2) + ' 80 116)');
+      clasps.forEach((g) => g.setAttribute('transform', 'translate(0 ' + (33 * Math.sin(a * Math.PI / 180)).toFixed(2) + ')'));
+      waves.forEach((g) => g.setAttribute('transform', 'rotate(' + w.toFixed(2) + ' 80 116)'));
     };
     if (svg._shake) cancelAnimationFrame(svg._shake);
     clearTimeout(svg._shakeWait);
