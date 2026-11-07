@@ -38,7 +38,7 @@ def sans_meches(s):
         s = s.replace(piece, '')
     return s
 
-def sans_sourcils_caches(s, bas=49):
+def sans_sourcils_caches(s, bas=52):
     """Retire les sourcils entièrement cachés sous le bord du bonnet ou du chapeau (y ≤ bas, au-dessus des yeux)."""
     def cache(m):
         nums = [float(x) for x in re.findall(r'-?\d+(?:\.\d+)?', m.group(1))]
@@ -73,9 +73,9 @@ def tenue_noel():
                f'<path d="M96 113 L100 136 L91 137 L89 115 Z" fill="{ROUGE}" stroke-width="3"/>'
                '<path d="M86 108 L86 115 M94 110 L94 117 M102 107 L103 114 M90 124 L98 123 M91 130 L99 129" stroke="#FFFFFF" stroke-width="2.6"/>')
     # bonnet enfoncé sur la tête (le bord blanc descend jusqu'au front), la pointe retombe vers l'arrière, gros pompon
-    bonnet = (f'<path d="M124 42 C126 24 116 8 99 6 C82 4 68 14 60 28 C68 29 72 35 69 42 Z" fill="{ROUGE}"/>'
-              '<rect x="61" y="36" width="68" height="13" rx="6.5" fill="#FFFFFF" stroke-width="3"/>'
-              '<circle cx="56" cy="29" r="9.5" fill="#FFFFFF" stroke-width="3"/>')
+    bonnet = (f'<path d="M127 40 C130 21 118 6 100 4 C82 2 68 12 60 26 C68 27 70 33 64 40 Z" fill="{ROUGE}"/>'
+              '<path d="M59 38 Q95 25 131 38 Q134 43 131 47 Q95 59 59 47 Q56 43 59 38 Z" fill="#FFFFFF" stroke-width="3"/>'
+              '<circle cx="56" cy="27" r="9.5" fill="#FFFFFF" stroke-width="3"/>')
     return HEAD + echarpe + bonnet
 
 def moufles(s):
@@ -119,15 +119,17 @@ LUNETTES = ('<path d="M60 64 L88 64" stroke-width="2.5"/>'
             '<path d="M110 64 Q112 61.5 114 63" stroke-width="2.5"/>')
 REFLETS = ('<path d="M94 61 Q97 58 101 59" stroke="#FFFFFF" stroke-width="2" fill="none"/>'
            '<path d="M117 59 Q120 56 124 57" stroke="#FFFFFF" stroke-width="2" fill="none"/>')
-def casquette():
-    return (f'<path d="M64 46 C63 24 78 12 96 12 C114 12 128 24 128 44 Z" fill="{VERT_ANIS}"/>'
-            f'<path d="M120 42 Q142 39 156 46 Q140 51 120 48 Z" fill="{VERT}"/>'
-            f'<path d="M96 13 L96 44" stroke="{VERT}" stroke-width="2"/>'
-            f'<circle cx="96" cy="12" r="3.5" fill="{VERT}"/>')
+CASQUETTES = [('#F6C945', '#E0A21B'), ('#9FD3EC', '#4F9CC4')]   # jaune, bleu ciel (calotte, visière)
+def casquette(k=0):
+    calotte, visiere = CASQUETTES[k % 2]
+    return (f'<path d="M62 47 C61 24 77 11 96 11 C115 11 130 24 130 45 Q96 59 62 47 Z" fill="{calotte}"/>'
+            f'<path d="M117 49 Q138 41 158 48 Q151 57 120 56 Z" fill="{visiere}"/>'
+            f'<path d="M96 12 Q99 32 97 52" stroke="{visiere}" stroke-width="2" fill="none"/>'
+            f'<circle cx="96" cy="11" r="3.5" fill="{visiere}"/>')
 def chapeau():
-    return (f'<ellipse cx="95" cy="42" rx="47" ry="9" fill="{PAILLE}"/>'
-            f'<path d="M70 42 C70 22 82 13 95 13 C108 13 120 22 120 42 Z" fill="{PAILLE}"/>'
-            f'<path d="M71 34 L119 34 L120 41 L70 41 Z" fill="{VERT}" stroke="none"/>'
+    return (f'<path d="M48 44 Q95 30 142 44 Q146 50 138 52 Q95 62 52 52 Q44 50 48 44 Z" fill="{PAILLE}"/>'
+            f'<path d="M70 45 C70 22 82 13 95 13 C108 13 120 22 120 45 Q95 52 70 45 Z" fill="{PAILLE}"/>'
+            f'<path d="M71 36 Q95 42 119 36 L120 44 Q95 51 70 44 Z" fill="{VERT}" stroke="none"/>'
             f'<path d="M78 24 Q95 20 112 24" stroke="#C9A24A" stroke-width="1.6"/>')
 
 def ete(key, svg):
@@ -136,7 +138,7 @@ def ete(key, svg):
     n = [0]
     def tete(m):
         k = n[0]; n[0] += 1
-        return HEAD + LUNETTES + (casquette() if k % 2 == 0 else chapeau())
+        return HEAD + LUNETTES + (casquette(k // 2) if k % 2 == 0 else chapeau())
     s = s.replace(HEAD, '\0')
     s = re.sub('\0', tete, s)
     # les lunettes de vue deviennent des lunettes de soleil (verres foncés, reflet)
