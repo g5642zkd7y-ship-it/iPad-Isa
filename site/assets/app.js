@@ -119,6 +119,7 @@
     'documents/comptes/comptes-2022-rapport-cac.pdf': ['Comptes 2022 : rapport du commissaire aux comptes', 18, 595, 841],
     'documents/comptes/comptes-2020-rapport-cac.pdf': ['Comptes 2020 : rapport du commissaire aux comptes', 14, 595, 842]
   };
+  PDFS['documents/etude-roland-berger-2025.pdf'] = ['Étude du secteur des laboratoires de biologie médicale libérale français, rapport 2025 (Roland Berger)', 59, 960, 540];
   Object.keys(PDFS).forEach((u) => { const [title, pages, w, h] = PDFS[u]; DOCS[u] = { title, pages, w, h, pdf: true, file: u.split('/').pop() }; });
   const nPages = (u) => DOCS[u].pages + ' page' + (DOCS[u].pages > 1 ? 's' : '');
 
@@ -243,7 +244,7 @@
     { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
     { n: 'Commission conventionnelle paritaire nationale', a: 'CPPNI', r: 'Dialogue social de la branche', reps: ['Antoine Crinquette', 'Éric Flatin'] },
     { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', r: 'Conditions d’exercice de la profession', reps: [],
-      groups: [['Bureau', ['Thierry Bouchet'], 'un représentant à désigner'], ['Assemblée générale', ['Hala Sarmini'], 'deux représentants à désigner']] },
+      groups: [['Bureau', ['Thierry Bouchet'], 'un représentant à désigner'], ['Assemblée générale', ['Harla Sarmini'], 'deux représentants à désigner']] },
     { n: 'Comité de suivi du protocole', r: 'Protocole 2027-2029 avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Isabelle Eimer', 'Nicolas Roquigny', 'Éric Flatin'] },
     { n: 'Commission paritaire nationale des structures pluriprofessionnelles', a: 'CPNMSP', r: 'Accord conventionnel interprofessionnel de 2017', reps: ['Thierry Bouchet'], todo: 'un représentant à désigner' },
     { n: 'Commission paritaire régionale des structures pluriprofessionnelles', a: 'CPRMSP', r: 'Accord conventionnel interprofessionnel de 2017, en région', reps: [], todo: 'un titulaire et un suppléant à désigner' },
@@ -255,7 +256,7 @@
     ['Auvergne-Rhône-Alpes et Bourgogne-Franche-Comté', ['Nicolas Roquigny', 'Éric Flatin', 'François Targe', 'Benoît Dumont', 'Marc Thome', 'Fabienne Moulinier']],
     ['Grand Est', ['Isabelle Eimer', 'Jovana Moularde', 'Carole Granello']],
     ['Hauts-de-France', ['Nicolas Chatelain', 'Antoine Crinquette']],
-    ['Île-de-France et outre-mer', ['Thierry Bouchet', 'Pascal Melin', 'Hala Sarmini', 'Alexandre Guiard', 'Ahmed Aboubacar', 'Sophie Beria']],
+    ['Île-de-France et outre-mer', ['Thierry Bouchet', 'Pascal Melin', 'Harla Sarmini', 'Alexandre Guiard', 'Ahmed Aboubacar', 'Sophie Beria']],
     ['Nouvelle-Aquitaine', ['Jean-Philippe Brochet']],
     ['Ouest', ['Laurent Perrot']],
     ['Provence-Alpes-Côte d’Azur, Languedoc et Corse', ['Guillaume Armana', 'Sylvain Chambourlier', 'Laurent Kbaier']]
@@ -264,7 +265,7 @@
     ['Auvergne-Rhône-Alpes', ['Jacques Pojer', 'Valérie Chepeaux']], ['Bourgogne-Franche-Comté', []],
     ['Bretagne', ['Eric Gueheneux']], ['Centre-Val de Loire', ['François Thomas']], ['Corse', ['Gérard Pesquie']],
     ['Grand Est', ['Christian Laeng', 'Michel Pax']], ['Hauts-de-France', ['Nicolas Chatelain', 'Daniel Gadeyne']],
-    ['Île-de-France', ['Hala Sarmini', 'Thierry Bouchet']], ['Normandie', ['Paul Bracquemart']],
+    ['Île-de-France', ['Harla Sarmini', 'Thierry Bouchet']], ['Normandie', ['Paul Bracquemart']],
     ['Nouvelle-Aquitaine', ['Jean-Philippe Brochet']], ['Occitanie', ['Olivier Attali', 'Arnaud Longuet']],
     ['Pays de la Loire', ['François Maillet']], ['Provence-Alpes-Côte d’Azur', ['Jean-Pierre Fayon', 'Frédéric Charrier']],
     ['Guadeloupe', ['Frédéric Leroy']], ['Guyane', []], ['Martinique', ['Gérard Cherchel']],
@@ -293,10 +294,9 @@
     { g: 'Études du secteur', items: [
       { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : version courte', s: 'Étude du secteur des laboratoires de biologie médicale libérale français, Roland Berger', url: 'documents/observatoire-biologie-2026-court.pdf', doc: true },
       { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : rapport complet', s: 'Même étude, version longue', url: 'documents/observatoire-biologie-2026-complet.pdf', doc: true },
-      /* Édition 2025 (troisième rapport Roland Berger, 7 novembre 2026, demande d'Isabelle Eimer) : version finale diffusée par l'APBM
-         sur sa page LinkedIn le 4 novembre 2025, sans PDF en téléchargement libre ; à mettre dans la liseuse dès que le PDF est fourni.
-         Le document de travail du 31 juillet 2025 envoyé par Isabelle Eimer n'est pas publié (version préliminaire). Point 27. */
-      { d: 'Novembre 2025', t: 'Étude du secteur des laboratoires de biologie médicale libérale français, édition 2025', s: 'Étude Roland Berger ; version complète publiée par l’APBM', url: 'https://www.linkedin.com/posts/apbm_etude-du-secteur-des-laboratoires-de-biologie-ugcPost-7391530588672794626-u0EB/', src: 'linkedin.com' }
+      /* Rapport 2025 (troisième étude Roland Berger, novembre 2025) : PDF envoyé par Isabelle Eimer le 7 novembre 2026, lu dans la liseuse.
+         Le document de travail du 31 juillet 2025 envoyé le même jour n'est pas publié (version préliminaire). Point 27. */
+      { d: 'Novembre 2025', t: 'Étude du secteur des laboratoires de biologie médicale libérale français, rapport 2025', s: 'Roland Berger', url: 'documents/etude-roland-berger-2025.pdf', doc: true }
     ] }
   ];
   /* Nomenclature : liens repris de l'ancienne page CHAB de slbc.fr (Légifrance, Journal officiel hébergé par la FHF).
@@ -608,6 +608,8 @@
   function renderStatic() {
     $('#home-benefits').innerHTML = BENEFITS.map((b) => '<li><span>' + esc(b.t) + '</span></li>').join('');
     $('#benefits-grid').innerHTML = BENEFITS.map((b) => '<div class="benefit"><h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
+    /* Piliers de « Ce que nous défendons » (accueil) : mêmes numéros dessinés et même animation que les missions */
+    $$('#piliers .pillar').forEach((el, k) => { if (!el.querySelector('.mnum')) el.insertAdjacentHTML('afterbegin', missionBadge(k + 1)); });
     $('#missions-list').innerHTML = MISSIONS.map((m, k) => '<div class="charter-item">' + missionBadge(k + 1) + '<div class="charter-text"><h3 class="h-block"><span class="sr-only">Mission ' + (k + 1) + '\u00a0: </span>' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div></div>').join('');
     renderSyndicat();
     $('#comptes-list').innerHTML = docRow({ t: 'Les statuts du SLBC', s: 'Paris, le 16 novembre 2013', url: STATUTS }, 'Statuts') +
