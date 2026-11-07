@@ -1053,8 +1053,9 @@
     if (!em.value.trim()) { er.textContent = 'Saisissez votre e-mail.'; er.hidden = false; em.setAttribute('aria-invalid', 'true'); em.focus(); return; }
     /* Démonstration : les comptes créés dans « Comptes des adhérents » demandent leur mot de passe ; les autres identifiants restent acceptés. */
     const refus = await checkCompte(em.value.trim(), $('#login-pass').value);
-    if (refus) { er.textContent = refus; er.hidden = false; $('#login-pass').value = ''; $('#login-pass').focus(); return; }
-    er.hidden = true; er.textContent = ''; em.removeAttribute('aria-invalid');
+    const pw = $('#login-pass');
+    if (refus) { er.textContent = refus; er.hidden = false; em.removeAttribute('aria-invalid'); pw.value = ''; pw.setAttribute('aria-invalid', 'true'); pw.setAttribute('aria-describedby', 'login-err'); pw.focus(); return; }
+    er.hidden = true; er.textContent = ''; em.removeAttribute('aria-invalid'); pw.removeAttribute('aria-invalid'); pw.removeAttribute('aria-describedby');
     setMember(em.value.trim());
     $('#login-pass').value = '';
     /* Les formulaires de l'espace reprennent l'e-mail de connexion. */
@@ -1690,6 +1691,7 @@
   }
   /* Visiteur : la carte de connexion prend la main et dit où l'on arrivera ensuite. */
   function askLogin(panel, sujet, label) {
+    $('#oubli-form').hidden = true; $('#login-form').hidden = false;
     wantPanel = panel; wantSujet = sujet || null;
     const l = label || (PANELS.find((p) => p[0] === panel) || PANELS[0])[1];
     $('#login-intent').textContent = 'Après la connexion, vous arriverez sur «\u00a0' + l + '\u00a0».';
@@ -1812,6 +1814,8 @@
     ['oubli-err', 'oubli-ok', 'cpt-ok', 'cpt-prenom-err', 'cpt-nom-err', 'cpt-email-err'].forEach(clear);
     $('#oubli-mail-wrap').hidden = true; $('#oubli-none').hidden = true;
     $('#cpt-form').reset(); $$('#cpt-form [aria-invalid], #oubli-form [aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+    $('#login-pass').removeAttribute('aria-describedby');
+    $('#cpt-mail').innerHTML = ''; $('#cpt-mail').hidden = true; $('#cpt-mail-note').hidden = true; $('#cpt-mail-empty').hidden = false; $('#oubli-mail').innerHTML = '';
   }
   renderMessages();
 
@@ -1824,7 +1828,10 @@
   const MDP_MIN = 12;
   const CPT_ST = { invite: 'Invitation envoyée', actif: 'Actif', desactive: 'Désactivé' };
   let comptes = loadList(CPT_KEY).filter((x) => x && str(x.email) && EMAIL_RE.test(x.email) && str(x.prenom) && str(x.nom) && str(x.salt) &&
-    Object.prototype.hasOwnProperty.call(CPT_ST, x.statut) && (x.hash === undefined || x.hash === null || str(x.hash)) && (x.token === undefined || x.token === null || str(x.token)));
+    Object.prototype.hasOwnProperty.call(CPT_ST, x.statut) && (x.hash === undefined || x.hash === null || str(x.hash)) && (x.token === undefined || x.token === null || str(x.token)) &&
+    (x.ancien === undefined || x.ancien === null || str(x.ancien)));
+  comptes.forEach((x) => { x.email = x.email.toLowerCase(); if (x.statut === 'desactive') x.token = null; });
+  comptes = comptes.filter((x, i) => comptes.findIndex((y) => y.email === x.email) === i);
   const saveComptes = () => saveList(CPT_KEY, comptes);
   const jeton = () => {
     const a = new Uint8Array(16);
@@ -1875,8 +1882,10 @@
         (c.statut === 'desactive' ? b('reactiver', 'Réactiver', 'Réactiver le compte de') : b('desactiver', 'Désactiver', 'Désactiver le compte de')) + '</span></li>';
     }).join('') : '<li class="nl-empty">Aucun compte pour l’instant.</li>';
   }
+  let cptLast = 0;
   $('#cpt-form').addEventListener('submit', (e) => {
     e.preventDefault();
+    if (Date.now() - cptLast < 1500 && !$('#cpt-prenom').value.trim() && !$('#cpt-nom').value.trim() && !$('#cpt-email').value.trim()) return;
     const ok = $('#cpt-ok'); ok.hidden = true; ok.textContent = '';
     const addr = $('#cpt-email').value.trim().toLowerCase();
     const fields = [['cpt-prenom', (v) => (v ? '' : 'Indiquez le prénom.')], ['cpt-nom', (v) => (v ? '' : 'Indiquez le nom.')],
@@ -1889,7 +1898,7 @@
     });
     if (first) { first.focus(); return; }
     const c = { prenom: $('#cpt-prenom').value.trim(), nom: $('#cpt-nom').value.trim(), email: addr, statut: 'invite', salt: jeton(), token: jeton(), hash: null };
-    comptes.unshift(c); saveComptes(); renderComptes(); showInvitation(c);
+    comptes.unshift(c); saveComptes(); renderComptes(); showInvitation(c); cptLast = Date.now();
     $('#cpt-form').reset();
     ok.textContent = 'Compte créé. L’invitation part vers ' + c.email + ' : voir l’aperçu de l’e-mail.'; ok.hidden = false;
   });
@@ -1900,9 +1909,9 @@
     if (!c) return;
     const act = b.dataset.cpt;
     if (act === 'renvoyer') { c.token = jeton(); showInvitation(c); showToast('Invitation renvoyée à ' + c.email + ' (démonstration).', null, null); }
-    if (act === 'desactiver') { c.statut = 'desactive'; c.token = null; showToast('Compte désactivé : ' + c.email + ' ne peut plus se connecter.', null, null); }
+    if (act === 'desactiver') { c.statut = 'desactive'; c.ancien = c.token || c.ancien || null; c.token = null; showToast('Compte désactivé : ' + c.email + ' ne peut plus se connecter.', null, null); }
     if (act === 'reactiver') {
-      c.statut = c.hash ? 'actif' : 'invite';
+      c.statut = c.hash ? 'actif' : 'invite'; c.ancien = null;
       if (!c.hash) { c.token = jeton(); showInvitation(c); }
       showToast('Compte réactivé : ' + c.email + '.', null, null);
     }
@@ -1926,18 +1935,26 @@
     /* Même réponse que le compte existe ou non : on ne dit pas à un inconnu quelles adresses ont un compte. */
     $('#oubli-ok').textContent = 'Si cette adresse correspond à un compte, un e-mail vient de lui être envoyé avec un lien pour choisir un nouveau mot de passe.';
     $('#oubli-ok').hidden = false;
-    const c = comptes.find((x) => x.email === addr && x.statut !== 'desactive');
-    if (c) { c.token = jeton(); saveComptes(); renderComptes(); $('#oubli-mail').innerHTML = mailCompte(c, 'oubli', 'oubli'); }
+    const trouve = comptes.find((x) => x.email === addr);
+    const c = trouve && trouve.statut !== 'desactive' ? trouve : null;
+    if (c) { c.token = jeton(); saveComptes(); renderComptes(); $('#oubli-mail').innerHTML = mailCompte(c, c.hash ? 'oubli' : 'invitation', 'oubli'); }
+    else $('#oubli-mail').innerHTML = '';
+    $('#oubli-none').textContent = trouve
+      ? 'Démonstration : ce compte est désactivé. Sur le site réel, aucun e-mail ne partirait ; l’adhérent doit écrire au bureau.'
+      : 'Démonstration : aucun compte créé dans « Comptes des adhérents » ne correspond à cette adresse. Sur le site réel, aucun e-mail ne partirait.';
     $('#oubli-mail-wrap').hidden = !c; $('#oubli-none').hidden = !!c;
   });
   /* La page ouverte depuis l'e-mail : choisir son mot de passe (lien à usage unique) */
-  let mdpCompte = null; let mdpReturn = null;
+  let mdpCompte = null; let mdpReturn = null; let mdpBusy = false;
   const mdpDialog = $('#mdp-dialog');
   function mdpState(kind, c) {
     $('#mdp-form').hidden = kind !== 'form'; $('#mdp-msg').hidden = kind === 'form';
     if (kind === 'form') {
       $('#mdp-title').textContent = c.hash ? 'Choisissez un nouveau mot de passe' : 'Créez votre mot de passe';
       $('#mdp-who').textContent = 'Compte : ' + c.email; $('#mdp-who').hidden = false;
+    } else if (kind === 'desactive') {
+      $('#mdp-title').textContent = 'Ce compte a été désactivé'; $('#mdp-who').hidden = true;
+      $('#mdp-msg').textContent = 'Ce lien ne sert plus. Écrivez au bureau du SLBC pour réactiver votre compte.';
     } else if (kind === 'invalide') {
       $('#mdp-title').textContent = 'Ce lien n’est plus valable'; $('#mdp-who').hidden = true;
       $('#mdp-msg').textContent = 'Il a déjà servi, ou un lien plus récent l’a remplacé. Demandez-en un nouveau avec « Mot de passe oublié ? » sur la page de connexion.';
@@ -1948,10 +1965,11 @@
   }
   function ouvrirMdp(token, from) {
     const c = comptes.find((x) => x.token && x.token === token);
-    mdpCompte = c || null; mdpReturn = from || null;
+    const coupe = !c && comptes.find((x) => x.statut === 'desactive' && x.ancien && x.ancien === token);
+    mdpCompte = c || null; mdpReturn = from || null; mdpBusy = false;
     $('#mdp-form').reset(); $('#mdp-1').type = 'password'; $('#mdp-2').type = 'password';
     ['mdp-1', 'mdp-2'].forEach((id) => { $('#' + id).removeAttribute('aria-invalid'); $('#' + id + '-err').hidden = true; $('#' + id + '-err').textContent = ''; });
-    mdpState(c ? 'form' : 'invalide', c);
+    mdpState(c ? 'form' : (coupe ? 'desactive' : 'invalide'), c);
     if (typeof mdpDialog.showModal === 'function') { if (!mdpDialog.open) mdpDialog.showModal(); } else mdpDialog.setAttribute('open', '');
     if (c) $('#mdp-1').focus(); else $('#mdp-title').focus();
   }
@@ -1959,6 +1977,7 @@
   $('#mdp-show').addEventListener('change', (e) => { const t = e.target.checked ? 'text' : 'password'; $('#mdp-1').type = t; $('#mdp-2').type = t; });
   $('#mdp-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (mdpBusy) return;
     const p1 = $('#mdp-1'); const p2 = $('#mdp-2');
     [p1, p2].forEach((el) => { el.removeAttribute('aria-invalid'); $('#' + el.id + '-err').hidden = true; $('#' + el.id + '-err').textContent = ''; });
     const fail = (el, msg) => { const err = $('#' + el.id + '-err'); err.textContent = msg; err.hidden = false; el.setAttribute('aria-invalid', 'true'); el.focus(); };
@@ -1966,7 +1985,8 @@
     if (p1.value !== p2.value) { fail(p2, 'Les deux mots de passe ne sont pas identiques.'); return; }
     const c = mdpCompte;
     if (!c || !c.token) { mdpState('invalide'); $('#mdp-title').focus(); return; }
-    c.hash = await empreinte(c.salt, p1.value); c.statut = 'actif'; c.token = null;
+    mdpBusy = true;
+    c.hash = await empreinte(c.salt, p1.value); c.statut = 'actif'; c.token = null; c.ancien = null;
     saveComptes(); renderComptes();
     $('#mdp-form').reset(); p1.type = 'password'; p2.type = 'password';
     mdpState('fini', c); $('#mdp-title').focus();
@@ -1974,10 +1994,15 @@
   });
   $('#mdp-close').addEventListener('click', () => { if (typeof mdpDialog.close === 'function') mdpDialog.close(); else mdpDialog.removeAttribute('open'); });
   mdpDialog.addEventListener('close', () => {
-    const back = mdpReturn && document.body.contains(mdpReturn) && mdpReturn.getClientRects().length ? mdpReturn : (member ? $('#cpt-title') : $('#login-pass'));
-    if (back) back.focus({ preventScroll: false });
-    mdpCompte = null; mdpReturn = null;
+    /* Le focus revient au bouton d'origine s'il est encore visible, sinon à un repère visible de la page affichée. */
+    const vis = (el) => el && document.body.contains(el) && el.getClientRects().length > 0;
+    let back = [mdpReturn, member ? $('#cpt-title') : $('#login-pass')].find(vis);
+    if (!back) { back = $('.view:not([hidden]) h1'); if (back && !back.hasAttribute('tabindex')) back.setAttribute('tabindex', '-1'); }
+    if (vis(back)) back.focus({ preventScroll: false });
+    mdpCompte = null; mdpReturn = null; mdpBusy = false;
   });
+  /* Changer de page (lien, bouton Précédent, geste retour) referme la fenêtre, comme la liseuse. */
+  window.addEventListener('hashchange', () => { if (mdpDialog.open) mdpDialog.close(); });
   renderComptes();
 
   /* ---------- Démarrage ---------- */
