@@ -120,6 +120,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .page-hero .lead{margin-inline:auto}
 .page-hero .doc-search{width:100%;margin-inline:auto;text-align:left}
 .bureau-ill{display:block;width:calc(var(--mascotte-h) * 660 / 210);max-width:100%;height:auto;margin-top:4px}
+.page-hero .mascotte-bienvenue{margin-top:4px;max-width:100%}
 .page-hero + .section-tight{padding-top:clamp(32px,4vw,56px)}
 .page-hero + .section-tight.bg-fond{padding-top:clamp(48px,6vw,72px)}
 .page-hero.bg-encre,.page-hero.bg-vert,.page-hero.bg-vert-clair,.page-hero.bg-neutre{padding-bottom:clamp(48px,6vw,72px)}
