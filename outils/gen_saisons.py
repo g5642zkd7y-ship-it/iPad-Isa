@@ -1,7 +1,7 @@
 # Planches « Mascottes de saison » (7 novembre 2026, demandes d'Isabelle Eimer) : les mascottes validées du site
 # - à Noël : bonnet de Père Noël rouge (descendu sur la tête, gros pompon), écharpe rouge et blanche, moufles rouges pour certaines ;
 # - en été : lunettes de soleil, casquette ou chapeau de paille, et une bouée gonflable posée à côté
-#   (en alternance, le canard jaune et la bouée ronde rayée bleu ciel et blanc, très gonflée).
+#   (en alternance, le canard jaune et la bouée ronde rayée bleu ciel et blanc).
 # usage : python3 gen_saisons.py <index.html> <dossier> <joyeux-noel.txt> <bonnes-vacances.txt>
 import math, sys, re, pathlib
 SRC = pathlib.Path(sys.argv[1]); OUT = pathlib.Path(sys.argv[2])
@@ -49,6 +49,23 @@ def sans_sourcils_caches(s, bas=52):
         return m.group(0)
     return re.sub(r'<path d="([^"]*)" stroke-width="3(?:\.2)?"/>', cache, s)
 
+def sans_sourcils_sous_bonnet(s):
+    """Noël : retire les sourcils qui passeraient sous le bord blanc du bonnet (ou le toucheraient)."""
+    def bas(x):
+        pts = BORD_BAS
+        if x <= pts[0][0]: return pts[0][1]
+        for (x0, y0), (x1, y1) in zip(pts, pts[1:]):
+            if x0 <= x <= x1:
+                return y0 + (y1 - y0) * (x - x0) / (x1 - x0)
+        return pts[-1][1]
+    def cache(m):
+        nums = [float(x) for x in re.findall(r'-?\d+(?:\.\d+)?', m.group(1))]
+        xs, ys = nums[0::2], nums[1::2]
+        if not ys or min(xs) < 84 or max(xs) > 136 or min(ys) < 38:
+            return m.group(0)
+        return '' if any(y <= bas(x) + 3 for x, y in zip(xs, ys)) else m.group(0)
+    return re.sub(r'<path d="([^"]*)" stroke-width="3(?:\.2)?"/>', cache, s)
+
 def clean(svg):
     s = re.sub(r'<svg class="[^"]*"', '<svg', svg, count=1)
     return re.sub(r' style="--vb-h:\d+"', '', s, count=1)
@@ -69,22 +86,41 @@ def nuage_plus_haut(s):
     return s.replace('viewBox="52 -60 112 272"', 'viewBox="52 -78 128 290"', 1)
 
 # ---------------- Noël ----------------
-def tenue_noel():
+def tenue_noel(**reglages):
     echarpe = (f'<path d="M78 104 Q93 112 110 103 L111 111 Q94 121 78 112 Z" fill="{ROUGE}" stroke-width="3"/>'
                f'<path d="M96 113 L100 136 L91 137 L89 115 Z" fill="{ROUGE}" stroke-width="3"/>'
                '<path d="M86 108 L86 115 M94 110 L94 117 M102 107 L103 114 M90 124 L98 123 M91 130 L99 129" stroke="#FFFFFF" stroke-width="2.6"/>')
-    # bonnet enfoncé sur la tête (le bord blanc descend jusqu'au front), la pointe retombe vers l'arrière, gros pompon
-    # bonnet basculé vers l'arrière : le bord blanc descend sur l'arrière du crâne, la pointe retombe derrière la tête,
-    # très gros pompon au bout
-    # bonnet à la taille de la tête : le bord blanc est un arc régulier, bombé vers le haut, qui suit le crâne d'une tempe
-    # à l'autre ; tracé deux fois (contour encre, puis blanc) pour garder la même épaisseur partout ; la pointe retombe
-    # vers l'arrière avec un gros pompon
-    bord = 'M65 60 Q95 30 125 53'
-    bonnet = (f'<path d="M124 50 C127 24 113 6 95 6 C77 6 63 18 53 34 C59 38 63 46 66 56 Z" fill="{ROUGE}"/>'
-              f'<path d="{bord}" stroke="{INK}" stroke-width="18" stroke-linecap="round" fill="none"/>'
-              f'<path d="{bord}" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" fill="none"/>'
-              '<circle cx="48" cy="34" r="13" fill="#FFFFFF" stroke-width="3"/>')
-    return HEAD + echarpe + bonnet
+    return HEAD + echarpe + bonnet_noel(**reglages)
+
+BORD_BAS = []   # bas du bord blanc du bonnet (coordonnées de la tête), rempli par bonnet_noel()
+
+def bonnet_noel(yg=60, yd=47, rc=32.5, w=6.5, cy=40.5, haut=6, evase=4, pointe=(48, 30), pompon=(46, 34, 12.5)):
+    """Bonnet de Père Noël à la taille de la tête (demandes d'Isabelle Eimer du 7 novembre 2026) : un bord blanc épais,
+    bombé vers le haut, aux deux bouts arrondis qui dépassent un tout petit peu de la tête, comme un bonnet bien
+    enfoncé ; la partie rouge part exactement des deux bouts du bord, monte, puis retombe vers l'arrière jusqu'au
+    gros pompon. `pointe` et `pompon` : bout de la pointe et pompon (plus bas quand deux voisins sont dos à dos)."""
+    sur_cercle = lambda y, r, cote: (95 + cote * math.sqrt(r * r - (72 - y) ** 2), y)
+    Lc, Rc, C = sur_cercle(yg, rc, -1), sur_cercle(yd, rc, 1), (95, cy)   # bouts du milieu du bord, point de contrôle
+    q = lambda t: tuple((1 - t) ** 2 * Lc[k] + 2 * t * (1 - t) * C[k] + t * t * Rc[k] for k in (0, 1))
+    dq = lambda t: tuple(2 * (1 - t) * (C[k] - Lc[k]) + 2 * t * (Rc[k] - C[k]) for k in (0, 1))
+    haut_bord, bas_bord = [], []
+    for i in range(41):
+        p, d = q(i / 40), dq(i / 40)
+        l = math.hypot(*d); n = (d[1] / l, -d[0] / l)                     # normale vers le haut
+        haut_bord.append((p[0] + w * n[0], p[1] + w * n[1])); bas_bord.append((p[0] - w * n[0], p[1] - w * n[1]))
+    def bout(c, depart):                                                  # demi-cercle au bout du bord
+        a = math.atan2(depart[1] - c[1], depart[0] - c[0])
+        return [(c[0] + w * math.cos(a + math.pi * k / 12), c[1] + w * math.sin(a + math.pi * k / 12)) for k in range(1, 12)]
+    f = lambda p: '%.2f %.2f' % p
+    contour = haut_bord + bout(Rc, haut_bord[-1]) + bas_bord[::-1] + bout(Lc, bas_bord[0])
+    bord = 'M' + ' L'.join(f(p) for p in contour) + 'Z'
+    BORD_BAS[:] = bas_bord
+    D, G = haut_bord[-1], haut_bord[0]                                   # départs du rouge : les deux bouts du bord
+    rouge = (f'M{f(D)} C{f((D[0] + evase, D[1] - 18))} {f((112, haut))} {f((92, haut))} '
+             f'C{f((72, haut))} {f((58, haut + 10))} {f(pointe)} '
+             f'C{f((pointe[0] + 7, pointe[1] + 6))} {f((G[0] - evase, G[1] - 8))} {f(G)} ' + ' '.join('L' + f(p) for p in haut_bord[1:]) + 'Z')
+    return (f'<path d="{rouge}" fill="{ROUGE}"/><path d="{bord}" fill="#FFFFFF"/>'
+            '<circle cx="%g" cy="%g" r="%g" fill="#FFFFFF"/>' % pompon)
 
 def moufles(s):
     """Les mains deviennent des moufles rouges, un peu plus grandes, avec leur pouce."""
@@ -104,13 +140,21 @@ def moufles(s):
     return re.sub(r'<ellipse cx="([\d.]+)" cy="([\d.]+)" rx="([\d.]+)" ry="([\d.]+)" fill="#2E3236" stroke="none"( transform="[^"]*")?/>', ell, s)
 
 def noel(key, svg):
-    s = clean(sans_sourcils_caches(sans_meches(svg), bas=52))
-    s = s.replace(HEAD, tenue_noel())
+    tenue = tenue_noel()
+    s = clean(sans_sourcils_sous_bonnet(sans_meches(svg)))
+    if key == 'bureau':
+        # les 3e et 4e personnages sont dos à dos : leur pointe retombe plus bas derrière la tête, pour que les pompons
+        # ne se touchent pas
+        tombe = tenue_noel(pointe=(56, 36), pompon=(55, 41, 12))
+        parts = s.split(HEAD)
+        s = parts[0] + ''.join((tombe if k in (2, 3) else tenue) + p for k, p in enumerate(parts[1:]))
+    else:
+        s = s.replace(HEAD, tenue)
     if key in MOUFLES:
         s = moufles(s)
     s = air_dessus(s, key)
     m, (x, y, w, hh) = viewbox(s)
-    s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x - 20, y, w + 40, hh), 1)
+    s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x - 24, y, w + 48, hh), 1)
     if key == 'bureau':
         s = s.replace('>MAKE BIOLOGY</text>', '>JOYEUX NOËL</text>').replace('>GREAT AGAIN</text>', '>À TOUS !</text>').replace('>YES WE CAN</text>', '>BONNES FÊTES</text>')
     if key == 'lecteurs':
@@ -163,65 +207,117 @@ def bouee_baleine(bx, sol):
             f'<path d="M{p(30, -50)} Q{p(26, -58)} {p(21, -59)} M{p(33, -50)} Q{p(34, -60)} {p(38, -63)} M{p(31, -51)} L{p(31, -61)}" stroke="{F}" stroke-width="2.6" fill="none"/>'
             '</g>')
 
-def bouee_tore(bx, sol, R=23.0, r=10.0, elev=42, rayures=8, decal=math.pi / 8, trait=3.0, ombre=True):
-    E = math.radians(elev)
-    cotE = 1 / math.tan(E)
+TEINTES_BOUEE = {'bleu': ('#9FD3EC', '#7DB5D2'), 'blanc': ('#FFFFFF', '#D5E1E8')}   # couleur, et un ton plus foncé dessous
 
+def bouee_tore(bx, sol, R=24.0, r=9.0, k=0.6, elev=38, rayures=8, decal=math.pi / 8, trait=3.0, ombre_deg=8,
+               teintes=None, decor=None, reflet_a=(168, 200)):
+    """Anneau gonflable vu de trois quarts. `teintes` : couleurs des rayures en alternance (couleur, ton foncé) ;
+    `decor(P)` rend (svg derrière, svg posé sur le dessus du boudin arrière), P(a, t) en degrés donnant un point de
+    l'anneau à l'écran (a : tour de l'anneau, 90 = au fond ; t : tour du boudin, 90 = sur le dessus)."""
+    teintes = teintes or [TEINTES_BOUEE['bleu'], TEINTES_BOUEE['blanc']]
+    E = math.radians(elev); rz = r * k
     def pos(a, t):
         ca, sa, ct, st = math.cos(a), math.sin(a), math.cos(t), math.sin(t)
-        X, Y, Z = (R + r * ct) * ca, (R + r * ct) * sa, r * st
+        X, Y, Z = (R + r * ct) * ca, (R + r * ct) * sa, rz * st
         return (X, -(Y * math.sin(E) + Z * math.cos(E)))
-
-    t_ext = lambda a: math.atan(math.sin(a) * cotE)          # contour extérieur
-    t_int = lambda a: math.atan(math.sin(a) * cotE) + math.pi  # contour intérieur (bord du trou)
-
-    def zone(a1, a2):
+    t0 = lambda a: math.atan(k * math.sin(a) / math.tan(E))     # bord visible extérieur ; + pi : bord du trou
+    th = math.radians(ombre_deg)
+    bandes = [  # (bas, haut, foncé ?) en fonction de a
+        (lambda a: t0(a), lambda a: max(t0(a), -th), True),
+        (lambda a: max(t0(a), -th), lambda a: min(t0(a) + math.pi, math.pi + th), False),
+        (lambda a: min(t0(a) + math.pi, math.pi + th), lambda a: t0(a) + math.pi, True),
+    ]
+    def zone(a1, a2, lo, hi):
         n = max(3, int(abs(a2 - a1) / math.radians(3)) + 1)
-        pts = [pos(a1 + (a2 - a1) * i / n, t_ext(a1 + (a2 - a1) * i / n)) for i in range(n + 1)]
-        pts += [pos(a2, t_ext(a2) + math.pi * j / 30) for j in range(1, 31)]
-        pts += [pos(a2 + (a1 - a2) * i / n, t_int(a2 + (a1 - a2) * i / n)) for i in range(1, n + 1)]
-        pts += [pos(a1, t_int(a1) - math.pi * j / 30) for j in range(1, 30)]
+        As = [a1 + (a2 - a1) * i / n for i in range(n + 1)]
+        if max(hi(a) - lo(a) for a in As) < 1e-3:
+            return None
+        pts = [pos(a, lo(a)) for a in As]
+        pts += [pos(a2, lo(a2) + (hi(a2) - lo(a2)) * j / 16) for j in range(1, 17)]
+        pts += [pos(a, hi(a)) for a in As[::-1][1:]]
+        pts += [pos(a1, hi(a1) - (hi(a1) - lo(a1)) * j / 16) for j in range(1, 16)]
         return pts
-
     pas = 2 * math.pi / rayures
-    bornes = sorted({(k * pas - decal) % (2 * math.pi) for k in range(rayures)} | {0.0, math.pi, 2 * math.pi})
-    formes = []  # (moitié, points, couleur) : arrière (0 à pi) d'abord, avant ensuite
+    bornes = sorted({(i * pas - decal) % (2 * math.pi) for i in range(rayures)} | {0.0, math.pi, 2 * math.pi})
+    formes = []
     for a1, a2 in zip(bornes, bornes[1:]):
         if a2 - a1 < 1e-6:
             continue
         am = (a1 + a2) / 2
-        k = int(math.floor(((am + decal) % (2 * math.pi)) / pas))
-        formes.append((0 if am < math.pi else 1, zone(a1, a2), '#FFFFFF' if k % 2 else BLEU_CIEL))
+        teinte = teintes[int(math.floor(((am + decal) % (2 * math.pi)) / pas)) % len(teintes)]
+        arriere = am < math.pi
+        for lo, hi, fonce in bandes:
+            # à l'arrière, le boudin est coupé sur son dessus : ce qui est posé dessus (cou, queue) passe entre les deux
+            morceaux = ([(lo, lambda a, hi=hi: min(hi(a), math.pi / 2), 0), (lambda a, lo=lo: max(lo(a), math.pi / 2), hi, 1)]
+                        if arriere else [(lo, hi, 2)])
+            for l2, h2, ordre in morceaux:
+                pts = zone(a1, a2, l2, h2)
+                if pts:
+                    formes.append((ordre, pts, teinte[1] if fonce else teinte[0]))
     formes.sort(key=lambda f: f[0])
-
     tous = [p for _, pts, _ in formes for p in pts]
     ox, oy = bx, sol - 2 - max(p[1] for p in tous)
     f = lambda p: '%.1f %.1f' % (p[0] + ox, p[1] + oy)
     chemin = lambda pts: 'M' + ' L'.join(f(p) for p in pts) + 'Z'
-
     sous = ''.join(chemin(pts) for _, pts, _ in formes)
-    peint = lambda m: ''.join(f'<path d="{chemin(pts)}" fill="{c}" stroke="{c}" stroke-width=".8" stroke-linejoin="round"/>'
-                              for h, pts, c in formes if h == m)
-    # le bord du trou vient du contour noir tracé dessous : aucun trait ne déborde du trou
-    # ombre douce sur le bas du boudin, à l'avant
-    om = ''
-    if ombre:
-        pts = [pos(math.radians(a), t_ext(math.radians(a)) + math.radians(22)) for a in range(196, 345, 4)]
-        om = f'<path d="M{" L".join(f(p) for p in pts)}" stroke="{INK}" stroke-opacity=".08" stroke-width="6" stroke-linecap="round" fill="none"/>'
-    # reflet sur le dessus du boudin, à gauche
-    ref = [pos(math.radians(a), math.radians(62)) for a in range(166, 200, 4)]
-    reflet = f'<path d="M{" L".join(f(p) for p in ref)}" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" fill="none"/>'
-
-    largeur = (R + r) * 1.1
+    peint = lambda o: ''.join(f'<path d="{chemin(pts)}" fill="{c}" stroke="{c}" stroke-width=".8" stroke-linejoin="round"/>'
+                              for ordre, pts, c in formes if ordre == o)
+    derriere, dessus = decor(lambda a, t: (pos(math.radians(a), math.radians(t))[0] + ox, pos(math.radians(a), math.radians(t))[1] + oy)) if decor else ('', '')
+    ref = [pos(math.radians(a), math.radians(65)) for a in range(reflet_a[0], reflet_a[1] + 1, 4)]   # reflet clair
+    reflet = f'<path d="M{" L".join(f(p) for p in ref)}" stroke="#FFFFFF" stroke-opacity=".55" stroke-width="4" stroke-linecap="round" fill="none"/>'
     return ('<g class="bouee">'
-            f'<ellipse cx="{bx:g}" cy="{sol + 1:g}" rx="{largeur:.1f}" ry="4.5" fill="#E6E9DF" stroke="none"/>'
+            f'<ellipse cx="{bx:g}" cy="{sol + 1:g}" rx="{(R + r) * 1.08:.1f}" ry="4.5" fill="#E6E9DF" stroke="none"/>'
+            + derriere +
             f'<path d="{sous}" fill="{INK}" stroke="{INK}" stroke-width="{trait * 2:g}" stroke-linejoin="round"/>'
-            + peint(0) + peint(1) + om + reflet + '</g>')
+            + peint(0) + dessus + peint(1) + peint(2) + reflet + '</g>')
+
+BOUEE_GEO = dict(R=24, r=10, k=.8, elev=44)   # forme commune aux deux bouées : anneau bien gonflé vu de trois quarts,
+                                              # d'après les exemples de bouée canard envoyés par Isabelle Eimer
 
 def bouee_rayee(bx, sol):
-    """Bouée ronde rayée bleu ciel et blanc, très gonflée : dessinée comme un vrai anneau (tore) vu de trois quarts,
-    chaque rayure d'une seule couleur, aux bords courbes qui suivent la rondeur du boudin, sans trait entre les rayures."""
-    return bouee_tore(bx, sol, R=23, r=9.5, elev=44)
+    """Bouée ronde rayée bleu ciel et blanc, d'après les exemples envoyés par Isabelle Eimer : anneau bien gonflé vu
+    de trois quarts, rayures sans trait entre elles ; dessous du boudin et intérieur du trou un ton plus foncés,
+    reflet clair sur la gauche."""
+    return bouee_tore(bx, sol, ombre_deg=0, **BOUEE_GEO)
+
+CANARD_OMBRE = '#E0A92B'
+
+def bouee_canard(bx, sol):
+    """Bouée canard jaune, d'après les deux exemples envoyés par Isabelle Eimer : le même anneau que la bouée rayée ;
+    le cou et la tête sortent du boudin à l'arrière droite (bec orange vers la droite, œil, reflets), une petite queue
+    pointe à l'arrière gauche ; le cou et la queue font corps avec l'anneau (pas de trait à la jonction)."""
+    def decor(P):
+        f = lambda p: '%.1f %.1f' % p
+        bord = lambda a: math.degrees(math.atan(BOUEE_GEO['k'] * math.sin(math.radians(a)) / math.tan(math.radians(BOUEE_GEO['elev']))))  # contour extérieur
+        # queue : sur le dessus du boudin, à l'arrière gauche ; l'anneau en cache le pied
+        q1, q2 = P(172, 90), P(138, 90)
+        pointe = (q1[0] - 7, q1[1] - 17)
+        queue = (f'<path d="M{f(q2)} C{f((q2[0] - 1, q2[1] - 9))} {f((pointe[0] + 5, pointe[1] + 1))} {f(pointe)} '
+                 f'C{f((pointe[0] - 2, pointe[1] + 7))} {f((q1[0] - 4, q1[1] - 3))} {f(q1)} '
+                 + ' '.join('L' + f(P(a, 115)) for a in range(172, 137, -6)) +
+                 f' Z" fill="{CANARD}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>')
+        # cou et tête : le cou part du dessus du boudin à l'arrière (b1) et rejoint le bord extérieur de l'anneau à
+        # droite (b2), comme sur les exemples ; le devant du boudin en cache le pied
+        b1, b2 = P(78, 95), P(22, bord(22))
+        H = (b2[0] - 10, b1[1] - 26)                                # centre de la tête
+        h = lambda dx, dy: (H[0] + dx, H[1] + dy)
+        cou = (f'M{f(b1)} C{f((b1[0] + .5, b1[1] - 10))} {f(h(-12, 9))} {f(h(-11, 3))} '
+               f'C{f(h(-11, -8))} {f(h(-5, -13))} {f(h(1, -13))} '
+               f'C{f(h(8, -13))} {f(h(12, -7))} {f(h(12, -1))} '
+               f'C{f(h(12, 6))} {f(h(7, 9))} {f(h(7, 15))} '
+               f'C{f(h(7, 22))} {f((b2[0] + 1, b2[1] - 5))} {f(b2)}')
+        pied = ' '.join('L' + f(P(a, 112)) for a in range(22, 79, 8)) + ' Z'   # caché sous le devant du boudin
+        # le cou est rempli jusqu'à son pied, mais son trait s'arrête sur l'anneau : pas de trait à la jonction
+        tete = (f'<path d="{cou} {pied}" fill="{CANARD}" stroke="none"/>'
+                f'<path d="{cou}" stroke="{INK}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>'
+                f'<path d="M{f(h(9, -4))} Q{f(h(23, -6))} {f(h(24, 0))} Q{f(h(23, 5))} {f(h(9, 3.5))} Q{f(h(7.5, -.5))} {f(h(9, -4))} Z" fill="{BEC}" stroke="{INK}" stroke-width="2.6" stroke-linejoin="round"/>'
+                f'<path d="M{f(h(13, -2.5))} Q{f(h(18, -3.5))} {f(h(21, -1.5))}" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="1.6" stroke-linecap="round" fill="none"/>'
+                f'<circle cx="{H[0] + 3:.1f}" cy="{H[1] - 4:.1f}" r="2.6" fill="{INK}" stroke="none"/>'
+                f'<circle cx="{H[0] + 3.8:.1f}" cy="{H[1] - 4.9:.1f}" r=".9" fill="#FFFFFF" stroke="none"/>'
+                f'<path d="M{f(h(-7.5, -5))} Q{f(h(-6.5, -9.5))} {f(h(-2, -10.5))}" stroke="#FFFFFF" stroke-opacity=".8" stroke-width="1.8" stroke-linecap="round" fill="none"/>')
+        return queue, tete
+    return bouee_tore(bx, sol, ombre_deg=0, teintes=[(CANARD, CANARD_OMBRE)], decor=decor, **BOUEE_GEO,
+                      reflet_a=(200, 236))
 
 def bouee_taille():
     return (f'<ellipse cx="96" cy="151" rx="37" ry="12.5" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
@@ -262,14 +358,7 @@ def ete(key, svg):
         bouee = bouee_rayee(bx, sol).replace('<g class="bouee">', f'<g class="bouee" transform="translate({bx:g} {sol:g}) scale(1.3) translate({-bx:g} {-sol:g})">', 1)
         s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x, y - 4, w + 128, hh + 4), 1)
         return s[:s.rindex('</svg>')] + bouee + '</svg>'
-    bouee = (f'<g class="bouee" transform="translate({bx:g} {sol:g}) scale(1.3) translate({-bx:g} {-sol:g})"><ellipse cx="{bx:g}" cy="{sol + 1:g}" rx="34" ry="4" fill="#E6E9DF" stroke="none"/>'
-             f'<ellipse cx="{bx:g}" cy="{sol - 14:g}" rx="32" ry="14" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
-             f'<ellipse cx="{bx:g}" cy="{sol - 16:g}" rx="14" ry="5.5" fill="#FFFFFF" stroke="{INK}" stroke-width="2.6"/>'
-             f'<path d="M{bx - 24:g} {sol - 22:g} Q{bx - 30:g} {sol - 14:g} {bx - 24:g} {sol - 6:g}" stroke="#FFFFFF" stroke-width="2.4" fill="none"/>'
-             f'<path d="M{bx + 18:g} {sol - 24:g} C{bx + 16:g} {sol - 36:g} {bx + 20:g} {sol - 44:g} {bx + 26:g} {sol - 46:g}" stroke="{INK}" stroke-width="3" fill="none"/>'
-             f'<path d="M{bx + 18:g} {sol - 24:g} C{bx + 14:g} {sol - 36:g} {bx + 16:g} {sol - 50:g} {bx + 26:g} {sol - 50:g} C{bx + 36:g} {sol - 50:g} {bx + 40:g} {sol - 40:g} {bx + 34:g} {sol - 32:g} C{bx + 32:g} {sol - 28:g} {bx + 30:g} {sol - 24:g} {bx + 30:g} {sol - 20:g} Z" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
-             f'<path d="M{bx + 36:g} {sol - 42:g} Q{bx + 48:g} {sol - 42:g} {bx + 47:g} {sol - 37:g} Q{bx + 44:g} {sol - 34:g} {bx + 36:g} {sol - 36:g} Z" fill="{BEC}" stroke="{INK}" stroke-width="2.4"/>'
-             f'<circle cx="{bx + 29:g}" cy="{sol - 42:g}" r="2.4" fill="{INK}" stroke="none"/></g>')
+    bouee = bouee_canard(bx, sol).replace('<g class="bouee">', f'<g class="bouee" transform="translate({bx:g} {sol:g}) scale(1.3) translate({-bx:g} {-sol:g})">', 1)
     s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x, y - 4, w + 128, hh + 4), 1)
     return s[:s.rindex('</svg>')] + bouee + '</svg>'
 
