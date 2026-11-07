@@ -279,8 +279,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 /* ---------- Grille de missions ---------- */
 .charter{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 56px;margin-top:56px}
-.charter-item{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:1px solid var(--filet-fort)}
+.charter-item{display:grid;grid-template-columns:116px minmax(0,1fr);column-gap:24px;align-items:start;padding-top:22px;border-top:1px solid var(--filet-fort)}
+.charter-text{display:flex;flex-direction:column;gap:12px;padding-top:26px}
 .charter-item p{max-width:34em;font-size:17px;line-height:1.6}
+.mnum{display:block;width:116px;height:auto;overflow:visible}
+@media (max-width:520px){.charter-item{grid-template-columns:88px minmax(0,1fr);column-gap:16px}.mnum{width:88px}.charter-text{padding-top:16px}}
 @media (max-width:760px){.charter{grid-template-columns:minmax(0,1fr)}}
 
 /* ---------- Adhésion (bandeau) ---------- */
@@ -347,9 +350,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .plain-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--filet)}
 .plain-list li{padding:16px 0;border-bottom:1px solid var(--filet);font-size:18px;line-height:1.5;color:var(--texte)}
 /* ---------- Le syndicat : mise en page éditoriale (7 novembre 2026, demandes d'Isabelle Eimer) ----------
-   Comme un rapport annuel : en-têtes en deux colonnes (titre et introduction à gauche, chiffres à droite), grands chiffres
-   et grands sigles vert foncé comme repères, filets vert foncé et vert anis, beaucoup d'air. Le bureau est un seul bloc
-   vert clair où chaque membre a la même place : aucune hiérarchie dessinée. Rien ne souligne les sièges à pourvoir. */
+   Comme un rapport annuel : en-têtes en deux colonnes (titre et introduction, chiffres), grands chiffres et grands sigles
+   comme repères, bandeaux et filets vert foncé / vert anis, beaucoup d'air. Personne n'est classé : le bureau est un seul
+   bloc vert clair, fiches identiques, par ordre alphabétique. Les représentants sur fond encre, sigles en vert anis. */
 .ed-head{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;margin-bottom:clamp(36px,4.5vw,60px)}
 .ed-quote{margin-top:22px;max-width:34em;padding-left:20px;border-left:3px solid var(--anis);font-size:clamp(19px,1.6vw,22px);line-height:1.45;color:var(--texte)}
 .kfigs{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:24px 0}
@@ -365,66 +368,64 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 }
 @media (max-width:420px){.kfig{padding:0 14px}.kfig-l{font-size:14px}}
 
-/* Bureau : un seul bloc vert clair ; l'introduction occupe la première case, puis chaque membre, tous de la même taille */
-.bureau{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px clamp(24px,3vw,40px);padding:clamp(28px,4vw,52px);border-radius:var(--r-tile);background:var(--vert-clair)}
+/* Bureau : un seul bloc vert clair ; l'introduction occupe la première case, puis chaque membre, fiches identiques */
+.bureau{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px clamp(20px,2.4vw,32px);padding:clamp(28px,4vw,52px);border-radius:var(--r-tile);background:var(--vert-clair)}
 .bureau-intro .h-section{margin:0}
 .bureau-intro .ed-quote{margin-top:16px;padding-left:16px;font-size:17px;border-left-color:var(--vert)}
 .bureau-grid{display:contents;list-style:none}
-.bureau .person{display:flex;flex-direction:column;padding-top:16px;border-top:2px solid var(--encre)}
-.bureau .person:nth-child(even){border-top-color:var(--vert)}
-.person-role{font-size:15px;font-weight:700;color:var(--encre)}
-.person-name{margin-top:6px;font-size:clamp(23px,2.1vw,28px);line-height:1.1;letter-spacing:-.022em;font-weight:800;color:var(--encre)}
-.pm-region,.pm-seats{margin-top:10px;font-size:15px;line-height:1.45;color:var(--texte)}
-.pm-seats{margin-top:4px}
-.pm-l{display:block;font-size:13px;font-weight:600;color:var(--encre);opacity:.75}
-.pm-seats a{color:var(--encre);font-weight:700;text-decoration:underline;text-decoration-color:rgba(46,50,54,.35);text-underline-offset:3px}
-.pm-seats a:hover{text-decoration-color:var(--encre)}
-@media (max-width:1100px){.bureau{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:860px){.bureau{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:560px){.bureau{grid-template-columns:minmax(0,1fr);gap:26px;padding:26px 20px 30px}.bureau .person{padding-top:12px}}
+.bureau .person{display:flex;flex-direction:column;padding-top:16px;border-top:3px solid var(--vert)}
+.person-name{font-size:clamp(21px,1.9vw,25px);line-height:1.12;letter-spacing:-.02em;font-weight:800;color:var(--encre)}
+.person-role{margin-top:6px;font-size:15.5px;line-height:1.35;color:var(--texte)}
+.pm-region{margin-top:12px;font-size:15px;line-height:1.45;color:var(--texte)}
+.pm-l{display:block;font-size:13px;font-weight:700;color:var(--encre)}
+@media (max-width:1100px){.bureau{grid-template-columns:repeat(3,minmax(0,1fr))}.bureau-intro{grid-column:span 2}}
+@media (max-width:860px){.bureau{grid-template-columns:repeat(2,minmax(0,1fr))}.bureau-intro{grid-column:auto}}
+@media (max-width:560px){.bureau{grid-template-columns:minmax(0,1fr);gap:24px;padding:26px 20px 30px}.bureau .person{padding-top:12px}}
 
-/* Conseil : une fiche par région, noms visibles ; les régions de cinq noms ou plus prennent deux colonnes */
-.ca-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-flow:row dense;gap:8px clamp(24px,3vw,40px)}
-.ca-region{padding:16px 0 36px;border-top:4px solid var(--vert)}
-.ca-region.s1{border-top-color:var(--anis)}
-.ca-wide{grid-column:span 2}
-.ca-name{font-size:clamp(20px,1.8vw,24px);line-height:1.2;font-weight:800;letter-spacing:-.015em;color:var(--vert)}
-.ca-people{list-style:none;margin:14px 0 0;padding:0;font-size:16.5px;line-height:1.4;color:var(--texte)}
-.ca-wide .ca-people{columns:2;column-gap:clamp(24px,3vw,40px)}
-.ca-people li{break-inside:avoid;padding:8px 0;border-top:1px solid var(--filet-fort)}
-.ca-role{display:block;font-size:14px;color:var(--gris)}
-@media (max-width:900px){.ca-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:560px){.ca-grid{grid-template-columns:minmax(0,1fr)}.ca-wide{grid-column:auto}.ca-region{padding-bottom:26px}.ca-people{font-size:16px}}
+/* Conseil : une fiche par région, nom de la région en bandeau de couleur (vert foncé puis vert anis), noms visibles ;
+   colonnes de journal : toutes les régions ont la même largeur, sans case vide */
+.ca-grid{list-style:none;margin:0;padding:0;columns:3;column-gap:clamp(24px,3vw,40px)}
+.ca-region{break-inside:avoid;padding-bottom:30px}
+.ca-name{padding:10px 16px 11px;border-radius:10px;background:var(--vert);font-size:clamp(17px,1.5vw,19px);line-height:1.25;font-weight:800;letter-spacing:-.01em;color:#fff}
+.ca-region.s1 .ca-name{background:var(--anis);color:var(--encre)}
+.ca-people{list-style:none;margin:8px 0 0;padding:0 4px;font-size:16.5px;line-height:1.4;color:var(--texte)}
+.ca-people li{padding:8px 0;border-bottom:1px solid var(--filet-fort)}
+.ca-people li:last-child{border-bottom:0}
+@media (max-width:900px){.ca-grid{columns:2}}
+@media (max-width:560px){.ca-grid{columns:1}.ca-region{padding-bottom:22px}.ca-people{font-size:16px}}
 
-/* Représentants : une fiche par instance, le sigle en grand */
-.inst-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:8px clamp(24px,3vw,48px)}
-.inst{padding:20px 0 44px;border-top:2px solid var(--encre)}
-.inst.s1{border-top-color:var(--vert)}
+/* Représentants : sur fond encre, une fiche par instance, le sigle en grand vert anis ; lignes alignées d'une fiche à l'autre */
+.bg-encre .ed-quote,.bg-encre .kfig-l{color:var(--sombre-texte)}
+.bg-encre .kfig-n{color:var(--anis)}
+.bg-encre .kfig{border-color:rgba(255,255,255,.2)}
+.inst-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:0 clamp(24px,3vw,48px)}
+.inst{padding:20px 0 44px;border-top:3px solid var(--anis)}
+.inst.s1{border-top-color:#fff}
 .inst-head{display:flex;flex-direction:column;gap:8px}
-.inst-sig{font-size:clamp(36px,3.6vw,46px);line-height:1;font-weight:800;letter-spacing:-.03em;color:var(--vert)}
+.inst-sig{font-size:clamp(36px,3.6vw,46px);line-height:1;font-weight:800;letter-spacing:-.03em;color:var(--anis)}
 .inst-sig-long{font-size:clamp(24px,2.1vw,28px);line-height:1.12;letter-spacing:-.02em}
-.inst-full{font-size:16px;line-height:1.35;font-weight:600;color:var(--encre)}
-.inst-role{margin-top:8px;font-size:15px;line-height:1.4;color:var(--gris)}
-.inst-reps{margin-top:18px;padding-top:14px;border-top:1px solid var(--filet)}
-.inst-group{margin-bottom:6px;font-size:14px;font-weight:600;color:var(--gris)}
+.inst-full{font-size:16px;line-height:1.35;font-weight:600;color:#fff}
+.inst-role{margin-top:8px;font-size:15px;line-height:1.4;color:var(--sombre-texte)}
+.inst-reps{margin-top:18px}
+.inst-reps:not(:empty){padding-top:14px;border-top:1px solid rgba(255,255,255,.2)}
+.inst-group{margin-bottom:6px;font-size:14px;font-weight:600;color:var(--sombre-texte)}
 .reps + .inst-group{margin-top:14px}
-.reps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:17px;line-height:1.4;color:var(--encre)}
-.seat-todo{font-size:15px;line-height:1.4;font-style:italic;color:var(--gris)}
+.reps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:17px;line-height:1.4;color:#fff}
 @media (max-width:900px){.inst-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:560px){.inst-grid{grid-template-columns:minmax(0,1fr)}.inst{padding:16px 0 30px}.inst-sig{font-size:34px}.inst-sig-long{font-size:24px}.inst-reps{margin-top:14px;padding-top:12px}}
+@media (max-width:560px){.inst-grid{grid-template-columns:minmax(0,1fr)}.inst{padding:16px 0 30px}.inst-sig{font-size:34px}.inst-sig-long{font-size:24px}.inst-reps{margin-top:14px}
+  .reps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 16px;font-size:16px}}
 
-/* URPS : la métropole, puis l'outre-mer */
-.urps{display:flex;flex-direction:column;gap:clamp(36px,4vw,52px)}
-.urps-group{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:20px clamp(24px,4vw,64px);padding-top:18px;border-top:4px solid var(--vert)}
-.urps-group + .urps-group{border-top-color:var(--anis)}
-.urps-gname{font-size:clamp(22px,2vw,26px);line-height:1.2;font-weight:800;letter-spacing:-.015em;color:var(--vert)}
-.urps-cols{list-style:none;margin:0;padding:0;columns:3;column-gap:clamp(24px,3vw,40px)}
-.urps-item{break-inside:avoid;padding:4px 0 16px;margin-bottom:14px;border-bottom:1px solid var(--filet-fort)}
+/* URPS : la métropole, puis l'outre-mer, chacune sous un bandeau de couleur */
+.urps{display:flex;flex-direction:column;gap:clamp(32px,3.5vw,44px)}
+.urps-gname{display:inline-block;margin-bottom:18px;padding:9px 18px 10px;border-radius:10px;background:var(--vert);font-size:clamp(18px,1.6vw,20px);line-height:1.2;font-weight:800;letter-spacing:-.01em;color:#fff}
+.urps-group + .urps-group .urps-gname{background:var(--anis);color:var(--encre)}
+.urps-cols{list-style:none;margin:0;padding:0;columns:4;column-gap:clamp(24px,3vw,40px)}
+.urps-item{break-inside:avoid;padding:4px 0 14px;margin-bottom:12px;border-bottom:1px solid var(--filet-fort)}
 .urps-region{font-size:15px;line-height:1.35;font-weight:700;color:var(--encre)}
 .urps-names{list-style:none;margin:4px 0 0;padding:0;font-size:16.5px;line-height:1.45;color:var(--texte)}
-.urps-item .seat-todo{margin-top:4px}
-@media (max-width:760px){.urps-group{grid-template-columns:minmax(0,1fr)}.urps-cols{columns:2;column-gap:20px}}
-@media (max-width:520px){.urps-names{font-size:15.5px}.urps-item .seat-todo{font-size:14px}}
+@media (max-width:999px){.urps-cols{columns:3}}
+@media (max-width:760px){.urps-cols{columns:2;column-gap:20px}}
+@media (max-width:520px){.urps-names{font-size:15.5px}}
 .regions{margin-top:36px;border-top:1px solid var(--filet-fort)}
 .region{border-bottom:1px solid var(--filet-fort)}
 .region summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 4px;list-style:none;cursor:pointer;font-size:19px;font-weight:600;color:var(--encre)}
@@ -797,6 +798,18 @@ svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
   .js-motion .pillar.drawn::before{transform:none;transition:transform 1.1s var(--ease-out) .15s}
   .js-motion .pillar.drawn:nth-child(2)::before{transition-delay:.35s}
   .js-motion .pillar.drawn:nth-child(3)::before{transition-delay:.55s}
+  /* Numéros des missions : le rond se trace, le rond vert anis apparaît avec un petit rebond, le chiffre s'écrit, puis les
+     petits traits de joie ; la mission de droite suit de peu celle de gauche. Sans animation, tout est déjà dessiné. */
+  .js-motion .mnum .mnum-head,.js-motion .mnum .mnum-digit{stroke-dasharray:1 2;stroke-dashoffset:1.001}
+  .js-motion .mnum .mnum-anis,.js-motion .mnum .mnum-eclats{transform-box:fill-box;transform:scale(0)}
+  .js-motion .mnum .mnum-anis{transform-origin:50% 50%}
+  .js-motion .mnum .mnum-eclats{transform-origin:0 100%}
+  .js-motion .mnum.drawn .mnum-head{stroke-dashoffset:0;transition:stroke-dashoffset .6s var(--ease-out) var(--d,0s)}
+  .js-motion .mnum.drawn .mnum-anis{transform:none;transition:transform .5s cubic-bezier(.34,1.56,.64,1) calc(var(--d,0s) + .3s)}
+  .js-motion .mnum.drawn .mnum-digit{stroke-dashoffset:0;transition:stroke-dashoffset .55s ease-in-out calc(var(--d,0s) + .55s)}
+  .js-motion .mnum.drawn .mnum-digit + .mnum-digit{transition-delay:calc(var(--d,0s) + 1s)}
+  .js-motion .mnum.drawn .mnum-eclats{transform:none;transition:transform .35s cubic-bezier(.34,1.56,.64,1) calc(var(--d,0s) + 1.15s)}
+  .charter-item:nth-child(even) .mnum{--d:.2s}
   /* Séparateur sous la devise : le trait se déploie depuis les ronds du centre */
   .js-motion .sep-l{transform:scaleX(0);transform-origin:right center}
   .js-motion .sep-r{transform:scaleX(0);transform-origin:left center}

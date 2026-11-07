@@ -526,71 +526,85 @@
   }
 
   /* ---------- Le syndicat : mise en page éditoriale (7 novembre 2026, demandes d'Isabelle Eimer) ----------
-     Un syndicat travaille en collectif : aucun membre n'est mis au-dessus des autres (même taille, même bloc).
-     On montre ce que le syndicat a, pas ce qui lui manque : pas de nombre de régions ni de compteur de sièges à pourvoir ;
-     un siège à pourvoir reste écrit, discrètement. Les croisements (région d'un membre du bureau, instances où il siège)
-     et les chiffres sont calculés à partir des tableaux BUREAU, CA, INSTANCES et URPS : aucune donnée n'est ajoutée. */
+     Un syndicat travaille en collectif : personne n'est classé. Le bureau est présenté par ordre alphabétique, chaque fiche
+     identique (nom, fonction, région) ; les noms du conseil et des instances sont aussi par ordre alphabétique.
+     On montre ce que le syndicat a, pas ce qui lui manque : pas de nombre de régions, et les sièges à pourvoir ne sont pas
+     affichés (ils restent dans les tableaux : champs todo, groupes vides, régions URPS sans nom) ; une instance sans
+     représentant nommé garde sa fiche, en fin de liste. Les chiffres affichés sont calculés à partir des tableaux. */
   const OUTREMER = ['Guadeloupe', 'Guyane', 'Martinique', 'La Réunion', 'Mayotte'];
-  const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+  const EN_LETTRES = ['zéro', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 'onze', 'douze'];
   const kfigs = (list) => list.map((f) => '<li class="kfig"><span class="kfig-n">' + f[0] + '</span> <span class="kfig-l">' + esc(f[1]) + '</span></li>').join('');
-  const roleOf = (name) => { const b = BUREAU.find((x) => x[1] === name); return b ? b[0] : ''; };
   const caRegionOf = (name) => { const r = CA.find((x) => x[1].includes(name)); return r ? r[0] : ''; };
+  /* Ordre alphabétique du nom de famille (dernier mot), puis du prénom */
+  const surname = (n) => n.split(' ').slice(-1)[0];
+  const byName = (a, b) => surname(a).localeCompare(surname(b), 'fr') || a.localeCompare(b, 'fr');
   /* Titre d'une instance : son sigle en grand, ou son nom s'il est court (Cofrac) */
   const instHead = (i) => i.a || (i.n.length < 10 ? i.n : '');
-  const seatsOf = (name) => INSTANCES.flatMap((i, k) => (i.groups
-    ? i.groups.filter((g) => g[1].includes(name)).map((g) => ({ i, k, g: g[0] }))
-    : (i.reps.includes(name) ? [{ i, k }] : [])));
-  const seatTodo = (t) => '<li class="seat-todo">' + esc(cap(t)) + '</li>';
-  const repsList = (names, todo) => '<ul class="reps">' + names.map((n) => '<li>' + esc(n) + '</li>').join('') +
-    (todo ? seatTodo(todo) : (names.length ? '' : seatTodo('représentant à désigner'))) + '</ul>';
+  const instNames = (i) => (i.groups ? i.groups.flatMap((g) => g[1]) : i.reps);
+  const repsList = (names) => (names.length ? '<ul class="reps">' + names.slice().sort(byName).map((n) => '<li>' + esc(n) + '</li>').join('') + '</ul>' : '');
 
   function renderSyndicat() {
-    /* Bureau : un seul bloc, chaque membre à égalité (ordre des statuts : président, vice-présidents, secrétaire, membres) */
-    const seatLinks = (name) => {
-      const s = seatsOf(name);
-      return s.length ? '<p class="pm-seats"><span class="pm-l">Siège</span> ' + s.map((x) => '<a href="#syndicat" data-section="inst-' + x.k + '">' +
-        esc(instHead(x.i) || x.i.n) + (x.g ? ' (' + esc(x.g.toLowerCase()) + ')' : '') + '</a>').join(', ') + '</p>' : '';
-    };
-    $('#bureau-list').innerHTML = BUREAU.map((b) => {
+    /* Bureau : par ordre alphabétique, fiches identiques */
+    const n = BUREAU.length;
+    $('#bureau-count').textContent = EN_LETTRES[n] || String(n);
+    $('#bureau-list').innerHTML = BUREAU.slice().sort((a, b) => byName(a[1], b[1])).map((b) => {
       const region = caRegionOf(b[1]);
-      return '<li class="person"><p class="person-role">' + esc(b[0]) + '</p><h3 class="person-name">' + esc(b[1]) + '</h3>' +
-        (region ? '<p class="pm-region"><span class="pm-l">Région</span> ' + esc(region) + '</p>' : '') + seatLinks(b[1]) + '</li>';
+      return '<li class="person"><h3 class="person-name">' + esc(b[1]) + '</h3><p class="person-role">' + esc(b[0]) + '</p>' +
+        (region ? '<p class="pm-region"><span class="pm-l">Région</span> ' + esc(region) + '</p>' : '') + '</li>';
     }).join('');
 
-    /* Conseil : le nombre d'administrateurs, puis une fiche par région, noms visibles */
-    const total = CA.reduce((n, r) => n + r[1].length, 0);
+    /* Conseil : le nombre d'administrateurs, puis une fiche par région (bandeau de couleur), noms par ordre alphabétique */
+    const total = CA.reduce((s, r) => s + r[1].length, 0);
     $('#ca-figs').innerHTML = kfigs([[total, total > 1 ? 'administrateurs' : 'administrateur']]);
     $('#ca-list').innerHTML = CA.map((r, k) =>
-      '<li class="ca-region s' + (k % 2) + (r[1].length >= 5 ? ' ca-wide' : '') + '"><h3 class="ca-name">' + esc(r[0]) + '</h3>' +
-        '<ul class="ca-people">' + r[1].map((n) => '<li>' + esc(n) + (roleOf(n) ? '<span class="ca-role">' + esc(roleOf(n).toLowerCase()) + '</span>' : '') + '</li>').join('') + '</ul></li>').join('');
+      '<li class="ca-region s' + (k % 2) + '"><h3 class="ca-name">' + esc(r[0]) + '</h3>' +
+        '<ul class="ca-people">' + r[1].slice().sort(byName).map((p) => '<li>' + esc(p) + '</li>').join('') + '</ul></li>').join('');
 
-    /* Représentants : une fiche par instance, sous son sigle ; une ancre par instance (inst-0…) pour les liens et la recherche */
-    const named = new Set();
-    INSTANCES.forEach((i) => { i.reps.forEach((n) => named.add(n)); (i.groups || []).forEach((g) => g[1].forEach((n) => named.add(n))); });
-    $('#inst-figs').innerHTML = kfigs([[INSTANCES.length, 'instances'], [named.size, 'représentants']]);
-    $('#inst-list').innerHTML = INSTANCES.map((i, k) => {
+    /* Représentants : une fiche par instance, sous son sigle, avec ses représentants nommés ; ancre inst-<numéro dans INSTANCES> */
+    $('#inst-figs').innerHTML = kfigs([[INSTANCES.length, 'instances']]);
+    const order = INSTANCES.map((i, k) => ({ i, k })).sort((a, b) => (instNames(b.i).length ? 1 : 0) - (instNames(a.i).length ? 1 : 0));
+    $('#inst-list').innerHTML = order.map(({ i, k }, pos) => {
       const head = instHead(i);
-      return '<li class="inst s' + (k % 2) + '" id="inst-' + k + '"><h3 class="inst-head">' +
+      const groups = (i.groups || []).filter((g) => g[1].length);
+      return '<li class="inst s' + (pos % 2) + '" id="inst-' + k + '"><h3 class="inst-head">' +
           (head ? '<span class="inst-sig">' + esc(head) + '</span>' + (i.a ? '<span class="inst-full">' + esc(i.n) + '</span>' : '') : '<span class="inst-sig inst-sig-long">' + esc(i.n) + '</span>') +
-        '</h3>' + (i.r ? '<p class="inst-role">' + esc(i.r) + '</p>' : '') + '<div class="inst-reps">' +
-        (i.groups ? i.groups.map((g) => '<p class="inst-group">' + esc(g[0]) + '</p>' + repsList(g[1], g[2])).join('') : repsList(i.reps, i.todo)) +
+        '</h3><p class="inst-role">' + esc(i.r || '') + '</p><div class="inst-reps">' +
+        (i.groups ? groups.map((g) => '<p class="inst-group">' + esc(g[0]) + '</p>' + repsList(g[1])).join('') : repsList(i.reps)) +
       '</div></li>';
     }).join('');
 
-    /* URPS : le nombre de représentants, puis la métropole et l'outre-mer */
-    const reps = URPS.reduce((n, u) => n + u[1].length, 0);
+    /* URPS : le nombre de représentants, puis la métropole et l'outre-mer (régions où siège au moins un représentant) */
+    const reps = URPS.reduce((s, u) => s + u[1].length, 0);
     $('#urps-figs').innerHTML = kfigs([[reps, 'représentants dans les URPS']]);
-    const group = (title, list) => '<div class="urps-group"><h3 class="urps-gname">' + esc(title) + '</h3>' +
+    const group = (title, list) => (list.length ? '<div class="urps-group"><h3 class="urps-gname">' + esc(title) + '</h3>' +
       '<ul class="urps-cols">' + list.map((u) => '<li class="urps-item"><h4 class="urps-region">' + esc(u[0]) + '</h4>' +
-        (u[1].length ? '<ul class="urps-names">' + u[1].map((n) => '<li>' + esc(n) + '</li>').join('') + '</ul>' : '<p class="seat-todo">Représentant à désigner</p>') + '</li>').join('') + '</ul></div>';
-    $('#urps-list').innerHTML = group('Métropole', URPS.filter((u) => !OUTREMER.includes(u[0]))) + group('Outre-mer', URPS.filter((u) => OUTREMER.includes(u[0])));
+        '<ul class="urps-names">' + u[1].slice().sort(byName).map((p) => '<li>' + esc(p) + '</li>').join('') + '</ul></li>').join('') + '</ul></div>' : '');
+    const filled = URPS.filter((u) => u[1].length);
+    $('#urps-list').innerHTML = group('Métropole', filled.filter((u) => !OUTREMER.includes(u[0]))) + group('Outre-mer', filled.filter((u) => OUTREMER.includes(u[0])));
   }
+
+  /* Numéros des missions, dessinés comme les mascottes (7 novembre 2026, demande d'Isabelle Eimer) : chiffre au marqueur
+     noir dans un rond blanc, posé sur le rond vert anis du logo, petits traits de joie, ombre au sol. Couleurs en attributs.
+     À l'arrivée à l'écran, le rond se trace, le rond vert apparaît, puis le chiffre s'écrit (setupMotion) ; au défilement,
+     la pastille bouge comme une mascotte (groupe .perso, setupScrollLife). */
+  const MISSION_DIGITS = {
+    1: ['M34 31 Q40 28 45 22 L45 57', 'M36 57.5 L54 57.5'],
+    2: ['M31 32 Q31 21.5 42.5 21.5 Q53.5 21.5 53 31.5 Q52.5 40 32 57.5 L55 57'],
+    3: ['M31.5 27 Q39 20 48 22.5 Q55 26 51 33.5 Q47.5 38.5 40 38.5 Q53 38.5 54.5 47 Q55 58 42 58.5 Q34.5 59 30.5 54'],
+    4: ['M48 58 L48 21.5 L29.5 46 L56.5 46']
+  };
+  const missionBadge = (n) => '<svg class="mnum" viewBox="0 0 86 92" aria-hidden="true" focusable="false" fill="none" stroke="#2E3236" stroke-linecap="round" stroke-linejoin="round">' +
+    '<ellipse cx="44" cy="86" rx="23" ry="3.2" fill="#E6E9DF" stroke="none"/>' +
+    '<g class="perso"><circle class="mnum-anis" cx="50" cy="47" r="29" fill="#A3BE3C" stroke="none"/>' +
+    '<path class="mnum-head" pathLength="1" d="M42 11 C59.5 10.5 71 23.5 71 40 C71 57.5 58.5 69.5 42 69.5 C25 69.5 13 57 13 40 C13 23.5 25.5 11.8 39.5 11.2" fill="#FFFFFF" stroke-width="2.8"/>' +
+    (MISSION_DIGITS[n] || []).map((d) => '<path class="mnum-digit" pathLength="1" d="' + d + '" stroke-width="5"/>').join('') +
+    '<g class="mnum-eclats" stroke-width="2.6"><path d="M67 13 L72.5 7.5"/><path d="M71.5 21.5 L79 19.5"/><path d="M60.5 8 L62 2"/></g></g></svg>';
 
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
     $('#home-benefits').innerHTML = BENEFITS.map((b) => '<li><span>' + esc(b.t) + '</span></li>').join('');
     $('#benefits-grid').innerHTML = BENEFITS.map((b) => '<div class="benefit"><h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
-    $('#missions-list').innerHTML = MISSIONS.map((m) => '<div class="charter-item"><h3 class="h-block">' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div>').join('');
+    $('#missions-list').innerHTML = MISSIONS.map((m, k) => '<div class="charter-item">' + missionBadge(k + 1) + '<div class="charter-text"><h3 class="h-block"><span class="sr-only">Mission ' + (k + 1) + '\u00a0: </span>' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div></div>').join('');
     renderSyndicat();
     $('#comptes-list').innerHTML = docRow({ t: 'Les statuts du SLBC', s: 'Paris, le 16 novembre 2013', url: STATUTS }, 'Statuts') +
       COMPTES.map((c) => docRow({ t: c.d, url: c.url }, 'Exercice ' + c.y)).join('');
@@ -1299,7 +1313,7 @@
         en.target.classList.add('drawn');
       });
     }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
-    $$('.pillar, .timeline, .sep-sig').forEach((el) => io.observe(el));
+    $$('.pillar, .timeline, .sep-sig, .mnum').forEach((el) => io.observe(el));
   }
 
   /* ---------- Le site bouge avec le visiteur (demande d'Isabelle Eimer du 6 novembre 2026) ----------
