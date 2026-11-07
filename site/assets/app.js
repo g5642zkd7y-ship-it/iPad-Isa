@@ -51,9 +51,30 @@
       t.parentNode.replaceChild(frag, t);
     });
   }
+  /* Flèche des liens « Lire… » (7 novembre 2026, demande d'Isabelle Eimer) : une petite flèche dessinée au marqueur, dans
+     le style des mascottes et des pastilles (trait arrondi, tige un peu courbe), en vrai dessin dans le lien et non plus
+     en masque CSS, que Safari affichait mal sur iPad. Elle prend la couleur du lien et reste collée au dernier mot. */
+  const FLECHE = '<svg class="fleche" viewBox="0 0 20 14" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M2.2 7.9 Q8.5 6.1 16.4 7.1"/><path d="M11.6 2.6 Q14.6 4.9 16.8 7.2 Q14.4 9.3 11.9 11.7"/></svg>';
+  function addArrows(root) {
+    if (!root || root.nodeType !== 1) return;
+    const links = root.matches && root.matches('.more') ? [root] : [...root.querySelectorAll('.more')];
+    links.forEach((a) => {
+      if (a.querySelector('svg.fleche')) return;
+      const fin = document.createElement('span'); fin.className = 'fl-fin';
+      const last = a.lastChild;
+      if (last && last.nodeType === 3) {
+        const m = last.nodeValue.match(/^([\s\S]*?)(\S+)\s*$/);
+        if (m) { last.nodeValue = m[1]; fin.textContent = m[2]; }
+      } else if (last && last.nodeType === 1) fin.appendChild(last);
+      fin.insertAdjacentHTML('beforeend', FLECHE);
+      a.appendChild(fin);
+    });
+  }
+  addArrows(document.body);
   keepTogether(document.body);
   if ('MutationObserver' in window) {
-    new MutationObserver((records) => records.forEach((r) => r.addedNodes.forEach((n) => { if (n.isConnected && (n.nodeType === 1 || n.nodeType === 3)) keepTogether(n); })))
+    new MutationObserver((records) => records.forEach((r) => r.addedNodes.forEach((n) => { if (n.isConnected && (n.nodeType === 1 || n.nodeType === 3)) { addArrows(n.nodeType === 1 ? n : n.parentNode && n.parentNode.closest && n.parentNode.closest('.more')); keepTogether(n); } })))
       .observe(document.body, { childList: true, subtree: true });
   }
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));

@@ -111,12 +111,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .more{display:inline-block;color:var(--vert);font-size:17px;font-weight:600;text-decoration:none}
 /* Chevron : petite boîte en ligne (pas un bloc à part), collée au dernier mot. Quand le lien passe sur deux lignes,
    il suit la fin du texte au lieu de rester au bord droit. */
-/* Flèche des liens « Lire… » : boîte en ligne (elle suit le dernier mot et ne part jamais seule à la ligne), de la taille de la flèche (police de 9 px, 7 px de large) pour que rien ne dépasse ; masque écrit en propriétés séparées avec no-repeat : Safari répétait la flèche au-dessus et au-dessous (petits carrés vus sur iPad). */
-.more::after{content:"";position:relative;left:0;margin-left:7px;padding-left:7px;font-size:9px;vertical-align:1px;background:currentColor;-webkit-mask-image:var(--chev);mask-image:var(--chev);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:7px 12px;mask-size:7px 12px;transition:left .2s var(--ease)}
+/* Flèche des liens « Lire… » : petit dessin au marqueur placé par addArrows() (app.js), collé au dernier mot */
+.fl-fin{white-space:nowrap}
+.more .fleche{display:inline-block;width:1.05em;height:.74em;margin-left:.36em;vertical-align:-.02em;overflow:visible;transition:transform .2s var(--ease)}
 /* Zone à toucher de 44 px sans rien déplacer : le remplissage vertical est repris par une marge négative. */
 a.more{padding-block:9px;margin-block:-9px}
 .more:hover{text-decoration:underline;text-underline-offset:3px}
-.more:hover::after{left:2px}
+.more:hover .fleche{transform:translateX(2px)}
 .bg-encre .more,.side-dark .more{color:var(--vert-clair)}
 .bg-vert .more{color:#fff}
 .tile-vert .more{color:var(--encre)}
@@ -739,7 +740,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .porte.c1{background:var(--vert-clair)}.porte.c1 .porte-d{color:var(--encre)}.porte.c1 .porte-cta{color:var(--encre)}
 .porte.c2{background:var(--anis)}.porte.c2 .porte-d{color:var(--encre)}.porte.c2 .porte-cta{color:var(--encre)}
 .porte.c3{background:var(--vert)}.porte.c3 .porte-t,.porte.c3 .porte-d,.porte.c3 .porte-cta{color:#fff}
-@media (hover:hover){.porte:hover .porte-cta{text-decoration:underline;text-underline-offset:3px}.porte:hover .porte-cta::after{left:2px}}
+@media (hover:hover){.porte:hover .porte-cta{text-decoration:underline;text-underline-offset:3px}.porte:hover .porte-cta .fleche{transform:translateX(2px)}}
 .porte:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
 .portes-menu{margin-bottom:36px}
 .portes-menu .portes{grid-template-columns:repeat(4,minmax(0,1fr))}
