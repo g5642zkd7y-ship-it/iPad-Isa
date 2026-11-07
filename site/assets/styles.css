@@ -271,6 +271,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media (max-width:560px){:root{--mascotte-h:112px}}
 .mascotte{flex:none;display:block;width:auto;height:calc(var(--mascotte-h) * var(--vb-h, 210) / 210)}
 .veille-band-head .mascotte{height:calc(var(--mascotte-h) * 206 / 210)}
+.join .mascotte-adhesion{height:calc(var(--mascotte-h) * 206 / 210)}
 @media (max-width:560px){.piliers-head,.tete-mascotte,.veille-band-head{gap:16px}.veille-band-head{align-items:flex-start}}
 .pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 48px;margin-top:48px}
 .pillar{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:4px solid var(--anis)}
