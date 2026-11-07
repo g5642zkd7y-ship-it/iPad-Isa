@@ -1,5 +1,5 @@
 # Planches « Mascottes de saison » (7 novembre 2026, demandes d'Isabelle Eimer) : les mascottes validées du site
-# - à Noël : bonnet de Père Noël rouge (descendu sur la tête, gros pompon), écharpe rouge et blanche, moufles rouges pour certaines ;
+# - à Noël : bonnet de Père Noël rouge (modèle B : bandeau et gros pompon en fourrure), écharpe rouge et blanche, moufles rouges pour certaines ;
 # - en été : lunettes de soleil, casquette ou chapeau de paille, et une bouée gonflable posée à côté
 #   (en alternance, le canard jaune et la bouée ronde rayée bleu ciel et blanc).
 # usage : python3 gen_saisons.py <index.html> <dossier> <joyeux-noel.txt> <bonnes-vacances.txt>
@@ -92,35 +92,67 @@ def tenue_noel(**reglages):
                '<path d="M86 108 L86 115 M94 110 L94 117 M102 107 L103 114 M90 124 L98 123 M91 130 L99 129" stroke="#FFFFFF" stroke-width="2.6"/>')
     return HEAD + echarpe + bonnet_noel(**reglages)
 
-BORD_BAS = []   # bas du bord blanc du bonnet (coordonnées de la tête), rempli par bonnet_noel()
+BORD_BAS = []   # bas du bandeau du bonnet (coordonnées de la tête), rempli par bonnet_noel()
 
-def bonnet_noel(yg=60, yd=47, rc=32.5, w=6.5, cy=40.5, haut=6, evase=4, pointe=(48, 30), pompon=(46, 34, 12.5)):
-    """Bonnet de Père Noël à la taille de la tête (demandes d'Isabelle Eimer du 7 novembre 2026) : un bord blanc épais,
-    bombé vers le haut, aux deux bouts arrondis qui dépassent un tout petit peu de la tête, comme un bonnet bien
-    enfoncé ; la partie rouge part exactement des deux bouts du bord, monte, puis retombe vers l'arrière jusqu'au
-    gros pompon. `pointe` et `pompon` : bout de la pointe et pompon (plus bas quand deux voisins sont dos à dos)."""
-    sur_cercle = lambda y, r, cote: (95 + cote * math.sqrt(r * r - (72 - y) ** 2), y)
-    Lc, Rc, C = sur_cercle(yg, rc, -1), sur_cercle(yd, rc, 1), (95, cy)   # bouts du milieu du bord, point de contrôle
+def bandeau_bonnet(L=57, Rr=133, T=37, th=17, s=2):
+    """Bandeau du bonnet, d'après les exemples envoyés par Isabelle Eimer : épais, un peu plus large que la tête, aux
+    bouts bien arrondis, presque droit (le milieu à peine plus bas), posé juste au-dessus des yeux."""
+    w = th / 2
+    Lc, Rc, C = (L + w, T + w), (Rr - w, T + w), (95, T + w + 2 * s)
     q = lambda t: tuple((1 - t) ** 2 * Lc[k] + 2 * t * (1 - t) * C[k] + t * t * Rc[k] for k in (0, 1))
     dq = lambda t: tuple(2 * (1 - t) * (C[k] - Lc[k]) + 2 * t * (Rc[k] - C[k]) for k in (0, 1))
-    haut_bord, bas_bord = [], []
+    haut, bas = [], []
     for i in range(41):
         p, d = q(i / 40), dq(i / 40)
-        l = math.hypot(*d); n = (d[1] / l, -d[0] / l)                     # normale vers le haut
-        haut_bord.append((p[0] + w * n[0], p[1] + w * n[1])); bas_bord.append((p[0] - w * n[0], p[1] - w * n[1]))
-    def bout(c, depart):                                                  # demi-cercle au bout du bord
+        l = math.hypot(*d); n = (d[1] / l, -d[0] / l)
+        haut.append((p[0] + w * n[0], p[1] + w * n[1])); bas.append((p[0] - w * n[0], p[1] - w * n[1]))
+    def bout(c, depart):
         a = math.atan2(depart[1] - c[1], depart[0] - c[0])
-        return [(c[0] + w * math.cos(a + math.pi * k / 12), c[1] + w * math.sin(a + math.pi * k / 12)) for k in range(1, 12)]
+        return [(c[0] + w * math.cos(a + math.pi * k / 16), c[1] + w * math.sin(a + math.pi * k / 16)) for k in range(1, 16)]
+    return haut + bout(Rc, haut[-1]) + bas[::-1] + bout(Lc, bas[0]), haut, bas
+
+def fourrure(pts, pas=5.2, bosse=1.9):
+    """Contour à petites bosses régulières (fourrure), comme sur la planche d'exemples."""
     f = lambda p: '%.2f %.2f' % p
-    contour = haut_bord + bout(Rc, haut_bord[-1]) + bas_bord[::-1] + bout(Lc, bas_bord[0])
-    bord = 'M' + ' L'.join(f(p) for p in contour) + 'Z'
-    BORD_BAS[:] = bas_bord
-    D, G = haut_bord[-1], haut_bord[0]                                   # départs du rouge : les deux bouts du bord
-    rouge = (f'M{f(D)} C{f((D[0] + evase, D[1] - 18))} {f((112, haut))} {f((92, haut))} '
-             f'C{f((72, haut))} {f((58, haut + 10))} {f(pointe)} '
-             f'C{f((pointe[0] + 7, pointe[1] + 6))} {f((G[0] - evase, G[1] - 8))} {f(G)} ' + ' '.join('L' + f(p) for p in haut_bord[1:]) + 'Z')
-    return (f'<path d="{rouge}" fill="{ROUGE}"/><path d="{bord}" fill="#FFFFFF"/>'
-            '<circle cx="%g" cy="%g" r="%g" fill="#FFFFFF"/>' % pompon)
+    aire = sum(pts[i][0] * pts[(i + 1) % len(pts)][1] - pts[(i + 1) % len(pts)][0] * pts[i][1] for i in range(len(pts)))
+    sens = 1 if aire > 0 else -1
+    seg = [math.dist(pts[i], pts[(i + 1) % len(pts)]) for i in range(len(pts))]
+    total = sum(seg); n = max(8, int(total / pas)); pas = total / n
+    res, acc, i = [], 0.0, 0
+    for k in range(n):
+        cible = k * pas
+        while acc + seg[i] < cible:
+            acc += seg[i]; i += 1
+        t = (cible - acc) / seg[i]
+        a, b = pts[i], pts[(i + 1) % len(pts)]
+        res.append((a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t))
+    d = 'M' + f(res[0])
+    for k in range(n):
+        a, b = res[k], res[(k + 1) % n]
+        m = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
+        tx, ty = b[0] - a[0], b[1] - a[1]; l = math.hypot(tx, ty) or 1
+        nx, ny = ty / l * sens, -tx / l * sens
+        d += ' Q' + f((m[0] + nx * bosse * 2, m[1] + ny * bosse * 2)) + ' ' + f(b)
+    return d + 'Z'
+
+def bonnet_noel(pointe=(46, 22), retour=(55, 26), pompon=(42, 23, 14.5)):
+    """Bonnet de Père Noël, modèle B choisi par Isabelle Eimer le 7 novembre 2026 : bandeau blanc en fourrure (voir
+    bandeau_bonnet), partie rouge posée dessus à partir du début des bouts arrondis, un pli, la pointe qui retombe en
+    arrière, gros pompon en fourrure. `pointe`, `retour`, `pompon` : bout de la pointe et pompon (cx, cy, r), plus bas
+    pour deux voisins dos à dos."""
+    f = lambda p: '%.2f %.2f' % p
+    contour, haut, bas = bandeau_bonnet()
+    BORD_BAS[:] = bas
+    G, D = haut[0], haut[-1]
+    rouge = (f'M{f(D)} C{f((D[0] + 4, D[1] - 24))} {f((114, -5))} {f((90, -5))} '
+             f'C{f((70, -5))} {f((56, 6))} {f(pointe)} '
+             f'C{f(retour)} {f((G[0] - 2, G[1] - 12))} {f(G)} ' + ' '.join('L' + f(p) for p in haut[1:]) + ' Z')
+    cx, cy, r = pompon
+    rond = [(cx + r * .86 * math.cos(2 * math.pi * k / 48), cy + r * .86 * math.sin(2 * math.pi * k / 48)) for k in range(48)]
+    return (f'<path d="{rouge}" fill="{ROUGE}"/>'
+            f'<path d="M102 4 Q84 8 68 24" stroke="{INK}" stroke-width="2.2" fill="none"/>'
+            f'<path d="{fourrure(contour)}" fill="#FFFFFF"/>'
+            f'<path d="{fourrure(rond, pas=4.6, bosse=1.6)}" fill="#FFFFFF"/>')
 
 def moufles(s):
     """Les mains deviennent des moufles rouges, un peu plus grandes, avec leur pouce."""
@@ -139,26 +171,36 @@ def moufles(s):
     s = re.sub(r'<circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)" fill="#2E3236" stroke="none"/>', circ, s)
     return re.sub(r'<ellipse cx="([\d.]+)" cy="([\d.]+)" rx="([\d.]+)" ry="([\d.]+)" fill="#2E3236" stroke="none"( transform="[^"]*")?/>', ell, s)
 
+def descendre_bureau(s, d=22):
+    """Le syndicat à Noël : les cinq personnages descendent de `d` (leur bonnet, plus haut, ne touche plus les
+    drapeaux ni la bulle) ; les hampes s'allongent d'autant et le dessin aussi."""
+    s, n = re.subn(r'<g transform="translate\((\d+) 70\)', lambda m: f'<g transform="translate({m.group(1)} {70 + d})', s)
+    assert n == 5, n
+    s = s.replace('<path d="M50 8 L50 246"', f'<path d="M50 8 L50 {246 + d}"', 1).replace('<path d="M612 12 L612 246"', f'<path d="M612 12 L612 {246 + d}"', 1)
+    m, (x, y, w, hh) = viewbox(s)
+    return s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x, y, w, hh + d), 1)
+
 def noel(key, svg):
     tenue = tenue_noel()
     s = clean(sans_sourcils_sous_bonnet(sans_meches(svg)))
     if key == 'bureau':
-        # les 3e et 4e personnages sont dos à dos : leur pointe retombe plus bas derrière la tête, pour que les pompons
-        # ne se touchent pas
-        tombe = tenue_noel(pointe=(56, 36), pompon=(55, 41, 12))
+        # les 3e et 4e personnages sont dos à dos : la pointe du 4e retombe plus bas, près de son oreille, pour que les
+        # deux pompons ne se touchent pas
+        tombe = tenue_noel(pointe=(58, 36), retour=(63, 38), pompon=(58, 46, 11.5))
         parts = s.split(HEAD)
-        s = parts[0] + ''.join((tombe if k in (2, 3) else tenue) + p for k, p in enumerate(parts[1:]))
+        s = parts[0] + ''.join((tombe if k == 3 else tenue) + p for k, p in enumerate(parts[1:]))
     else:
         s = s.replace(HEAD, tenue)
     if key in MOUFLES:
         s = moufles(s)
-    s = air_dessus(s, key)
+    s = air_dessus(s, key, dy=20)
     m, (x, y, w, hh) = viewbox(s)
-    s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x - 24, y, w + 48, hh), 1)
+    s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x - 26, y, w + 52, hh), 1)
     if key == 'bureau':
+        s = descendre_bureau(s)
         s = s.replace('>MAKE BIOLOGY</text>', '>JOYEUX NOËL</text>').replace('>GREAT AGAIN</text>', '>À TOUS !</text>').replace('>YES WE CAN</text>', '>BONNES FÊTES</text>')
     if key == 'lecteurs':
-        s = s.replace('<text x="384" y="40"', '<text x="400" y="34"', 1)
+        s = s.replace('<text x="384" y="40"', '<text x="418" y="20"', 1)
     if key == 'bienvenue':
         s = re.sub(r'<path class="mot-main" d="[^"]*"', '<path class="mot-main" d="' + TXT_NOEL + '"', s, count=1)
     if key == 'documentation':
@@ -358,7 +400,15 @@ def ete(key, svg):
         bouee = bouee_rayee(bx, sol).replace('<g class="bouee">', f'<g class="bouee" transform="translate({bx:g} {sol:g}) scale(1.3) translate({-bx:g} {-sol:g})">', 1)
         s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x, y - 4, w + 128, hh + 4), 1)
         return s[:s.rindex('</svg>')] + bouee + '</svg>'
-    bouee = bouee_canard(bx, sol).replace('<g class="bouee">', f'<g class="bouee" transform="translate({bx:g} {sol:g}) scale(1.3) translate({-bx:g} {-sol:g})">', 1)
+    # bouée canard du début (préférée par Isabelle Eimer le 7 novembre 2026 à la version d'après les exemples, bouee_canard())
+    bouee = (f'<g class="bouee" transform="translate({bx:g} {sol:g}) scale(1.3) translate({-bx:g} {-sol:g})"><ellipse cx="{bx:g}" cy="{sol + 1:g}" rx="34" ry="4" fill="#E6E9DF" stroke="none"/>'
+             f'<ellipse cx="{bx:g}" cy="{sol - 14:g}" rx="32" ry="14" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
+             f'<ellipse cx="{bx:g}" cy="{sol - 16:g}" rx="14" ry="5.5" fill="#FFFFFF" stroke="{INK}" stroke-width="2.6"/>'
+             f'<path d="M{bx - 24:g} {sol - 22:g} Q{bx - 30:g} {sol - 14:g} {bx - 24:g} {sol - 6:g}" stroke="#FFFFFF" stroke-width="2.4" fill="none"/>'
+             f'<path d="M{bx + 18:g} {sol - 24:g} C{bx + 16:g} {sol - 36:g} {bx + 20:g} {sol - 44:g} {bx + 26:g} {sol - 46:g}" stroke="{INK}" stroke-width="3" fill="none"/>'
+             f'<path d="M{bx + 18:g} {sol - 24:g} C{bx + 14:g} {sol - 36:g} {bx + 16:g} {sol - 50:g} {bx + 26:g} {sol - 50:g} C{bx + 36:g} {sol - 50:g} {bx + 40:g} {sol - 40:g} {bx + 34:g} {sol - 32:g} C{bx + 32:g} {sol - 28:g} {bx + 30:g} {sol - 24:g} {bx + 30:g} {sol - 20:g} Z" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
+             f'<path d="M{bx + 36:g} {sol - 42:g} Q{bx + 48:g} {sol - 42:g} {bx + 47:g} {sol - 37:g} Q{bx + 44:g} {sol - 34:g} {bx + 36:g} {sol - 36:g} Z" fill="{BEC}" stroke="{INK}" stroke-width="2.4"/>'
+             f'<circle cx="{bx + 29:g}" cy="{sol - 42:g}" r="2.4" fill="{INK}" stroke="none"/></g>')
     s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x, y - 4, w + 128, hh + 4), 1)
     return s[:s.rindex('</svg>')] + bouee + '</svg>'
 
