@@ -661,9 +661,39 @@
     (MISSION_DIGITS[n] || []).map((d) => '<path class="mnum-digit" pathLength="1" d="' + d + '" stroke-width="5"/>').join('') +
     '<g class="mnum-eclats" stroke-width="2.6"><path d="M67 13 L72.5 7.5"/><path d="M71.5 21.5 L79 19.5"/><path d="M60.5 8 L62 2"/></g></g></svg>';
 
+  /* Pastilles de la bannière « Rejoindre le SLBC » (accueil, 7 novembre 2026, demande d'Isabelle Eimer) : même dessin
+     et même animation que les numéros des missions, mais un petit dessin au marqueur à la place du chiffre :
+     des jumelles (la veille), deux biologistes (les groupes de travail), un porte-voix (une voix dans les instances).
+     Pas d'ombre au sol : la bannière est vert foncé, comme pour les mascottes sur fond sombre. Les traits se tracent
+     (mnum-digit), les aplats apparaissent ensuite (mnum-fill). */
+  const JOIN_ICONS = [
+    '<circle class="mnum-fill" cx="31" cy="42" r="6" fill="#D6E4A6" stroke="none"/><circle class="mnum-fill" cx="53" cy="42" r="6" fill="#D6E4A6" stroke="none"/>' +
+      '<circle class="mnum-digit" pathLength="1" cx="31" cy="42" r="10.5" stroke-width="3.6"/><circle class="mnum-digit" pathLength="1" cx="53" cy="42" r="10.5" stroke-width="3.6"/>' +
+      '<rect class="mnum-fill" x="39" y="35.5" width="8" height="11" rx="2.5" fill="#2E3236" stroke="none"/>' +
+      '<path class="mnum-fill" d="M27 38 Q29 36 32 36.5 M49 38 Q51 36 54 36.5" stroke="#FFFFFF" stroke-width="1.8"/>',
+    '<path class="mnum-digit" pathLength="1" d="M19.5 61 Q20 47.5 31 47.5 Q41 47.5 42.5 61" fill="#FFFFFF" stroke-width="3.4"/>' +
+      '<path class="mnum-digit" pathLength="1" d="M41.5 61 Q43 47.5 53 47.5 Q64 47.5 64.5 61" fill="#FFFFFF" stroke-width="3.4"/>' +
+      '<circle class="mnum-digit" pathLength="1" cx="31" cy="34.5" r="8.5" fill="#FFFFFF" stroke-width="3.4"/><circle class="mnum-digit" pathLength="1" cx="53" cy="34.5" r="8.5" fill="#FFFFFF" stroke-width="3.4"/>' +
+      '<g class="mnum-fill"><circle cx="28.5" cy="33.5" r="1.4" fill="#2E3236" stroke="none"/><circle cx="33.5" cy="33.5" r="1.4" fill="#2E3236" stroke="none"/>' +
+      '<circle cx="50.5" cy="33.5" r="1.4" fill="#2E3236" stroke="none"/><circle cx="55.5" cy="33.5" r="1.4" fill="#2E3236" stroke="none"/>' +
+      '<path d="M28 37.5 Q31 40 34 37.5 M50 37.5 Q53 40 56 37.5" stroke-width="2"/>' +
+      '<path d="M31 47.5 L31 60" stroke="#A3BE3C" stroke-width="3"/><path d="M53 47.5 L53 60" stroke="#A3BE3C" stroke-width="3"/></g>',
+    '<path class="mnum-digit" pathLength="1" d="M20 35.5 L27 35.5 L27 46.5 L20 46.5 Z" fill="#FFFFFF" stroke-width="3.4"/>' +
+      '<path class="mnum-digit" pathLength="1" d="M27 35.5 L48 25.5 L48 56.5 L27 46.5 Z" fill="#FFFFFF" stroke-width="3.4"/>' +
+      '<ellipse class="mnum-fill" cx="48" cy="41" rx="3.6" ry="14.5" fill="#D6E4A6" stroke="none"/>' +
+      '<ellipse class="mnum-digit" pathLength="1" cx="48" cy="41" rx="3.6" ry="14.5" stroke-width="3.2"/>' +
+      '<path class="mnum-digit" pathLength="1" d="M33 48.5 L36 57" stroke-width="3.4"/>' +
+      '<g class="mnum-fill" stroke-width="3"><path d="M57 32.5 L62.5 29"/><path d="M58 41 L64.5 41"/><path d="M57 49.5 L62.5 53"/></g>'
+  ];
+  const joinBadge = (k) => '<svg class="mnum mnum-join" viewBox="8 0 74 76" aria-hidden="true" focusable="false" fill="none" stroke="#2E3236" stroke-linecap="round" stroke-linejoin="round">' +
+    '<g class="perso"><circle class="mnum-anis" cx="50" cy="47" r="29" fill="#A3BE3C" stroke="none"/>' +
+    '<path class="mnum-head" pathLength="1" d="M42 11 C59.5 10.5 71 23.5 71 40 C71 57.5 58.5 69.5 42 69.5 C25 69.5 13 57 13 40 C13 23.5 25.5 11.8 39.5 11.2" fill="#FFFFFF" stroke-width="2.8"/>' +
+    (JOIN_ICONS[k] || '') +
+    '<g class="mnum-eclats" stroke-width="2.6"><path d="M67 13 L72.5 7.5"/><path d="M71.5 21.5 L79 19.5"/><path d="M60.5 8 L62 2"/></g></g></svg>';
+
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
-    $('#home-benefits').innerHTML = BENEFITS.map((b) => '<li><span>' + esc(b.t) + '</span></li>').join('');
+    $('#home-benefits').innerHTML = BENEFITS.map((b, k) => '<li>' + joinBadge(k) + '<span>' + esc(b.t) + '</span></li>').join('');
     $('#benefits-grid').innerHTML = BENEFITS.map((b, k) => '<div class="benefit c' + k + '"><h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
     /* Piliers de « Ce que nous défendons » (accueil) : mêmes numéros dessinés et même animation que les missions */
     $$('#piliers .pillar').forEach((el, k) => { if (!el.querySelector('.mnum')) el.insertAdjacentHTML('afterbegin', missionBadge(k + 1)); });

@@ -321,8 +321,12 @@ a.more{padding-block:9px;margin-block:-9px}
 .join-accroche{font-weight:700}
 .join-lead .join-note{margin-top:-10px;font-size:17px;color:rgba(255,255,255,.88)}
 .join-list{list-style:none;margin:0;padding:0}
-.join-list li{display:flex;align-items:flex-start;gap:14px;padding:18px 0;border-top:1px solid rgba(255,255,255,.28);font-size:19px;font-weight:600;line-height:1.35;color:#fff}
+.join-list li{display:flex;align-items:center;gap:16px;padding:14px 0;border-top:1px solid rgba(255,255,255,.28);font-size:19px;font-weight:600;line-height:1.35;color:#fff}
 .join-list li:last-child{border-bottom:1px solid rgba(255,255,255,.28)}
+/* Pastilles dessinées de la bannière « Rejoindre le SLBC » (même style que les numéros des missions) */
+.join-list .mnum-join{flex:none;width:80px;height:auto}
+.join-list .mnum-join .mnum-eclats{stroke:#fff}
+@media (max-width:520px){.join-list .mnum-join{width:66px}}
 @media (max-width:900px){.join{grid-template-columns:minmax(0,1fr)}}
 
 /* ---------- Documentation (accueil) ---------- */
@@ -946,6 +950,10 @@ svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
   .js-motion .mnum.drawn .mnum-digit{stroke-dashoffset:0;transition:stroke-dashoffset .55s ease-in-out calc(var(--d,0s) + .55s)}
   .js-motion .mnum.drawn .mnum-digit + .mnum-digit{transition-delay:calc(var(--d,0s) + 1s)}
   .js-motion .mnum.drawn .mnum-eclats{transform:none;transition:transform .35s cubic-bezier(.34,1.56,.64,1) calc(var(--d,0s) + 1.15s)}
+  .js-motion .mnum .mnum-fill{transform-box:fill-box;transform-origin:50% 50%;transform:scale(0)}
+  .js-motion .mnum.drawn .mnum-fill{transform:none;transition:transform .35s cubic-bezier(.34,1.56,.64,1) calc(var(--d,0s) + 1s)}
+  .join-list li:nth-child(2) .mnum{--d:.2s}
+  .join-list li:nth-child(3) .mnum{--d:.4s}
   .charter-item:nth-child(even) .mnum{--d:.2s}
   .pillar:nth-child(2) .mnum{--d:.2s}
   .pillar:nth-child(3) .mnum{--d:.4s}
