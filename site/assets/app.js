@@ -539,7 +539,12 @@
     $$('button', el).forEach((b, i) => b.addEventListener('click', () => {
       onPick(options[i]);
       const pressed = el.querySelector('[aria-pressed="true"]');
-      if (pressed) pressed.focus();
+      if (!pressed) return;
+      pressed.focus({ preventScroll: true });
+      /* Barre plus large que l'écran : le choix fait est entièrement visible (la barre se décale si besoin). */
+      const br = el.getBoundingClientRect(); const pr = pressed.getBoundingClientRect();
+      if (pr.left < br.left) el.scrollLeft += pr.left - br.left - 4;
+      else if (pr.right > br.right) el.scrollLeft += pr.right - br.right + 4;
     }));
   }
 
@@ -831,7 +836,11 @@
   /* ---------- Menu mobile ---------- */
   const menuBtn = $('#menu-btn');
   const mmenu = $('#mmenu');
-  function openMenu() { mmenu.hidden = false; menuBtn.setAttribute('aria-expanded', 'true'); menuBtn.setAttribute('aria-label', 'Fermer le menu'); document.documentElement.style.overflow = 'hidden'; }
+  /* Le menu commence sous l'en-tête (et sous le bandeau « Maquette de travail » quand il est visible) : en défilant,
+     ses liens ne passent pas au-dessus de l'en-tête. Il repart du haut à chaque ouverture. */
+  const placeMenu = () => mmenu.style.setProperty('--mmenu-top', Math.max(0, Math.round($('.gnav').getBoundingClientRect().bottom)) + 'px');
+  function openMenu() { placeMenu(); mmenu.hidden = false; mmenu.scrollTop = 0; menuBtn.setAttribute('aria-expanded', 'true'); menuBtn.setAttribute('aria-label', 'Fermer le menu'); document.documentElement.style.overflow = 'hidden'; }
+  ['resize', 'scroll'].forEach((t) => window.addEventListener(t, () => { if (!mmenu.hidden) placeMenu(); }, { passive: true }));
   function closeMenu() { if (mmenu.hidden) return; mmenu.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.setAttribute('aria-label', 'Ouvrir le menu'); document.documentElement.style.overflow = ''; }
   menuBtn.addEventListener('click', () => (mmenu.hidden ? openMenu() : closeMenu()));
 
@@ -1469,7 +1478,7 @@
         el.style.transform = el._off ? 'translate3d(0,' + el._off.toFixed(1) + 'px,0)' : '';
       });
     }
-    let spied = null;
+    let spied = null; let spiedNav = null;
     function spy() {
       const nav = $('.view:not([hidden]) .lnav');
       if (!nav) return;
@@ -1478,10 +1487,17 @@
       let cur = null;
       links.forEach((a) => { const sec = document.getElementById(a.dataset.section); if (sec && shown(sec) && sec.getBoundingClientRect().top <= line) cur = a; });
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4 && links.length) cur = links[links.length - 1];
-      if (cur === spied) return;
-      spied = cur;
+      if (cur === spied && nav === spiedNav) return;
+      spied = cur; spiedNav = nav;
       links.forEach((a) => { if (a === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
-      if (cur) { const box = cur.parentElement; const x = cur.offsetLeft - 12; if (x < box.scrollLeft || cur.offsetLeft + cur.offsetWidth > box.scrollLeft + box.clientWidth) box.scrollLeft = x; }
+      /* Sous-menu plus large que l'écran (téléphone) : en haut de page, il repart du début ; sinon la rubrique en cours
+         est entièrement visible. */
+      const box = $('.lnav-links', nav);
+      if (!box) return;
+      if (!cur) { box.scrollLeft = 0; return; }
+      const br = box.getBoundingClientRect(); const ar = cur.getBoundingClientRect();
+      if (ar.left < br.left) box.scrollLeft += ar.left - br.left - 12;
+      else if (ar.right > br.right) box.scrollLeft += ar.right - br.right + 12;
     }
     function frame(t) {
       const y = window.scrollY;
@@ -2063,7 +2079,19 @@
     mdpState('fini', c); $('#mdp-title').focus();
     if (!member) { $('#login-form').hidden = false; $('#oubli-form').hidden = true; $('#login-email').value = c.email; $('#login-pass').value = ''; }
   });
-  $('#mdp-close').addEventListener('click', () => { if (typeof mdpDialog.close === 'function') mdpDialog.close(); else mdpDialog.removeAttribute('open'); });
+  const closeMdp = () => { if (typeof mdpDialog.close === 'function') mdpDialog.close(); else mdpDialog.removeAttribute('open'); };
+  $('#mdp-close').addEventListener('click', closeMdp);
+  $('#mdp-x').addEventListener('click', closeMdp);
+  /* Toucher le fond, hors de la carte, ferme aussi la fenêtre (seulement si le geste commence et finit sur le fond :
+     une sélection de texte commencée dans un champ ne la ferme pas). */
+  const onBackdrop = (e) => {
+    if (e.target !== mdpDialog) return false;
+    const r = mdpDialog.getBoundingClientRect();
+    return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+  };
+  let mdpDownOut = false;
+  mdpDialog.addEventListener('pointerdown', (e) => { mdpDownOut = onBackdrop(e); });
+  mdpDialog.addEventListener('click', (e) => { if (mdpDownOut && onBackdrop(e)) closeMdp(); mdpDownOut = false; });
   mdpDialog.addEventListener('close', () => {
     /* Le focus revient au bouton d'origine s'il est encore visible, sinon à un repère visible de la page affichée. */
     const vis = (el) => el && document.body.contains(el) && el.getClientRects().length > 0;

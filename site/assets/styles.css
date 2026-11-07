@@ -82,7 +82,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media (max-width:420px){.gnav-in{gap:12px}.brand{gap:8px}.brand-mark{width:32px;height:32px}.brand-word{font-size:24px}.btn-nav{padding:0 14px;font-size:16px;margin-left:2px}}
 @media (max-width:340px){.gnav-in{gap:8px}.brand-mark{width:28px;height:28px}.brand-word{font-size:21px}.btn-nav{padding:0 12px;font-size:15px}}
 
-.mmenu{position:fixed;inset:0;z-index:45;background:var(--blanc);overflow-y:auto;padding-top:calc(env(safe-area-inset-top,0px) + 112px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 40px)}
+/* Le menu commence sous l'en-tête : --mmenu-top est posé à l'ouverture par openMenu() (app.js). */
+.mmenu{position:fixed;top:var(--mmenu-top,calc(env(safe-area-inset-top,0px) + var(--nav-h)));right:0;bottom:0;left:0;z-index:45;background:var(--blanc);overflow-y:auto;overscroll-behavior:contain;padding-top:12px;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 40px)}
 .mmenu-in{display:flex;flex-direction:column}
 .mmenu-link{display:block;padding:12px 0;font-size:24px;font-weight:700;letter-spacing:-.02em;color:var(--encre);text-decoration:none;border-bottom:1px solid var(--filet)}
 .mmenu-link[aria-current="page"]{color:var(--vert)}
@@ -773,9 +774,10 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 
 /* ---------- Recherche ---------- */
 .search-scrim{position:fixed;inset:0;z-index:70;background:rgba(46,50,54,.32);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-.search-panel{position:fixed;top:0;left:0;right:0;z-index:71;max-height:88vh;overflow-y:auto;padding-top:env(safe-area-inset-top,0px);border-radius:0 0 24px 24px;background:#fff;box-shadow:0 20px 40px rgba(46,50,54,.18)}
-.search-in{display:flex;flex-direction:column;gap:22px;padding-block:20px 30px}
-.search-field{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--filet);color:var(--gris)}
+.search-panel{position:fixed;top:0;left:0;right:0;z-index:71;max-height:88vh;overflow-y:auto;overscroll-behavior:contain;border-radius:0 0 24px 24px;background:#fff;box-shadow:0 20px 40px rgba(46,50,54,.18)}
+.search-in{display:flex;flex-direction:column;gap:22px;padding-block:0 30px}
+/* Le champ et le bouton de fermeture restent en haut de la fenêtre quand on fait défiler les résultats. */
+.search-field{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:12px;padding-top:calc(env(safe-area-inset-top,0px) + 20px);padding-bottom:12px;border-bottom:1px solid var(--filet);background:#fff;color:var(--gris)}
 .search-field input{flex:1;min-width:0;border:0;outline:none;background:transparent;color:var(--encre);font:600 clamp(20px,2.2vw,24px)/1.2 var(--font);letter-spacing:-.01em;-webkit-appearance:none;appearance:none}
 .search-field input::placeholder{color:#6E7276}
 .search-field input::-webkit-search-cancel-button{display:none}
@@ -916,6 +918,10 @@ button.mp-btn{border:0;font:inherit;font-size:15px;font-weight:600;cursor:pointe
 button.mp-btn:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
 .mdp-dialog{width:min(480px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:var(--r-tile);background:#fff;box-shadow:0 20px 60px rgba(46,50,54,.25)}
 .mdp-dialog::backdrop{background:rgba(46,50,54,.5)}
+/* Bouton de fermeture en haut à droite, toujours visible quand la fenêtre défile (téléphone à l'horizontale) */
+.mdp-x{position:sticky;top:6px;z-index:2;margin:6px 6px -50px auto;background:#fff}
+.mdp-x:hover{background:#F1F2EE}
+.mdp-dialog .mdp-demo{padding-right:60px}
 .mdp-dialog .login-card{max-width:none;box-shadow:none}
 .mdp-demo{margin:0;padding:12px clamp(28px,5vw,48px);background:var(--vert-clair);font-size:14px;font-weight:600;color:var(--encre)}
 .mdp-form{display:flex;flex-direction:column;gap:18px}
