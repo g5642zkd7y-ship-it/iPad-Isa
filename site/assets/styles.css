@@ -647,7 +647,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .porte-t{font-size:18px;line-height:1.25;font-weight:700;letter-spacing:-.005em;color:var(--encre)}
 .porte-d{font-size:15.5px;line-height:1.5;color:var(--texte)}
 .porte-cta{margin-top:auto;padding-top:4px;font-size:16px}
-.porte:hover .porte-t{color:var(--vert)}
+@media (hover:hover){.porte:not([aria-pressed="true"]):hover .porte-t{color:var(--vert)}}
 .porte:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
 .portes-menu{margin-bottom:36px}
 .portes-menu .portes{grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -657,6 +657,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .portes-menu .porte[aria-pressed="true"] .porte-cta{display:none}
 .porte-bureau{margin-top:14px;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding:14px 20px;background:var(--fond);border:1px solid var(--filet);border-top:4px solid var(--gris)}
 .porte-bureau .porte-d{font-size:15px;color:var(--gris)}
+.portes-menu .porte-bureau{border-top-color:var(--gris)}
 .portes-menu .porte-bureau[aria-pressed="true"]{border-top-color:var(--encre)}
 .portes-menu .porte-bureau[aria-pressed="true"] .porte-d{color:var(--texte)}
 .login-intent{font-size:15px;font-weight:600;color:var(--vert)}
@@ -677,11 +678,13 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .msg-from{font-size:15px;color:var(--texte)}
 .msg-from a{color:var(--vert)}
 .msg-text{font-size:16px;line-height:1.55;color:var(--encre);white-space:pre-line}
+.msg-text,.msg-from,.msg-inst{overflow-wrap:anywhere}
+.messages-admin{margin-top:0;margin-bottom:40px}
+.form-ok .link-btn{display:flex;margin-top:4px}
 @media (max-width:860px){.ecrire{grid-template-columns:minmax(0,1fr)}}
 .login-card{display:flex;flex-direction:column;gap:18px;width:100%;max-width:440px;padding:clamp(28px,5vw,48px);border-radius:var(--r-tile);background:#fff;box-shadow:0 1px 2px rgba(46,50,54,.06)}
 .member-id{font-size:17px}
 .ea-panel{margin-top:32px}
-@media (max-width:560px){#ea-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%}#ea-tabs button{white-space:normal;min-height:52px;padding:6px 8px;line-height:1.2;text-align:center}}
 .ea-intro{margin-bottom:28px}
 .ea-intro .muted{margin-top:6px;max-width:46em}
 .ea-lettre{max-width:560px}
