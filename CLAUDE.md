@@ -41,7 +41,7 @@ Objectifs exprimés pour le site :
 - **Logo validé** : deux ronds qui se chevauchent, le rond gris `#5E6266` en haut à gauche, le rond vert anis `#A3BE3C` en bas à droite, la zone commune en vert foncé `#5F7A2B`. Nom « SLBC » en **Nunito Black 900**, signature « Syndicat des Laboratoires / de Biologie Clinique » en Nunito Bold 700 (seconde ligne en vert foncé). Fichiers dans `marque/`.
 - Dans le code, **écris les couleurs du logo directement en attributs `fill`** sur chaque cercle. Un symbole réutilisé avec `<use>` a déjà fait apparaître les ronds en noir.
 - **Palette** : vert anis `#A3BE3C`, vert foncé `#5F7A2B`, vert clair `#D6E4A6`, gris cellule `#5E6266`, gris texte `#3F4347`, encre `#2E3236`, fond clair `#F7F8F4`, blanc. Le vert anis ne sert **jamais** pour du texte sur fond clair (contraste 2,1:1).
-- **Polices** : Nunito pour le logo uniquement ; Figtree pour tous les textes du site. Point ouvert : la charte (`marque/CHARTE.md`) indique encore Nunito pour le texte courant ; à mettre à jour si Figtree est validée.
+- **Polices** : Nunito pour le logo et pour tous les textes du site, y compris les textes des dessins (drapeaux, journaux) : décision d’Isabelle Eimer du 7 novembre 2026, après comparaison avec Figtree, conforme à la charte (`marque/CHARTE.md`, § 4.2). Les documents produits avant cette date (PDF des actualités, note de mise en service, planches des mascottes) restent en Figtree.
 - Thème clair uniquement, choisi pour que le logo reste dans ses couleurs validées.
 
 ## Règles de contenu
@@ -69,7 +69,7 @@ Objectifs exprimés pour le site :
 
 ## Pistes pour la suite
 
-1. Faire valider la police des textes, puis mettre à jour la charte. Comparaison Figtree / Nunito sur les textes du site (7 novembre 2026, demande d’Isabelle Eimer) : https://claude.ai/artifact/2rWBsh9xLXtQrV1Kt3r8En (copie `marque/polices-figtree-nunito.html`).
+1. Police des textes : fait, Nunito retenue le 7 novembre 2026 (site et charte mis à jour). Comparaison Figtree / Nunito sur les textes du site (7 novembre 2026, demande d’Isabelle Eimer) : https://claude.ai/artifact/2rWBsh9xLXtQrV1Kt3r8En (copie `marque/polices-figtree-nunito.html`).
 2. Ajouter des pages de détail (article, communiqué, fiche de veille).
 3. Préparer l’intégration réelle avec Kstudio (thème WordPress ou autre outil de gestion de contenu), avec de vrais comptes pour l’espace adhérent.
 4. Brancher la veille réglementaire hebdomadaire (déjà produite chaque lundi par Claude) sur la rubrique Veille.
