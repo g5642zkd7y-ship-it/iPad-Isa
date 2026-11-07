@@ -660,7 +660,7 @@
             <div class="field"><label class="field-label" for="j-msg">Message (facultatif)</label><textarea class="input" id="j-msg" rows="3"></textarea></div>
           </fieldset>
           <fieldset data-panel="3" hidden>
-            <legend>Vérifiez et envoyez</legend>
+            <legend id="j-recap-title" tabindex="-1">Vérifiez et envoyez</legend>
             <dl class="recap" id="j-recap"></dl>
             <p class="join-dest">Votre demande sera envoyée au bureau du SLBC, à <strong><span data-adhesion>bureau@slbc.fr</span></strong>. En cliquant sur « Envoyer ma demande », votre messagerie s’ouvre avec l’e-mail déjà rédigé : il ne reste qu’à l’envoyer.</p>
           </fieldset>
@@ -852,7 +852,7 @@
         <p>Indiquez l’e-mail de votre compte : vous recevrez un lien pour choisir un nouveau mot de passe.</p>
         <div class="field"><label class="field-label" for="oubli-email">E-mail</label><input class="input" id="oubli-email" type="email" autocomplete="username" placeholder="nom@laboratoire.fr" aria-describedby="oubli-err"><p class="field-error" id="oubli-err" hidden></p></div>
         <button class="btn btn-primary" type="submit">Recevoir le lien</button>
-        <p class="form-ok" id="oubli-ok" role="status" hidden></p>
+        <p class="form-ok" id="oubli-ok" role="status" tabindex="-1" hidden></p>
         <div class="oubli-demo" id="oubli-mail-wrap" hidden>
           <p class="form-note">Démonstration : voici l’e-mail que recevrait l’adhérent. Son bouton ouvre la page où il choisit son mot de passe.</p>
           <div class="mail-preview" id="oubli-mail"></div>
@@ -942,7 +942,7 @@
             </div>
             <label class="check-line"><input type="checkbox" id="sub-consent"><span>J’accepte de recevoir la lettre d’information du SLBC. Je peux me désinscrire à tout moment.</span></label>
             <button class="btn btn-light" type="submit">M’abonner</button>
-            <p class="form-ok" id="sub-ok" role="status" hidden></p>
+            <p class="form-ok" id="sub-ok" role="status" tabindex="-1" hidden></p>
             <p class="form-note">Votre e-mail sert seulement à l’envoi de la lettre. Chaque envoi contient un lien de désinscription. <a href="#mentions" data-section="donnees">Vos données personnelles</a></p>
           </form>
         </div>
@@ -1028,7 +1028,7 @@
               </div>
               <div class="field"><label class="field-label" for="cpt-email">E-mail</label><input class="input" id="cpt-email" type="email" autocomplete="off" placeholder="nom@laboratoire.fr" aria-describedby="cpt-email-err"><p class="field-error" id="cpt-email-err" hidden></p></div>
               <button class="btn btn-primary" type="submit">Créer le compte et envoyer l’invitation</button>
-              <p class="form-ok" id="cpt-ok" role="status" hidden></p>
+              <p class="form-ok" id="cpt-ok" role="status" tabindex="-1" hidden></p>
             </form>
             <p class="g-title" style="margin-top:16px">Comptes</p>
             <div class="group"><ul class="nl-list cpt-list" id="cpt-list"></ul></div>

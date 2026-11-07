@@ -4,6 +4,18 @@
   /* ---------- Outils ---------- */
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const smooth = () => (reduceMotion ? 'auto' : 'smooth');
+  /* Bas des barres collées en haut de l'écran une fois la page défilée : l'en-tête, plus le sous-menu de la page s'il y en a un. */
+  const barsBottom = () => {
+    const g = document.querySelector('.gnav');
+    let b = g ? (parseFloat(getComputedStyle(g).top) || 0) + g.offsetHeight : 0;
+    const ln = document.querySelector('.view:not([hidden]) .lnav');
+    if (ln && getComputedStyle(ln).position === 'sticky') b += ln.offsetHeight;
+    return b;
+  };
+  /* Amène le haut d'un bloc juste sous les barres collantes. */
+  const scrollUnderBars = (el, gap) => window.scrollTo({ top: Math.max(0, window.scrollY + el.getBoundingClientRect().top - barsBottom() - (gap == null ? 16 : gap)), behavior: smooth() });
+  /* Message de confirmation (tabindex="-1") : il reçoit le focus et vient à l'écran s'il est en dessous ou au-dessus. */
+  const showOk = (el) => { el.hidden = false; el.focus({ preventScroll: true }); el.scrollIntoView({ block: 'nearest', behavior: smooth() }); };
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -938,14 +950,14 @@
     if (!EMAIL_RE.test(addr)) { fail('Saisissez une adresse e-mail valide, par exemple nom@laboratoire.fr.', em); return; }
     if (!consent.checked) { fail('Cochez la case pour confirmer votre inscription.', consent); return; }
     er.hidden = true; er.textContent = '';
-    if (subscribers.includes(addr)) { ok.textContent = 'Cette adresse est déjà inscrite.'; ok.hidden = false; return; }
+    if (subscribers.includes(addr)) { ok.textContent = 'Cette adresse est déjà inscrite.'; showOk(ok); return; }
     subscribers.push(addr);
     saveList(SUB_KEY, subscribers);
     renderNewsletter();
     updatePreview();
     ok.textContent = 'Inscription enregistrée pour la démonstration.';
-    ok.hidden = false;
     em.value = ''; consent.checked = false;
+    showOk(ok);
   });
 
   /* ---------- Documentation ---------- */
@@ -997,13 +1009,22 @@
     if (!ok) { const first = panel.querySelector('[aria-invalid="true"]'); if (first) first.focus(); }
     return ok;
   }
+  /* Après un changement d'étape ou l'envoi, sur un petit écran le bouton touché est en bas et le haut du formulaire au-dessus
+     de l'écran : on fait revenir le haut du bloc sous l'en-tête s'il y est caché, ou si l'élément à lire n'est pas entièrement
+     à l'écran, puis on pose le focus. */
+  function jReveal(box, focusEl, checkEl) {
+    const b = box.getBoundingClientRect(); const c = (checkEl || focusEl).getBoundingClientRect();
+    if (b.top < barsBottom() || c.bottom > window.innerHeight) scrollUnderBars(box);
+    focusEl.focus({ preventScroll: true });
+  }
+  const jFirst = () => (jStep === 3 ? $('#j-recap-title') : jf.querySelector('[data-panel="' + jStep + '"] .input'));
   jf.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!jValidate(jStep)) return;
     if (jStep < 3) {
       jShow(jStep + 1);
-      const f = jf.querySelector('[data-panel="' + jStep + '"] .input');
-      if (f) f.focus({ preventScroll: true });
+      /* Étape 3 : le focus va sur « Vérifiez et envoyez », pour relire le récapitulatif avant d'envoyer. */
+      jReveal(jf.querySelector('.steps'), jFirst(), jStep === 3 ? $('#j-recap') : null);
       return;
     }
     /* Envoi : la messagerie du visiteur s'ouvre avec l'e-mail rédigé, adressé au bureau. Dans la page publiée sur claude.ai
@@ -1016,7 +1037,7 @@
     $('#join-copy-ok').hidden = true; $('#join-copy-ok').textContent = ''; $('.join-texte').open = false;
     $('#join-wrap').hidden = true;
     $('#join-done').hidden = false;
-    $('#join-done-title').focus({ preventScroll: true });
+    jReveal($('#join-done'), $('#join-done-title'));
     if (okAdh) openMail(url);
   });
   function joinMail() {
@@ -1043,7 +1064,8 @@
       else fallback();
     } catch (err) { fallback(); }
   });
-  $('#join-prev').addEventListener('click', () => jShow(Math.max(1, jStep - 1)));
+  /* « Retour » : le bouton disparaît à l'étape 1, le focus va donc au premier champ de l'étape affichée. */
+  $('#join-prev').addEventListener('click', () => { jShow(Math.max(1, jStep - 1)); jReveal(jf.querySelector('.steps'), jFirst()); });
   $('#join-restart').addEventListener('click', () => { jf.reset(); $('#join-wrap').hidden = false; $('#join-done').hidden = true; jShow(1); });
 
   /* ---------- Espace adhérent : connexion ---------- */
@@ -1508,21 +1530,30 @@
     return window.pdfjsLib;
   }).catch((err) => { pdfjsReady = null; throw err; }));
   const freePage = (fig) => { const cv = fig.querySelector('canvas'); if (cv) { cv.width = 0; cv.height = 0; } fig.classList.remove('is-drawn'); fig._drawn = false; };
-  function drawPage(fig) {
+  /* Largeur de dessin d'une page : sa largeur à l'écran, en pixels réels (2 au plus par pixel CSS), 1800 au plus. */
+  const pagePx = (fig) => Math.min((fig.clientWidth || 880) * Math.min(window.devicePixelRatio || 1, 2), 1800);
+  /* Page dessinée trop petite pour sa taille actuelle (l'appareil a tourné) */
+  const tooSmall = (fig) => { const cv = fig.querySelector('canvas'); return fig._drawn && fig.clientWidth > 0 && cv && cv.width < pagePx(fig) * 0.9; };
+  /* again : redessiner une page déjà dessinée, dans une nouvelle toile qui remplace l'ancienne une fois prête (pas de page blanche). */
+  function drawPage(fig, again) {
     fig._want = true;
-    if (fig._busy || fig._drawn || !readerPdf) return;
+    if (fig._busy || (fig._drawn && !again) || !readerPdf) return;
     const pdf = readerPdf; fig._busy = true;
     pdf.getPage(+fig.dataset.n).then((pg) => {
       if (pdf !== readerPdf || !fig._want) return null;
       const base = pg.getViewport({ scale: 1 });
       fig.style.aspectRatio = base.width + ' / ' + base.height;
-      const px = Math.min((fig.clientWidth || 880) * Math.min(window.devicePixelRatio || 1, 2), 1800);
-      const vp = pg.getViewport({ scale: px / base.width });
-      const cv = fig.querySelector('canvas');
+      const vp = pg.getViewport({ scale: pagePx(fig) / base.width });
+      const old = fig.querySelector('canvas');
+      const cv = again && fig._drawn ? document.createElement('canvas') : old;
       cv.width = Math.floor(vp.width); cv.height = Math.floor(vp.height);
       fig._task = pg.render({ canvasContext: cv.getContext('2d'), viewport: vp });
-      return fig._task.promise.then(() => { fig._drawn = true; fig.classList.add('is-drawn'); });
-    }).catch(() => { freePage(fig); }).then(() => { fig._busy = false; fig._task = null; if (!fig._want) freePage(fig); });
+      return fig._task.promise.then(() => { if (cv !== old) old.replaceWith(cv); fig._drawn = true; fig.classList.add('is-drawn'); });
+    }).catch(() => { freePage(fig); }).then(() => {
+      fig._busy = false; fig._task = null;
+      if (!fig._want) freePage(fig);
+      else if (pdf === readerPdf && tooSmall(fig)) setTimeout(() => drawPage(fig, true), 0);
+    });
   }
   function hidePage(fig) { fig._want = false; if (fig._task) fig._task.cancel(); else if (!fig._busy) freePage(fig); }
   function openPdf(url, d, pages) {
@@ -1570,8 +1601,9 @@
     if (d.pdf) openPdf(url, d, pages);
     else pages.innerHTML = Array.from({ length: d.pages }, (_, i) =>
       '<figure class="reader-page" data-n="' + (i + 1) + '"><img src="' + esc(d.img(i + 1)) + '" width="' + d.w + '" height="' + d.h + '" alt="Page ' + (i + 1) + ' sur ' + d.pages + '"' + (i > 1 ? ' loading="lazy"' : '') + '></figure>').join('');
-    pages.scrollTop = 0;
     $('#reader').hidden = false;
+    /* Chaque document s'ouvre à sa première page (un défilement fait liseuse cachée serait sans effet). */
+    pages.scrollTop = 0; readerSpot = { top: true }; readerW = pages.clientWidth;
     document.documentElement.style.overflow = 'hidden';
     if (readerIO) readerIO.disconnect();
     if ('IntersectionObserver' in window) {
@@ -1585,6 +1617,8 @@
   }
   function closeReader() {
     if ($('#reader').hidden) return;
+    $('#reader-pages').scrollTop = 0;
+    clearTimeout(redrawTimer); readerSpot = null;
     $('#reader').hidden = true;
     document.documentElement.style.overflow = '';
     if (readerIO) { readerIO.disconnect(); readerIO = null; }
@@ -1602,6 +1636,38 @@
     openReader(a.dataset.doc, a);
   });
   $('#reader-close').addEventListener('click', closeReader);
+  /* En tournant l'appareil, la liseuse garde la page en cours. Pendant la lecture, on retient la page en haut de l'écran et
+     la part déjà lue ; quand la largeur change, on revient au même endroit de cette page. En mode PDF, les pages déjà
+     dessinées devenues trop petites pour leur nouvelle taille sont redessinées, peu après la fin de la rotation. */
+  let readerSpot = null; let readerW = 0; let markRaf = 0; let redrawTimer = 0;
+  function readerMark() {
+    markRaf = 0;
+    const pages = $('#reader-pages');
+    if ($('#reader').hidden || pages.clientWidth !== readerW) return;
+    const figs = pages.querySelectorAll('.reader-page');
+    if (!figs.length || pages.scrollTop < 1) { readerSpot = { top: true }; return; }
+    const y = pages.getBoundingClientRect().top;
+    let lo = 0; let hi = figs.length - 1;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (figs[mid].getBoundingClientRect().bottom <= y) lo = mid + 1; else hi = mid; }
+    const r = figs[lo].getBoundingClientRect();
+    readerSpot = { i: lo, f: (y - r.top) / (r.height || 1) };
+  }
+  $('#reader-pages').addEventListener('scroll', () => { if (!markRaf) markRaf = requestAnimationFrame(readerMark); }, { passive: true });
+  function readerResize() {
+    if ($('#reader').hidden) return;
+    const pages = $('#reader-pages');
+    if (pages.clientWidth === readerW) return;
+    readerW = pages.clientWidth;
+    const s = readerSpot; const fig = s && !s.top ? pages.querySelectorAll('.reader-page')[s.i] : null;
+    if (s && s.top) pages.scrollTop = 0;
+    else if (fig) { const r = fig.getBoundingClientRect(); pages.scrollTop += r.top - pages.getBoundingClientRect().top + s.f * r.height; }
+    if (readerPdf) {
+      clearTimeout(redrawTimer);
+      redrawTimer = setTimeout(() => $$('#reader-pages .reader-page.is-drawn').forEach((f) => { if (tooSmall(f)) drawPage(f, true); }), 300);
+    }
+  }
+  window.addEventListener('resize', readerResize);
+  window.addEventListener('orientationchange', () => { readerResize(); requestAnimationFrame(readerResize); });
   /* Changer de page (lien, bouton Précédent du navigateur) referme la liseuse. */
   window.addEventListener('hashchange', closeReader);
   /* Le focus reste dans la liseuse tant qu'elle est ouverte. */
@@ -1696,8 +1762,12 @@
     const l = label || (PANELS.find((p) => p[0] === panel) || PANELS[0])[1];
     $('#login-intent').textContent = 'Après la connexion, vous arriverez sur «\u00a0' + l + '\u00a0».';
     $('#login-intent').hidden = false;
-    const f = $('#login-form'); const r = f.getBoundingClientRect();
-    if (r.top < 0 || r.bottom > window.innerHeight) f.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+    /* La carte vient à l'écran : centrée si elle tient sous l'en-tête, sinon son haut juste sous l'en-tête, pour que
+       « Connexion » et « Après la connexion, vous arriverez sur … » restent visibles (téléphone à l'horizontale). */
+    const f = $('#login-form'); const r = f.getBoundingClientRect(); const top = barsBottom();
+    const room = window.innerHeight - top;
+    if (r.height > room - 24) { if (Math.abs(r.top - top - 12) > 2) scrollUnderBars(f, 12); }
+    else if (r.top < top || r.bottom > window.innerHeight) window.scrollTo({ top: Math.max(0, window.scrollY + r.top - top - (room - r.height) / 2), behavior: smooth() });
     $('#login-email').focus({ preventScroll: true });
   }
   function applyMember() {
@@ -1900,7 +1970,7 @@
     const c = { prenom: $('#cpt-prenom').value.trim(), nom: $('#cpt-nom').value.trim(), email: addr, statut: 'invite', salt: jeton(), token: jeton(), hash: null };
     comptes.unshift(c); saveComptes(); renderComptes(); showInvitation(c); cptLast = Date.now();
     $('#cpt-form').reset();
-    ok.textContent = 'Compte créé. L’invitation part vers ' + c.email + ' : voir l’aperçu de l’e-mail.'; ok.hidden = false;
+    ok.textContent = 'Compte créé. L’invitation part vers ' + c.email + ' : voir l’aperçu de l’e-mail.'; showOk(ok);
   });
   $('#cpt-list').addEventListener('click', (e) => {
     const b = e.target.closest('[data-cpt]');
@@ -1943,6 +2013,7 @@
       ? 'Démonstration : ce compte est désactivé. Sur le site réel, aucun e-mail ne partirait ; l’adhérent doit écrire au bureau.'
       : 'Démonstration : aucun compte créé dans « Comptes des adhérents » ne correspond à cette adresse. Sur le site réel, aucun e-mail ne partirait.';
     $('#oubli-mail-wrap').hidden = !c; $('#oubli-none').hidden = !!c;
+    showOk($('#oubli-ok'));
   });
   /* La page ouverte depuis l'e-mail : choisir son mot de passe (lien à usage unique) */
   let mdpCompte = null; let mdpReturn = null; let mdpBusy = false;
