@@ -749,6 +749,16 @@
           </dl>
         </li>
         <li>
+          <h3 class="h-block">Compte de l’espace adhérent</h3>
+          <dl class="legal-kv">
+            <div><dt>Données</dt><dd>Nom, prénom, e-mail ; le mot de passe, enregistré seulement sous une forme illisible : personne ne peut le lire, pas même le bureau.</dd></div>
+            <div><dt>Usage</dt><dd>Vous donner accès à l’espace adhérent.</dd></div>
+            <div><dt>Destinataire</dt><dd>Le bureau du SLBC, qui crée et désactive les comptes.</dd></div>
+            <div><dt>Base légale</dt><dd>L’adhésion.</dd></div>
+            <div><dt>Durée</dt><dd>Le temps de l’adhésion ; le compte est désactivé à sa fin. Ensuite : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
+          </dl>
+        </li>
+        <li>
           <h3 class="h-block">Messages au bureau</h3>
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>Nom, e-mail, objet, commission choisie le cas échéant, message.</dd></div>
@@ -826,15 +836,31 @@
         <h2 class="h-block-l">Ce à quoi les adhérents ont accès</h2>
         <ul class="portes" id="acces-invite"></ul>
       </div>
+      <div class="login-col">
       <form class="login-card" id="login-form" novalidate>
         <h2 class="h-tile">Connexion</h2>
         <p class="login-intent" id="login-intent" role="status" hidden></p>
         <div class="field"><label class="field-label" for="login-email">E-mail</label><input class="input" id="login-email" type="email" autocomplete="username" aria-describedby="login-err login-intent" placeholder="nom@laboratoire.fr"><p class="field-error" id="login-err" role="alert" hidden></p></div>
         <div class="field"><label class="field-label" for="login-pass">Mot de passe</label><input class="input" id="login-pass" type="password" autocomplete="current-password"></div>
         <button class="btn btn-primary" type="submit">Se connecter</button>
-        <p class="muted" style="font-size:14px">Démonstration : tout identifiant fonctionne.</p>
+        <button class="link-btn" type="button" id="login-oubli">Mot de passe oublié ?</button>
+        <p class="muted" style="font-size:14px">Démonstration : tout identifiant fonctionne, sauf les comptes créés dans « Publier sur le site », partie « Comptes des adhérents », qui demandent leur mot de passe.</p>
         <p class="login-join">Pas encore adhérent ? <a href="#adherer">Adhérer au SLBC</a></p>
       </form>
+      <form class="login-card" id="oubli-form" novalidate hidden>
+        <h2 class="h-tile" id="oubli-title" tabindex="-1">Mot de passe oublié</h2>
+        <p>Indiquez l’e-mail de votre compte : vous recevrez un lien pour choisir un nouveau mot de passe.</p>
+        <div class="field"><label class="field-label" for="oubli-email">E-mail</label><input class="input" id="oubli-email" type="email" autocomplete="username" placeholder="nom@laboratoire.fr" aria-describedby="oubli-err"><p class="field-error" id="oubli-err" hidden></p></div>
+        <button class="btn btn-primary" type="submit">Recevoir le lien</button>
+        <p class="form-ok" id="oubli-ok" role="status" hidden></p>
+        <div class="oubli-demo" id="oubli-mail-wrap" hidden>
+          <p class="form-note">Démonstration : voici l’e-mail que recevrait l’adhérent. Son bouton ouvre la page où il choisit son mot de passe.</p>
+          <div class="mail-preview" id="oubli-mail"></div>
+        </div>
+        <p class="form-note" id="oubli-none" hidden>Démonstration : aucun compte créé dans « Comptes des adhérents » ne correspond à cette adresse. Sur le site réel, aucun e-mail ne partirait.</p>
+        <button class="link-btn" type="button" id="oubli-back">Retour à la connexion</button>
+      </form>
+      </div>
     </div>
   </section>
   <section class="section-tight" id="member" hidden>
@@ -923,7 +949,7 @@
       </div>
       <div class="ea-panel" id="ea-publier" hidden>
         <div id="admin">
-          <div class="ea-intro"><h2 class="h-block-l">Publier sur le site</h2><p class="muted">Messages des adhérents, communiqués, veille réglementaire, actualités et lettre d’information. Réservé aux membres du bureau habilités ; dans cette démonstration, tout adhérent connecté y accède.</p></div>
+          <div class="ea-intro"><h2 class="h-block-l">Publier sur le site</h2><p class="muted">Messages des adhérents, communiqués, veille réglementaire, actualités, comptes des adhérents et lettre d’information. Réservé aux membres du bureau habilités ; dans cette démonstration, tout adhérent connecté y accède.</p></div>
       <div class="newsletter-admin messages-admin" id="messages-admin">
         <h2 class="h-block-l">Messages des adhérents <span id="msg-count"></span></h2>
         <p class="muted">Messages envoyés par les adhérents depuis « Écrire au bureau » : expérience en commission, suggestions, questions. Démonstration : ils restent dans ce navigateur.</p>
@@ -989,6 +1015,32 @@
           <button class="link-btn" type="button" id="reset-demo" hidden>Effacer les publications et envois de démonstration</button>
         </aside>
       </div>
+      <div class="newsletter-admin" id="comptes-admin">
+        <h2 class="h-block-l" id="cpt-title" tabindex="-1">Comptes des adhérents <span id="cpt-count"></span></h2>
+        <p class="muted">Le bureau crée le compte ; l’adhérent reçoit un e-mail avec un lien pour choisir lui-même son mot de passe. Aucun mot de passe n’est envoyé, et personne d’autre que lui ne le connaît. Démonstration : les comptes restent dans ce navigateur et aucun e-mail n’est envoyé.</p>
+        <div class="nl-grid">
+          <div>
+            <p class="g-title">Créer un compte</p>
+            <form class="group cpt-form" id="cpt-form" novalidate>
+              <div class="field-row">
+                <div class="field"><label class="field-label" for="cpt-prenom">Prénom</label><input class="input" id="cpt-prenom" autocomplete="off" aria-describedby="cpt-prenom-err"><p class="field-error" id="cpt-prenom-err" hidden></p></div>
+                <div class="field"><label class="field-label" for="cpt-nom">Nom</label><input class="input" id="cpt-nom" autocomplete="off" aria-describedby="cpt-nom-err"><p class="field-error" id="cpt-nom-err" hidden></p></div>
+              </div>
+              <div class="field"><label class="field-label" for="cpt-email">E-mail</label><input class="input" id="cpt-email" type="email" autocomplete="off" placeholder="nom@laboratoire.fr" aria-describedby="cpt-email-err"><p class="field-error" id="cpt-email-err" hidden></p></div>
+              <button class="btn btn-primary" type="submit">Créer le compte et envoyer l’invitation</button>
+              <p class="form-ok" id="cpt-ok" role="status" hidden></p>
+            </form>
+            <p class="g-title" style="margin-top:16px">Comptes</p>
+            <div class="group"><ul class="nl-list cpt-list" id="cpt-list"></ul></div>
+          </div>
+          <div>
+            <p class="g-title">Aperçu de l’e-mail envoyé</p>
+            <p class="muted" id="cpt-mail-empty">Créez un compte pour voir l’e-mail d’invitation.</p>
+            <div class="mail-preview" id="cpt-mail" hidden></div>
+            <p class="form-note" id="cpt-mail-note" hidden>Démonstration : aucun e-mail n’est envoyé. Le bouton de l’e-mail ouvre la page que verrait l’adhérent.</p>
+          </div>
+        </div>
+      </div>
       <div class="newsletter-admin" id="lettre">
         <h2 class="h-block-l">Lettre d’information</h2>
         <p class="muted">Les adhérents s’inscrivent depuis leur espace, rubrique « Lettre d’information ». Chaque publication peut leur être envoyée par e-mail. Démonstration : la liste reste dans ce navigateur et aucun e-mail n’est envoyé.</p>
@@ -1017,6 +1069,22 @@
       </div>
     </div>
   </section>
+  <dialog class="mdp-dialog" id="mdp-dialog" aria-labelledby="mdp-title">
+    <p class="mdp-demo">Démonstration : la page que l’adhérent ouvre depuis l’e-mail.</p>
+    <div class="login-card">
+      <h2 class="h-tile" id="mdp-title" tabindex="-1">Créez votre mot de passe</h2>
+      <p class="muted" id="mdp-who"></p>
+      <form id="mdp-form" class="mdp-form" novalidate>
+        <div class="field"><label class="field-label" for="mdp-1">Mot de passe</label><input class="input" id="mdp-1" type="password" autocomplete="new-password" aria-describedby="mdp-rule mdp-1-err"><p class="field-help" id="mdp-rule">Au moins 12 caractères. Une phrase facile à retenir convient bien.</p><p class="field-error" id="mdp-1-err" hidden></p></div>
+        <div class="field"><label class="field-label" for="mdp-2">Confirmez le mot de passe</label><input class="input" id="mdp-2" type="password" autocomplete="new-password" aria-describedby="mdp-2-err"><p class="field-error" id="mdp-2-err" hidden></p></div>
+        <label class="check-line"><input type="checkbox" id="mdp-show"><span>Afficher le mot de passe</span></label>
+        <button class="btn btn-primary" type="submit">Enregistrer mon mot de passe</button>
+        <p class="form-note">Démonstration : n’utilisez pas un vrai mot de passe. Il n’est gardé que dans ce navigateur, et seulement sous une forme illisible.</p>
+      </form>
+      <p id="mdp-msg" hidden></p>
+      <button class="btn btn-quiet" type="button" id="mdp-close">Fermer</button>
+    </div>
+  </dialog>
 </div>
 
 </main>

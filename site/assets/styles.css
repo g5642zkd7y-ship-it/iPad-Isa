@@ -897,3 +897,25 @@ svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
 @keyframes fadeIn{from{opacity:.5}to{opacity:1}}
 @keyframes dropIn{from{opacity:.6;transform:translateY(-12px)}to{opacity:1;transform:none}}
 @keyframes toastIn{from{opacity:.5;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+
+/* Comptes des adhérents et mots de passe (démonstration, 7 novembre 2026) */
+.login-col{display:flex;flex-direction:column;min-width:0}
+.acces-wrap .login-col{align-items:stretch}
+.field-help{font-size:14px;line-height:1.45;color:var(--gris)}
+.oubli-demo{display:flex;flex-direction:column;gap:10px}
+.cpt-form{display:flex;flex-direction:column;gap:14px;padding:18px}
+.cpt-list li{flex-wrap:wrap;padding-block:10px}
+.cpt-who{display:flex;flex-direction:column;flex:1 1 180px;min-width:0}
+.cpt-who strong{font-weight:600;color:var(--encre)}
+.cpt-who span{font-size:14px;color:var(--gris);overflow-wrap:anywhere}
+.cpt-st{flex:0 0 auto;padding:2px 10px;border-radius:999px;background:var(--fond);font-size:14px;font-weight:600;color:var(--texte)}
+.cpt-st-actif{background:var(--vert-clair);color:var(--encre)}
+.cpt-st-desactive{background:#ECEDEA;color:var(--texte)}
+.cpt-actions{display:flex;flex-wrap:wrap;gap:0 16px}
+button.mp-btn{border:0;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+button.mp-btn:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
+.mdp-dialog{width:min(480px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:var(--r-tile);background:#fff;box-shadow:0 20px 60px rgba(46,50,54,.25)}
+.mdp-dialog::backdrop{background:rgba(46,50,54,.5)}
+.mdp-dialog .login-card{max-width:none;box-shadow:none}
+.mdp-demo{margin:0;padding:12px clamp(28px,5vw,48px);background:var(--vert-clair);font-size:14px;font-weight:600;color:var(--encre)}
+.mdp-form{display:flex;flex-direction:column;gap:18px}

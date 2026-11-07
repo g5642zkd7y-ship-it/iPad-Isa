@@ -1047,10 +1047,13 @@
   $('#join-restart').addEventListener('click', () => { jf.reset(); $('#join-wrap').hidden = false; $('#join-done').hidden = true; jShow(1); });
 
   /* ---------- Espace adhérent : connexion ---------- */
-  $('#login-form').addEventListener('submit', (e) => {
+  $('#login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const em = $('#login-email'); const er = $('#login-err');
     if (!em.value.trim()) { er.textContent = 'Saisissez votre e-mail.'; er.hidden = false; em.setAttribute('aria-invalid', 'true'); em.focus(); return; }
+    /* Démonstration : les comptes créés dans « Comptes des adhérents » demandent leur mot de passe ; les autres identifiants restent acceptés. */
+    const refus = await checkCompte(em.value.trim(), $('#login-pass').value);
+    if (refus) { er.textContent = refus; er.hidden = false; $('#login-pass').value = ''; $('#login-pass').focus(); return; }
     er.hidden = true; er.textContent = ''; em.removeAttribute('aria-invalid');
     setMember(em.value.trim());
     $('#login-pass').value = '';
@@ -1644,7 +1647,7 @@
     { t: 'Une suggestion, une idée, une question', d: 'Vous avez une suggestion à faire, une idée, une question ? Contactez-nous.', panel: 'ecrire', sujet: 'suggestion', cta: 'Nous écrire' },
     { t: 'La lettre d’information', d: 'La veille et les nouvelles publications du SLBC, par e‑mail.', panel: 'lettre', cta: 'M’abonner' }
   ];
-  const PORTE_BUREAU = { t: 'Publier sur le site', d: 'Outils du bureau : messages des adhérents, communiqués, veille, actualités, lettre d’information.', panel: 'publier' };
+  const PORTE_BUREAU = { t: 'Publier sur le site', d: 'Outils du bureau : messages des adhérents, communiqués, veille, actualités, comptes des adhérents, lettre d’information.', panel: 'publier' };
   /* Côté bureau, l'objet est dit de façon neutre. */
   const SUJETS_BUREAU = { commission: 'Expérience en commission', suggestion: 'Suggestion ou idée', question: 'Question' };
   const SUJETS = { commission: 'Partager mon expérience dans une commission', suggestion: 'Une suggestion ou une idée', question: 'Une question' };
@@ -1805,8 +1808,177 @@
     $$('#login-form [aria-invalid], #ecrire-form [aria-invalid], #abonnement [aria-invalid], #pub-form [aria-invalid], #nl-add-form [aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
     ['sub-email', 'sub-consent', 'f-title', 'f-url'].forEach((id) => document.getElementById(id).removeAttribute('aria-describedby'));
     updatePreview();
+    $('#oubli-form').reset(); $('#oubli-form').hidden = true; $('#login-form').hidden = false;
+    ['oubli-err', 'oubli-ok', 'cpt-ok', 'cpt-prenom-err', 'cpt-nom-err', 'cpt-email-err'].forEach(clear);
+    $('#oubli-mail-wrap').hidden = true; $('#oubli-none').hidden = true;
+    $('#cpt-form').reset(); $$('#cpt-form [aria-invalid], #oubli-form [aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
   }
   renderMessages();
+
+  /* ---------- Espace adhérent : comptes des adhérents et mots de passe (démonstration, 7 novembre 2026, demande d'Isabelle Eimer) ----------
+     Le bureau crée le compte ; le site envoie à l'adhérent un lien pour choisir lui-même son mot de passe, qui n'est jamais envoyé par e-mail.
+     Le lien ne sert qu'une fois ; « Mot de passe oublié ? » en envoie un nouveau ; le bureau désactive le compte à la fin de l'adhésion.
+     Démonstration : comptes gardés dans ce navigateur (clé slbc-maquette-comptes), mot de passe gardé seulement sous forme d'empreinte
+     (SHA-256 salée), aucun e-mail envoyé : un aperçu montre l'e-mail, et son bouton ouvre la page où l'adhérent choisit son mot de passe. */
+  const CPT_KEY = 'slbc-maquette-comptes';
+  const MDP_MIN = 12;
+  const CPT_ST = { invite: 'Invitation envoyée', actif: 'Actif', desactive: 'Désactivé' };
+  let comptes = loadList(CPT_KEY).filter((x) => x && str(x.email) && EMAIL_RE.test(x.email) && str(x.prenom) && str(x.nom) && str(x.salt) &&
+    Object.prototype.hasOwnProperty.call(CPT_ST, x.statut) && (x.hash === undefined || x.hash === null || str(x.hash)) && (x.token === undefined || x.token === null || str(x.token)));
+  const saveComptes = () => saveList(CPT_KEY, comptes);
+  const jeton = () => {
+    const a = new Uint8Array(16);
+    try { crypto.getRandomValues(a); } catch (err) { for (let i = 0; i < 16; i++) a[i] = Math.floor(Math.random() * 256); }
+    return Array.from(a, (b) => b.toString(16).padStart(2, '0')).join('');
+  };
+  async function empreinte(salt, pass) {
+    const data = new TextEncoder().encode(salt + ':' + pass);
+    try {
+      if (window.crypto && crypto.subtle) { const d = await crypto.subtle.digest('SHA-256', data); return Array.from(new Uint8Array(d), (b) => b.toString(16).padStart(2, '0')).join(''); }
+    } catch (err) { /* repli ci-dessous */ }
+    let x = 2166136261; data.forEach((b) => { x ^= b; x = Math.imul(x, 16777619) >>> 0; });
+    return 'f' + x.toString(16);
+  }
+  async function checkCompte(email, pass) {
+    const c = comptes.find((x) => x.email === email.toLowerCase());
+    if (!c) return '';
+    if (c.statut === 'desactive') return 'Ce compte est désactivé. Écrivez au bureau pour le réactiver.';
+    if (!c.hash) return 'Ce compte n’a pas encore de mot de passe : ouvrez le lien reçu par e-mail, ou utilisez « Mot de passe oublié ? ».';
+    return (await empreinte(c.salt, pass)) === c.hash ? '' : 'E-mail ou mot de passe incorrect.';
+  }
+  /* L'e-mail envoyé à l'adhérent (aperçu) : invitation ou nouveau mot de passe, avec le lien personnel. */
+  const logoMini = (id) => '<svg viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="clip-' + id + '"><circle cx="44" cy="44" r="36"/></clipPath></defs><circle cx="44" cy="44" r="36" fill="#5E6266"/><circle cx="76" cy="76" r="36" fill="#A3BE3C"/><circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-' + id + ')"/></svg>';
+  function mailCompte(c, kind, id) {
+    const inv = kind === 'invitation';
+    const paras = inv
+      ? ['Bonjour ' + c.prenom + ',', 'Le bureau du SLBC vous a ouvert un compte sur l’espace adhérent du site : veille réglementaire, lettre d’information, messages au bureau.', 'Votre identifiant est votre adresse e-mail. Choisissez votre mot de passe avec le bouton ci-dessous.']
+      : ['Bonjour ' + c.prenom + ',', 'Une demande de nouveau mot de passe a été faite pour votre compte de l’espace adhérent du SLBC.', 'Si elle ne vient pas de vous, ignorez cet e-mail : votre mot de passe actuel reste valable.'];
+    return '<div class="mp-meta"><span><strong>De :</strong> SLBC, espace adhérent</span><span><strong>À :</strong> ' + esc(c.email) + '</span><span><strong>Objet :</strong> ' +
+      esc(inv ? 'Créez votre mot de passe pour l’espace adhérent du SLBC' : 'Choisissez un nouveau mot de passe') + '</span></div>' +
+      '<div class="mp-head">' + logoMini(id) + '<span class="mp-brand">SLBC</span></div>' +
+      '<div class="mp-body"><p class="mp-title">' + (inv ? 'Bienvenue dans l’espace adhérent' : 'Nouveau mot de passe') + '</p>' + paras.map((p) => '<p class="mp-text">' + esc(p) + '</p>').join('') +
+      '<button class="mp-btn" type="button" data-mdp-token="' + esc(c.token) + '">' + (inv ? 'Créer mon mot de passe' : 'Choisir un nouveau mot de passe') + '</button>' +
+      '<p class="mp-note">Ce lien est personnel et ne sert qu’une fois. S’il ne fonctionne plus, utilisez « Mot de passe oublié ? » sur la page de connexion.</p></div>' +
+      '<p class="mp-foot">SLBC, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail parce qu’un compte de l’espace adhérent du SLBC est à votre nom.</p>';
+  }
+  function showInvitation(c) {
+    $('#cpt-mail').innerHTML = mailCompte(c, 'invitation', 'cpt'); $('#cpt-mail').hidden = false;
+    $('#cpt-mail-empty').hidden = true; $('#cpt-mail-note').hidden = false;
+  }
+  function renderComptes() {
+    $('#cpt-count').textContent = '(' + comptes.length + ')';
+    $('#cpt-list').innerHTML = comptes.length ? comptes.map((c) => {
+      const qui = esc(c.prenom + ' ' + c.nom); const em = esc(c.email);
+      const b = (act, label, aria) => '<button class="link-btn" type="button" data-cpt="' + act + '" data-email="' + em + '" aria-label="' + aria + ' ' + qui + '">' + label + '</button>';
+      return '<li><span class="cpt-who"><strong>' + qui + '</strong><span>' + em + '</span></span><span class="cpt-st cpt-st-' + c.statut + '">' + CPT_ST[c.statut] + '</span><span class="cpt-actions">' +
+        (c.statut === 'invite' ? b('renvoyer', 'Renvoyer l’invitation', 'Renvoyer l’invitation à') : '') +
+        (c.statut === 'desactive' ? b('reactiver', 'Réactiver', 'Réactiver le compte de') : b('desactiver', 'Désactiver', 'Désactiver le compte de')) + '</span></li>';
+    }).join('') : '<li class="nl-empty">Aucun compte pour l’instant.</li>';
+  }
+  $('#cpt-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const ok = $('#cpt-ok'); ok.hidden = true; ok.textContent = '';
+    const addr = $('#cpt-email').value.trim().toLowerCase();
+    const fields = [['cpt-prenom', (v) => (v ? '' : 'Indiquez le prénom.')], ['cpt-nom', (v) => (v ? '' : 'Indiquez le nom.')],
+      ['cpt-email', (v) => (!EMAIL_RE.test(v) ? 'Saisissez une adresse e-mail valide, par exemple nom@laboratoire.fr.' : (comptes.some((x) => x.email === v.toLowerCase()) ? 'Un compte existe déjà pour cette adresse.' : ''))]];
+    let first = null;
+    fields.forEach(([id, check]) => {
+      const el = $('#' + id); const err = $('#' + id + '-err'); const msg = check(el.value.trim());
+      err.textContent = msg; err.hidden = !msg;
+      if (msg) { el.setAttribute('aria-invalid', 'true'); if (!first) first = el; } else el.removeAttribute('aria-invalid');
+    });
+    if (first) { first.focus(); return; }
+    const c = { prenom: $('#cpt-prenom').value.trim(), nom: $('#cpt-nom').value.trim(), email: addr, statut: 'invite', salt: jeton(), token: jeton(), hash: null };
+    comptes.unshift(c); saveComptes(); renderComptes(); showInvitation(c);
+    $('#cpt-form').reset();
+    ok.textContent = 'Compte créé. L’invitation part vers ' + c.email + ' : voir l’aperçu de l’e-mail.'; ok.hidden = false;
+  });
+  $('#cpt-list').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-cpt]');
+    if (!b) return;
+    const c = comptes.find((x) => x.email === b.dataset.email);
+    if (!c) return;
+    const act = b.dataset.cpt;
+    if (act === 'renvoyer') { c.token = jeton(); showInvitation(c); showToast('Invitation renvoyée à ' + c.email + ' (démonstration).', null, null); }
+    if (act === 'desactiver') { c.statut = 'desactive'; c.token = null; showToast('Compte désactivé : ' + c.email + ' ne peut plus se connecter.', null, null); }
+    if (act === 'reactiver') {
+      c.statut = c.hash ? 'actif' : 'invite';
+      if (!c.hash) { c.token = jeton(); showInvitation(c); }
+      showToast('Compte réactivé : ' + c.email + '.', null, null);
+    }
+    saveComptes(); renderComptes();
+    const again = $$('#cpt-list [data-cpt]').find((x) => x.dataset.email === c.email);
+    (again || $('#cpt-title')).focus();
+  });
+  /* « Mot de passe oublié ? » : à la place de la carte de connexion */
+  function showOubli(on) {
+    $('#login-form').hidden = on; $('#oubli-form').hidden = !on;
+    if (on) { $('#oubli-ok').hidden = true; $('#oubli-mail-wrap').hidden = true; $('#oubli-none').hidden = true; $('#oubli-title').focus(); }
+    else $('#login-email').focus();
+  }
+  $('#login-oubli').addEventListener('click', () => { $('#oubli-email').value = $('#login-email').value.trim(); showOubli(true); });
+  $('#oubli-back').addEventListener('click', () => showOubli(false));
+  $('#oubli-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const em = $('#oubli-email'); const er = $('#oubli-err'); const addr = em.value.trim().toLowerCase();
+    if (!EMAIL_RE.test(addr)) { er.textContent = 'Saisissez une adresse e-mail valide, par exemple nom@laboratoire.fr.'; er.hidden = false; em.setAttribute('aria-invalid', 'true'); em.focus(); return; }
+    er.hidden = true; er.textContent = ''; em.removeAttribute('aria-invalid');
+    /* Même réponse que le compte existe ou non : on ne dit pas à un inconnu quelles adresses ont un compte. */
+    $('#oubli-ok').textContent = 'Si cette adresse correspond à un compte, un e-mail vient de lui être envoyé avec un lien pour choisir un nouveau mot de passe.';
+    $('#oubli-ok').hidden = false;
+    const c = comptes.find((x) => x.email === addr && x.statut !== 'desactive');
+    if (c) { c.token = jeton(); saveComptes(); renderComptes(); $('#oubli-mail').innerHTML = mailCompte(c, 'oubli', 'oubli'); }
+    $('#oubli-mail-wrap').hidden = !c; $('#oubli-none').hidden = !!c;
+  });
+  /* La page ouverte depuis l'e-mail : choisir son mot de passe (lien à usage unique) */
+  let mdpCompte = null; let mdpReturn = null;
+  const mdpDialog = $('#mdp-dialog');
+  function mdpState(kind, c) {
+    $('#mdp-form').hidden = kind !== 'form'; $('#mdp-msg').hidden = kind === 'form';
+    if (kind === 'form') {
+      $('#mdp-title').textContent = c.hash ? 'Choisissez un nouveau mot de passe' : 'Créez votre mot de passe';
+      $('#mdp-who').textContent = 'Compte : ' + c.email; $('#mdp-who').hidden = false;
+    } else if (kind === 'invalide') {
+      $('#mdp-title').textContent = 'Ce lien n’est plus valable'; $('#mdp-who').hidden = true;
+      $('#mdp-msg').textContent = 'Il a déjà servi, ou un lien plus récent l’a remplacé. Demandez-en un nouveau avec « Mot de passe oublié ? » sur la page de connexion.';
+    } else {
+      $('#mdp-title').textContent = 'Mot de passe enregistré'; $('#mdp-who').hidden = true;
+      $('#mdp-msg').textContent = 'Vous pouvez maintenant vous connecter à l’espace adhérent avec ' + c.email + ' et ce mot de passe.';
+    }
+  }
+  function ouvrirMdp(token, from) {
+    const c = comptes.find((x) => x.token && x.token === token);
+    mdpCompte = c || null; mdpReturn = from || null;
+    $('#mdp-form').reset(); $('#mdp-1').type = 'password'; $('#mdp-2').type = 'password';
+    ['mdp-1', 'mdp-2'].forEach((id) => { $('#' + id).removeAttribute('aria-invalid'); $('#' + id + '-err').hidden = true; $('#' + id + '-err').textContent = ''; });
+    mdpState(c ? 'form' : 'invalide', c);
+    if (typeof mdpDialog.showModal === 'function') { if (!mdpDialog.open) mdpDialog.showModal(); } else mdpDialog.setAttribute('open', '');
+    if (c) $('#mdp-1').focus(); else $('#mdp-title').focus();
+  }
+  document.addEventListener('click', (e) => { const b = e.target.closest('[data-mdp-token]'); if (b) ouvrirMdp(b.dataset.mdpToken, b); });
+  $('#mdp-show').addEventListener('change', (e) => { const t = e.target.checked ? 'text' : 'password'; $('#mdp-1').type = t; $('#mdp-2').type = t; });
+  $('#mdp-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const p1 = $('#mdp-1'); const p2 = $('#mdp-2');
+    [p1, p2].forEach((el) => { el.removeAttribute('aria-invalid'); $('#' + el.id + '-err').hidden = true; $('#' + el.id + '-err').textContent = ''; });
+    const fail = (el, msg) => { const err = $('#' + el.id + '-err'); err.textContent = msg; err.hidden = false; el.setAttribute('aria-invalid', 'true'); el.focus(); };
+    if (p1.value.length < MDP_MIN) { fail(p1, 'Choisissez au moins ' + MDP_MIN + ' caractères.'); return; }
+    if (p1.value !== p2.value) { fail(p2, 'Les deux mots de passe ne sont pas identiques.'); return; }
+    const c = mdpCompte;
+    if (!c || !c.token) { mdpState('invalide'); $('#mdp-title').focus(); return; }
+    c.hash = await empreinte(c.salt, p1.value); c.statut = 'actif'; c.token = null;
+    saveComptes(); renderComptes();
+    $('#mdp-form').reset(); p1.type = 'password'; p2.type = 'password';
+    mdpState('fini', c); $('#mdp-title').focus();
+    if (!member) { $('#login-form').hidden = false; $('#oubli-form').hidden = true; $('#login-email').value = c.email; $('#login-pass').value = ''; }
+  });
+  $('#mdp-close').addEventListener('click', () => { if (typeof mdpDialog.close === 'function') mdpDialog.close(); else mdpDialog.removeAttribute('open'); });
+  mdpDialog.addEventListener('close', () => {
+    const back = mdpReturn && document.body.contains(mdpReturn) && mdpReturn.getClientRects().length ? mdpReturn : (member ? $('#cpt-title') : $('#login-pass'));
+    if (back) back.focus({ preventScroll: false });
+    mdpCompte = null; mdpReturn = null;
+  });
+  renderComptes();
 
   /* ---------- Démarrage ---------- */
   $('#f-date').value = todayISO();
