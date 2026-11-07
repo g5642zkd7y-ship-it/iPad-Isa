@@ -1,0 +1,327 @@
+<title>Mise en service du site SLBC</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Nunito:wght@700;900&display=swap">
+<style>
+/* Charte du nouveau site SLBC (thème clair seulement, pour garder le logo dans ses couleurs validées) :
+   une colonne de lecture, bandeau blanc avec logo et mascotte, parties numérotées par les pastilles du site, encadrés vert clair pour les décisions. */
+:root{
+  --anis:#A3BE3C; --vert:#5F7A2B; --vert-clair:#D6E4A6; --gris:#5E6266; --texte:#3F4347; --encre:#2E3236;
+  --fond:#F7F8F4; --blanc:#FFFFFF; --filet:#E3E6DD; --filet-fort:#CBD0C2;
+  --font:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-marque:"Nunito","Figtree",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--texte);font:400 17px/1.6 var(--font);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.page{max-width:880px;margin:0 auto;padding-block:clamp(16px,4vw,40px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.feuille{background:var(--blanc);border-radius:28px;box-shadow:0 1px 2px rgba(46,50,54,.06),0 12px 40px rgba(46,50,54,.06);overflow:hidden}
+.bloc{padding:clamp(24px,5vw,56px)}
+h1,h2,h3{color:var(--encre);margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--vert);text-underline-offset:3px}
+strong{color:var(--encre);font-weight:600}
+
+/* En-tête : logo du SLBC */
+.entete{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid var(--filet)}
+.logo{display:flex;align-items:center;gap:12px;color:var(--texte);text-decoration:none}
+.logo svg{width:52px;height:52px;flex:none}
+.logo-nom{font-family:var(--font-marque);font-weight:900;font-size:34px;line-height:1;letter-spacing:.01em;color:var(--texte)}
+.logo-sig{display:flex;flex-direction:column;font-family:var(--font-marque);font-weight:700;font-size:13px;line-height:1.2;color:var(--texte)}
+.logo-sig span:last-child{color:var(--vert)}
+.surtitre{font-size:15px;font-weight:600;color:var(--gris);letter-spacing:.01em}
+
+/* Titre et mascotte */
+.titre{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(20px,4vw,48px);align-items:center;padding-top:36px}
+.titre h1{font-size:clamp(32px,5.2vw,50px);line-height:1.06;font-weight:800;letter-spacing:-.025em}
+.chapo{margin-top:20px;font-size:clamp(18px,2.2vw,21px);line-height:1.5;color:var(--texte);max-width:36em}
+.mascotte{height:clamp(150px,22vw,230px);width:auto;display:block}
+.date{margin-top:18px;font-size:15px;color:var(--gris)}
+
+/* Séparateur du site : deux traits vert anis, les deux ronds au milieu */
+.sep{display:flex;align-items:center;gap:18px;margin:8px 0 0}
+.sep::before,.sep::after{content:"";flex:1;height:2px;background:var(--anis);border-radius:2px}
+.sep svg{width:34px;height:34px;flex:none}
+
+/* Sommaire */
+.sommaire{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(5,auto);grid-auto-flow:column;gap:6px 28px;margin:0;padding:0;list-style:none}
+.sommaire li{display:flex;gap:10px;align-items:baseline;font-size:16px}
+.sommaire a{color:var(--encre);text-decoration:none;font-weight:500}
+.sommaire a:hover{text-decoration:underline}
+.sommaire .n{flex:none;min-width:1.6em;font-weight:700;color:var(--vert);font-variant-numeric:tabular-nums}
+
+/* Parties */
+.partie{display:flex;flex-direction:column;gap:18px;padding-top:44px;margin-top:44px;border-top:1px solid var(--filet);scroll-margin-top:16px}
+.partie:first-of-type{border-top:0;margin-top:0}
+.partie-tete{display:flex;align-items:center;gap:16px}
+.pastille{width:52px;height:52px;flex:none}
+.partie h2{font-size:clamp(23px,3vw,28px);line-height:1.2;font-weight:800;letter-spacing:-.015em}
+.partie > p,.partie li{max-width:42em}
+ul,ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
+li::marker{color:var(--vert);font-weight:700}
+
+/* Tableaux à filets fins */
+.tableau{overflow-x:auto;border-radius:16px;box-shadow:0 0 0 1px var(--filet)}
+table{width:100%;border-collapse:collapse;font-size:15.5px;line-height:1.5}
+th{background:var(--encre);color:var(--blanc);text-align:left;font-weight:600;padding:12px 16px;font-size:14.5px;letter-spacing:.01em}
+td{padding:12px 16px;border-top:1px solid var(--filet);vertical-align:top}
+tbody tr:nth-child(even) td{background:var(--fond)}
+td:first-child{font-weight:600;color:var(--encre)}
+.demo{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:var(--vert-clair);color:var(--encre);font-size:12.5px;font-weight:600;vertical-align:1px}
+
+/* Qui fait quoi */
+.qui{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13.5px;font-weight:700;white-space:nowrap}
+.qui-bureau{background:var(--vert-clair);color:var(--encre)}
+.qui-kstudio{background:var(--encre);color:var(--blanc)}
+.qui-juriste{background:var(--anis);color:var(--encre)}
+
+/* Encadrés */
+.decider{display:flex;flex-direction:column;gap:6px;padding:18px 22px;border-radius:18px;background:var(--vert-clair);color:var(--encre)}
+.decider .etiquette{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--vert)}
+.important{display:flex;flex-direction:column;gap:6px;padding:18px 22px;border-radius:18px;background:var(--encre);color:var(--blanc)}
+.important .etiquette{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--vert-clair)}
+.important strong{color:var(--blanc)}
+.demo-note{padding:14px 20px;border-radius:16px;background:var(--fond);box-shadow:inset 0 0 0 1px var(--filet);font-size:15.5px}
+.etapes{counter-reset:e;list-style:none;padding:0;gap:10px}
+.etapes li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start;counter-increment:e}
+.etapes li::before{content:counter(e);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--blanc);box-shadow:inset 0 0 0 2px var(--encre),3px 3px 0 0 var(--anis);font-weight:800;font-size:15px;color:var(--encre);margin-top:-2px}
+
+/* Parcours d'un compte */
+.schema{overflow-x:auto;padding:18px 8px;border-radius:18px;background:var(--fond)}
+.schema svg{display:block;width:100%;min-width:560px;height:auto}
+
+/* Prochaines étapes */
+.taches{list-style:none;padding:0;gap:0;border-radius:16px;box-shadow:0 0 0 1px var(--filet);overflow:hidden}
+.taches li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:14px;align-items:start;padding:14px 18px;border-top:1px solid var(--filet);max-width:none}
+.taches li:first-child{border-top:0}
+.taches .case{width:22px;height:22px;border-radius:6px;box-shadow:inset 0 0 0 2px var(--gris);margin-top:2px}
+.taches .qui{margin-right:8px}
+
+/* Pied */
+.pied{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding:22px clamp(24px,5vw,56px);background:var(--encre);color:#E6E9DF;font-size:14.5px}
+.pied strong{color:var(--blanc)}
+
+@media (max-width:640px){
+  .titre{grid-template-columns:minmax(0,1fr)}
+  .titre .mascotte{justify-self:center;order:-1}
+  .sommaire{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-auto-flow:row}
+  .pastille{width:44px;height:44px}
+}
+a:focus-visible{outline:3px solid var(--vert);outline-offset:3px;border-radius:4px}
+@media print{
+  @page{size:A4;margin:14mm 14mm 16mm}
+  body{background:#fff;font-size:12pt}
+  .page{max-width:none;padding:0}
+  .feuille{box-shadow:none;border-radius:0}
+  .bloc{padding:0}
+  .partie{break-inside:auto}
+  .partie-tete,.decider,.important,.schema,tr,.taches li{break-inside:avoid}
+  .partie-tete{break-after:avoid}
+  .pied{margin-top:28px;border-radius:12px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  th,.decider,.important,.qui,.demo,.etapes li::before,tbody tr:nth-child(even) td,.schema,.demo-note{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .schema svg{min-width:0}
+}
+</style>
+
+<div class="page">
+<article class="feuille">
+<div class="bloc">
+
+<header class="entete">
+  <div class="logo" aria-label="SLBC, Syndicat des Laboratoires de Biologie Clinique">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="clip-logo"><circle cx="44" cy="44" r="36"/></clipPath></defs><circle cx="44" cy="44" r="36" fill="#5E6266"/><circle cx="76" cy="76" r="36" fill="#A3BE3C"/><circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-logo)"/></svg>
+    <span class="logo-nom">SLBC</span>
+    <span class="logo-sig"><span>Syndicat des Laboratoires</span><span>de Biologie Clinique</span></span>
+  </div>
+  <p class="surtitre">Note au bureau</p>
+</header>
+
+<div class="titre">
+  <div>
+    <h1>Ce qui manque pour mettre le nouveau site en service</h1>
+    <p class="chapo">La maquette montre tout le site, mais elle ne fait encore rien de réel : pas de vrais comptes, pas d’e-mails envoyés par le site, et ce qu’on y publie reste dans le navigateur de la personne qui l’a fait. Voici ce qu’il faut mettre en place pour ouvrir le site, et qui doit le faire.</p>
+    <p class="date">Note de travail du 7 novembre 2026, à valider par le bureau.</p>
+  </div>
+  {{MASCOTTE}}
+</div>
+</div>
+
+<div class="bloc" style="padding-top:0">
+<div class="sep" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><clipPath id="clip-sep"><circle cx="44" cy="44" r="36"/></clipPath></defs><circle cx="44" cy="44" r="36" fill="#5E6266"/><circle cx="76" cy="76" r="36" fill="#A3BE3C"/><circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-sep)"/></svg></div>
+
+<nav aria-label="Sommaire" style="margin-top:32px">
+  <ol class="sommaire">
+    <li><span class="n">1</span><a href="#maquette">Où en est la maquette</a></li>
+    <li><span class="n">2</span><a href="#hebergement">Hébergement et mise en ligne</a></li>
+    <li><span class="n">3</span><a href="#comptes">Comptes et mots de passe</a></li>
+    <li><span class="n">4</span><a href="#adhesion">Adhésion et messages au bureau</a></li>
+    <li><span class="n">5</span><a href="#publication">Publication</a></li>
+    <li><span class="n">6</span><a href="#veille">Veille réglementaire</a></li>
+    <li><span class="n">7</span><a href="#lettre">Lettre d’information</a></li>
+    <li><span class="n">8</span><a href="#legal">Obligations légales</a></li>
+    <li><span class="n">9</span><a href="#contenus">Contenus à valider</a></li>
+    <li><span class="n">10</span><a href="#etapes">Prochaines étapes</a></li>
+  </ol>
+</nav>
+
+<section class="partie" id="maquette" style="border-top:0;margin-top:36px">
+  <div class="partie-tete">{{P1}}<h2>Où en est la maquette</h2></div>
+  <p>Les pages, les textes et les documents sont prêts à être repris. Les fonctions sont des démonstrations, à remplacer par de vraies fonctions sur le site final.</p>
+  <div class="tableau"><table>
+    <thead><tr><th scope="col">Fonction</th><th scope="col">Dans la maquette aujourd’hui</th><th scope="col">Sur le site réel</th></tr></thead>
+    <tbody>
+      <tr><td>Pages et documents (syndicat, presse, actualités, documentation)</td><td>Rédigés ; les documents se lisent dans la liseuse intégrée</td><td>À reprendre dans l’outil de gestion du site</td></tr>
+      <tr><td>Connexion à l’espace adhérent</td><td>Tout identifiant fonctionne ; comptes et mots de passe montrés dans « Publier sur le site »<span class="demo">démonstration</span></td><td>Un compte par adhérent, créé par le bureau</td></tr>
+      <tr><td>Demande d’adhésion</td><td>Part par la messagerie du visiteur vers bureau@slbc.fr</td><td>Envoyée directement par le site</td></tr>
+      <tr><td>« Écrire au bureau » (commissions, suggestions, questions)</td><td>Message gardé dans le navigateur<span class="demo">démonstration</span></td><td>Envoyé directement au bureau</td></tr>
+      <tr><td>Publier un communiqué, une veille, une actualité</td><td>Gardé dans le navigateur, visible seulement sur cet appareil<span class="demo">démonstration</span></td><td>Outil de publication du site, réservé au bureau</td></tr>
+      <tr><td>Lettre d’information</td><td>Inscriptions et envois simulés<span class="demo">démonstration</span></td><td>Service d’envoi réel</td></tr>
+      <tr><td>Veille réglementaire</td><td>Une synthèse d’exemple, celle du 4 novembre 2026</td><td>Mise à jour chaque lundi</td></tr>
+      <tr><td>Informations légales</td><td>Textes proposés, plusieurs points « à compléter »</td><td>Complétées et relues par un juriste</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="partie" id="hebergement">
+  <div class="partie-tete">{{P2}}<h2>Hébergement, outil de gestion et mise en ligne</h2></div>
+  <p>Le site actuel, slbc.fr, est un site WordPress réalisé par l’agence Kstudio. Le plus simple est de garder WordPress et d’y reprendre la maquette.</p>
+  <ul>
+    <li><strong>Reprise de la maquette</strong> : Kstudio en fait un thème WordPress (mise en page, couleurs, mascottes, animations). Communiqués, actualités, textes de veille et documents deviennent des contenus que le bureau remplit dans WordPress, sans toucher au code.</li>
+    <li><strong>Hébergeur</strong> : son nom, son adresse et son téléphone sont à fournir pour les mentions légales.</li>
+    <li><strong>Sécurité et entretien</strong> : connexion chiffrée (https), mises à jour régulières de WordPress et de ses extensions, sauvegardes. À confier par écrit à Kstudio ou à l’hébergeur.</li>
+    <li><strong>Documents PDF</strong> : sur le site réel, ils s’ouvrent directement. La liseuse intégrée a été ajoutée parce que claude.ai bloquait l’ouverture des PDF ; on peut la garder ou non.</li>
+    <li><strong>Contenus de l’ancien site</strong> : déjà recopiés dans la maquette, en PDF (actualités, statuts, comptes, textes de la documentation professionnelle). À la mise en ligne, les anciennes adresses doivent renvoyer vers les nouvelles pages.</li>
+  </ul>
+</section>
+
+<section class="partie" id="comptes">
+  <div class="partie-tete">{{P3}}<h2>Comptes des adhérents et mots de passe</h2></div>
+  <p>Un mot de passe ne s’envoie jamais par e-mail : le site envoie à l’adhérent un lien pour qu’il choisisse lui-même le sien. Personne d’autre ne le connaît, pas même le bureau.</p>
+  <figure class="schema" style="margin:0">
+    {{SCHEMA}}
+  </figure>
+  <ol class="etapes">
+    <li><span>Le bureau crée le compte : nom, prénom, e-mail. Pour démarrer, la liste des adhérents à jour peut être importée en une fois.</span></li>
+    <li><span>Le site envoie à l’adhérent un e-mail « Créez votre mot de passe », avec un lien personnel, utilisable une seule fois et pendant une durée limitée.</span></li>
+    <li><span>L’adhérent choisit son mot de passe ; son compte devient actif.</span></li>
+    <li><span>Mot de passe oublié : un lien sur la carte de connexion lui envoie un nouvel e-mail du même type.</span></li>
+    <li><span>Fin d’adhésion : le bureau désactive le compte, et le réactive au renouvellement.</span></li>
+  </ol>
+  <p><strong>Dans WordPress</strong>, la création de comptes, l’e-mail qui invite à choisir son mot de passe et « Mot de passe oublié » existent déjà. Kstudio les adapte : e-mails aux couleurs du SLBC, un rôle « adhérent » qui ouvre l’espace adhérent, un rôle « bureau » qui peut publier. L’import d’une liste se fait avec une extension.</p>
+  <div class="decider"><span class="etiquette">À décider par le bureau</span><p>Qui crée et désactive les comptes ; qui a le rôle « bureau » ; la longueur minimale des mots de passe (la démonstration demande 12 caractères) ; la durée de validité du lien.</p></div>
+  <p class="demo-note"><strong>À essayer dans la maquette</strong> : rubrique « Publier sur le site », partie « Comptes des adhérents » (créer un compte, voir l’e-mail d’invitation, choisir le mot de passe, se connecter), et « Mot de passe oublié ? » sur la carte de connexion.</p>
+</section>
+
+<section class="partie" id="adhesion">
+  <div class="partie-tete">{{P4}}<h2>Demande d’adhésion et messages au bureau</h2></div>
+  <p>Sur le site réel, le formulaire envoie lui-même la demande à bureau@slbc.fr : le visiteur clique sur « Envoyer » et c’est parti. Dans la maquette, faute de serveur, la demande passe par la messagerie du visiteur.</p>
+  <ul>
+    <li><strong>Formulaire</strong> : une extension de formulaire WordPress courante, réglée pour envoyer chaque demande à bureau@slbc.fr.</li>
+    <li><strong>Envoi fiable</strong> : les e-mails partent par la messagerie du domaine slbc.fr, avec les réglages d’authentification du domaine (SPF, DKIM), pour ne pas arriver dans les indésirables.</li>
+    <li><strong>Protection contre les robots</strong> et <strong>accusé de réception</strong> envoyé au demandeur.</li>
+    <li><strong>« Écrire au bureau »</strong> (commissions, suggestions, questions) : même fonctionnement, réservé aux adhérents connectés.</li>
+  </ul>
+  <div class="important"><span class="etiquette">Adresses à créer</span><p><strong>contact@slbc.fr</strong> et <strong>bureau@slbc.fr</strong> doivent être créées sur la messagerie du domaine slbc.fr avant la mise en ligne. Le site affiche contact@slbc.fr pour le contact général, la presse et les droits sur les données ; les demandes d’adhésion partent vers bureau@slbc.fr.</p></div>
+  <div class="decider"><span class="etiquette">À décider par le bureau</span><p>Qui lit bureau@slbc.fr et répond, dans quel délai ; combien de temps on garde les demandes et les messages ; si bureau@slbc.fr remplace aussi contact@slbc.fr, l’adresse de contact générale affichée aujourd’hui (pied de page, presse, informations légales).</p></div>
+</section>
+
+<section class="partie" id="publication">
+  <div class="partie-tete">{{P5}}<h2>Publication des communiqués, de la veille et des actualités</h2></div>
+  <p>Le bureau doit pouvoir publier seul, depuis l’outil du site, sans passer par un développeur. La rubrique « Publier sur le site » de la maquette montre le formulaire attendu.</p>
+  <ul>
+    <li><strong>Trois types de contenus</strong> : communiqué (salle de presse et, s’il est public, accueil), texte de veille (espace adhérent), actualité. Chacun avec titre, résumé, texte, date, pièce jointe PDF et une case « réservé aux adhérents ».</li>
+    <li><strong>Droits</strong> : seuls les comptes « bureau » publient ; les adhérents lisent.</li>
+    <li><strong>Documents</strong> : un PDF joint s’affiche avec le communiqué ou l’actualité.</li>
+  </ul>
+  <div class="decider"><span class="etiquette">À décider par le bureau</span><p>Qui publie ; si une relecture par un second membre est nécessaire avant publication.</p></div>
+</section>
+
+<section class="partie" id="veille">
+  <div class="partie-tete">{{P6}}<h2>Veille réglementaire hebdomadaire</h2></div>
+  <p>La veille est déjà produite chaque lundi par Claude ; il reste à la mettre en ligne dans l’espace adhérent. La maquette n’affiche qu’une synthèse d’exemple, celle du 4 novembre 2026.</p>
+  <ol class="etapes">
+    <li><span><strong>Pour commencer, à la main</strong> : chaque lundi, un membre du bureau colle la synthèse dans le formulaire « Veille » du site (source, impact, lien vers le texte officiel). Aucun développement n’est nécessaire.</span></li>
+    <li><span><strong>Ensuite, automatiquement</strong> : la synthèse du lundi est déposée directement dans le site. À étudier avec Kstudio une fois le site en ligne.</span></li>
+  </ol>
+  <p>La veille reste réservée aux adhérents connectés ; la page publique « Veille » présente seulement le service. Elle peut aussi partir chaque lundi par la lettre d’information.</p>
+  <div class="decider"><span class="etiquette">À décider par le bureau</span><p>Qui met la veille en ligne chaque lundi ; combien de temps les anciennes synthèses restent consultables.</p></div>
+</section>
+
+<section class="partie" id="lettre">
+  <div class="partie-tete">{{P7}}<h2>Lettre d’information</h2></div>
+  <p>Il faut un vrai service d’envoi d’e-mails, relié au site ; la maquette ne fait que simuler les inscriptions et les envois.</p>
+  <div class="tableau"><table>
+    <thead><tr><th scope="col">Besoin</th><th scope="col">Ce qu’il faut prévoir</th></tr></thead>
+    <tbody>
+      <tr><td>Envoyer les e-mails</td><td>Une extension d’e-mailing pour WordPress ou un service externe, à choisir avec Kstudio</td></tr>
+      <tr><td>Inscription</td><td>Double confirmation : un e-mail à cliquer avant l’inscription définitive</td></tr>
+      <tr><td>Consentement</td><td>Garder pour chaque inscription la date, l’origine et le texte de la case acceptée</td></tr>
+      <tr><td>Désinscription</td><td>Un lien dans chaque e-mail, qui fonctionne en un clic</td></tr>
+      <tr><td>Expéditeur</td><td>Une adresse du domaine slbc.fr, authentifiée (SPF, DKIM, DMARC recommandé) ; nom et adresse postale du SLBC en pied d’e-mail</td></tr>
+      <tr><td>Suivi</td><td>Ni pixel d’ouverture ni suivi des clics, sinon un consentement séparé est nécessaire</td></tr>
+      <tr><td>Contenu réservé</td><td>L’e-mail renvoie vers le site, où la lecture demande une connexion</td></tr>
+    </tbody>
+  </table></div>
+  <div class="decider"><span class="etiquette">À décider par le bureau</span><p>Un envoi à chaque publication ou une lettre groupée le lundi ; qui peut envoyer ; une liste réservée aux adhérents ou ouverte à la presse et aux partenaires.</p></div>
+</section>
+
+<section class="partie" id="legal">
+  <div class="partie-tete">{{P8}}<h2>Obligations légales et données personnelles</h2></div>
+  <p>Les textes des mentions légales, des données personnelles et des cookies sont rédigés dans la maquette ; il reste des informations à fournir, des décisions à prendre et une relecture par un juriste.</p>
+  <div class="tableau"><table>
+    <thead><tr><th scope="col">À fournir ou à décider</th><th scope="col">Qui</th></tr></thead>
+    <tbody>
+      <tr><td>Téléphone de l’éditeur : le SLBC n’en affiche pas, alors que la loi en demande un ; à faire confirmer par le juriste</td><td><span class="qui qui-bureau">Bureau</span> <span class="qui qui-juriste">Juriste</span></td></tr>
+      <tr><td>Adresses contact@slbc.fr et bureau@slbc.fr à créer ; adresse de contact définitive</td><td><span class="qui qui-bureau">Bureau</span></td></tr>
+      <tr><td>Hébergeur : nom, adresse, téléphone</td><td><span class="qui qui-kstudio">Kstudio</span></td></tr>
+      <tr><td>Numéro SIREN, s’il existe</td><td><span class="qui qui-bureau">Bureau</span></td></tr>
+      <tr><td>Durées de conservation : adhérents après la fin de l’adhésion, demandes non abouties, messages au bureau, preuve du consentement, journal des connexions</td><td><span class="qui qui-bureau">Bureau</span></td></tr>
+      <tr><td>Trace écrite de la décision de ne pas désigner de délégué à la protection des données</td><td><span class="qui qui-bureau">Bureau</span></td></tr>
+      <tr><td>Prestataires : hébergeur, outil d’envoi des e-mails, transferts hors de l’Union européenne éventuels</td><td><span class="qui qui-kstudio">Kstudio</span></td></tr>
+      <tr><td>Accord des élus et représentants pour la publication de leur nom</td><td><span class="qui qui-bureau">Bureau</span></td></tr>
+      <tr><td>Polices Figtree et Nunito hébergées sur le serveur du site ; contenus intégrés automatiques et Gravatar désactivés dans WordPress</td><td><span class="qui qui-kstudio">Kstudio</span></td></tr>
+      <tr><td>Cession écrite des droits sur le logo au SLBC ; dépôt de marque à envisager</td><td><span class="qui qui-bureau">Bureau</span></td></tr>
+      <tr><td>Relecture de l’ensemble</td><td><span class="qui qui-juriste">Juriste</span></td></tr>
+    </tbody>
+  </table></div>
+  <p>Le détail, avec les sources, est dans le document de travail « Obligations légales » du projet.</p>
+</section>
+
+<section class="partie" id="contenus">
+  <div class="partie-tete">{{P9}}<h2>Contenus à faire valider par le bureau</h2></div>
+  <p>Plusieurs textes ont été rédigés avec Isabelle Eimer et attendent l’accord du bureau avant la mise en ligne.</p>
+  <ul>
+    <li><strong>Devise et missions</strong> : « Défendre la biologie, défendre les patients. » et les quatre missions.</li>
+    <li><strong>Textes repris de la note de positionnement</strong> du 10 septembre 2026 : les trois piliers de l’accueil, les introductions des pages Adhérer et Veille ; à valider par Thierry Bouchet et le bureau.</li>
+    <li><strong>Slogans des drapeaux</strong> de l’illustration du bureau (« MAKE BIOLOGY GREAT AGAIN », « YES WE CAN ») : ils reprennent des slogans de campagnes présidentielles américaines.</li>
+    <li><strong>Représentants</strong> : sièges encore à désigner dans certaines instances (gardés dans les listes, non affichés) ; liste des URPS à vérifier.</li>
+    <li><strong>Police des textes</strong> : Figtree, à valider ; la charte graphique indique encore Nunito et sera mise à jour.</li>
+    <li><strong>Comptes publiés</strong> : exercices 2021 à 2023 ; ajouter les suivants si le SLBC publie ses comptes sur son site.</li>
+    <li><strong>Cotisation</strong> : aucun montant n’est affiché, comme sur le site actuel.</li>
+  </ul>
+</section>
+
+<section class="partie" id="etapes">
+  <div class="partie-tete">{{P10}}<h2>Prochaines étapes</h2></div>
+  <p>Dans l’ordre, avec qui s’en charge.</p>
+  <ul class="taches">
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-bureau">Bureau</span>Avec Kstudio ou l’hébergeur du domaine slbc.fr : créer les adresses contact@slbc.fr et bureau@slbc.fr, et décider qui lit chacune.</span></li>
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-bureau">Bureau</span>Valider les contenus et prendre les décisions listées dans cette note (adresses, rôles, durées de conservation).</span></li>
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-bureau">Bureau</span>Présenter la maquette et cette note à Kstudio, et demander un devis (thème WordPress, formulaires, comptes des adhérents, publication, lettre d’information).</span></li>
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-kstudio">Kstudio</span>Donner les informations sur l’hébergeur et proposer l’outil d’envoi des e-mails.</span></li>
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-kstudio">Kstudio</span>Monter le site sur une adresse de test, non publique, pour que le bureau l’essaie.</span></li>
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-juriste">Juriste</span>Relire les mentions légales, les données personnelles et les cookies.</span></li>
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-bureau">Bureau</span>Importer la liste des adhérents et envoyer les invitations à créer un mot de passe.</span></li>
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-kstudio">Kstudio</span>Mettre le site en ligne sur slbc.fr et faire renvoyer les anciennes adresses vers les nouvelles pages.</span></li>
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-bureau">Bureau</span>Mettre en ligne la veille chaque lundi, puis étudier l’envoi automatique avec Kstudio.</span></li>
+  </ul>
+</section>
+</div>
+
+<footer class="pied">
+  <span><strong>SLBC</strong>, Syndicat des Laboratoires de Biologie Clinique, 6 place de la Madeleine, 75008 Paris</span>
+  <span>Note de travail, 7 novembre 2026</span>
+</footer>
+</article>
+</div>
