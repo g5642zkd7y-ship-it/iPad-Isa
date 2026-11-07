@@ -1205,7 +1205,6 @@
       '<circle data-c="overlap" cx="76" cy="76" r="36" fill="' + c[2] + '" clip-path="url(#clip-sig-' + id + ')"/></svg>';
   }
   function setupSignatures() {
-    $('#member-sig').innerHTML = sigSVG('membre', false);
     $$('.view').forEach((v) => {
       const hero = v.querySelector('.page-hero .page-name') || v.querySelector('.page-hero .container');
       if (hero) hero.insertAdjacentHTML('afterbegin', sigSVG(v.dataset.view, /bg-encre|bg-vert(\s|$)/.test(v.querySelector('.page-hero').className)));
