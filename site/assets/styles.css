@@ -571,7 +571,8 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .hcp-title{max-width:22em;font-size:clamp(26px,2.6vw,34px);font-weight:700;line-height:1.15;letter-spacing:-.02em;color:var(--encre)}
 .hcp-chapo{max-width:40em;font-size:18px;line-height:1.6}
 /* Accueil : « Flash Info » au-dessus du dernier communiqué (demande d’Isabelle Eimer du 6 novembre 2026) */
-.hcp-kicker{display:inline-flex;align-items:center;padding:10px 26px;border-radius:999px;background:var(--vert);color:#fff;font-size:clamp(22px,2.2vw,28px);font-weight:700;letter-spacing:.01em;line-height:1.2}
+/* Étiquette « Flash Info » en vert clair, comme le bandeau de la Salle de presse (7 novembre 2026, demande d’Isabelle Eimer). */
+.hcp-kicker{display:inline-flex;align-items:center;padding:10px 26px;border-radius:999px;background:var(--vert-clair);color:var(--encre);font-size:clamp(22px,2.2vw,28px);font-weight:700;letter-spacing:.01em;line-height:1.2}
 .hcp-side{display:flex;flex-direction:column;gap:28px;min-width:0}
 .hcp-ill{display:block;width:calc(var(--mascotte-h) * 384 / 210);max-width:100%;height:auto}
 .p-quote.hcp-quote{margin:0}
