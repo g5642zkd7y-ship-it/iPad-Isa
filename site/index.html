@@ -907,10 +907,10 @@
             <p>La veille chaque lundi, et les nouvelles publications du SLBC dès leur mise en ligne.</p>
             <div class="field">
               <label class="field-label" for="sub-email">Votre e-mail d’adhérent</label>
-              <input class="input" id="sub-email" type="email" placeholder="nom@laboratoire.fr" autocomplete="email" aria-describedby="sub-error">
+              <input class="input" id="sub-email" type="email" placeholder="nom@laboratoire.fr" autocomplete="email">
               <p class="field-error" id="sub-error" role="alert" hidden></p>
             </div>
-            <label class="check-line"><input type="checkbox" id="sub-consent" aria-describedby="sub-error"><span>J’accepte de recevoir la lettre d’information du SLBC. Je peux me désinscrire à tout moment.</span></label>
+            <label class="check-line"><input type="checkbox" id="sub-consent"><span>J’accepte de recevoir la lettre d’information du SLBC. Je peux me désinscrire à tout moment.</span></label>
             <button class="btn btn-light" type="submit">M’abonner</button>
             <p class="form-ok" id="sub-ok" role="status" hidden></p>
             <p class="form-note">Votre e-mail sert seulement à l’envoi de la lettre. Chaque envoi contient un lien de désinscription. <a href="#mentions" data-section="donnees">Vos données personnelles</a></p>
@@ -932,7 +932,7 @@
           <div>
             <p class="g-title">Contenu</p>
             <div class="group">
-              <div class="g-row stack"><label for="f-title">Titre</label><input class="input" id="f-title" type="text" placeholder="Ex. : Le SLBC réagit au PLFSS 2027" aria-describedby="pub-error"></div>
+              <div class="g-row stack"><label for="f-title">Titre</label><input class="input" id="f-title" type="text" placeholder="Ex. : Le SLBC réagit au PLFSS 2027"></div>
               <div class="g-row stack"><label for="f-resume">Résumé, repris sur la page d’accueil</label><textarea class="input" id="f-resume" rows="3" style="min-height:96px"></textarea></div>
               <div class="g-row stack"><label for="f-body">Texte complet</label><textarea class="input" id="f-body" rows="5"></textarea></div>
             </div>
@@ -942,7 +942,7 @@
             <div class="group">
               <div class="g-row"><label for="f-src">Source</label><select class="input input-inline" id="f-src"><option value="jo">Journal officiel</option><option value="parl">Parlement</option><option value="hors">Hors JO</option></select></div>
               <div class="g-row"><label for="f-impact">Impact pour les laboratoires</label><select class="input input-inline" id="f-impact"><option value="fort">Impact fort</option><option value="suivre">À suivre</option><option value="faible">Impact faible</option></select></div>
-              <div class="g-row stack"><label for="f-url">Lien vers le texte officiel</label><input class="input" id="f-url" type="url" placeholder="https://www.legifrance.gouv.fr/…" aria-describedby="pub-error"></div>
+              <div class="g-row stack"><label for="f-url">Lien vers le texte officiel</label><input class="input" id="f-url" type="url" placeholder="https://www.legifrance.gouv.fr/…"></div>
             </div>
           </div>
           <div id="g-actu" hidden>

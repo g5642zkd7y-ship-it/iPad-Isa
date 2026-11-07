@@ -930,8 +930,8 @@
   $('#abonnement').addEventListener('submit', (e) => {
     e.preventDefault();
     const em = $('#sub-email'); const er = $('#sub-error'); const ok = $('#sub-ok'); const consent = $('#sub-consent');
-    const fail = (msg, el) => { er.textContent = msg; er.hidden = false; ok.hidden = true; el.setAttribute('aria-invalid', 'true'); el.focus(); };
-    em.removeAttribute('aria-invalid'); consent.removeAttribute('aria-invalid');
+    const fail = (msg, el) => { er.textContent = msg; er.hidden = false; ok.hidden = true; el.setAttribute('aria-invalid', 'true'); el.setAttribute('aria-describedby', 'sub-error'); el.focus(); };
+    [em, consent].forEach((x) => { x.removeAttribute('aria-invalid'); x.removeAttribute('aria-describedby'); });
     const addr = em.value.trim().toLowerCase();
     if (!EMAIL_RE.test(addr)) { fail('Saisissez une adresse e-mail valide, par exemple nom@laboratoire.fr.', em); return; }
     if (!consent.checked) { fail('Cochez la case pour confirmer votre inscription.', consent); return; }
@@ -1111,9 +1111,11 @@
     const title = titleEl.value.trim();
     const urlEl = $('#f-url');
     const urlVal = urlEl.value.trim();
-    err.hidden = true; err.textContent = ''; titleEl.removeAttribute('aria-invalid'); urlEl.removeAttribute('aria-invalid');
-    if (!title) { err.textContent = 'Ajoutez un titre pour publier.'; err.hidden = false; titleEl.setAttribute('aria-invalid', 'true'); titleEl.focus(); return; }
-    if (pubType === 'veille' && urlVal && !isHttp(urlVal)) { err.textContent = 'Le lien vers le texte officiel doit commencer par https://'; err.hidden = false; urlEl.setAttribute('aria-invalid', 'true'); urlEl.focus(); return; }
+    err.hidden = true; err.textContent = '';
+    [titleEl, urlEl].forEach((x) => { x.removeAttribute('aria-invalid'); x.removeAttribute('aria-describedby'); });
+    const pubFail = (msg, el) => { err.textContent = msg; err.hidden = false; el.setAttribute('aria-invalid', 'true'); el.setAttribute('aria-describedby', 'pub-error'); el.focus(); };
+    if (!title) { pubFail('Ajoutez un titre pour publier.', titleEl); return; }
+    if (pubType === 'veille' && urlVal && !isHttp(urlVal)) { pubFail('Le lien vers le texte officiel doit commencer par https://', urlEl); return; }
     const date = $('#f-date').value || todayISO();
     const resume = $('#f-resume').value.trim() || $('#f-body').value.trim().slice(0, 240);
     const members = $('#f-members').checked;
@@ -1161,7 +1163,8 @@
     saveList(SENT_KEY, sentLog);
     renderNewsletter();
     renderDynamic();
-    $('#recent-title').focus({ preventScroll: true });
+    const rt = $('#recent-title'); rt.focus({ preventScroll: true });
+    const rr = rt.getBoundingClientRect(); if (rr.top < $('.gnav').getBoundingClientRect().bottom || rr.bottom > window.innerHeight) rt.scrollIntoView({ block: 'start', behavior: 'auto' });
     showToast('Publications et envois de démonstration effacés.', null, null);
   });
 
@@ -1758,9 +1761,11 @@
     ['ecrire-nom', 'ecrire-email', 'ecrire-msg'].forEach((id) => clear(id + '-err'));
     $('#abonnement').reset(); clear('sub-ok'); clear('sub-error');
     /* Outils du bureau : le brouillon en cours et l'adresse en cours d'ajout. */
-    ['f-title', 'f-resume', 'f-body', 'f-url', 'f-file', 'f-subject', 'nl-add-email'].forEach((id) => { document.getElementById(id).value = ''; });
+    $('#pub-form').reset(); $('#f-date').value = todayISO(); pubType = 'cp'; renderPubType();
+    $('#nl-add-email').value = '';
     clear('pub-error'); clear('nl-add-err');
     $$('#login-form [aria-invalid], #ecrire-form [aria-invalid], #abonnement [aria-invalid], #pub-form [aria-invalid], #nl-add-form [aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+    ['sub-email', 'sub-consent', 'f-title', 'f-url'].forEach((id) => document.getElementById(id).removeAttribute('aria-describedby'));
     updatePreview();
   }
   renderMessages();
