@@ -694,7 +694,8 @@
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
     $('#home-benefits').innerHTML = BENEFITS.map((b, k) => '<li>' + joinBadge(k) + '<span>' + esc(b.t) + '</span></li>').join('');
-    $('#benefits-grid').innerHTML = BENEFITS.map((b, k) => '<div class="benefit c' + k + '"><h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
+    /* Page Adhérer : les mêmes pastilles dessinées que la bannière « Rejoindre le SLBC » de l'accueil (demande d'Isabelle Eimer, 7 novembre 2026) */
+    $('#benefits-grid').innerHTML = BENEFITS.map((b, k) => '<div class="benefit c' + k + '">' + joinBadge(k) + '<h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
     /* Piliers de « Ce que nous défendons » (accueil) : mêmes numéros dessinés et même animation que les missions */
     $$('#piliers .pillar').forEach((el, k) => { if (!el.querySelector('.mnum')) el.insertAdjacentHTML('afterbegin', missionBadge(k + 1)); });
     $('#missions-list').innerHTML = MISSIONS.map((m, k) => '<div class="charter-item">' + missionBadge(k + 1) + '<div class="charter-text"><h3 class="h-block"><span class="sr-only">Mission ' + (k + 1) + '\u00a0: </span>' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div></div>').join('');

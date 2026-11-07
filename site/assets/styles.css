@@ -658,6 +658,10 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .benefit.c2{background:var(--vert)}.benefit.c2 h2,.benefit.c2 p{color:#fff}
 .benefit h2{font-size:20px;font-weight:700;line-height:1.25;letter-spacing:-.01em}
 .benefit p{font-size:16px;line-height:1.55}
+/* Pastilles dessinées des trois cases (même dessin que sur l’accueil) ; traits de joie en blanc sur les cases foncées */
+.benefit .mnum-join{width:84px;height:auto;margin:-4px 0 4px -6px}
+.benefit.c0 .mnum-eclats,.benefit.c2 .mnum-eclats{stroke:#fff}
+@media (max-width:520px){.benefit .mnum-join{width:70px}}
 @media (max-width:760px){.benefits{grid-template-columns:minmax(0,1fr)}}
 .join-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(32px,6vw,88px);align-items:start}
 @media (max-width:900px){.join-layout{grid-template-columns:minmax(0,1fr)}}
@@ -967,8 +971,8 @@ svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
   .js-motion .mnum.drawn .mnum-eclats{transform:none;transition:transform .35s cubic-bezier(.34,1.56,.64,1) calc(var(--d,0s) + 1.15s)}
   .js-motion .mnum .mnum-fill{transform-box:fill-box;transform-origin:50% 50%;transform:scale(0)}
   .js-motion .mnum.drawn .mnum-fill{transform:none;transition:transform .35s cubic-bezier(.34,1.56,.64,1) calc(var(--d,0s) + 1s)}
-  .join-list li:nth-child(2) .mnum{--d:.2s}
-  .join-list li:nth-child(3) .mnum{--d:.4s}
+  .join-list li:nth-child(2) .mnum,.benefit:nth-child(2) .mnum{--d:.2s}
+  .join-list li:nth-child(3) .mnum,.benefit:nth-child(3) .mnum{--d:.4s}
   .charter-item:nth-child(even) .mnum{--d:.2s}
   .pillar:nth-child(2) .mnum{--d:.2s}
   .pillar:nth-child(3) .mnum{--d:.4s}
