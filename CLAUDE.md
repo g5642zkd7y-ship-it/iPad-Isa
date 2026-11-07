@@ -69,7 +69,7 @@ Objectifs exprimés pour le site :
 
 ## Pistes pour la suite
 
-1. Faire valider la police des textes, puis mettre à jour la charte.
+1. Faire valider la police des textes, puis mettre à jour la charte. Comparaison Figtree / Nunito sur les textes du site (7 novembre 2026, demande d’Isabelle Eimer) : https://claude.ai/artifact/2rWBsh9xLXtQrV1Kt3r8En (copie `marque/polices-figtree-nunito.html`).
 2. Ajouter des pages de détail (article, communiqué, fiche de veille).
 3. Préparer l’intégration réelle avec Kstudio (thème WordPress ou autre outil de gestion de contenu), avec de vrais comptes pour l’espace adhérent.
 4. Brancher la veille réglementaire hebdomadaire (déjà produite chaque lundi par Claude) sur la rubrique Veille.
