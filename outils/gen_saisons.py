@@ -28,7 +28,7 @@ MASCOTTES = [
 MOUFLES = {'defendons', 'hanches', 'bureau', 'bienvenue', 'poignee'}   # « pour certains » : les mains bien visibles
 
 HEAD = '<circle cx="95" cy="72" r="35" fill="#FFFFFF"/>'
-HAIR = ['<path d="M89 37 C86 27 90 18 99 13"/>', '<path d="M97 37 C98 29 103 24 110 23"/>',
+HAIR = ['<path d="M63 60 C61 48 66 40 73 37"/>', '<path d="M67 70 C64 62 66 54 70 50"/>', '<path d="M89 37 C86 27 90 18 99 13"/>', '<path d="M97 37 C98 29 103 24 110 23"/>',
         '<path d="M88 37 C86 29 92 22 99 22 C95 26 95 31 99 33"/>',
         '<path d="M80 42 L75 31"/>', '<path d="M90 38 L89 26"/>', '<path d="M100 38 L104 27"/>', '<path d="M109 42 L116 33"/>']
 ROUGE = '#C62F3B'
@@ -73,9 +73,11 @@ def tenue_noel():
                f'<path d="M96 113 L100 136 L91 137 L89 115 Z" fill="{ROUGE}" stroke-width="3"/>'
                '<path d="M86 108 L86 115 M94 110 L94 117 M102 107 L103 114 M90 124 L98 123 M91 130 L99 129" stroke="#FFFFFF" stroke-width="2.6"/>')
     # bonnet enfoncé sur la tête (le bord blanc descend jusqu'au front), la pointe retombe vers l'arrière, gros pompon
-    bonnet = (f'<path d="M127 40 C130 21 118 6 100 4 C82 2 68 12 60 26 C68 27 70 33 64 40 Z" fill="{ROUGE}"/>'
-              '<path d="M59 38 Q95 25 131 38 Q134 43 131 47 Q95 59 59 47 Q56 43 59 38 Z" fill="#FFFFFF" stroke-width="3"/>'
-              '<circle cx="56" cy="27" r="9.5" fill="#FFFFFF" stroke-width="3"/>')
+    # bonnet basculé vers l'arrière : le bord blanc descend sur l'arrière du crâne, la pointe retombe derrière la tête,
+    # très gros pompon au bout
+    bonnet = (f'<path d="M126 36 C128 16 112 3 93 3 C73 3 57 15 45 34 C53 36 58 41 58 48 Z" fill="{ROUGE}"/>'
+              '<path d="M55 50 Q85 22 128 34 Q134 39 131 45 Q95 52 61 64 Q52 58 55 50 Z" fill="#FFFFFF" stroke-width="3"/>'
+              '<circle cx="42" cy="37" r="14" fill="#FFFFFF" stroke-width="3"/>')
     return HEAD + echarpe + bonnet
 
 def moufles(s):
@@ -101,6 +103,8 @@ def noel(key, svg):
     if key in MOUFLES:
         s = moufles(s)
     s = air_dessus(s, key)
+    m, (x, y, w, hh) = viewbox(s)
+    s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x - 20, y, w + 40, hh), 1)
     if key == 'bureau':
         s = s.replace('>MAKE BIOLOGY</text>', '>JOYEUX NOËL</text>').replace('>GREAT AGAIN</text>', '>À TOUS !</text>').replace('>YES WE CAN</text>', '>BONNES FÊTES</text>')
     if key == 'lecteurs':
