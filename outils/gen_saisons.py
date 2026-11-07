@@ -75,8 +75,12 @@ def tenue_noel():
     # bonnet enfoncé sur la tête (le bord blanc descend jusqu'au front), la pointe retombe vers l'arrière, gros pompon
     # bonnet basculé vers l'arrière : le bord blanc descend sur l'arrière du crâne, la pointe retombe derrière la tête,
     # très gros pompon au bout
-    bonnet = (f'<path d="M126 36 C128 16 112 3 93 3 C73 3 57 15 45 34 C53 36 58 41 58 48 Z" fill="{ROUGE}"/>'
-              '<path d="M55 50 Q85 22 128 34 Q134 39 131 45 Q95 52 61 64 Q52 58 55 50 Z" fill="#FFFFFF" stroke-width="3"/>'
+    # le bord blanc est un arc régulier, de même épaisseur partout, qui épouse le front comme une visière vue de face
+    # et descend sur l'arrière du crâne ; tracé deux fois (contour encre, puis blanc) pour garder une largeur constante
+    bord = 'M56 60 Q100 58 133 32'
+    bonnet = (f'<path d="M130 31 C131 12 113 1 93 2 C73 3 57 15 45 34 C52 38 56 46 56 58 Z" fill="{ROUGE}"/>'
+              f'<path d="{bord}" stroke="{INK}" stroke-width="18" stroke-linecap="round" fill="none"/>'
+              f'<path d="{bord}" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" fill="none"/>'
               '<circle cx="42" cy="37" r="14" fill="#FFFFFF" stroke-width="3"/>')
     return HEAD + echarpe + bonnet
 
@@ -98,7 +102,7 @@ def moufles(s):
     return re.sub(r'<ellipse cx="([\d.]+)" cy="([\d.]+)" rx="([\d.]+)" ry="([\d.]+)" fill="#2E3236" stroke="none"( transform="[^"]*")?/>', ell, s)
 
 def noel(key, svg):
-    s = clean(sans_sourcils_caches(sans_meches(svg)))
+    s = clean(sans_sourcils_caches(sans_meches(svg), bas=56))
     s = s.replace(HEAD, tenue_noel())
     if key in MOUFLES:
         s = moufles(s)
