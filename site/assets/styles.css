@@ -108,7 +108,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .more{display:inline-block;color:var(--vert);font-size:17px;font-weight:600;text-decoration:none}
 /* Chevron : petite boîte en ligne (pas un bloc à part), collée au dernier mot. Quand le lien passe sur deux lignes,
    il suit la fin du texte au lieu de rester au bord droit. */
-.more::after{content:"";position:relative;left:0;margin-left:7px;padding-left:7px;background:currentColor;-webkit-mask:var(--chev) center/7px 12px no-repeat;mask:var(--chev) center/7px 12px no-repeat;transition:left .2s var(--ease)}
+/* Flèche des liens « Lire… » : boîte en ligne (elle suit le dernier mot et ne part jamais seule à la ligne), de la taille de la flèche (police de 9 px, 7 px de large) pour que rien ne dépasse ; masque écrit en propriétés séparées avec no-repeat : Safari répétait la flèche au-dessus et au-dessous (petits carrés vus sur iPad). */
+.more::after{content:"";position:relative;left:0;margin-left:7px;padding-left:7px;font-size:9px;vertical-align:1px;background:currentColor;-webkit-mask-image:var(--chev);mask-image:var(--chev);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:7px 12px;mask-size:7px 12px;transition:left .2s var(--ease)}
 /* Zone à toucher de 44 px sans rien déplacer : le remplissage vertical est repris par une marge négative. */
 a.more{padding-block:9px;margin-block:-9px}
 .more:hover{text-decoration:underline;text-underline-offset:3px}
