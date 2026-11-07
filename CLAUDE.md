@@ -76,7 +76,7 @@ Objectifs exprimés pour le site :
 
 ## Ressources liées (privées, compte claude.ai de la porteuse du projet)
 
-- Charte graphique : https://claude.ai/artifact/EhTqyWrkSQibEFKKZiydUK
+- Charte graphique : https://claude.ai/artifact/EhTqyWrkSQibEFKKZiydUK (PDF A4 : `marque/charte-graphique-slbc.pdf`, 7 novembre 2026)
 - Présentation du nouveau logo au bureau : https://claude.ai/artifact/KCR59a2h3UqryejFXh9NNE
 - Planche des pistes de logo : https://claude.ai/artifact/5XjHgFR5MJBjyEWxmWh8LC
 - Quatre pistes graphiques pour l’accueil (6 novembre 2026 ; palette et logo conservés : éditoriale, rigueur scientifique, couleur affirmée, les deux cercles), avec à gauche une capture de l’accueil de la maquette actuelle pour comparaison : https://claude.ai/artifact/PE61R8Fy1wYjHGFckEHqbq
