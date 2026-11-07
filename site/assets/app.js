@@ -292,7 +292,11 @@
     ] },
     { g: 'Études du secteur', items: [
       { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : version courte', s: 'Étude du secteur des laboratoires de biologie médicale libérale français, Roland Berger', url: 'documents/observatoire-biologie-2026-court.pdf', doc: true },
-      { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : rapport complet', s: 'Même étude, version longue', url: 'documents/observatoire-biologie-2026-complet.pdf', doc: true }
+      { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : rapport complet', s: 'Même étude, version longue', url: 'documents/observatoire-biologie-2026-complet.pdf', doc: true },
+      /* Édition 2025 (troisième rapport Roland Berger, 7 novembre 2026, demande d'Isabelle Eimer) : version finale diffusée par l'APBM
+         sur sa page LinkedIn le 4 novembre 2025, sans PDF en téléchargement libre ; à mettre dans la liseuse dès que le PDF est fourni.
+         Le document de travail du 31 juillet 2025 envoyé par Isabelle Eimer n'est pas publié (version préliminaire). Point 27. */
+      { d: 'Novembre 2025', t: 'Étude du secteur des laboratoires de biologie médicale libérale français, édition 2025', s: 'Étude Roland Berger ; version complète publiée par l’APBM', url: 'https://www.linkedin.com/posts/apbm_etude-du-secteur-des-laboratoires-de-biologie-ugcPost-7391530588672794626-u0EB/', src: 'linkedin.com' }
     ] }
   ];
   /* Nomenclature : liens repris de l'ancienne page CHAB de slbc.fr (Légifrance, Journal officiel hébergé par la FHF).
