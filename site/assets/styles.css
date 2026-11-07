@@ -647,18 +647,22 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .acces .h-block-l{margin-bottom:18px}
 .portes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .portes > li{display:flex}
-.porte{display:flex;flex-direction:column;align-items:flex-start;gap:8px;width:100%;padding:18px 20px 20px;border:0;border-top:4px solid var(--vert);border-radius:14px;background:#fff;color:var(--texte);font:inherit;text-align:left;text-decoration:none;cursor:pointer}
-.porte.s1{border-top-color:var(--anis)}
+.porte{display:flex;flex-direction:column;align-items:flex-start;gap:8px;width:100%;padding:20px 20px 22px;border:0;border-radius:14px;background:#fff;color:var(--texte);font:inherit;text-align:left;text-decoration:none;cursor:pointer}
 .porte-t{font-size:18px;line-height:1.25;font-weight:700;letter-spacing:-.005em;color:var(--encre)}
 .porte-d{font-size:15.5px;line-height:1.5;color:var(--texte)}
 .porte-cta{margin-top:auto;padding-top:4px;font-size:16px}
-@media (hover:hover){.porte:not([aria-pressed="true"]):hover .porte-t{color:var(--vert)}}
+/* Une couleur par porte (7 novembre 2026, demande d’Isabelle Eimer) : veille en encre (comme la page Veille), commission en vert clair,
+   suggestion en vert anis, lettre en vert foncé. Textes contrôlés à 4,5:1 au moins sur chaque fond. */
+.porte.c0{background:var(--encre)}.porte.c0 .porte-t{color:#fff}.porte.c0 .porte-d{color:#E6E9DF}.porte.c0 .porte-cta{color:var(--vert-clair)}
+.porte.c1{background:var(--vert-clair)}.porte.c1 .porte-d{color:var(--encre)}.porte.c1 .porte-cta{color:var(--encre)}
+.porte.c2{background:var(--anis)}.porte.c2 .porte-d{color:var(--encre)}.porte.c2 .porte-cta{color:var(--encre)}
+.porte.c3{background:var(--vert)}.porte.c3 .porte-t,.porte.c3 .porte-d,.porte.c3 .porte-cta{color:#fff}
+@media (hover:hover){.porte:hover .porte-cta{text-decoration:underline;text-underline-offset:3px}.porte:hover .porte-cta::after{transform:translateX(2px)}}
 .porte:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
 .portes-menu{margin-bottom:36px}
 .portes-menu .portes{grid-template-columns:repeat(4,minmax(0,1fr))}
-.portes-menu .porte{border:1px solid var(--filet);border-top:4px solid var(--vert)}
-.portes-menu .porte.s1{border-top-color:var(--anis)}
-.portes-menu .porte[aria-pressed="true"]{background:var(--vert-clair);border-color:var(--vert-clair);border-top-color:var(--vert)}
+/* Rubrique ouverte : la porte garde sa couleur, entourée d’un anneau encre. */
+.portes-menu .porte[aria-pressed="true"]{box-shadow:0 0 0 3px #fff,0 0 0 6px var(--encre)}
 .portes-menu .porte[aria-pressed="true"] .porte-cta{display:none}
 .porte-bureau{margin-top:14px;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding:14px 20px;background:var(--fond);border:1px solid var(--filet);border-top:4px solid var(--gris)}
 .porte-bureau .porte-d{font-size:15px;color:var(--gris)}

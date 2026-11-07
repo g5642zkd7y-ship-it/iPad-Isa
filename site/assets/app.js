@@ -1614,7 +1614,7 @@
   const porteInner = (a) => '<span class="porte-t">' + esc(a.t) + '</span><span class="porte-d">' + esc(a.d) + '</span>' + (a.cta ? '<span class="porte-cta more">' + esc(a.cta) + '</span>' : '');
   const porteOn = (a) => a.panel === curPanel && (curPanel !== 'ecrire' || (a.sujet === 'commission') === (curSujet === 'commission'));
   function renderPortes() {
-    $('#ea-tabs').innerHTML = '<ul class="portes">' + ACCES.map((a, k) => '<li><button type="button" class="porte s' + (k % 2) + '" data-porte="' + k + '" aria-pressed="' + porteOn(a) + '">' + porteInner(a) + '</button></li>').join('') + '</ul>' +
+    $('#ea-tabs').innerHTML = '<ul class="portes">' + ACCES.map((a, k) => '<li><button type="button" class="porte c' + k + '" data-porte="' + k + '" aria-pressed="' + porteOn(a) + '">' + porteInner(a) + '</button></li>').join('') + '</ul>' +
       '<button type="button" class="porte porte-bureau" data-porte="bureau" aria-pressed="' + (curPanel === 'publier') + '">' + porteInner(PORTE_BUREAU) + '</button>';
   }
   function setSujet(s) {
@@ -1675,7 +1675,7 @@
 
   /* ---------- Espace adhérent : portes et « Écrire au bureau » (7 novembre 2026, demande d'Isabelle Eimer) ---------- */
   /* Avant la connexion : chaque porte mène à la carte de connexion, puis, une fois connecté, à la bonne rubrique. */
-  $('#acces-invite').innerHTML = ACCES.map((a, k) => '<li><button type="button" class="porte s' + (k % 2) + '" data-porte="' + k + '">' + porteInner(a) + '</button></li>').join('');
+  $('#acces-invite').innerHTML = ACCES.map((a, k) => '<li><button type="button" class="porte c' + k + '" data-porte="' + k + '">' + porteInner(a) + '</button></li>').join('');
   $('#acces-invite').addEventListener('click', (e) => {
     const l = e.target.closest('[data-porte]');
     if (!l) return;
