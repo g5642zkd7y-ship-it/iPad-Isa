@@ -400,15 +400,8 @@ def ete(key, svg):
         bouee = bouee_rayee(bx, sol).replace('<g class="bouee">', f'<g class="bouee" transform="translate({bx:g} {sol:g}) scale(1.3) translate({-bx:g} {-sol:g})">', 1)
         s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x, y - 4, w + 128, hh + 4), 1)
         return s[:s.rindex('</svg>')] + bouee + '</svg>'
-    # bouée canard du début (préférée par Isabelle Eimer le 7 novembre 2026 à la version d'après les exemples, bouee_canard())
-    bouee = (f'<g class="bouee" transform="translate({bx:g} {sol:g}) scale(1.3) translate({-bx:g} {-sol:g})"><ellipse cx="{bx:g}" cy="{sol + 1:g}" rx="34" ry="4" fill="#E6E9DF" stroke="none"/>'
-             f'<ellipse cx="{bx:g}" cy="{sol - 14:g}" rx="32" ry="14" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
-             f'<ellipse cx="{bx:g}" cy="{sol - 16:g}" rx="14" ry="5.5" fill="#FFFFFF" stroke="{INK}" stroke-width="2.6"/>'
-             f'<path d="M{bx - 24:g} {sol - 22:g} Q{bx - 30:g} {sol - 14:g} {bx - 24:g} {sol - 6:g}" stroke="#FFFFFF" stroke-width="2.4" fill="none"/>'
-             f'<path d="M{bx + 18:g} {sol - 24:g} C{bx + 16:g} {sol - 36:g} {bx + 20:g} {sol - 44:g} {bx + 26:g} {sol - 46:g}" stroke="{INK}" stroke-width="3" fill="none"/>'
-             f'<path d="M{bx + 18:g} {sol - 24:g} C{bx + 14:g} {sol - 36:g} {bx + 16:g} {sol - 50:g} {bx + 26:g} {sol - 50:g} C{bx + 36:g} {sol - 50:g} {bx + 40:g} {sol - 40:g} {bx + 34:g} {sol - 32:g} C{bx + 32:g} {sol - 28:g} {bx + 30:g} {sol - 24:g} {bx + 30:g} {sol - 20:g} Z" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
-             f'<path d="M{bx + 36:g} {sol - 42:g} Q{bx + 48:g} {sol - 42:g} {bx + 47:g} {sol - 37:g} Q{bx + 44:g} {sol - 34:g} {bx + 36:g} {sol - 36:g} Z" fill="{BEC}" stroke="{INK}" stroke-width="2.4"/>'
-             f'<circle cx="{bx + 29:g}" cy="{sol - 42:g}" r="2.4" fill="{INK}" stroke="none"/></g>')
+    # bouée canard d'après les exemples, anneau gonflé (choix d'Isabelle Eimer du 7 novembre 2026, capture à l'appui)
+    bouee = bouee_canard(bx, sol).replace('<g class="bouee">', f'<g class="bouee" transform="translate({bx:g} {sol:g}) scale(1.3) translate({-bx:g} {-sol:g})">', 1)
     s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x, y - 4, w + 128, hh + 4), 1)
     return s[:s.rindex('</svg>')] + bouee + '</svg>'
 
