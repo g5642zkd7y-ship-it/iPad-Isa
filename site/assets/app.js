@@ -1614,8 +1614,8 @@
   const porteInner = (a) => '<span class="porte-t">' + esc(a.t) + '</span><span class="porte-d">' + esc(a.d) + '</span>' + (a.cta ? '<span class="porte-cta more">' + esc(a.cta) + '</span>' : '');
   const porteOn = (a) => a.panel === curPanel && (curPanel !== 'ecrire' || (a.sujet === 'commission') === (curSujet === 'commission'));
   function renderPortes() {
-    $('#ea-tabs').innerHTML = '<ul class="portes">' + ACCES.map((a, k) => '<li><button type="button" class="porte c' + k + '" data-porte="' + k + '" aria-pressed="' + porteOn(a) + '">' + porteInner(a) + '</button></li>').join('') + '</ul>' +
-      '<button type="button" class="porte porte-bureau" data-porte="bureau" aria-pressed="' + (curPanel === 'publier') + '">' + porteInner(PORTE_BUREAU) + '</button>';
+    $('#ea-tabs').innerHTML = '<ul class="portes">' + ACCES.map((a, k) => '<li><button type="button" class="porte c' + k + '" data-porte="' + k + '" aria-pressed="' + porteOn(a) + '">' + porteInner(a) + (porteOn(a) ? '<span class="porte-on" aria-hidden="true">Rubrique ouverte</span>' : '') + '</button></li>').join('') + '</ul>' +
+      '<button type="button" class="porte porte-bureau" data-porte="bureau" aria-pressed="' + (curPanel === 'publier') + '">' + porteInner(PORTE_BUREAU) + (curPanel === 'publier' ? '<span class="porte-on" aria-hidden="true">Rubrique ouverte</span>' : '') + '</button>';
   }
   function setSujet(s) {
     curSujet = SUJETS[s] ? s : 'commission';
