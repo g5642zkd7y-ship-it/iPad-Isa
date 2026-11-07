@@ -835,6 +835,7 @@
     page('Statuts et comptes', 'Les statuts du SLBC, comptes des exercices 2020, 2022 et 2023', '#syndicat', 'comptes');
     page('Veille réglementaire', 'Réservée aux adhérents : Journal officiel, Assemblée nationale, Sénat', '#veille');
     idx.push({ type: 'Page', title: 'Lettre d’information', sub: 'La veille et les nouvelles publications par e-mail', href: '#espace', section: 'ea-lettre', text: 'newsletter abonnement abonner s’abonner s\'abonner désinscription e-mail' });
+    idx.push({ type: 'Page', title: 'Écrire au bureau', sub: 'Participer à une commission, une suggestion, une question', href: '#espace', section: 'ea-ecrire', text: 'commission participer suggestion idée question contact message adhérent' });
     idx.push({ type: 'Page', title: 'Salle de presse', sub: 'Les communiqués du SLBC', href: '#presse', section: null, text: 'contact presse journaliste kit presse logo' });
     idx.push({ type: 'Page', title: 'Contacter le SLBC', sub: 'Adresse e-mail et adresse postale', href: '#mentions', section: 'mentions-legales', text: 'contact contacter nous contacter écrire e-mail courriel adresse téléphone' });
     page('Actualités', 'L’information du syndicat', '#actualites');
@@ -1016,7 +1017,8 @@
     if (!em.value.trim()) { er.textContent = 'Saisissez votre e-mail.'; er.hidden = false; em.setAttribute('aria-invalid', 'true'); em.focus(); return; }
     er.hidden = true; em.removeAttribute('aria-invalid');
     setMember(em.value.trim());
-    showPanel(wantPanel || 'veille'); wantPanel = null;
+    showPanel(wantPanel || 'veille', wantSujet); wantPanel = null; wantSujet = null;
+    $('#login-intent').hidden = true;
     window.scrollTo(0, 0);
     playSignature('espace');
     $('#ea-tabs button[aria-pressed="true"]').focus({ preventScroll: true });
@@ -1579,12 +1581,41 @@
   const SESSION_KEY = 'slbc-maquette-session';
   let member = null; let wantPanel = null;
   try { member = sessionStorage.getItem(SESSION_KEY) || null; } catch (e) { member = null; }
-  const PANELS = [['veille', 'Veille réglementaire'], ['lettre', 'Lettre d’information'], ['publier', 'Publier']];
+  const PANELS = [['veille', 'Veille réglementaire'], ['ecrire', 'Écrire au bureau'], ['lettre', 'Lettre d’information'], ['publier', 'Publier']];
   const panelOf = (el) => { const p = el.closest('.ea-panel'); return p ? p.id.replace('ea-', '') : 'veille'; };
-  function showPanel(name) {
-    const label = (PANELS.find((p) => p[0] === name) || PANELS[0])[1];
-    seg($('#ea-tabs'), PANELS.map((p) => p[1]), label, (l) => { showPanel(PANELS.find((p) => p[1] === l)[0]); });
-    PANELS.forEach((p) => { $('#ea-' + p[0]).hidden = p[1] !== label; });
+  /* Ce à quoi les adhérents ont accès (7 novembre 2026, demande d'Isabelle Eimer). Les mêmes « portes » présentent l'espace
+     avant la connexion (liens : après la connexion, on arrive sur la bonne rubrique) et servent de menu une fois connecté.
+     Les portes 2 et 3 ouvrent « Écrire au bureau » avec l'objet déjà choisi. */
+  const ACCES = [
+    { t: 'La veille réglementaire', d: 'Chaque lundi, le Journal officiel, l’Assemblée nationale et le Sénat, analysés pour votre laboratoire.', panel: 'veille', cta: 'Lire la veille réglementaire' },
+    { t: 'Partager votre expérience dans une commission', d: 'Vous voulez partager votre expérience dans une commission ? Dites-le nous.', panel: 'ecrire', sujet: 'commission', cta: 'Proposer ma participation' },
+    { t: 'Une suggestion, une idée, une question', d: 'Vous avez une suggestion à faire, une idée, une question ? Contactez-nous.', panel: 'ecrire', sujet: 'suggestion', cta: 'Écrire au bureau' },
+    { t: 'La lettre d’information', d: 'La veille et les nouvelles publications du SLBC, par e‑mail.', panel: 'lettre', cta: 'M’inscrire' }
+  ];
+  const PORTE_BUREAU = { t: 'Publier sur le site', d: 'Outils du bureau : communiqués, veille, actualités, messages des adhérents. Démonstration ouverte à tout adhérent connecté.', panel: 'publier' };
+  const SUJETS = { commission: 'Partager mon expérience dans une commission', suggestion: 'Une suggestion ou une idée', question: 'Une question' };
+  let wantSujet = null; let curSujet = 'commission'; let curPanel = 'veille';
+  const porteInner = (a) => '<span class="porte-t">' + esc(a.t) + '</span><span class="porte-d">' + esc(a.d) + '</span>' + (a.cta ? '<span class="porte-cta more">' + esc(a.cta) + '</span>' : '');
+  const porteOn = (a) => a.panel === curPanel && (curPanel !== 'ecrire' || (a.sujet === 'commission') === (curSujet === 'commission'));
+  function renderPortes() {
+    $('#ea-tabs').innerHTML = '<ul class="portes">' + ACCES.map((a, k) => '<li><button type="button" class="porte s' + (k % 2) + '" data-porte="' + k + '" aria-pressed="' + porteOn(a) + '">' + porteInner(a) + '</button></li>').join('') + '</ul>' +
+      '<button type="button" class="porte porte-bureau" data-porte="bureau" aria-pressed="' + (curPanel === 'publier') + '">' + porteInner(PORTE_BUREAU) + '</button>';
+  }
+  function setSujet(s) {
+    curSujet = SUJETS[s] ? s : 'commission';
+    $$('#ecrire-form input[name="ecrire-sujet"]').forEach((r) => { r.checked = r.value === curSujet; });
+    $('#ecrire-inst-wrap').hidden = curSujet !== 'commission';
+  }
+  function showPanel(name, sujet) {
+    if (!PANELS.some((p) => p[0] === name)) name = 'veille';
+    curPanel = name;
+    if (name === 'ecrire' && sujet) setSujet(sujet);
+    renderPortes();
+    PANELS.forEach((p) => { $('#ea-' + p[0]).hidden = p[0] !== name; });
+    if (name === 'ecrire' && member) {
+      if (!$('#ecrire-email').value) $('#ecrire-email').value = member;
+      renderMesMessages();
+    }
     if (name === 'lettre' && member) {
       if (!$('#sub-email').value) $('#sub-email').value = member;
       const inscrit = subscribers.includes(member.toLowerCase());
@@ -1606,6 +1637,77 @@
     try { if (member) sessionStorage.setItem(SESSION_KEY, member); else sessionStorage.removeItem(SESSION_KEY); } catch (e) { /* stockage indisponible */ }
     applyMember();
   }
+
+  /* ---------- Espace adhérent : portes et « Écrire au bureau » (7 novembre 2026, demande d'Isabelle Eimer) ---------- */
+  /* Avant la connexion : chaque porte mène à la carte de connexion, puis, une fois connecté, à la bonne rubrique. */
+  $('#acces-invite').innerHTML = ACCES.map((a, k) => '<li><a class="porte s' + (k % 2) + '" href="#espace" data-porte="' + k + '">' + porteInner(a) + '</a></li>').join('');
+  $('#acces-invite').addEventListener('click', (e) => {
+    const l = e.target.closest('[data-porte]');
+    if (!l) return;
+    e.preventDefault();
+    const a = ACCES[+l.dataset.porte];
+    if (member) { showPanel(a.panel, a.sujet); return; }
+    wantPanel = a.panel; wantSujet = a.sujet || null;
+    $('#login-intent').textContent = 'Après la connexion, vous arriverez sur « ' + a.t + ' ».';
+    $('#login-intent').hidden = false;
+    $('#login-form').scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+    $('#login-email').focus({ preventScroll: true });
+  });
+  /* Une fois connecté : les portes servent de menu ; sur un petit écran, la rubrique choisie remonte sous les portes. */
+  $('#ea-tabs').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-porte]');
+    if (!b) return;
+    const a = b.dataset.porte === 'bureau' ? PORTE_BUREAU : ACCES[+b.dataset.porte];
+    showPanel(a.panel, a.sujet);
+    const on = $('#ea-tabs [aria-pressed="true"]'); if (on) on.focus({ preventScroll: true });
+    const top = $('#ea-' + a.panel).getBoundingClientRect().top;
+    if (top > window.innerHeight * 0.6) window.scrollTo({ top: window.scrollY + top - 96, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+  /* Formulaire : objet, commission (liste des instances du site), nom, e-mail, message. Démonstration : le message est gardé
+     dans ce navigateur (clé slbc-maquette-messages) et s'affiche côté bureau, rubrique « Publier ». Aucun e-mail n'est envoyé. */
+  const MSG_KEY = 'slbc-maquette-messages';
+  let messages = loadList(MSG_KEY).filter((m) => m && typeof m.msg === 'string' && typeof m.date === 'string' && typeof m.email === 'string');
+  $('#ecrire-inst').innerHTML = '<option value="">Je ne sais pas encore</option>' + INSTANCES.map((i) => { const l = i.n + (i.a ? ' (' + i.a + ')' : ''); return '<option value="' + esc(l) + '">' + esc(l) + '</option>'; }).join('');
+  setSujet('commission');
+  $$('#ecrire-form input[name="ecrire-sujet"]').forEach((r) => r.addEventListener('change', () => { setSujet(r.value); renderPortes(); }));
+  const msgItem = (m, bureau) => '<li class="msg"><p class="msg-meta"><span class="msg-sujet">' + esc(SUJETS[m.sujet] || 'Message') + '</span><time datetime="' + esc(m.date) + '">' + esc(longDate(m.date.slice(0, 10))) + '</time></p>' +
+    (m.inst ? '<p class="msg-inst">' + esc(m.inst) + '</p>' : '') +
+    (bureau ? '<p class="msg-from">' + esc(m.nom) + ', <a href="mailto:' + esc(m.email) + '?subject=' + encodeURIComponent('Votre message au SLBC') + '">' + esc(m.email) + '</a></p>' : '') +
+    '<p class="msg-text">' + esc(m.msg) + '</p></li>';
+  function renderMessages() {
+    $('#msg-count').textContent = '(' + messages.length + ')';
+    $('#msg-list').innerHTML = messages.length ? messages.map((m) => msgItem(m, true)).join('') : '<li class="nl-empty">Aucun message pour l’instant.</li>';
+    $('#msg-clear').hidden = !messages.length;
+  }
+  function renderMesMessages() {
+    const mine = member ? messages.filter((m) => m.email.toLowerCase() === member.toLowerCase()) : [];
+    $('#ecrire-mes-messages').innerHTML = mine.length ? mine.map((m) => msgItem(m, false)).join('') : '<li class="nl-empty">Aucun message envoyé pour l’instant.</li>';
+  }
+  $('#ecrire-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fields = [['ecrire-nom', (v) => (v ? '' : 'Indiquez votre nom.')],
+      ['ecrire-email', (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Indiquez une adresse e-mail valide.')],
+      ['ecrire-msg', (v) => (v ? '' : 'Écrivez votre message.')]];
+    let first = null;
+    fields.forEach(([id, check]) => {
+      const el = $('#' + id); const err = $('#' + id + '-err'); const msg = check(el.value.trim());
+      err.textContent = msg; err.hidden = !msg;
+      if (msg) { el.setAttribute('aria-invalid', 'true'); if (!first) first = el; } else el.removeAttribute('aria-invalid');
+    });
+    if (first) { first.focus(); return; }
+    messages.unshift({ date: new Date().toISOString(), sujet: curSujet, inst: curSujet === 'commission' ? $('#ecrire-inst').value : '',
+      nom: $('#ecrire-nom').value.trim(), email: $('#ecrire-email').value.trim(), msg: $('#ecrire-msg').value.trim() });
+    saveList(MSG_KEY, messages);
+    renderMessages(); renderMesMessages();
+    $('#ecrire-msg').value = '';
+    $('#ecrire-ok').textContent = 'Merci, votre message est transmis au bureau.';
+    $('#ecrire-ok').hidden = false; $('#ecrire-ok').focus();
+  });
+  $('#msg-clear').addEventListener('click', () => {
+    messages = []; saveList(MSG_KEY, messages); renderMessages(); renderMesMessages();
+    showToast('Messages de démonstration effacés.', null, null);
+  });
+  renderMessages();
 
   /* ---------- Démarrage ---------- */
   $('#f-date').value = todayISO();

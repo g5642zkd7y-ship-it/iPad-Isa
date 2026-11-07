@@ -637,7 +637,47 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .side-dark .form-note a{color:var(--vert-clair)}
 
 /* ---------- Espace adhérent ---------- */
-.login-wrap{display:flex;justify-content:center}
+/* Espace adhérent : les « portes » (ce à quoi les adhérents ont accès), à côté de la carte de connexion puis en menu */
+.acces-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:clamp(28px,4vw,56px);align-items:start}
+.acces .h-block-l{margin-bottom:18px}
+.portes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.portes > li{display:flex}
+.porte{display:flex;flex-direction:column;align-items:flex-start;gap:8px;width:100%;padding:18px 20px 20px;border:0;border-top:4px solid var(--vert);border-radius:14px;background:#fff;color:var(--texte);font:inherit;text-align:left;text-decoration:none;cursor:pointer}
+.porte.s1{border-top-color:var(--anis)}
+.porte-t{font-size:18px;line-height:1.25;font-weight:700;letter-spacing:-.005em;color:var(--encre)}
+.porte-d{font-size:15.5px;line-height:1.5;color:var(--texte)}
+.porte-cta{margin-top:auto;padding-top:4px;font-size:16px}
+.porte:hover .porte-t{color:var(--vert)}
+.porte:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
+.portes-menu{margin-bottom:36px}
+.portes-menu .portes{grid-template-columns:repeat(4,minmax(0,1fr))}
+.portes-menu .porte{border:1px solid var(--filet);border-top:4px solid var(--vert)}
+.portes-menu .porte.s1{border-top-color:var(--anis)}
+.portes-menu .porte[aria-pressed="true"]{background:var(--vert-clair);border-color:var(--vert-clair);border-top-color:var(--vert)}
+.portes-menu .porte[aria-pressed="true"] .porte-cta{display:none}
+.porte-bureau{margin-top:14px;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding:14px 20px;background:var(--fond);border:1px solid var(--filet);border-top:4px solid var(--gris)}
+.porte-bureau .porte-d{font-size:15px;color:var(--gris)}
+.portes-menu .porte-bureau[aria-pressed="true"]{border-top-color:var(--encre)}
+.portes-menu .porte-bureau[aria-pressed="true"] .porte-d{color:var(--texte)}
+.login-intent{font-size:15px;font-weight:600;color:var(--vert)}
+@media (max-width:1000px){.portes-menu .portes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){.acces-wrap{grid-template-columns:minmax(0,1fr)}.acces-wrap .login-card{max-width:none}}
+@media (max-width:560px){.portes{grid-template-columns:minmax(0,1fr)}.portes-menu .portes{grid-template-columns:minmax(0,1fr);gap:10px}.portes-menu .porte .porte-d,.portes-menu .porte .porte-cta{display:none}.portes-menu .porte{padding:14px 16px}}
+/* « Écrire au bureau » et messages reçus */
+.ecrire{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.ecrire-form{background:var(--fond)}
+.ecrire-sujets{display:flex;flex-direction:column;gap:10px;min-width:0;margin:0;padding:0;border:0}
+.ecrire-sujets legend{margin-bottom:10px}
+.ecrire-side{display:flex;flex-direction:column;gap:14px}
+.msg-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--filet)}
+.msg{display:flex;flex-direction:column;gap:6px;padding:16px 0;border-bottom:1px solid var(--filet)}
+.msg-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;font-size:14px;color:var(--gris)}
+.msg-sujet{font-weight:700;color:var(--encre)}
+.msg-inst{font-size:15px;color:var(--vert);font-weight:600}
+.msg-from{font-size:15px;color:var(--texte)}
+.msg-from a{color:var(--vert)}
+.msg-text{font-size:16px;line-height:1.55;color:var(--encre);white-space:pre-line}
+@media (max-width:860px){.ecrire{grid-template-columns:minmax(0,1fr)}}
 .login-card{display:flex;flex-direction:column;gap:18px;width:100%;max-width:440px;padding:clamp(28px,5vw,48px);border-radius:var(--r-tile);background:#fff;box-shadow:0 1px 2px rgba(46,50,54,.06)}
 .member-id{font-size:17px}
 .ea-panel{margin-top:32px}
