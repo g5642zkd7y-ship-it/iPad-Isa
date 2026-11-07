@@ -12,8 +12,8 @@
             <path d="M49.9 70 L58.1 70 L58.1 84 Q58.1 88.6 54 88.6 Q49.9 88.6 49.9 84 Z" fill="#A3BE3C" stroke="none"/>
             <path d="M46 52 L62 52" stroke-width="3"/>
           </g>
-          <ellipse cx="46" cy="88" rx="5" ry="6.5" fill="#2E3236" stroke="none" transform="rotate(-14 46 88)"/>
-          <circle cx="95" cy="72" r="35" fill="#FFFFFF"/><path d="M78 104 Q93 112 110 103 L111 111 Q94 121 78 112 Z" fill="#C62F3B" stroke-width="3"/><path d="M96 113 L100 136 L91 137 L89 115 Z" fill="#C62F3B" stroke-width="3"/><path d="M86 108 L86 115 M94 110 L94 117 M102 107 L103 114 M90 124 L98 123 M91 130 L99 129" stroke="#FFFFFF" stroke-width="2.6"/><path d="M122 34 C123 18 114 4 99 2 C84 0 70 8 61 19 C68 20 72 27 70 34 Z" fill="#C62F3B"/><rect x="64" y="29" width="62" height="12" rx="6" fill="#FFFFFF" stroke-width="3"/><circle cx="59" cy="21" r="6.5" fill="#FFFFFF" stroke-width="3"/>
+          <ellipse cx="46" cy="88" rx="7" ry="8.5" fill="#C62F3B" stroke="#2E3236" stroke-width="2.4" transform="rotate(-14 46 88)"/>
+          <circle cx="95" cy="72" r="35" fill="#FFFFFF"/><path d="M78 104 Q93 112 110 103 L111 111 Q94 121 78 112 Z" fill="#C62F3B" stroke-width="3"/><path d="M96 113 L100 136 L91 137 L89 115 Z" fill="#C62F3B" stroke-width="3"/><path d="M86 108 L86 115 M94 110 L94 117 M102 107 L103 114 M90 124 L98 123 M91 130 L99 129" stroke="#FFFFFF" stroke-width="2.6"/><path d="M124 42 C126 24 116 8 99 6 C82 4 68 14 60 28 C68 29 72 35 69 42 Z" fill="#C62F3B"/><rect x="61" y="36" width="68" height="13" rx="6.5" fill="#FFFFFF" stroke-width="3"/><circle cx="56" cy="29" r="9.5" fill="#FFFFFF" stroke-width="3"/>
           
           
           <path d="M60 66 L88 66" stroke-width="2.5"/>
@@ -35,5 +35,5 @@
             </g>
           </g>
           <path d="M106 116 Q128 134 150 109"/>
-          <circle cx="151" cy="107" r="4.5" fill="#2E3236" stroke="none"/>
+          <ellipse cx="151" cy="107" rx="6.7" ry="7.5" fill="#C62F3B" stroke="#2E3236" stroke-width="2.4"/><ellipse cx="145.3" cy="107.5" rx="2.6" ry="3.4" fill="#C62F3B" stroke="#2E3236" stroke-width="2"/>
         </svg>

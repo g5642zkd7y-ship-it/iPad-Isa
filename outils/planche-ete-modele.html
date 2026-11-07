@@ -1,0 +1,57 @@
+<title>Mascottes d’été SLBC</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Nunito:wght@900&display=swap">
+<style>
+/* Planche de propositions, charte du site SLBC (thème clair seulement) : une ligne par mascotte,
+   le dessin actuel puis ses deux tenues de Noël côte à côte. */
+:root{
+  --anis:#A3BE3C; --vert:#5F7A2B; --vert-clair:#D6E4A6; --gris:#5E6266; --texte:#3F4347; --encre:#2E3236;
+  --fond:#F7F8F4; --blanc:#FFFFFF; --filet:#E3E6DD; --rouge:#C62F3B;
+  --font:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-marque:"Nunito","Figtree",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--texte);font:400 16px/1.55 var(--font);-webkit-font-smoothing:antialiased}
+.page{max-width:1180px;margin:0 auto;padding-block:clamp(20px,4vw,48px) 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+h1,h2{color:var(--encre);margin:0;text-wrap:balance}
+p{margin:0}
+.entete{display:flex;align-items:center;gap:12px}
+.entete svg{width:44px;height:44px;flex:none}
+.entete .nom{font-family:var(--font-marque);font-weight:900;font-size:28px;line-height:1;color:var(--texte)}
+.titre{display:flex;flex-direction:column;gap:12px;max-width:52em}
+.titre h1{font-size:clamp(30px,4.6vw,46px);line-height:1.08;font-weight:800;letter-spacing:-.02em}
+.titre p{font-size:18px}
+.legende{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:15px}
+.legende span{display:inline-flex;align-items:center;gap:8px}
+.legende i{display:inline-block;width:16px;height:16px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--encre)}
+.mascotte-ligne{display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:22px;background:var(--blanc);box-shadow:0 1px 2px rgba(46,50,54,.06)}
+.mascotte-ligne h2{font-size:20px;font-weight:700}
+.note{font-size:15px;color:var(--gris)}
+.cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.case{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+.dessin{display:grid;place-items:center;height:260px;padding:12px;border-radius:16px;background:linear-gradient(180deg,#E6F1F4 0%,#FFFFFF 75%)}
+.case.actuelle .dessin{background:var(--fond)}
+.dessin svg{display:block;width:100%;height:100%}
+.large .cases{grid-template-columns:minmax(0,1fr)}
+.large .dessin{height:auto;aspect-ratio:var(--ar,2.4)}
+figcaption{font-size:14.5px;font-weight:600;color:var(--encre);text-align:center}
+.case.actuelle figcaption{color:var(--gris);font-weight:500}
+.pied{font-size:14px;color:var(--gris)}
+@media (min-width:900px){.large .cases{grid-template-columns:repeat(2,minmax(0,1fr))}.large .dessin{aspect-ratio:auto;height:260px}}
+@media (max-width:640px){.cases{grid-template-columns:minmax(0,1fr)}.dessin{height:210px}}
+</style>
+<div class="page">
+  <div class="entete" aria-label="SLBC">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="clip-logo"><circle cx="44" cy="44" r="36"/></clipPath></defs><circle cx="44" cy="44" r="36" fill="#5E6266"/><circle cx="76" cy="76" r="36" fill="#A3BE3C"/><circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-logo)"/></svg>
+    <span class="nom">SLBC</span>
+  </div>
+  <div class="titre">
+    <h1>Les mascottes du site en tenue d’été</h1>
+    <p>Pour chaque mascotte validée : le dessin actuel, puis sa tenue d’été. Lunettes de soleil, casquette vert anis ou chapeau de paille, et une bouée gonflable en forme de canard posée à côté.</p>
+  </div>
+  {{LIGNES}}
+  <p class="pied">Propositions du 7 novembre 2026. Le jaune de la bouée et la paille du chapeau ne sont pas dans la charte du site : ces tenues ne serviraient que l’été.</p>
+</div>
