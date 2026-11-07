@@ -238,28 +238,18 @@
      todo : sièges restant à pourvoir (texte affiché après les noms) ; groups : [libellé, noms, todo] quand l’instance a plusieurs collèges.
      Le 6 novembre 2026, Isabelle Eimer a demandé de ne garder que les instances qu’elle a données (Agence de la biomédecine,
      Santé publique France, SFBC, Bio Qualité, CNPS, Agence nationale du DPC, Klesia et Commission sociale paritaire retirés).
-     Les descriptifs, retirés un moment le même jour, ont été rétablis à sa demande.
-     p : domaine (voir POLES), qui classe les instances sur la page Le syndicat. */
+     Les descriptifs, retirés un moment le même jour, ont été rétablis à sa demande. */
   const INSTANCES = [
-    { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', p: 'am', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
-    { n: 'Commission conventionnelle paritaire nationale', a: 'CPPNI', p: 'so', r: 'Dialogue social de la branche', reps: ['Antoine Crinquette', 'Éric Flatin'] },
-    { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', p: 'ex', r: 'Conditions d’exercice de la profession', reps: [],
+    { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
+    { n: 'Commission conventionnelle paritaire nationale', a: 'CPPNI', r: 'Dialogue social de la branche', reps: ['Antoine Crinquette', 'Éric Flatin'] },
+    { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', r: 'Conditions d’exercice de la profession', reps: [],
       groups: [['Bureau', ['Thierry Bouchet'], 'un représentant à désigner'], ['Assemblée générale', ['Hala Sarmini'], 'deux représentants à désigner']] },
-    { n: 'Comité de suivi du protocole', p: 'am', r: 'Protocole 2027-2029 avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Isabelle Eimer', 'Nicolas Roquigny', 'Éric Flatin'] },
-    { n: 'Commission paritaire nationale des structures pluriprofessionnelles', a: 'CPNMSP', p: 'msp', r: 'Accord conventionnel interprofessionnel de 2017', reps: ['Thierry Bouchet'], todo: 'un représentant à désigner' },
-    { n: 'Commission paritaire régionale des structures pluriprofessionnelles', a: 'CPRMSP', p: 'msp', r: 'Accord conventionnel interprofessionnel de 2017, en région', reps: [], todo: 'un titulaire et un suppléant à désigner' },
-    { n: 'Cofrac', p: 'ex', r: 'Commission technique d’accréditation', reps: [] },
-    { n: 'Ministère chargé de la santé', p: 'tu', r: 'Relations avec la tutelle', reps: ['Thierry Bouchet', 'Nicolas Roquigny'] },
-    { n: 'Commission biologie européenne', p: 'tu', r: 'Représentation de la profession en Europe', reps: ['Jean-Philippe Brochet'] }
-  ];
-  /* Domaines des représentants (proposition du 6 novembre 2026, à valider par le bureau) : les instances ci-dessus
-     regroupées d'après leur nom et leur descriptif, dans cet ordre. Aucune instance ni aucun nom n'est ajouté. */
-  const POLES = [
-    { k: 'am', t: 'Assurance maladie et nomenclature' },
-    { k: 'ex', t: 'Exercice et accréditation' },
-    { k: 'so', t: 'Dialogue social' },
-    { k: 'msp', t: 'Structures pluriprofessionnelles' },
-    { k: 'tu', t: 'Tutelle et Europe' }
+    { n: 'Comité de suivi du protocole', r: 'Protocole 2027-2029 avec l’Assurance maladie', reps: ['Thierry Bouchet', 'Isabelle Eimer', 'Nicolas Roquigny', 'Éric Flatin'] },
+    { n: 'Commission paritaire nationale des structures pluriprofessionnelles', a: 'CPNMSP', r: 'Accord conventionnel interprofessionnel de 2017', reps: ['Thierry Bouchet'], todo: 'un représentant à désigner' },
+    { n: 'Commission paritaire régionale des structures pluriprofessionnelles', a: 'CPRMSP', r: 'Accord conventionnel interprofessionnel de 2017, en région', reps: [], todo: 'un titulaire et un suppléant à désigner' },
+    { n: 'Cofrac', r: 'Commission technique d’accréditation', reps: [] },
+    { n: 'Ministère chargé de la santé', r: 'Relations avec la tutelle', reps: ['Thierry Bouchet', 'Nicolas Roquigny'] },
+    { n: 'Commission biologie européenne', r: 'Représentation de la profession en Europe', reps: ['Jean-Philippe Brochet'] }
   ];
   const CA = [
     ['Auvergne-Rhône-Alpes et Bourgogne-Franche-Comté', ['Nicolas Roquigny', 'Éric Flatin', 'François Targe', 'Benoît Dumont', 'Marc Thome', 'Fabienne Moulinier']],
@@ -280,15 +270,6 @@
     ['Guadeloupe', ['Frédéric Leroy']], ['Guyane', []], ['Martinique', ['Gérard Cherchel']],
     ['La Réunion', ['Paul Emile Gin']], ['Mayotte', ['Ahmed Aboubacar']]
   ];
-  /* URPS de métropole sur grand écran : une case par région, placée à peu près à sa place sur la carte de France
-     (rangée, colonne sur une grille de 10 demi-colonnes). Une région absente de cette liste se range à la suite. */
-  const URPS_CARTE = {
-    'Hauts-de-France': [1, 5], 'Normandie': [2, 3], 'Île-de-France': [2, 5], 'Grand Est': [2, 7],
-    'Bretagne': [3, 1], 'Pays de la Loire': [3, 3], 'Centre-Val de Loire': [3, 5], 'Bourgogne-Franche-Comté': [3, 7],
-    'Nouvelle-Aquitaine': [4, 4], 'Auvergne-Rhône-Alpes': [4, 6], 'Occitanie': [5, 5], 'Provence-Alpes-Côte d’Azur': [5, 7], 'Corse': [5, 9]
-  };
-  /* URPS d'outre-mer, présentées à part sur la page Le syndicat */
-  const OUTRE_MER = ['Guadeloupe', 'Guyane', 'Martinique', 'La Réunion', 'Mayotte'];
   /* Statuts et comptes, recopiés de l'ancien site (6 novembre 2026). Le document présenté comme « Bilan 2021 » sur l'ancien site
      porte sur l'exercice clos le 31 décembre 2020 : affiché ici sous 2020 (point 25 de docs/sources-et-verifications.md). */
   const STATUTS = 'documents/syndicat/statuts-slbc.pdf';
@@ -526,83 +507,13 @@
       actuLinks(a) +
     '</li>';
 
-  /* ---------- Page Le syndicat : organigramme, domaines et régions (proposition du 6 novembre 2026) ----------
-     Tout vient des tableaux BUREAU, CA, INSTANCES et URPS : la fonction au bureau et la région affichées près
-     d'un nom sont retrouvées dans ces listes ; aucun nom, aucune fonction n'est ajouté. */
-  const BUREAU_ROLE = new Map(BUREAU.map((b) => [b[1], b[0]]));
-  const caRegionOf = (name) => { const r = CA.find((x) => x[1].includes(name)); return r ? r[0] : ''; };
-  const plural = (n, one, many) => n + '\u00a0' + (n > 1 ? many : one);
-  /* Sièges à pourvoir, lus dans le champ todo : « un représentant à désigner » donne un siège, « deux représentants… »
-     deux sièges, « un titulaire et un suppléant… » un titulaire et un suppléant. Sans nom ni todo : un siège. */
-  const NOMBRES = { un: 1, une: 1, deux: 2, trois: 3, quatre: 4, cinq: 5 };
-  function openSeats(names, todo) {
-    if (!todo) return names.length ? [] : ['À désigner'];
-    if (/titulaire et un suppléant/.test(todo)) return ['Titulaire à désigner', 'Suppléant à désigner'];
-    const n = NOMBRES[todo.split(' ')[0]];
-    return n ? Array(n).fill('À désigner') : [todo.charAt(0).toUpperCase() + todo.slice(1)];
-  }
-  /* Un nom par pastille ; fond vert clair pour les membres du bureau ; pointillés pour un siège à pourvoir */
-  const chips = (names, todo) => '<ul class="chips">' +
-    names.map((n) => (BUREAU_ROLE.has(n)
-      ? '<li class="chip chip-bureau">' + esc(n) + '<span class="sr-only">, membre du bureau</span></li>'
-      : '<li class="chip">' + esc(n) + '</li>')).join('') +
-    openSeats(names, todo).map((t) => '<li class="chip chip-open">' + esc(t) + '</li>').join('') + '</ul>';
-  /* Instances où siège une personne (INSTANCES, collèges compris), avec le numéro de l'instance pour le lien */
-  const seatsOf = (name) => INSTANCES.map((i, k) => {
-    if (i.reps.includes(name)) return { i, k, g: '' };
-    const g = (i.groups || []).find((x) => x[1].includes(name));
-    return g ? { i, k, g: g[0].toLowerCase() } : null;
-  }).filter(Boolean);
-  const seatLinks = (name) => {
-    const s = seatsOf(name);
-    return s.length ? '<span class="plate-seats"><span class="plate-seats-l">Siège :</span> ' + s.map((x) => '<a href="#syndicat" data-section="inst-' + x.k + '">' +
-      esc(x.i.a || x.i.n) + (x.g ? ' (' + esc(x.g) + ')' : '') + '</a>').join('<span aria-hidden="true"> · </span><span class="sr-only">, </span>') + '</span>' : '';
+  const namesOr = (names, empty) => (names.length ? esc(names.join(', ')) : '<span class="pending">' + esc(empty) + '</span>');
+  /* Représentants d’une instance : « Thierry Bouchet et un représentant à désigner », ou « Représentant à désigner » s’il n’y a personne. */
+  const repsLine = (names, todo) => {
+    if (!todo) return namesOr(names, 'Représentant à désigner');
+    if (!names.length) return '<span class="pending">' + esc(todo.charAt(0).toUpperCase() + todo.slice(1)) + '</span>';
+    return esc(names.join(', ')) + ' et <span class="pending">' + esc(todo) + '</span>';
   };
-  /* Organigramme du bureau : le président, puis les vice-présidents, puis le secrétaire général et les membres */
-  function orgHtml() {
-    const tier = (b) => (/^présidente?$/i.test(b[0]) ? 0 : /^vice-/i.test(b[0]) ? 1 : 2);
-    const plate = (b) => {
-      const reg = caRegionOf(b[1]);
-      return '<li class="plate"><span class="plate-role">' + esc(b[0]) + '</span><span class="plate-name">' + esc(b[1]) + '</span>' +
-        (reg ? '<span class="plate-region">' + keepWords(reg) + '</span>' : '') + seatLinks(b[1]) + '</li>';
-    };
-    return [0, 1, 2].map((t) => BUREAU.filter((b) => tier(b) === t)).filter((r) => r.length)
-      .map((r, i) => '<ul class="org-row org-row-' + i + (r.length % 2 ? ' is-odd' : ' is-even') + '" style="--n:' + r.length + '">' + r.map(plate).join('') + '</ul>').join('');
-  }
-  /* Carte d'une région (conseil d'administration ou URPS) : nom, noms visibles ; la fonction au bureau est rappelée sous
-     le nom des membres du bureau. Conseil : nombre d'administrateurs en pastille, et carte deux fois plus large à partir
-     de cinq noms. URPS : cartes plus petites, sans pastille (un ou deux noms). */
-  const keepWords = (t) => esc(t).replace(/[^\s,]+-[^\s,]+/g, (w) => '<span class="nw">' + w + '</span>');
-  function regionCard(region, names, o) {
-    const wide = o.count && names.length >= 5;
-    const pos = o.map && URPS_CARTE[region];
-    return '<article class="reg-card' + (wide ? ' reg-wide' : '') + '"' + (pos ? ' style="--r:' + pos[0] + ';--c:' + pos[1] + '"' : '') + '><div class="reg-head"><' + o.h + ' class="reg-name">' + (o.count ? keepWords(region) : esc(region)) + '</' + o.h + '>' +
-      (o.count && names.length ? '<span class="reg-count"><span aria-hidden="true">' + names.length + '</span><span class="sr-only">' + plural(names.length, 'administrateur', 'administrateurs') + '</span></span>' : '') + '</div>' +
-      (names.length
-        ? '<ul class="reg-names">' + names.map((n) => '<li><span>' + esc(n) + '</span>' + (BUREAU_ROLE.has(n) ? '<span class="reg-role">' + esc(BUREAU_ROLE.get(n)) + '</span>' : '') + '</li>').join('') + '</ul>'
-        : '<ul class="chips"><li class="chip chip-open">À désigner</li></ul>') +
-      '</article>';
-  }
-  const instHtml = (i) => '<div class="inst" id="inst-' + INSTANCES.indexOf(i) + '"><div class="inst-head"><h4 class="inst-name">' + esc(i.n) + (i.a ? ' <span class="inst-abbr">(' + esc(i.a) + ')</span>' : '') + '</h4>' +
-    (i.r ? '<p class="inst-role">' + esc(i.r) + '</p>' : '') + '</div><div class="inst-seats">' +
-    (i.groups ? i.groups.map((g) => '<div class="inst-grp"><p class="inst-group">' + esc(g[0]) + '</p>' + chips(g[1], g[2]) + '</div>').join('') : chips(i.reps, i.todo)) +
-    '</div></div>';
-  function polesHtml() {
-    const known = new Set(POLES.map((p) => p.k));
-    const others = INSTANCES.filter((i) => !known.has(i.p));
-    return POLES.concat(others.length ? [{ k: 'autres', t: 'Autres instances' }] : []).map((p) => {
-      const list = p.k === 'autres' ? others : INSTANCES.filter((i) => i.p === p.k);
-      if (!list.length) return '';
-      return '<div class="pole" role="group" aria-labelledby="pole-' + p.k + '"><div class="pole-head"><h3 class="pole-title" id="pole-' + p.k + '">' + esc(p.t) + '</h3>' +
-        '<p class="pole-count">' + plural(list.length, 'instance', 'instances') + '</p></div><div class="pole-list">' + list.map(instHtml).join('') + '</div></div>';
-    }).join('');
-  }
-  function urpsHtml() {
-    const om = new Set(OUTRE_MER);
-    const group = (title, list, map) => (list.length ? '<div class="urps-group"><h3 class="h-group">' + esc(title) + '</h3><div class="reg-grid urps-grid' + (map ? ' urps-map' : ' urps-om') + '">' +
-      list.map((u) => regionCard(u[0], u[1], { h: 'h4', map })).join('') + '</div>' + (map ? '<p class="map-note">Carte schématique : une case par région.</p>' : '') + '</div>' : '');
-    return group('Métropole', URPS.filter((u) => !om.has(u[0])), true) + group('Outre-mer', URPS.filter((u) => om.has(u[0])), false);
-  }
 
   /* ---------- Commande segmentée ---------- */
   function seg(el, options, current, onPick) {
@@ -614,16 +525,73 @@
     }));
   }
 
+  /* ---------- Le syndicat : mise en page éditoriale (7 novembre 2026, demandes d'Isabelle Eimer) ----------
+     Un syndicat travaille en collectif : aucun membre n'est mis au-dessus des autres (même taille, même bloc).
+     On montre ce que le syndicat a, pas ce qui lui manque : pas de nombre de régions ni de compteur de sièges à pourvoir ;
+     un siège à pourvoir reste écrit, discrètement. Les croisements (région d'un membre du bureau, instances où il siège)
+     et les chiffres sont calculés à partir des tableaux BUREAU, CA, INSTANCES et URPS : aucune donnée n'est ajoutée. */
+  const OUTREMER = ['Guadeloupe', 'Guyane', 'Martinique', 'La Réunion', 'Mayotte'];
+  const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+  const kfigs = (list) => list.map((f) => '<li class="kfig"><span class="kfig-n">' + f[0] + '</span> <span class="kfig-l">' + esc(f[1]) + '</span></li>').join('');
+  const roleOf = (name) => { const b = BUREAU.find((x) => x[1] === name); return b ? b[0] : ''; };
+  const caRegionOf = (name) => { const r = CA.find((x) => x[1].includes(name)); return r ? r[0] : ''; };
+  /* Titre d'une instance : son sigle en grand, ou son nom s'il est court (Cofrac) */
+  const instHead = (i) => i.a || (i.n.length < 10 ? i.n : '');
+  const seatsOf = (name) => INSTANCES.flatMap((i, k) => (i.groups
+    ? i.groups.filter((g) => g[1].includes(name)).map((g) => ({ i, k, g: g[0] }))
+    : (i.reps.includes(name) ? [{ i, k }] : [])));
+  const seatTodo = (t) => '<li class="seat-todo">' + esc(cap(t)) + '</li>';
+  const repsList = (names, todo) => '<ul class="reps">' + names.map((n) => '<li>' + esc(n) + '</li>').join('') +
+    (todo ? seatTodo(todo) : (names.length ? '' : seatTodo('représentant à désigner'))) + '</ul>';
+
+  function renderSyndicat() {
+    /* Bureau : un seul bloc, chaque membre à égalité (ordre des statuts : président, vice-présidents, secrétaire, membres) */
+    const seatLinks = (name) => {
+      const s = seatsOf(name);
+      return s.length ? '<p class="pm-seats"><span class="pm-l">Siège</span> ' + s.map((x) => '<a href="#syndicat" data-section="inst-' + x.k + '">' +
+        esc(instHead(x.i) || x.i.n) + (x.g ? ' (' + esc(x.g.toLowerCase()) + ')' : '') + '</a>').join(', ') + '</p>' : '';
+    };
+    $('#bureau-list').innerHTML = BUREAU.map((b) => {
+      const region = caRegionOf(b[1]);
+      return '<li class="person"><p class="person-role">' + esc(b[0]) + '</p><h3 class="person-name">' + esc(b[1]) + '</h3>' +
+        (region ? '<p class="pm-region"><span class="pm-l">Région</span> ' + esc(region) + '</p>' : '') + seatLinks(b[1]) + '</li>';
+    }).join('');
+
+    /* Conseil : le nombre d'administrateurs, puis une fiche par région, noms visibles */
+    const total = CA.reduce((n, r) => n + r[1].length, 0);
+    $('#ca-figs').innerHTML = kfigs([[total, total > 1 ? 'administrateurs' : 'administrateur']]);
+    $('#ca-list').innerHTML = CA.map((r, k) =>
+      '<li class="ca-region s' + (k % 2) + (r[1].length >= 5 ? ' ca-wide' : '') + '"><h3 class="ca-name">' + esc(r[0]) + '</h3>' +
+        '<ul class="ca-people">' + r[1].map((n) => '<li>' + esc(n) + (roleOf(n) ? '<span class="ca-role">' + esc(roleOf(n).toLowerCase()) + '</span>' : '') + '</li>').join('') + '</ul></li>').join('');
+
+    /* Représentants : une fiche par instance, sous son sigle ; une ancre par instance (inst-0…) pour les liens et la recherche */
+    const named = new Set();
+    INSTANCES.forEach((i) => { i.reps.forEach((n) => named.add(n)); (i.groups || []).forEach((g) => g[1].forEach((n) => named.add(n))); });
+    $('#inst-figs').innerHTML = kfigs([[INSTANCES.length, 'instances'], [named.size, 'représentants']]);
+    $('#inst-list').innerHTML = INSTANCES.map((i, k) => {
+      const head = instHead(i);
+      return '<li class="inst s' + (k % 2) + '" id="inst-' + k + '"><h3 class="inst-head">' +
+          (head ? '<span class="inst-sig">' + esc(head) + '</span>' + (i.a ? '<span class="inst-full">' + esc(i.n) + '</span>' : '') : '<span class="inst-sig inst-sig-long">' + esc(i.n) + '</span>') +
+        '</h3>' + (i.r ? '<p class="inst-role">' + esc(i.r) + '</p>' : '') + '<div class="inst-reps">' +
+        (i.groups ? i.groups.map((g) => '<p class="inst-group">' + esc(g[0]) + '</p>' + repsList(g[1], g[2])).join('') : repsList(i.reps, i.todo)) +
+      '</div></li>';
+    }).join('');
+
+    /* URPS : le nombre de représentants, puis la métropole et l'outre-mer */
+    const reps = URPS.reduce((n, u) => n + u[1].length, 0);
+    $('#urps-figs').innerHTML = kfigs([[reps, 'représentants dans les URPS']]);
+    const group = (title, list) => '<div class="urps-group"><h3 class="urps-gname">' + esc(title) + '</h3>' +
+      '<ul class="urps-cols">' + list.map((u) => '<li class="urps-item"><h4 class="urps-region">' + esc(u[0]) + '</h4>' +
+        (u[1].length ? '<ul class="urps-names">' + u[1].map((n) => '<li>' + esc(n) + '</li>').join('') + '</ul>' : '<p class="seat-todo">Représentant à désigner</p>') + '</li>').join('') + '</ul></div>';
+    $('#urps-list').innerHTML = group('Métropole', URPS.filter((u) => !OUTREMER.includes(u[0]))) + group('Outre-mer', URPS.filter((u) => OUTREMER.includes(u[0])));
+  }
+
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
     $('#home-benefits').innerHTML = BENEFITS.map((b) => '<li><span>' + esc(b.t) + '</span></li>').join('');
     $('#benefits-grid').innerHTML = BENEFITS.map((b) => '<div class="benefit"><h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
     $('#missions-list').innerHTML = MISSIONS.map((m) => '<div class="charter-item"><h3 class="h-block">' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div>').join('');
-    $('#bureau-list').innerHTML = orgHtml();
-    $('#ca-list').innerHTML = CA.map((r) => regionCard(r[0], r[1], { h: 'h3', count: true })).join('');
-    $('#ca-total').textContent = ' : ' + plural(CA.reduce((n, r) => n + r[1].length, 0), 'administrateur', 'administrateurs') + ' dans ' + plural(CA.length, 'région', 'régions');
-    $('#inst-list').innerHTML = polesHtml();
-    $('#urps-list').innerHTML = urpsHtml();
+    renderSyndicat();
     $('#comptes-list').innerHTML = docRow({ t: 'Les statuts du SLBC', s: 'Paris, le 16 novembre 2013', url: STATUTS }, 'Statuts') +
       COMPTES.map((c) => docRow({ t: c.d, url: c.url }, 'Exercice ' + c.y)).join('');
     $('#trackers').innerHTML = TRACKERS.map((t) => '<p class="track-title">' + esc(t.title) + '</p><ol class="track">' + t.steps.map((s) => '<li class="' + (s.done ? 'done' : '') + '"><span class="step-name">' + esc(s.n) + '</span><span class="step-when">' + esc(s.w) + '</span></li>').join('') + '</ol>').join('');
@@ -1349,7 +1317,7 @@
   function setupScrollLife() {
     const live = !reduceMotion;
     if (live) document.documentElement.classList.add('js-life');
-    const DRIFT = '.pillar, .charter-item, .org, .reg-card, .pole, .benefit, .vcard';
+    const DRIFT = '.pillar, .charter-item, .person, .ca-region, .inst, .urps-item, .benefit, .vcard';
     const springs = new WeakMap();
     let lastY = window.scrollY; let lastT = performance.now(); let vel = 0; let raf = 0;
     const shown = (el) => el.getClientRects().length > 0;
