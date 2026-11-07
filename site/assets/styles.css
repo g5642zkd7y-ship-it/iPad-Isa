@@ -480,9 +480,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .field-label{font-size:15px;font-weight:600;color:var(--encre)}
 .side-dark .field-label{color:#fff}
 .input{width:100%;min-height:48px;padding:11px 14px;border:1px solid var(--filet-fort);border-radius:12px;background:#fff;color:var(--encre);font:400 17px/1.4 var(--font);transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none}
-.input::placeholder{color:#868A8E}
+.input::placeholder{color:#6E7276}
 .input:focus{outline:none;border-color:var(--vert);box-shadow:0 0 0 4px rgba(95,122,43,.18)}
 .input[aria-invalid="true"]{border-color:var(--erreur)}
+.input[aria-invalid="true"]:focus{outline:2px solid var(--erreur);outline-offset:2px;box-shadow:none}
 textarea.input{min-height:120px;resize:vertical}
 select.input{padding-right:38px;background-image:var(--chev-down);background-repeat:no-repeat;background-position:right 14px center;background-size:12px;cursor:pointer}
 .field-error{font-size:14px;font-weight:500;color:var(--erreur)}

@@ -935,7 +935,7 @@
     const addr = em.value.trim().toLowerCase();
     if (!EMAIL_RE.test(addr)) { fail('Saisissez une adresse e-mail valide, par exemple nom@laboratoire.fr.', em); return; }
     if (!consent.checked) { fail('Cochez la case pour confirmer votre inscription.', consent); return; }
-    er.hidden = true;
+    er.hidden = true; er.textContent = '';
     if (subscribers.includes(addr)) { ok.textContent = 'Cette adresse est déjà inscrite.'; ok.hidden = false; return; }
     subscribers.push(addr);
     saveList(SUB_KEY, subscribers);
@@ -1015,14 +1015,15 @@
     e.preventDefault();
     const em = $('#login-email'); const er = $('#login-err');
     if (!em.value.trim()) { er.textContent = 'Saisissez votre e-mail.'; er.hidden = false; em.setAttribute('aria-invalid', 'true'); em.focus(); return; }
-    er.hidden = true; em.removeAttribute('aria-invalid');
+    er.hidden = true; er.textContent = ''; em.removeAttribute('aria-invalid');
     setMember(em.value.trim());
+    $('#login-pass').value = '';
     /* Les formulaires de l'espace reprennent l'e-mail de connexion. */
     const mail = EMAIL_RE.test(member) ? member : '';
     $('#ecrire-email').value = mail; $('#sub-email').value = mail;
     const target = wantPanel;
     showPanel(wantPanel || 'veille', wantSujet); wantPanel = null; wantSujet = null;
-    $('#login-intent').hidden = true;
+    $('#login-intent').hidden = true; $('#login-intent').textContent = '';
     window.scrollTo(0, 0);
     playSignature('espace');
     /* Arrivée par une porte ou un lien : directement sur la rubrique choisie. */
@@ -1031,7 +1032,7 @@
   });
   $('#logout').addEventListener('click', () => {
     setMember(null); resetEspace(); showPanel('veille');
-    window.scrollTo(0, 0); $('#login-email').focus({ preventScroll: true });
+    window.scrollTo(0, 0); $('#h-espace').focus({ preventScroll: true });
   });
 
   /* ---------- Espace adhérent : publier ---------- */
@@ -1071,7 +1072,7 @@
       '<p class="pv-date">' + esc(longDate(date)) + '</p>';
     const mail = $('#f-mail').checked;
     const n = subscribers.length;
-    $('#preview-where').textContent = PUB[pubType].where + (mail ? (n ? (n === 1 ? ' L’abonné la recevra aussi par e-mail.' : ' ' + abonnes(n, true) + ' la recevront aussi par e-mail.') : ' Aucun abonné pour l’instant : aucun e-mail ne partira.') : '');
+    $('#preview-where').textContent = PUB[pubType].where + (mail ? (n ? (n === 1 ? ' L’abonné la recevra aussi par e-mail.' : ' ' + abonnes(n, true) + ' la recevront aussi par e-mail.') : ' Aucun abonné pour l’instant : aucun e‑mail ne partira.') : '');
     $('#g-mail-subject').hidden = !mail;
     $('#mail-preview-wrap').hidden = !mail;
     if (mail) {
@@ -1110,7 +1111,7 @@
     const title = titleEl.value.trim();
     const urlEl = $('#f-url');
     const urlVal = urlEl.value.trim();
-    err.hidden = true; titleEl.removeAttribute('aria-invalid'); urlEl.removeAttribute('aria-invalid');
+    err.hidden = true; err.textContent = ''; titleEl.removeAttribute('aria-invalid'); urlEl.removeAttribute('aria-invalid');
     if (!title) { err.textContent = 'Ajoutez un titre pour publier.'; err.hidden = false; titleEl.setAttribute('aria-invalid', 'true'); titleEl.focus(); return; }
     if (pubType === 'veille' && urlVal && !isHttp(urlVal)) { err.textContent = 'Le lien vers le texte officiel doit commencer par https://'; err.hidden = false; urlEl.setAttribute('aria-invalid', 'true'); urlEl.focus(); return; }
     const date = $('#f-date').value || todayISO();
@@ -1160,6 +1161,7 @@
     saveList(SENT_KEY, sentLog);
     renderNewsletter();
     renderDynamic();
+    $('#recent-title').focus({ preventScroll: true });
     showToast('Publications et envois de démonstration effacés.', null, null);
   });
 
@@ -1194,7 +1196,7 @@
     inp.removeAttribute('aria-invalid');
     if (!EMAIL_RE.test(addr)) { er.textContent = 'Saisissez une adresse e-mail valide, par exemple nom@laboratoire.fr.'; er.hidden = false; inp.setAttribute('aria-invalid', 'true'); inp.focus(); return; }
     if (subscribers.includes(addr)) { er.textContent = 'Cette adresse est déjà dans la liste.'; er.hidden = false; inp.focus(); return; }
-    er.hidden = true;
+    er.hidden = true; er.textContent = '';
     subscribers.push(addr);
     saveList(SUB_KEY, subscribers);
     inp.value = '';
@@ -1633,6 +1635,7 @@
       if (!$('#sub-email').value && EMAIL_RE.test(member)) $('#sub-email').value = member;
       const inscrit = subscribers.includes(member.toLowerCase());
       if (inscrit) { $('#sub-ok').textContent = 'Votre adresse ' + member + ' reçoit déjà la lettre d’information.'; $('#sub-ok').hidden = false; }
+      else { $('#sub-ok').hidden = true; $('#sub-ok').textContent = ''; }
     }
   }
   /* Fait venir la rubrique à l'écran et place le focus sur son titre (lecteur d'écran, clavier). */
@@ -1645,7 +1648,7 @@
   function askLogin(panel, sujet, label) {
     wantPanel = panel; wantSujet = sujet || null;
     const l = label || (PANELS.find((p) => p[0] === panel) || PANELS[0])[1];
-    $('#login-intent').textContent = 'Après la connexion, vous arriverez sur « ' + l + ' ».';
+    $('#login-intent').textContent = 'Après la connexion, vous arriverez sur «\u00a0' + l + '\u00a0».';
     $('#login-intent').hidden = false;
     const f = $('#login-form'); const r = f.getBoundingClientRect();
     if (r.top < 0 || r.bottom > window.innerHeight) f.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
@@ -1683,21 +1686,22 @@
     if (!b) return;
     const a = b.dataset.porte === 'bureau' ? PORTE_BUREAU : ACCES[+b.dataset.porte];
     showPanel(a.panel, a.sujet);
-    const on = $('#ea-tabs [aria-pressed="true"]'); if (on) on.focus({ preventScroll: true });
     const top = $('#ea-' + a.panel).getBoundingClientRect().top;
-    if (top > window.innerHeight * 0.6) window.scrollTo({ top: window.scrollY + top - 96, behavior: reduceMotion ? 'auto' : 'smooth' });
+    if (top > window.innerHeight * 0.6) revealPanel(a.panel);
+    else { const on = $('#ea-tabs [aria-pressed="true"]'); if (on) on.focus({ preventScroll: true }); }
   });
   /* Formulaire : objet, commission (liste des instances du site), nom, e-mail, message. Démonstration : le message est gardé
      dans ce navigateur (clé slbc-maquette-messages) et s'affiche côté bureau, rubrique « Publier ». Aucun e-mail n'est envoyé. */
   const MSG_KEY = 'slbc-maquette-messages';
   const str = (x) => typeof x === 'string';
+  const localDay = (iso) => { const d = new Date(iso); return isNaN(d) ? iso.slice(0, 10) : d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
   let messages = loadList(MSG_KEY).filter((m) => m && str(m.msg) && str(m.email) && str(m.nom) && str(m.date) && /^\d{4}-\d{2}-\d{2}/.test(m.date) &&
     Object.prototype.hasOwnProperty.call(SUJETS, m.sujet) && (m.inst === undefined || str(m.inst)) && (m.by === undefined || str(m.by)));
   $('#ecrire-inst').innerHTML = '<option value="">Je ne sais pas encore</option>' + INSTANCES.map((i) => { const l = i.n + (i.a ? ' (' + i.a + ')' : ''); return '<option value="' + esc(l) + '">' + esc(l) + '</option>'; }).join('');
   setSujet('commission');
   $$('#ecrire-form input[name="ecrire-sujet"]').forEach((r) => r.addEventListener('change', () => { setSujet(r.value); renderPortes(); }));
   $('#ecrire-form').addEventListener('input', () => { $('#ecrire-ok').hidden = true; });
-  const msgItem = (m, bureau) => '<li class="msg"><p class="msg-meta"><span class="msg-sujet">' + esc((bureau ? SUJETS_BUREAU : SUJETS)[m.sujet] || 'Message') + '</span><time datetime="' + esc(m.date) + '">' + esc(longDate(m.date.slice(0, 10))) + '</time></p>' +
+  const msgItem = (m, bureau) => '<li class="msg"><p class="msg-meta"><span class="msg-sujet">' + esc((bureau ? SUJETS_BUREAU : SUJETS)[m.sujet] || 'Message') + '</span><time datetime="' + esc(m.date) + '">' + esc(longDate(localDay(m.date))) + '</time></p>' +
     (m.inst ? '<p class="msg-inst">' + esc(m.inst) + '</p>' : '') +
     (bureau ? '<p class="msg-from">' + esc(m.nom) + ', <a href="mailto:' + esc(m.email) + '?subject=' + encodeURIComponent('Votre message au SLBC') + '">' + esc(m.email) + '</a></p>' : '') +
     '<p class="msg-text">' + esc(m.msg) + '</p></li>';
@@ -1747,11 +1751,17 @@
   });
   /* À la déconnexion, rien du compte précédent ne reste dans les formulaires de l'espace. */
   function resetEspace() {
-    wantPanel = null; wantSujet = null; $('#login-intent').hidden = true;
+    const clear = (id) => { const el = $('#' + id); el.hidden = true; el.textContent = ''; };
+    wantPanel = null; wantSujet = null; clear('login-intent');
+    $('#login-form').reset(); clear('login-err');
     $('#ecrire-form').reset(); setSujet('commission');
-    ['ecrire-nom', 'ecrire-email', 'ecrire-msg'].forEach((id) => { $('#' + id).removeAttribute('aria-invalid'); $('#' + id + '-err').hidden = true; });
-    $('#abonnement').reset(); $('#sub-email').removeAttribute('aria-invalid');
-    $('#sub-ok').hidden = true; $('#sub-error').hidden = true;
+    ['ecrire-nom', 'ecrire-email', 'ecrire-msg'].forEach((id) => clear(id + '-err'));
+    $('#abonnement').reset(); clear('sub-ok'); clear('sub-error');
+    /* Outils du bureau : le brouillon en cours et l'adresse en cours d'ajout. */
+    ['f-title', 'f-resume', 'f-body', 'f-url', 'f-file', 'f-subject', 'nl-add-email'].forEach((id) => { document.getElementById(id).value = ''; });
+    clear('pub-error'); clear('nl-add-err');
+    $$('#login-form [aria-invalid], #ecrire-form [aria-invalid], #abonnement [aria-invalid], #pub-form [aria-invalid], #nl-add-form [aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+    updatePreview();
   }
   renderMessages();
 
