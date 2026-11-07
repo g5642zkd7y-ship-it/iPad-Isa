@@ -141,7 +141,42 @@ def chapeau():
             f'<path d="M71 36 Q95 42 119 36 L120 44 Q95 51 70 44 Z" fill="{VERT}" stroke="none"/>'
             f'<path d="M78 24 Q95 20 112 24" stroke="#C9A24A" stroke-width="1.6"/>')
 
-BOUEE_TAILLE = {'defendons': 0, 'veille': 0, 'hanches': 0}   # qui porte la bouée à la taille ; les autres l'ont posée au sol
+BOUEE_TAILLE = {}   # bouée portée à la taille : essayée puis abandonnée (demande d'Isabelle Eimer : la bouée est posée à côté)
+BOUEE_MODELE = {'defendons': 'canard', 'lecteurs': 'baleine', 'veille': 'canard', 'hanches': 'baleine', 'bureau': 'canard',
+                'presse': 'baleine', 'documentation': 'canard', 'bienvenue': 'baleine', 'poignee': 'canard'}   # les deux bouées alternent
+BLEU_CIEL = '#9FD3EC'
+def bouee_baleine(bx, sol):
+    """Bouée en forme de baleine bleu ciel : la tête à l'avant avec son jet d'eau, la queue à l'arrière."""
+    B = BLEU_CIEL; F = '#4F9CC4'; c = sol - 14
+    p = lambda dx, dy: '%g %g' % (bx + dx, sol + dy)
+    return ('<g class="bouee">'
+            f'<ellipse cx="{bx:g}" cy="{sol + 1:g}" rx="36" ry="4" fill="#E6E9DF" stroke="none"/>'
+            f'<path d="M{p(-24, -20)} Q{p(-34, -34)} {p(-47, -35)} Q{p(-41, -27)} {p(-31, -25)} Q{p(-40, -39)} {p(-35, -48)} Q{p(-25, -36)} {p(-20, -24)} Z" fill="{B}" stroke="{INK}" stroke-width="2.8"/>'
+            f'<ellipse cx="{bx:g}" cy="{c:g}" rx="32" ry="14" fill="{B}" stroke="{INK}" stroke-width="3"/>'
+            f'<ellipse cx="{bx:g}" cy="{c - 2:g}" rx="13" ry="5.5" fill="#FFFFFF" stroke="{INK}" stroke-width="2.6"/>'
+            f'<path d="M{p(-26, -20)} Q{p(-31, -14)} {p(-26, -8)}" stroke="#FFFFFF" stroke-width="2.4" fill="none"/>'
+            f'<path d="M{p(12, -24)} C{p(12, -40)} {p(24, -49)} {p(35, -47)} C{p(46, -45)} {p(50, -35)} {p(46, -26)} C{p(42, -19)} {p(31, -17)} {p(20, -19)} Z" fill="{B}" stroke="{INK}" stroke-width="3"/>'
+            f'<path d="M{p(30, -26)} Q{p(39, -22)} {p(46, -29)}" stroke="{INK}" stroke-width="2.4" fill="none"/>'
+            f'<circle cx="{bx + 34:g}" cy="{sol - 37:g}" r="2.4" fill="{INK}" stroke="none"/>'
+            f'<path d="M{p(30, -50)} Q{p(26, -58)} {p(21, -59)} M{p(33, -50)} Q{p(34, -60)} {p(38, -63)} M{p(31, -51)} L{p(31, -61)}" stroke="{F}" stroke-width="2.6" fill="none"/>'
+            '</g>')
+
+def bouee_rayee(bx, sol):
+    """Bouée ronde rayée bleu ciel et blanc, vue de trois quarts, posée au sol."""
+    import math
+    c = sol - 14
+    def pt(rx, ry, cy, a):
+        return '%g %g' % (round(bx + rx * math.cos(a), 1), round(cy + ry * math.sin(a), 1))
+    rayures = ''
+    for k in range(4):
+        a = math.pi / 4 + k * math.pi / 2
+        rayures += ('<path d="M' + pt(32, 14, c, a - .2) + ' L' + pt(32, 14, c, a + .2) + ' L' + pt(13, 5.5, c - 2, a + .42) + ' L' + pt(13, 5.5, c - 2, a - .42)
+                    + ' Z" fill="#FFFFFF" stroke="' + INK + '" stroke-width="2"/>')
+    return (f'<g class="bouee"><ellipse cx="{bx:g}" cy="{sol + 1:g}" rx="34" ry="4" fill="#E6E9DF" stroke="none"/>'
+            f'<ellipse cx="{bx:g}" cy="{c:g}" rx="32" ry="14" fill="{BLEU_CIEL}" stroke="{INK}" stroke-width="3"/>'
+            + rayures +
+            f'<ellipse cx="{bx:g}" cy="{c - 2:g}" rx="13" ry="5.5" fill="#FFFFFF" stroke="{INK}" stroke-width="2.6"/>'
+            f'<path d="M{bx - 26:g} {c - 6:g} Q{bx - 31:g} {c:g} {bx - 26:g} {c + 6:g}" stroke="#FFFFFF" stroke-width="2.4" fill="none"/></g>')
 def bouee_taille():
     return (f'<ellipse cx="96" cy="151" rx="37" ry="12.5" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
             f'<ellipse cx="96" cy="148" rx="21" ry="5.5" fill="#FFFFFF" stroke="{INK}" stroke-width="2.6"/>'
@@ -177,6 +212,10 @@ def ete(key, svg):
     m, (x, y, w, hh) = viewbox(s)
     sol = y + hh - 6
     bx = x + w + 54
+    if BOUEE_MODELE.get(key) == 'baleine':
+        bouee = bouee_baleine(bx, sol).replace('<g class="bouee">', f'<g class="bouee" transform="translate({bx:g} {sol:g}) scale(1.3) translate({-bx:g} {-sol:g})">', 1)
+        s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x, y - 4, w + 128, hh + 4), 1)
+        return s[:s.rindex('</svg>')] + bouee + '</svg>'
     bouee = (f'<g class="bouee" transform="translate({bx:g} {sol:g}) scale(1.3) translate({-bx:g} {-sol:g})"><ellipse cx="{bx:g}" cy="{sol + 1:g}" rx="34" ry="4" fill="#E6E9DF" stroke="none"/>'
              f'<ellipse cx="{bx:g}" cy="{sol - 14:g}" rx="32" ry="14" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
              f'<ellipse cx="{bx:g}" cy="{sol - 16:g}" rx="14" ry="5.5" fill="#FFFFFF" stroke="{INK}" stroke-width="2.6"/>'
@@ -185,7 +224,7 @@ def ete(key, svg):
              f'<path d="M{bx + 18:g} {sol - 24:g} C{bx + 14:g} {sol - 36:g} {bx + 16:g} {sol - 50:g} {bx + 26:g} {sol - 50:g} C{bx + 36:g} {sol - 50:g} {bx + 40:g} {sol - 40:g} {bx + 34:g} {sol - 32:g} C{bx + 32:g} {sol - 28:g} {bx + 30:g} {sol - 24:g} {bx + 30:g} {sol - 20:g} Z" fill="{CANARD}" stroke="{INK}" stroke-width="3"/>'
              f'<path d="M{bx + 36:g} {sol - 42:g} Q{bx + 48:g} {sol - 42:g} {bx + 47:g} {sol - 37:g} Q{bx + 44:g} {sol - 34:g} {bx + 36:g} {sol - 36:g} Z" fill="{BEC}" stroke="{INK}" stroke-width="2.4"/>'
              f'<circle cx="{bx + 29:g}" cy="{sol - 42:g}" r="2.4" fill="{INK}" stroke="none"/></g>')
-    s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x, y - 4, w + 114, hh + 4), 1)
+    s = s.replace(m.group(0), 'viewBox="%g %g %g %g"' % (x, y - 4, w + 128, hh + 4), 1)
     return s[:s.rindex('</svg>')] + bouee + '</svg>'
 
 # ---------------- Planches ----------------
