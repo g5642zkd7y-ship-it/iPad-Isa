@@ -563,6 +563,21 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .p-subtitle{display:block}
 /* Accueil : dernier communiqué sous la devise */
 .home-cp{padding-top:0}
+/* Accueil, bannières aux couleurs de leurs onglets (7 novembre 2026, demande d’Isabelle Eimer) */
+.hero-sep{margin-top:clamp(28px,4vw,48px)}
+.hero:has(.hero-sep){padding-bottom:clamp(32px,4vw,48px)}
+.home-cp.bg-vert-clair{padding-top:clamp(40px,5vw,64px)}
+.bg-vert-clair .hcp-kicker{background:#fff}
+.bg-vert-clair .more{color:var(--encre)}
+.bg-vert-clair .p-quote{border-color:var(--vert)}
+.bg-vert .coverage{color:#fff}
+.bg-vert .vcard{background:rgba(46,50,54,.38)}
+.bg-vert .vcard:hover{background:rgba(46,50,54,.52)}
+.bg-encre .rows{border-top-color:rgba(255,255,255,.2)}
+.bg-encre .row-link{border-bottom-color:rgba(255,255,255,.2);color:var(--sombre-texte)}
+.bg-encre .row-title{color:#fff}
+.bg-encre .row-link:hover .row-title{color:var(--vert-clair)}
+.bg-encre .row-date,.bg-encre .row-sub,.bg-encre .row-cat{color:var(--sombre-texte)}
 .sep-sig{display:flex;align-items:center;gap:22px;margin-bottom:clamp(40px,5vw,64px)}
 .sep-line{flex:1 1 0;height:2px;border-radius:2px;background:var(--anis)}
 .sep-mark{flex:0 0 auto;display:block;width:34px;height:34px;overflow:visible}
