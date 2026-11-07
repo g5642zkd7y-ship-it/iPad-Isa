@@ -580,7 +580,11 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 
 /* ---------- Adhérer ---------- */
 .benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,40px)}
-.benefit{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:1px solid var(--filet-fort)}
+/* Les trois cases en couleur (7 novembre 2026, demande d’Isabelle Eimer), comme les portes de l’espace adhérent. */
+.benefit{display:flex;flex-direction:column;gap:12px;padding:24px 24px 26px;border-radius:14px}
+.benefit.c0{background:var(--encre)}.benefit.c0 h2{color:#fff}.benefit.c0 p{color:#E6E9DF}
+.benefit.c1{background:var(--vert-clair)}.benefit.c1 h2,.benefit.c1 p{color:var(--encre)}
+.benefit.c2{background:var(--vert)}.benefit.c2 h2,.benefit.c2 p{color:#fff}
 .benefit h2{font-size:20px;font-weight:700;line-height:1.25;letter-spacing:-.01em}
 .benefit p{font-size:16px;line-height:1.55}
 @media (max-width:760px){.benefits{grid-template-columns:minmax(0,1fr)}}
@@ -661,11 +665,8 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .porte:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
 .portes-menu{margin-bottom:36px}
 .portes-menu .portes{grid-template-columns:repeat(4,minmax(0,1fr))}
-/* Rubrique ouverte : la porte garde sa couleur et le dit en toutes lettres (un anneau noir, d’abord essayé, a été jugé déroutant). */
-.porte-on{margin-top:auto;padding-top:4px;font-size:15px;font-weight:700;color:var(--encre)}
-.porte.c0 .porte-on{color:var(--vert-clair)}.porte.c3 .porte-on{color:#fff}
-.porte-bureau .porte-on{margin-top:0;padding-top:0}
-.portes-menu .porte[aria-pressed="true"] .porte-cta{display:none}
+/* Une fois connecté, toutes les portes gardent leur lien (« Nous écrire »…) ; ni anneau ni mention « Rubrique ouverte »,
+   jugés déroutants par Isabelle Eimer. La rubrique ouverte reste signalée aux lecteurs d’écran (aria-pressed). */
 .porte-bureau{margin-top:14px;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding:14px 20px;background:var(--fond);border:1px solid var(--filet);border-top:4px solid var(--gris)}
 .porte-bureau .porte-d{font-size:15px;color:var(--gris)}
 .portes-menu .porte-bureau{border-top-color:var(--gris)}

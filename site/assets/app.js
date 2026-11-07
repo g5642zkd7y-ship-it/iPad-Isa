@@ -607,7 +607,7 @@
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
     $('#home-benefits').innerHTML = BENEFITS.map((b) => '<li><span>' + esc(b.t) + '</span></li>').join('');
-    $('#benefits-grid').innerHTML = BENEFITS.map((b) => '<div class="benefit"><h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
+    $('#benefits-grid').innerHTML = BENEFITS.map((b, k) => '<div class="benefit c' + k + '"><h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
     /* Piliers de « Ce que nous défendons » (accueil) : mêmes numéros dessinés et même animation que les missions */
     $$('#piliers .pillar').forEach((el, k) => { if (!el.querySelector('.mnum')) el.insertAdjacentHTML('afterbegin', missionBadge(k + 1)); });
     $('#missions-list').innerHTML = MISSIONS.map((m, k) => '<div class="charter-item">' + missionBadge(k + 1) + '<div class="charter-text"><h3 class="h-block"><span class="sr-only">Mission ' + (k + 1) + '\u00a0: </span>' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div></div>').join('');
@@ -1602,8 +1602,8 @@
      Les portes 2 et 3 ouvrent « Écrire au bureau » avec l'objet déjà choisi. */
   const ACCES = [
     { t: 'La veille réglementaire', d: 'Chaque lundi, les textes du Journal officiel, de l’Assemblée nationale et du Sénat qui concernent les laboratoires.', panel: 'veille', cta: 'Lire la veille réglementaire' },
-    { t: 'Partager votre expérience dans une commission', d: 'Vous voulez partager votre expérience dans une commission ? Dites-le-nous.', panel: 'ecrire', sujet: 'commission', cta: 'Proposer ma participation' },
-    { t: 'Une suggestion, une idée, une question', d: 'Vous avez une suggestion à faire, une idée, une question ? Contactez-nous.', panel: 'ecrire', sujet: 'suggestion', cta: 'Écrire au bureau' },
+    { t: 'Partager votre expérience dans une commission', d: 'Vous voulez partager votre expérience dans une commission ? Dites-le-nous.', panel: 'ecrire', sujet: 'commission', cta: 'Nous écrire' },
+    { t: 'Une suggestion, une idée, une question', d: 'Vous avez une suggestion à faire, une idée, une question ? Contactez-nous.', panel: 'ecrire', sujet: 'suggestion', cta: 'Nous écrire' },
     { t: 'La lettre d’information', d: 'La veille et les nouvelles publications du SLBC, par e‑mail.', panel: 'lettre', cta: 'M’abonner' }
   ];
   const PORTE_BUREAU = { t: 'Publier sur le site', d: 'Outils du bureau : messages des adhérents, communiqués, veille, actualités, lettre d’information.', panel: 'publier' };
@@ -1614,8 +1614,8 @@
   const porteInner = (a) => '<span class="porte-t">' + esc(a.t) + '</span><span class="porte-d">' + esc(a.d) + '</span>' + (a.cta ? '<span class="porte-cta more">' + esc(a.cta) + '</span>' : '');
   const porteOn = (a) => a.panel === curPanel && (curPanel !== 'ecrire' || (a.sujet === 'commission') === (curSujet === 'commission'));
   function renderPortes() {
-    $('#ea-tabs').innerHTML = '<ul class="portes">' + ACCES.map((a, k) => '<li><button type="button" class="porte c' + k + '" data-porte="' + k + '" aria-pressed="' + porteOn(a) + '">' + porteInner(a) + (porteOn(a) ? '<span class="porte-on" aria-hidden="true">Rubrique ouverte</span>' : '') + '</button></li>').join('') + '</ul>' +
-      '<button type="button" class="porte porte-bureau" data-porte="bureau" aria-pressed="' + (curPanel === 'publier') + '">' + porteInner(PORTE_BUREAU) + (curPanel === 'publier' ? '<span class="porte-on" aria-hidden="true">Rubrique ouverte</span>' : '') + '</button>';
+    $('#ea-tabs').innerHTML = '<ul class="portes">' + ACCES.map((a, k) => '<li><button type="button" class="porte c' + k + '" data-porte="' + k + '" aria-pressed="' + porteOn(a) + '">' + porteInner(a) + '</button></li>').join('') + '</ul>' +
+      '<button type="button" class="porte porte-bureau" data-porte="bureau" aria-pressed="' + (curPanel === 'publier') + '">' + porteInner(PORTE_BUREAU) + '</button>';
   }
   function setSujet(s) {
     curSujet = SUJETS[s] ? s : 'commission';
