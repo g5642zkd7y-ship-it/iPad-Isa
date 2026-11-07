@@ -43,7 +43,15 @@ a{color:var(--vert)}
 h1,h2,h3,h4{margin:0;color:var(--encre);text-wrap:balance}
 p,ul,ol,dl,figure{margin:0}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--nav-h) + 16px)}
+/* Pages avec un sous-menu collant (Le syndicat, Documentation, Informations légales) : les ancres et le focus clavier
+   s'arrêtent sous l'en-tête et sous le sous-menu. --lnav-h : hauteur du sous-menu. */
+:root{--lnav-h:59px}
+html:has(.view:not([hidden]) > .lnav){scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--nav-h) + var(--lnav-h) + 16px)}
 [id]{scroll-margin-top:56px}
+/* Sur ces pages, une rubrique atteinte par le sous-menu s'arrête juste sous lui, sans laisser voir la fin de la précédente. */
+html:has(.view:not([hidden]) > .lnav) .view [id]:not(input,select,textarea){scroll-margin-top:0}
+/* Mots à ne pas couper au trait d'union (numéros de textes, « e-mail », prénoms composés) : voir keepTogether() dans app.js. */
+.nobr{white-space:nowrap}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 .container{width:100%;max-width:1180px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
@@ -52,10 +60,10 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--nav-h) + 16px)
 
 /* ---------- En-tête ---------- */
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--blanc)}
-.proto-strip{background:var(--fond);color:var(--gris);font-size:15px;line-height:1.4;padding-block:7px;text-align:center}
+.proto-strip{background:var(--fond);color:var(--gris);font-size:15px;line-height:1.4;padding-block:7px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));text-align:center;text-wrap:balance}
 .gnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(255,255,255,.84);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(46,50,54,.09)}
 .gnav-in{display:flex;align-items:center;gap:24px;height:var(--nav-h)}
-.brand{display:inline-flex;align-items:center;gap:10px;color:var(--texte);text-decoration:none;flex:0 0 auto}
+.brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--texte);text-decoration:none;flex:0 0 auto}
 .brand-mark{display:block;width:36px;height:36px}
 .brand-word{font-family:var(--font-marque);font-weight:900;font-size:27px;line-height:1;letter-spacing:.02em}
 .gnav-links{display:flex;align-items:center;gap:26px;margin-inline:auto}
@@ -90,21 +98,26 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .mmenu-cta{margin-top:28px;align-self:flex-start}
 
 /* ---------- Boutons et liens ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 26px;border:0;border-radius:999px;font-family:var(--font);font-size:17px;font-weight:600;line-height:1;text-decoration:none;cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 26px;border:0;border-radius:999px;font-family:var(--font);font-size:17px;font-weight:600;line-height:1.2;text-align:center;text-decoration:none;cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease)}
 .btn-primary{background:var(--vert);color:#fff}
 .btn-primary:hover{background:var(--vert-fonce);color:#fff}
 .btn-light{background:#fff;color:var(--encre)}
 .btn-light:hover{background:var(--fond);color:var(--encre)}
 .btn-quiet{background:var(--neutre);color:var(--encre)}
 .btn-quiet:hover{background:#E2E5DC}
-.more{display:inline-flex;align-items:center;gap:7px;color:var(--vert);font-size:17px;font-weight:600;text-decoration:none}
-.more::after{content:"";flex:0 0 auto;width:7px;height:12px;background:currentColor;-webkit-mask:var(--chev) center/contain no-repeat;mask:var(--chev) center/contain no-repeat;transition:transform .2s var(--ease)}
+.more{display:inline-block;color:var(--vert);font-size:17px;font-weight:600;text-decoration:none}
+/* Chevron : petite boîte en ligne (pas un bloc à part), collée au dernier mot. Quand le lien passe sur deux lignes,
+   il suit la fin du texte au lieu de rester au bord droit. */
+.more::after{content:"";position:relative;left:0;margin-left:7px;padding-left:7px;background:currentColor;-webkit-mask:var(--chev) center/7px 12px no-repeat;mask:var(--chev) center/7px 12px no-repeat;transition:left .2s var(--ease)}
+/* Zone à toucher de 44 px sans rien déplacer : le remplissage vertical est repris par une marge négative. */
+a.more{padding-block:9px;margin-block:-9px}
 .more:hover{text-decoration:underline;text-underline-offset:3px}
-.more:hover::after{transform:translateX(2px)}
+.more:hover::after{left:2px}
 .bg-encre .more,.side-dark .more{color:var(--vert-clair)}
 .bg-vert .more{color:#fff}
 .tile-vert .more{color:var(--encre)}
-.link-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px}
+/* Écart de 18 px entre deux liens empilés : leurs zones à toucher de 44 px se touchent sans se recouvrir. */
+.link-row{display:flex;flex-wrap:wrap;align-items:center;gap:18px 28px}
 .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
 
 /* ---------- Sections et typographie ---------- */
@@ -157,12 +170,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .empty{padding-block:24px;font-size:17px;color:var(--gris)}
 
 /* ---------- Commandes segmentées ---------- */
-.seg{display:inline-flex;gap:2px;max-width:100%;padding:3px;border-radius:12px;background:var(--neutre);overflow-x:auto;scrollbar-width:none}
-.seg::-webkit-scrollbar{display:none}
-.seg button{flex:0 0 auto;min-height:44px;padding:0 17px;border:0;border-radius:9px;background:transparent;color:var(--texte);font:500 16px/1 var(--font);white-space:nowrap;cursor:pointer;transition:background-color .2s,color .2s}
+/* Quand les choix ne tiennent pas sur une ligne (téléphone, iPad vertical), ils passent à la ligne au lieu de défiler
+   hors de vue ; chaque ligne est alors remplie (flex-grow). Sur une ligne, rien ne change : la barre a la largeur de ses choix. */
+.seg{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:2px;max-width:100%;padding:3px;border-radius:12px;background:var(--neutre)}
+/* max-width : un choix seul sur sa ligne (« Appels à projets » sur iPad) garde une largeur proche des autres, au centre. */
+.seg button{flex:1 0 auto;max-width:12em;min-height:44px;padding:0 17px;border:0;border-radius:9px;background:transparent;color:var(--texte);font:500 16px/1 var(--font);white-space:nowrap;cursor:pointer;transition:background-color .2s,color .2s}
 .seg button:hover{color:var(--encre)}
 .seg button[aria-pressed="true"]{background:#fff;color:var(--encre);font-weight:600;box-shadow:0 1px 2px rgba(46,50,54,.14),0 0 0 .5px rgba(46,50,54,.08)}
 .seg-lg button{min-height:46px;padding:0 19px;font-size:16px}
+/* « Publier » : la barre occupe toute la largeur de la colonne ; ses trois choix gardent leur largeur, à gauche. */
+.seg-lg{justify-content:flex-start}
+.seg-lg button{flex-grow:0}
 .seg button:focus-visible{outline-offset:-3px}
 @media (max-width:520px){.seg button{padding:0 9px}}
 @media (max-width:380px){.seg button{padding:0 7px;font-size:15px}}
@@ -322,7 +340,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .lockup-sub{font-size:12.5px;font-weight:700;line-height:1.25;color:var(--gris)}
 .lockup-sub span{color:var(--vert)}
 .foot-address{font-style:normal;font-size:14px;line-height:1.6;color:var(--texte)}
-.foot-address a{color:inherit;text-underline-offset:2px}
+.foot-address a{padding-block:13px;color:inherit;text-underline-offset:2px}
 .social-link{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-size:16px;font-weight:600;color:var(--texte);text-decoration:none}
 .social-link svg{flex:0 0 auto;color:var(--encre)}
 .social-link:hover,.social-link:hover svg{color:var(--vert)}
@@ -331,11 +349,24 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .foot-cols h3{margin-bottom:10px;font-size:14px;font-weight:600;color:var(--encre)}
 .foot-cols ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .foot-cols a{color:var(--gris);text-decoration:none}
+/* Liens du pied de page : zone agrandie sans changer la mise en page (marge négative), jamais plus haute que l'écart
+   entre deux liens, pour qu'un lien ne prenne pas le bas du texte de son voisin. */
+.foot-cols a,.foot-legal a{display:inline-block;padding-block:4px;margin-block:-4px}
 .foot-cols a:hover{color:var(--encre);text-decoration:underline}
 .foot-legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;padding-top:20px}
-.foot-legal nav{display:flex;flex-wrap:wrap;gap:6px 18px}
+.foot-legal nav{display:flex;flex-wrap:wrap;gap:8px 18px}
 .foot-legal a{color:var(--gris)}
 @media (max-width:760px){.foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Écrans tactiles : chaque lien a sa propre zone de 44 px de haut, sur toute la largeur de sa colonne ; les zones se
+   touchent sans se recouvrir. */
+@media (pointer:coarse){
+  .foot-cols ul{gap:0;margin-bottom:-11.5px}
+  .foot-cols a{display:block;padding-block:11.5px;margin-block:0}
+  .foot-cols h3{margin-bottom:0}
+  .foot-legal{row-gap:12px}
+  .foot-legal nav{gap:0 18px;margin-block:-11.5px}
+  .foot-legal a{padding-block:11.5px;margin-block:0}
+}
 
 /* ---------- Navigation locale (Le syndicat) ---------- */
 .lnav{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--nav-h));z-index:40;background:rgba(255,255,255,.86);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--filet)}
@@ -348,7 +379,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .lnav-links a{padding:16px 8px;font-size:17px;color:var(--texte);text-decoration:none;white-space:nowrap}
 .lnav-links a:hover{color:var(--vert)}
 .lnav-links a:focus-visible{outline-offset:-3px}
-@media (max-width:640px){.lnav-title{display:none}.lnav-links{margin-left:0}.lnav-links a{font-size:16px;padding-inline:6px}}
+@media (max-width:640px){.lnav-title{display:none}.lnav-links{margin-left:0}.lnav-links a{font-size:16px;padding-inline:6px}
+  /* Téléphone : le sous-menu va d'un bord à l'autre de l'écran et s'efface en fondu là où des rubriques sont cachées.
+     Les cales (::before, ::after, plus l'espacement de 6 px) font 24 px, la largeur du fondu : en début ou en fin de
+     défilement, aucune rubrique n'est estompée. Centrées quand elles tiennent (marges automatiques), au début quand elles débordent. */
+  .lnav-links,.lnav-centre .lnav-links{flex:1 1 auto;margin-left:calc(-1 * max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)));-webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
+  .lnav-links::before{content:"";flex:0 0 calc(max(16px,env(safe-area-inset-left,0px)) + 2px)}
+  .lnav-links::after{content:"";flex:0 0 calc(max(16px,env(safe-area-inset-right,0px)) + 2px)}
+  .lnav-links a:first-of-type{margin-left:auto}
+  .lnav-links a:last-of-type{margin-right:auto}
+}
 
 .two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(32px,6vw,80px)}
 .two-col > div{display:flex;flex-direction:column;gap:20px}
@@ -547,15 +587,17 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .p-points dd{margin:0;font-size:16px;line-height:1.55}
 @media (max-width:640px){.p-points div{grid-template-columns:minmax(0,1fr)}}
 .copy-line{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 14px;border-radius:12px;background:#fff;font-weight:600;color:var(--encre);overflow-wrap:anywhere}
-.copy-line a{color:inherit;text-underline-offset:2px}
-.btn-copy{flex:0 0 auto;min-height:36px;padding:0 14px;border:0;border-radius:999px;background:var(--neutre);color:var(--encre);font:600 14px/1 var(--font);cursor:pointer}
+.copy-line a{padding-block:9px;margin-block:-9px;color:inherit;text-underline-offset:2px}
+.btn-copy{position:relative;flex:0 0 auto;min-height:36px;padding:0 14px;border:0;border-radius:999px;background:var(--neutre);color:var(--encre);font:600 14px/1 var(--font);cursor:pointer}
+/* Zone à toucher de 44 px de haut ; le bouton visible garde ses 36 px. */
+.btn-copy::after{content:"";position:absolute;inset:-4px 0}
 .news{list-style:none;margin:28px 0 0;padding:0;border-top:1px solid var(--filet)}
 .news-item{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:28px 4px;border-bottom:1px solid var(--filet)}
 .news-meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:15px;color:var(--gris)}
 .news-meta time{font-weight:600;color:var(--encre);font-variant-numeric:tabular-nums}
 .news-title{max-width:32em;font-size:clamp(20px,1.8vw,23px);font-weight:700;line-height:1.25;letter-spacing:-.012em;color:var(--encre)}
 .news-excerpt{max-width:42em;font-size:17px;line-height:1.6}
-.news-links{display:flex;flex-wrap:wrap;gap:6px 28px}
+.news-links{display:flex;flex-wrap:wrap;gap:18px 28px}
 
 /* ---------- Documentation ---------- */
 .doc-search{display:flex;align-items:center;gap:12px;max-width:560px;min-height:52px;margin-top:8px;padding:0 16px;border-radius:14px;background:var(--neutre);color:var(--gris)}
@@ -614,14 +656,14 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .recap{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 20px;padding:20px;border-radius:16px;background:var(--fond);font-size:16px}
 .recap dt{color:var(--gris)}
 .recap dd{margin:0;font-weight:600;color:var(--encre);overflow-wrap:anywhere}
-.check-line{display:flex;align-items:flex-start;gap:12px;font-size:16px;line-height:1.5;cursor:pointer}
+.check-line{display:flex;align-items:flex-start;gap:12px;padding-block:10px;margin-block:-10px;font-size:16px;line-height:1.5;cursor:pointer}
 .check-line input{flex:0 0 auto;width:22px;height:22px;margin:1px 0 0;accent-color:var(--vert)}
 .join-dest{font-size:16px;color:var(--texte);overflow-wrap:anywhere}
 .join-dest strong{font-weight:600;color:var(--encre)}
 .done-panel{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
 .done-panel p{overflow-wrap:anywhere}
 .join-fallback{font-size:16px;color:var(--texte)}
-.join-texte summary{cursor:pointer;font-weight:600;color:var(--vert)}
+.join-texte summary{padding-block:9px;margin-block:-9px;cursor:pointer;font-weight:600;color:var(--vert)}
 .join-texte pre{margin:10px 0 0;padding:16px;border-radius:12px;background:var(--fond);font:400 15px/1.5 var(--font);color:var(--encre);white-space:pre-wrap;overflow-wrap:anywhere}
 .done-icon{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--vert-clair);color:var(--vert)}
 
@@ -666,7 +708,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .porte.c1{background:var(--vert-clair)}.porte.c1 .porte-d{color:var(--encre)}.porte.c1 .porte-cta{color:var(--encre)}
 .porte.c2{background:var(--anis)}.porte.c2 .porte-d{color:var(--encre)}.porte.c2 .porte-cta{color:var(--encre)}
 .porte.c3{background:var(--vert)}.porte.c3 .porte-t,.porte.c3 .porte-d,.porte.c3 .porte-cta{color:#fff}
-@media (hover:hover){.porte:hover .porte-cta{text-decoration:underline;text-underline-offset:3px}.porte:hover .porte-cta::after{transform:translateX(2px)}}
+@media (hover:hover){.porte:hover .porte-cta{text-decoration:underline;text-underline-offset:3px}.porte:hover .porte-cta::after{left:2px}}
 .porte:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
 .portes-menu{margin-bottom:36px}
 .portes-menu .portes{grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -680,11 +722,13 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .login-intent{font-size:15px;font-weight:600;color:var(--vert)}
 @media (max-width:1000px){.portes-menu .portes{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:860px){.acces-wrap{grid-template-columns:minmax(0,1fr)}.acces-wrap .login-card{max-width:none}}
+/* Entre 861 et 1000 px, la colonne des portes, à côté de la carte de connexion, est trop étroite pour deux cartes. */
+@media (min-width:861px) and (max-width:1000px){.acces-wrap .portes{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:560px){.portes{grid-template-columns:minmax(0,1fr)}.portes-menu .portes{grid-template-columns:minmax(0,1fr);gap:10px}.portes-menu .porte .porte-d,.portes-menu .porte .porte-cta{display:none}.portes-menu .porte{padding:14px 16px}}
 /* « Écrire au bureau » et messages reçus */
 .ecrire{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
 .ecrire-form{background:var(--fond)}
-.ecrire-sujets{display:flex;flex-direction:column;gap:10px;min-width:0;margin:0;padding:0;border:0}
+.ecrire-sujets{display:flex;flex-direction:column;gap:20px;min-width:0;margin:0;padding:0;border:0}
 .ecrire-sujets legend{margin-bottom:10px}
 .ecrire-side{display:flex;flex-direction:column;gap:14px}
 .msg-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--filet)}
@@ -692,8 +736,8 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .msg-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;font-size:14px;color:var(--gris)}
 .msg-sujet{font-weight:700;color:var(--encre)}
 .msg-inst{font-size:15px;color:var(--vert);font-weight:600}
-.msg-from{font-size:15px;color:var(--texte)}
-.msg-from a{color:var(--vert)}
+.msg-from{margin-bottom:6px;font-size:15px;color:var(--texte)}
+.msg-from a{display:inline-block;padding-block:12px;margin-block:-12px;color:var(--vert)}
 .msg-text{font-size:16px;line-height:1.55;color:var(--encre);white-space:pre-line}
 .msg-text,.msg-from,.msg-inst{overflow-wrap:anywhere}
 .messages-admin{margin-top:0;margin-bottom:40px}
@@ -718,14 +762,19 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .g-row{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:58px;padding:12px 18px}
 .g-row + .g-row{border-top:1px solid var(--filet)}
 .g-row > label{font-size:16px;font-weight:500;color:var(--encre)}
+/* Ligne à interrupteur : le libellé occupe toute la hauteur de la ligne, l'interrupteur a une zone à toucher de 45 px. */
+.g-row > label:has(+ .switch){flex:1 1 auto;align-self:stretch;display:flex;flex-direction:column;justify-content:center;margin-block:-12px;padding-block:12px;cursor:pointer}
 .g-row.stack{flex-direction:column;align-items:stretch;gap:8px;padding-block:14px}
 .g-row.stack > label{font-size:14px;font-weight:500;color:var(--gris)}
 .input-inline{width:auto;max-width:58%;min-width:0}
+@media (max-width:400px){.g-row:has(> input.input-inline){flex-direction:column;align-items:stretch;gap:8px;padding-block:14px}
+  .g-row:has(> input.input-inline) > label{font-size:14px;color:var(--gris)}.g-row > input.input-inline{max-width:none;width:100%}}
 .switch{position:relative;flex:0 0 auto;width:51px;height:31px;margin:0;border-radius:999px;background:#D7DAD3;cursor:pointer;transition:background-color .2s var(--ease);-webkit-appearance:none;appearance:none}
 .switch::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.18);transition:transform .2s var(--ease)}
+.switch::before{content:"";position:absolute;inset:-7px -4px}
 .switch:checked{background:var(--vert)}
 .switch:checked::after{transform:translateX(20px)}
-.file-input{font:400 15px/1.4 var(--font);color:var(--texte)}
+.file-input{padding-block:11px;margin-block:-11px;font:400 15px/1.4 var(--font);color:var(--texte)}
 .form-error{font-size:15px;font-weight:600;color:var(--erreur)}
 .admin-side{display:flex;flex-direction:column;gap:12px}
 .preview{display:flex;flex-direction:column;gap:12px;padding:26px;border-radius:var(--r-card);background:#fff;box-shadow:0 0 0 1px var(--filet),0 10px 30px rgba(46,50,54,.06)}
@@ -747,7 +796,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .mp-type{font-size:14px;font-weight:600;color:var(--vert)}
 .mp-title{font-size:20px;font-weight:700;line-height:1.3;letter-spacing:-.01em;color:var(--encre);overflow-wrap:anywhere}
 .mp-text{font-size:16px;line-height:1.55;color:var(--texte);overflow-wrap:anywhere}
-.mp-btn{display:inline-flex;align-items:center;min-height:40px;margin-top:4px;padding:0 18px;border-radius:999px;background:var(--vert);color:#fff;font-size:15px;font-weight:600}
+.mp-btn{display:inline-flex;align-items:center;min-height:44px;margin-top:4px;padding:0 18px;border-radius:999px;background:var(--vert);color:#fff;font-size:15px;font-weight:600}
 .mp-note{font-size:14px;color:var(--gris)}
 .mp-foot{padding:14px 22px;background:var(--fond);font-size:14px;line-height:1.5;color:var(--gris)}
 .mp-link{color:var(--vert);text-decoration:underline;text-underline-offset:2px}
@@ -764,6 +813,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .nl-add-row{display:flex;gap:12px}
 .nl-add-row .input{flex:1;min-width:0}
 .nl-add-row .btn{flex:0 0 auto}
+@media (max-width:400px){.nl-add-row{flex-direction:column;gap:10px}.nl-add-row .input{flex:none}}
 .side-dark .check-line{font-size:15px}
 .recent{list-style:none;margin:0;padding:0;overflow:hidden;border-radius:16px;background:#fff;box-shadow:0 0 0 1px var(--filet)}
 .recent li{display:flex;flex-direction:column;gap:2px;padding:14px 18px}
@@ -797,13 +847,13 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .reader{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;background:#E6E8E3}
 .reader-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:calc(8px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));background:#fff;border-bottom:1px solid var(--filet)}
 .reader-head{min-width:0}
-.reader-title{font-size:16px;font-weight:700;line-height:1.3;color:var(--encre);overflow-wrap:anywhere}
-.reader-count{font-size:14px;color:var(--gris);font-variant-numeric:tabular-nums}
+.reader-title{font-size:16px;font-weight:700;line-height:1.3;color:var(--encre);overflow-wrap:break-word}
+.reader-count{font-size:14px;color:var(--gris);font-variant-numeric:tabular-nums;white-space:nowrap}
 .reader-tools{display:flex;align-items:center;gap:8px;flex:0 0 auto}
 .reader-btn{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:0;border-radius:999px;background:var(--neutre);color:var(--encre);font:600 15px/1 var(--font);text-decoration:none;white-space:nowrap;cursor:pointer}
 .reader-btn:hover{background:#E1E4DC}
 .reader-btn[aria-busy="true"]{opacity:.6;cursor:progress}
-.reader-pages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px 12px calc(40px + env(safe-area-inset-bottom,0px))}
+.reader-pages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px max(12px,env(safe-area-inset-right,0px)) calc(40px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
 .reader-pages:focus{outline:none}
 .reader-pages:focus-visible{outline:3px solid var(--vert);outline-offset:-3px}
 .reader-page{margin:0;width:100%;max-width:880px;background:#fff;box-shadow:0 1px 3px rgba(46,50,54,.14)}
@@ -814,9 +864,26 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 @keyframes reader-spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.reader-page.is-pdf:not(.is-drawn)::after{animation:none;border-top-color:var(--filet)}}
 .reader-error{max-width:32em;margin:40px auto;padding:0 16px;font-size:17px;text-align:center;color:var(--encre)}
-@media (max-width:520px){.reader-btn{padding:0 12px;font-size:14px}.reader-pages{padding-inline:8px;gap:10px}.reader-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px}}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:95;display:flex;align-items:center;gap:18px;max-width:calc(100% - 32px);padding:14px 16px 14px 20px;border-radius:16px;background:var(--encre);color:#fff;font-size:15px;font-weight:500;box-shadow:0 14px 34px rgba(0,0,0,.24);transform:translateX(-50%)}
-.toast a{color:var(--vert-clair);font-weight:700;white-space:nowrap}
+/* Téléphone : le titre sur sa propre ligne, puis le compteur à gauche et les boutons à droite. */
+@media (max-width:520px){
+  .reader-bar{flex-wrap:wrap;row-gap:6px;column-gap:12px}
+  .reader-head{display:contents}
+  .reader-title{flex:1 0 100%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px}
+  .reader-tools{margin-left:auto}
+  .reader-btn{padding:0 12px;font-size:14px}
+  .reader-pages{padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));gap:10px}
+}
+/* Téléphones les plus étroits : barre plus basse, pour laisser la place aux pages (le titre complet reste le nom de la fenêtre). */
+@media (max-width:400px){
+  .reader-bar{row-gap:2px;padding-top:calc(6px + env(safe-area-inset-top,0px));padding-bottom:6px}
+  .reader-title{font-size:14px}
+}
+/* Très petits écrans : « Enregistrer » seul (le nom complet reste dans aria-label), pour que le compteur et les
+   boutons tiennent sur la même ligne, même pour « Page 206 sur 222 ». */
+@media (max-width:360px){.reader-btn-x{display:none}}
+/* Message éphémère : centré, de la largeur de son texte, jusqu'à toute la largeur utile (marges de 16 px). */
+.toast{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:95;display:flex;align-items:center;gap:18px;width:-webkit-fit-content;width:fit-content;max-width:600px;margin-inline:auto;padding:14px 16px 14px 20px;border-radius:16px;background:var(--encre);color:#fff;font-size:15px;font-weight:500;box-shadow:0 14px 34px rgba(0,0,0,.24)}
+.toast a{padding:12px 8px;margin:-12px -8px;color:var(--vert-clair);font-weight:700;white-space:nowrap}
 
 /* ---------- Le site bouge avec le visiteur (6 novembre 2026) ----------
    Variables posées par setupScrollLife() pendant le défilement : --sway (élan, de -1,2 à 1,2), --swayabs (sa valeur
@@ -898,7 +965,7 @@ svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
 @keyframes viewIn{from{opacity:.4}to{opacity:1}}
 @keyframes fadeIn{from{opacity:.5}to{opacity:1}}
 @keyframes dropIn{from{opacity:.6;transform:translateY(-12px)}to{opacity:1;transform:none}}
-@keyframes toastIn{from{opacity:.5;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes toastIn{from{opacity:.5;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 /* Comptes des adhérents et mots de passe (démonstration, 7 novembre 2026) */
 .login-col{display:flex;flex-direction:column;min-width:0}
@@ -925,3 +992,22 @@ button.mp-btn:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
 .mdp-dialog .login-card{max-width:none;box-shadow:none}
 .mdp-demo{margin:0;padding:12px clamp(28px,5vw,48px);background:var(--vert-clair);font-size:14px;font-weight:600;color:var(--encre)}
 .mdp-form{display:flex;flex-direction:column;gap:18px}
+
+/* ---------- Écrans bas, à l'horizontale (téléphone tourné) ----------
+   Seul l'en-tête reste collant : le sous-menu des pages défile avec elles. L'accueil montre la devise dès le premier
+   écran (moins de marge en haut, grands ronds plus petits). Une fois connecté, le menu de l'espace adhérent ne garde
+   que les titres des rubriques, comme sur un téléphone tenu droit. */
+@media (orientation:landscape) and (max-height:500px){
+  .lnav{position:static}
+  html:has(.view:not([hidden]) > .lnav){scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--nav-h) + 16px)}
+  .hero{padding-top:16px}
+  .hero-in{gap:10px}
+  .hero-mark{width:auto;height:72px;margin-bottom:0}
+  .portes-menu .porte .porte-d,.portes-menu .porte .porte-cta{display:none}
+  .portes-menu .porte{padding:14px 16px}
+  .portes-menu .portes{gap:10px}
+  /* Une rubrique atteinte par un lien arrive juste sous l'en-tête (les champs de formulaire gardent leur marge). */
+  .view [id]:not(input,select,textarea){scroll-margin-top:0}
+  /* Liseuse : titre sur deux lignes au plus, pour laisser la place aux pages. */
+  .reader-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px}
+}

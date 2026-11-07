@@ -18,6 +18,44 @@
   const showOk = (el) => { el.hidden = false; el.focus({ preventScroll: true }); el.scrollIntoView({ block: 'nearest', behavior: smooth() }); };
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  /* Pas de retour à la ligne au trait d'union d'un numéro (« 2026-2030 », « n° 2020-546 », « L. 162-1-7 », « covid-19 »),
+     de « e-mail », de « ci-dessous », d'un impératif (« Dites-le-nous ») ou d'un prénom composé (« Jean-François ») : ces mots sont mis dans un
+     <span class="nobr">. La police n'a pas de trait d'union insécable (U+2011), qui s'afficherait dans une autre police.
+     Fait une fois sur la page, puis sur tout ce qui s'y ajoute (MutationObserver). Les mots longs (plus de 20 lettres)
+     restent sécables, pour ne jamais déborder sur un téléphone. */
+  const KEEP = /[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)+/gu;
+  const keepWord = (w) => w.length <= 20 && (/\p{N}/u.test(w) || /^(?:e-mails?|ci-dessous|ci-dessus)$/i.test(w) || /^\p{Lu}\p{Ll}+-\p{Lu}\p{Ll}+$/u.test(w) || /-(?:nous|vous|le|la|les|moi|lui|leur|mêmes?)$/i.test(w));
+  const KEEP_SKIP = /^(?:SCRIPT|STYLE|TEXTAREA|OPTION|SELECT|PRE|TITLE)$/;
+  const keepText = (t) => {
+    const p = t.parentNode;
+    return !!p && p.namespaceURI === 'http://www.w3.org/1999/xhtml' && !KEEP_SKIP.test(p.nodeName) && !p.closest('.nobr, svg, [contenteditable]') && t.nodeValue.indexOf('-') >= 0;
+  };
+  function keepTogether(root) {
+    const texts = [];
+    if (root.nodeType === 3) { if (keepText(root)) texts.push(root); }
+    else {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: (t) => (keepText(t) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP) });
+      while (walker.nextNode()) texts.push(walker.currentNode);
+    }
+    texts.forEach((t) => {
+      const v = t.nodeValue; KEEP.lastIndex = 0;
+      const parts = []; let last = 0; let m;
+      while ((m = KEEP.exec(v))) if (keepWord(m[0])) { parts.push(v.slice(last, m.index), m[0]); last = m.index + m[0].length; }
+      if (!parts.length) return;
+      /* Texte posé directement dans une boîte flex ou grille : un <span> y ferait un élément de plus, on n'y touche pas. */
+      const d = getComputedStyle(t.parentNode).display;
+      if (/flex|grid/.test(d)) return;
+      const frag = document.createDocumentFragment();
+      parts.forEach((x, i) => { if (i % 2) { const sp = document.createElement('span'); sp.className = 'nobr'; sp.textContent = x; frag.appendChild(sp); } else if (x) frag.appendChild(document.createTextNode(x)); });
+      if (last < v.length) frag.appendChild(document.createTextNode(v.slice(last)));
+      t.parentNode.replaceChild(frag, t);
+    });
+  }
+  keepTogether(document.body);
+  if ('MutationObserver' in window) {
+    new MutationObserver((records) => records.forEach((r) => r.addedNodes.forEach((n) => { if (n.isConnected && (n.nodeType === 1 || n.nodeType === 3)) keepTogether(n); })))
+      .observe(document.body, { childList: true, subtree: true });
+  }
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const norm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   const fmt = (iso, opts) => { try { return new Intl.DateTimeFormat('fr-FR', opts).format(new Date(iso + 'T12:00:00')); } catch (e) { return iso; } };
@@ -53,19 +91,19 @@
     'documents/textes/52-decret-n-2016-839-relatif-aux-conditions-et-modalites-dexerc.pdf': ['Décret n° 2016-839 relatif aux conditions et modalités d’exercice des biologistes médicaux et portant création de la Commission nationale de biologie médicale', 6, 595, 842],
     'documents/textes/57-decret-2015-1152-relatif-aux-conditions-et-modalites-dexerci.pdf': ['Décret n° 2015-1152 relatif aux conditions et modalités d’exercice des biologistes médicaux et portant création de la CNBM', 6, 595, 842],
     'documents/textes/21-decret-no-2021-293-fixant-les-missions-et-les-modalites-de-d.pdf': ['Décret n° 2021-293 fixant les missions et les modalités de désignation des laboratoires de biologie médicale de référence', 1, 595, 842],
-    'documents/textes/07-arrete-du-18-janvier-2022-laboratoires-de-reference.pdf': ['Arrêté du 18 janvier 2022 : laboratoires de référence', 2, 595, 842],
+    'documents/textes/07-arrete-du-18-janvier-2022-laboratoires-de-reference.pdf': ['Arrêté du 18 janvier 2022 : laboratoires de référence', 2, 595, 842],
     'documents/textes/65-arrete-fixant-la-composition-de-la-commission-nationale-de-b.pdf': ['Arrêté du 22 février 2016 fixant la composition de la Commission nationale de biologie médicale', 2, 595, 842],
     'documents/textes/48-decret-no-2017-414-relatif-aux-sanctions-administratives-app.pdf': ['Décret n° 2017-414 relatif aux sanctions administratives applicables en matière de biologie médicale', 2, 595, 842],
     'documents/textes/46-decret-no-2017-1520-relatif-a-la-reconnaissance-des-qualific.pdf': ['Décret n° 2017-1520 relatif à la reconnaissance des qualifications professionnelles dans le domaine de la santé', 15, 595, 842],
     'documents/textes/60-decret-2014-606-relatif-aux-conditions-de-remplacement-des-b.pdf': ['Décret n° 2014-606 relatif aux conditions de remplacement des biologistes médicaux par des internes en médecine et en pharmacie', 2, 595, 842],
     'documents/textes/59-decret-2015-150-fixant-les-criteres-de-competence-des-pratic.pdf': ['Décret n° 2015-150 fixant les critères de compétence des praticiens exerçant au sein de structures autorisées pour pratiquer des activités d’AMP', 3, 595, 842],
     'documents/textes/61-decret-2011-2119-transmissions-biologiques-entre-laboratoire.pdf': ['Décret n° 2011-2119 transmissions biologiques entre laboratoires de biologie médicale', 3, 595, 842],
-    'documents/textes/62-decret-2011-1268-fixant-les-regles-dactivite-dun-labm-et-le.pdf': ['Décret n° 2011-1268 fixant les règles d’activité d’un LABM et le % max. d’échantillons biologiques pouvant être transmis entre LABM', 2, 595, 842],
+    'documents/textes/62-decret-2011-1268-fixant-les-regles-dactivite-dun-labm-et-le.pdf': ['Décret n° 2011-1268 fixant les règles d’activité d’un LABM et le % max. d’échantillons biologiques pouvant être transmis entre LABM', 2, 595, 842],
     'documents/textes/66-arrete-du-30-decembre-2014-relatif-a-lattestation-de-formati.pdf': ['Arrêté du 30 décembre 2014 relatif à l’attestation de formation aux gestes et soins d’urgence', 12, 595, 842],
     'documents/textes/19-arrete-du-8-mars-2021-fixant-les-examens-representatifs-et-l.pdf': ['Arrêté du 8 mars 2021 fixant les examens représentatifs et les compétences associées pour l’accréditation des lignes de portée des examens de biologie médicale', 7, 595, 842],
     'documents/textes/49-decret-no-2016-1430-relatif-aux-modalites-daccreditation-des.pdf': ['Décret n° 2016-1430 relatif aux modalités d’accréditation des laboratoires de biologie médicale', 1, 595, 842],
-    'documents/textes/55-decret-2016-45-modalites-specifiques-procedure-d-accreditati.pdf': ['Décret n° 2016-45 : modalités spécifiques de la procédure d’accréditation des LBM en Guadeloupe, Guyane, Martinique', 2, 595, 842],
-    'documents/textes/58-decret-2015-205-relatif-aux-modalites-de-depot-des-demandes.pdf': ['Décret n° 2015-205 relatif aux modalités de dépôt des demandes d’accréditation des LABM : étape 2016', 1, 595, 842],
+    'documents/textes/55-decret-2016-45-modalites-specifiques-procedure-d-accreditati.pdf': ['Décret n° 2016-45 : modalités spécifiques de la procédure d’accréditation des LBM en Guadeloupe, Guyane, Martinique', 2, 595, 842],
+    'documents/textes/58-decret-2015-205-relatif-aux-modalites-de-depot-des-demandes.pdf': ['Décret n° 2015-205 relatif aux modalités de dépôt des demandes d’accréditation des LABM : étape 2016', 1, 595, 842],
     'documents/textes/68-arrete-du-17-octobre-2012-definissant-les-conditions-justifi.pdf': ['Arrêté du 17 octobre 2012 définissant les conditions justificatives de l’entrée effective d’un laboratoire de biologie médicale dans une démarche d’accréditation', 4, 595, 842],
     'documents/textes/40-nabm-baisses-au-6-avril-2018.pdf': ['Baisses de la NABM au 6 avril 2018 (décision de l’UNCAM du 12 mars 2018)', 4, 595, 842],
     'documents/textes/45-decision-du-24-mai-2017-de-lunion-nationale-des-caisses-dass.pdf': ['Décision du 24 mai 2017 de l’Union nationale des caisses d’assurance maladie relative à la liste des actes et prestations pris en charge par l’assurance maladie', 3, 595, 842],
@@ -76,7 +114,7 @@
     'documents/textes/53-decret-no-2016-545-relatif-a-levaluation-et-au-controle-de-q.pdf': ['Décret n° 2016-545 relatif à l’évaluation et au contrôle de qualité des examens de diagnostic prénatal', 2, 595, 842],
     'documents/textes/35-arrete-10-oct-2019-relatif-a-la-rougeole.pdf': ['Arrêté du 16 octobre 2019 relatif à la rougeole', 2, 595, 842],
     'documents/textes/36-arrete-du-4-octobre-2019-relatif-aux-avk.pdf': ['Arrêté du 4 octobre 2019 relatif aux AVK', 45, 595, 842],
-    'documents/textes/37-arrete-du-26-juin-2019-depistage-hepatite-c-en-officine.pdf': ['Arrêté du 26 juin 2019 : dépistage de l’hépatite C en officine', 17, 595, 842],
+    'documents/textes/37-arrete-du-26-juin-2019-depistage-hepatite-c-en-officine.pdf': ['Arrêté du 26 juin 2019 : dépistage de l’hépatite C en officine', 17, 595, 842],
     'documents/textes/34-arrete-du-30-janvier-2020-fixant-les-tests-de-diagnostic-rap.pdf': ['Arrêté du 30 janvier 2020 fixant les tests de diagnostic rapide pouvant être réalisés par les pharmaciens', 1, 595, 842],
     'documents/textes/67-arrete-du-11-juin-2013-determinant-la-liste-des-tests-recuei.pdf': ['Arrêté du 11 juin 2013 déterminant la liste des tests, recueils et traitements de signaux biologiques qui ne constituent pas un examen de biologie médicale, les catégories de personnes pouvant les réaliser et les conditions de réalisation de certains de ces tests, recueils et traitements de signaux biologiques', 7, 595, 842],
     'documents/textes/09-loi-no-2021-1754-du-23-decembre-2021-de-financement-de-la-se.pdf': ['Loi n° 2021-1754 du 23 décembre 2021 de financement de la sécurité sociale pour 2022', 68, 595, 842],
@@ -89,7 +127,7 @@
     'documents/textes/01-labm-rapport-de-branche-2021.pdf': ['Rapport de branche 2021 des laboratoires de biologie médicale extra-hospitaliers (données 2020)', 97, 850, 595],
     'documents/textes/02-2022-grille-salaires-au-1er-mai.pdf': ['Grille des salaires minima au 1er mai 2022 (accord du 27 avril 2022)', 4, 595, 842],
     'documents/textes/03-arrete-du-15-mars-sur-le-criblage.pdf': ['Arrêté du 15 mars 2022 sur le criblage', 1, 595, 842],
-    'documents/textes/05-decret-du-12-mars-mesures-generales-necessaires-a-la-gestion.pdf': ['Décret n° 2022-352 du 12 mars 2022 : mesures générales nécessaires à la gestion de la sortie de crise sanitaire', 4, 595, 842],
+    'documents/textes/05-decret-du-12-mars-mesures-generales-necessaires-a-la-gestion.pdf': ['Décret n° 2022-352 du 12 mars 2022 : mesures générales nécessaires à la gestion de la sortie de crise sanitaire', 4, 595, 842],
     'documents/textes/06-arrete-du-1er-fevrier-modifiant-la-liste-des-actes-et-presta.pdf': ['Arrêté du 1er février 2022 modifiant la liste des actes et prestations mentionnée à l’article L. 162-1-7 du code de la sécurité sociale et l’arrêté du 12 décembre 2020 portant modification des conditions de remboursement de l’acte de détection du génome du SARS-CoV-2 par amplification génique', 1, 595, 842],
     'documents/textes/08-arrete-du-27-decembre-2021-modifiant-larrete-du-1er-juin-202.pdf': ['Arrêté du 27 décembre 2021 modifiant l’arrêté du 1er juin 2021 prescrivant les mesures générales nécessaires à la gestion de la sortie de crise sanitaire', 1, 595, 842],
     'documents/textes/10-loi-no-2021-1465-du-10-novembre-2021-portant-diverses-dispos.pdf': ['Loi n° 2021-1465 du 10 novembre 2021 portant diverses dispositions de vigilance sanitaire', 7, 595, 842],
@@ -112,28 +150,28 @@
     'documents/textes/32-decret-n-2020-293-prescrivant-les-mesures-generales-necessai.pdf': ['Décret n° 2020-293 prescrivant les mesures générales nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', 6, 595, 842],
     'documents/textes/33-arrete-du-16-mars-2020-completant-larrete-du-14-mars-2020-po.pdf': ['Arrêté du 16 mars 2020 complétant l’arrêté du 14 mars 2020 portant diverses mesures relatives à la lutte contre la propagation du virus covid-19', 2, 595, 842],
     'documents/textes/38-dgos-et-cnam-references-juridiques-en-biologie-medicale-mise.pdf': ['Références juridiques en biologie médicale, DGOS et CNAM, mise à jour de novembre 2018', 222, 595, 842],
-    'documents/actualites/2026-09-07-strategie-sante-sexuelle-texte-integral.pdf': ['Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', 2, 595, 842],
+    'documents/actualites/2026-09-07-strategie-sante-sexuelle-texte-integral.pdf': ['Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', 2, 595, 842],
     'documents/actualites/feuille-de-route-sante-sexuelle-2026-2030.pdf': ['Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle (ministère de la Santé)', 72, 595, 839],
     'documents/actualites/2026-09-07-feuille-de-route-sante-sexuelle.pdf': ['Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle', 1, 595, 842],
     'documents/actualites/depeche-apmnews-2026-09-07-feuille-de-route-sante-sexuelle.pdf': ['Dépêche APMnews du 7 septembre 2026', 2, 595, 842],
-    'documents/actualites/2026-08-31-rapport-beaudeux-bouvier.pdf': ['Rapport Beaudeux-Bouvier : biologistes médicaux et assistance médicale à la procréation', 1, 595, 842],
-    'documents/actualites/rapport-mission-biologistes-amp-beaudeux-bouvier.pdf': ['Rapport de la mission Beaudeux-Bouvier : biologistes médicaux et AMP', 19, 595, 842],
+    'documents/actualites/2026-08-31-rapport-beaudeux-bouvier.pdf': ['Rapport Beaudeux-Bouvier : biologistes médicaux et assistance médicale à la procréation', 1, 595, 842],
+    'documents/actualites/rapport-mission-biologistes-amp-beaudeux-bouvier.pdf': ['Rapport de la mission Beaudeux-Bouvier : biologistes médicaux et AMP', 19, 595, 842],
     'documents/actualites/2026-08-31-deces-jean-francois-perotto.pdf': ['Décès du Docteur Jean-François Perotto', 1, 595, 842],
-    'documents/actualites/2026-07-01-negociations-salariales-grille-2026.pdf': ['Négociations salariales : recommandation patronale et grille 2026', 1, 595, 842],
+    'documents/actualites/2026-07-01-negociations-salariales-grille-2026.pdf': ['Négociations salariales : recommandation patronale et grille 2026', 1, 595, 842],
     'documents/actualites/2026-06-09-appel-candidatures-pnmr4.pdf': ['Appel à candidatures PNMR4 pour les tests fonctionnels', 1, 595, 842],
     'documents/actualites/2026-05-04-greve-nationale-salaries-laboratoires.pdf': ['Grève nationale historique des salariés des laboratoires', 1, 595, 842],
-    'documents/actualites/2026-04-16-deploiement-rihn-2-0.pdf': ['Innovation diagnostique : déploiement du RIHN 2.0', 1, 595, 842],
-    'documents/actualites/programme-campagne-slbc-2026.pdf': ['Programme de campagne du SLBC : « Une ambition commune : valoriser notre expertise médicale »', 2, 597, 843],
+    'documents/actualites/2026-04-16-deploiement-rihn-2-0.pdf': ['Innovation diagnostique : déploiement du RIHN 2.0', 1, 595, 842],
+    'documents/actualites/programme-campagne-slbc-2026.pdf': ['Programme de campagne du SLBC : « Une ambition commune : valoriser notre expertise médicale »', 2, 597, 843],
     'documents/actualites/2026-02-04-radiation-vs-nabm.pdf': ['Radiation de la vitesse de sédimentation (VS) de la NABM', 1, 595, 842],
     'documents/syndicat/statuts-slbc.pdf': ['Statuts du SLBC', 4, 595, 842],
-    'documents/comptes/comptes-2023-rapport-cac.pdf': ['Comptes 2023 : bilan et rapport du commissaire aux comptes', 17, 595, 842],
-    'documents/comptes/comptes-2022-etats-financiers.pdf': ['Comptes 2022 : états financiers', 17, 596, 843],
-    'documents/comptes/comptes-2022-rapport-cac.pdf': ['Comptes 2022 : rapport du commissaire aux comptes', 18, 595, 841],
-    'documents/comptes/comptes-2020-rapport-cac.pdf': ['Comptes 2020 : rapport du commissaire aux comptes', 14, 595, 842]
+    'documents/comptes/comptes-2023-rapport-cac.pdf': ['Comptes 2023 : bilan et rapport du commissaire aux comptes', 17, 595, 842],
+    'documents/comptes/comptes-2022-etats-financiers.pdf': ['Comptes 2022 : états financiers', 17, 596, 843],
+    'documents/comptes/comptes-2022-rapport-cac.pdf': ['Comptes 2022 : rapport du commissaire aux comptes', 18, 595, 841],
+    'documents/comptes/comptes-2020-rapport-cac.pdf': ['Comptes 2020 : rapport du commissaire aux comptes', 14, 595, 842]
   };
   PDFS['documents/etude-roland-berger-2025.pdf'] = ['Étude du secteur des laboratoires de biologie médicale libérale français, rapport 2025 (Roland Berger)', 59, 960, 540];
   Object.keys(PDFS).forEach((u) => { const [title, pages, w, h] = PDFS[u]; DOCS[u] = { title, pages, w, h, pdf: true, file: u.split('/').pop() }; });
-  const nPages = (u) => DOCS[u].pages + ' page' + (DOCS[u].pages > 1 ? 's' : '');
+  const nPages = (u) => DOCS[u].pages + '\u00a0page' + (DOCS[u].pages > 1 ? 's' : '');
 
   const sv = (w, body) => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
   const ICON = {
@@ -148,7 +186,7 @@
   const DATA = {
     veille: [
       { id: 'v0', src: 'hors', where: 'Assurance maladie', date: '2026-11-02', when: '2 novembre 2026',
-        title: 'Protocole 2027-2029 : l’Assurance maladie et les syndicats représentatifs de biologistes signent',
+        title: 'Protocole 2027-2029 : l’Assurance maladie et les syndicats représentatifs de biologistes signent',
         teaser: 'Tous les syndicats représentatifs de biologistes médicaux le signent, dont le SLBC.',
         resume: 'L’Assurance maladie et l’ensemble des syndicats représentatifs de biologistes médicaux, dont le SLBC, ont signé le 2 novembre 2026 un nouveau protocole d’accord pour la période 2027-2029. Il prend le relais de l’accord du 20 décembre 2024, qui gèle la nomenclature jusqu’en décembre 2026.',
         impact: 'fort',
@@ -162,7 +200,7 @@
         facts: [['Publication', 'JO n° 0254 du 30 octobre 2026, texte n° 34'], ['Articles modifiés', 'R. 1413-58-1 et R. 3113-2 du code de la santé publique'], ['Entrée en vigueur', 'Le lendemain de la publication']],
         url: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000055029947', linkLabel: 'Lire le décret sur Légifrance' },
       { id: 'v2', src: 'parl', where: 'Sénat', date: '2026-11-02', when: '2 novembre 2026',
-        title: 'PLFSS 2027 : le projet de loi est transmis au Sénat',
+        title: 'PLFSS 2027 : le projet de loi est transmis au Sénat',
         teaser: 'Considéré comme rejeté par l’Assemblée nationale, le texte part en commission des affaires sociales du Sénat.',
         resume: 'Le projet de loi de financement de la sécurité sociale pour 2027, considéré comme rejeté par l’Assemblée nationale, a été transmis au Sénat et renvoyé à sa commission des affaires sociales. La veille suit les articles et les amendements qui concernent les laboratoires.',
         impact: 'suivre',
@@ -176,7 +214,7 @@
         facts: [['Dépôt', '23 juin 2026'], ['Commission', 'Affaires sociales']],
         url: 'https://www.assemblee-nationale.fr/dyn/17/textes/l17b2956_proposition-loi', linkLabel: 'Voir le texte sur assemblee-nationale.fr' },
       { id: 'v4', src: 'jo', where: 'Journal officiel', date: '2026-10-22', when: 'Arrêté du 22 octobre 2026',
-        title: 'Biosimilaires substituables par le pharmacien d’officine : la liste est modifiée',
+        title: 'Biosimilaires substituables par le pharmacien d’officine : la liste est modifiée',
         teaser: 'Concerne la substitution en officine. Pas d’effet direct sur les laboratoires.',
         resume: 'L’arrêté modifie la liste des groupes biologiques similaires que le pharmacien d’officine peut substituer, ainsi que les conditions de substitution. Il n’a pas d’effet direct sur l’activité des laboratoires de biologie médicale.',
         impact: 'faible',
@@ -194,7 +232,7 @@
         subtitle: 'Le SLBC signe et alerte sur la pression tarifaire',
         with: 'Communiqué du SLBC',
         chapo: 'Le Syndicat des Laboratoires de Biologie Clinique (SLBC) a signé le 2 novembre 2026, avec l’Assurance Maladie et les autres syndicats représentatifs, le protocole d’accord pour les années 2027-2029. Il reconnaît l’intérêt des dispositions relatives à la prévention et à l’innovation, mais alerte sur une trajectoire qui maintient la pression sur les tarifs des examens. Il a signé pour conserver sa place dans les instances de suivi et sa capacité d’intervention dans les discussions sur l’avenir de la profession.',
-        quote: { text: '« Nous signons pour défendre les laboratoires dans les discussions à venir. Notre signature n’efface pas notre désaccord sur l’équilibre économique de cet accord. »', by: 'Thierry Bouchet, président du SLBC' },
+        quote: { text: '« Nous signons pour défendre les laboratoires dans les discussions à venir. Notre signature n’efface pas notre désaccord sur l’équilibre économique de cet accord. »', by: 'Thierry Bouchet, président du SLBC' },
         body: [
           { h: 'Une enveloppe de dépenses autorisées qui laisse les tarifs sous pression', ps: [
             'Face à une croissance des besoins en examens liée au vieillissement de la population et à l’augmentation des maladies chroniques, l’accord limite la croissance de l’enveloppe des actes courants à 1,1 % chaque année. La dernière estimation de la CNAM fait état d’une croissance des volumes de 4,1 % en 2026. À tarifs et à structure d’activité constants, la hausse annuelle de l’enveloppe permettrait de financer une progression des volumes de 1,1 %. Le SLBC anticipe une baisse tarifaire d’au moins 2 %, pouvant atteindre 2,5 % selon les hypothèses d’activité retenues.',
@@ -208,18 +246,18 @@
             'Ces perspectives ne valent pas mise en œuvre immédiate. Elles dépendent encore, selon les mesures, de textes législatifs ou réglementaires et de négociations conventionnelles. Le SLBC sera vigilant sur le financement intégral des nouvelles missions en dehors de l’enveloppe courante. Pour les futurs actes de santé publique, la part des dépenses affectée à l’enveloppe spécifique reste à négocier.'
           ] }
         ],
-        url: 'documents/protocole-biologie-2027-2029.pdf', linkLabel: 'Lire le protocole signé (13 pages)' }
+        url: 'documents/protocole-biologie-2027-2029.pdf', linkLabel: 'Lire le protocole signé (13\u00a0pages)' }
     ],
     actus: [
-      { id: 'a1', date: '2026-09-07', cat: 'Santé publique', title: 'Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', excerpt: 'Sur les 22 actions du plan, deux touchent les laboratoires, dont le déploiement de la biologie délocalisée.', doc: 'documents/actualites/2026-09-07-strategie-sante-sexuelle-texte-integral.pdf', att: { url: 'documents/actualites/feuille-de-route-sante-sexuelle-2026-2030.pdf', label: 'La feuille de route' } },
+      { id: 'a1', date: '2026-09-07', cat: 'Santé publique', title: 'Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', excerpt: 'Sur les 22 actions du plan, deux touchent les laboratoires, dont le déploiement de la biologie délocalisée.', doc: 'documents/actualites/2026-09-07-strategie-sante-sexuelle-texte-integral.pdf', att: { url: 'documents/actualites/feuille-de-route-sante-sexuelle-2026-2030.pdf', label: 'La feuille de route' } },
       { id: 'a2', date: '2026-09-07', cat: 'Santé publique', title: 'Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle', excerpt: 'La feuille de route prévoit le déploiement de la biologie médicale délocalisée.', doc: 'documents/actualites/2026-09-07-feuille-de-route-sante-sexuelle.pdf', att: { url: 'documents/actualites/depeche-apmnews-2026-09-07-feuille-de-route-sante-sexuelle.pdf', label: 'La dépêche APMnews' } },
-      { id: 'a3', date: '2026-08-31', cat: 'Exercice', title: 'Rapport Beaudeux-Bouvier : biologistes médicaux et assistance médicale à la procréation', excerpt: 'Une mission ministérielle propose de reconnaître et de rémunérer les consultations des biologistes médicaux en assistance médicale à la procréation.', doc: 'documents/actualites/2026-08-31-rapport-beaudeux-bouvier.pdf', att: { url: 'documents/actualites/rapport-mission-biologistes-amp-beaudeux-bouvier.pdf', label: 'Le rapport' } },
+      { id: 'a3', date: '2026-08-31', cat: 'Exercice', title: 'Rapport Beaudeux-Bouvier : biologistes médicaux et assistance médicale à la procréation', excerpt: 'Une mission ministérielle propose de reconnaître et de rémunérer les consultations des biologistes médicaux en assistance médicale à la procréation.', doc: 'documents/actualites/2026-08-31-rapport-beaudeux-bouvier.pdf', att: { url: 'documents/actualites/rapport-mission-biologistes-amp-beaudeux-bouvier.pdf', label: 'Le rapport' } },
       { id: 'a4', date: '2026-08-31', cat: 'Vie du syndicat', title: 'Décès du Docteur Jean-François Perotto', excerpt: '', doc: 'documents/actualites/2026-08-31-deces-jean-francois-perotto.pdf' },
-      { id: 'a5', date: '2026-07-01', cat: 'Social', title: 'Négociations salariales : recommandation patronale et grille 2026', excerpt: 'Les organisations patronales, dont le SLBC, ont émis une recommandation le 15 décembre 2025.', doc: 'documents/actualites/2026-07-01-negociations-salariales-grille-2026.pdf' },
+      { id: 'a5', date: '2026-07-01', cat: 'Social', title: 'Négociations salariales : recommandation patronale et grille 2026', excerpt: 'Les organisations patronales, dont le SLBC, ont émis une recommandation le 15 décembre 2025.', doc: 'documents/actualites/2026-07-01-negociations-salariales-grille-2026.pdf' },
       { id: 'a6', date: '2026-06-09', cat: 'Appels à projets', title: 'Appel à candidatures PNMR4 pour les tests fonctionnels', excerpt: 'La DGOS a lancé le 9 juin 2026 un appel à candidatures dans le cadre du 4e plan national maladies rares.', doc: 'documents/actualites/2026-06-09-appel-candidatures-pnmr4.pdf' },
       { id: 'a7', date: '2026-05-04', cat: 'Social', title: 'Grève nationale historique des salariés des laboratoires', excerpt: '', doc: 'documents/actualites/2026-05-04-greve-nationale-salaries-laboratoires.pdf' },
-      { id: 'a8', date: '2026-04-16', cat: 'Nomenclature', title: 'Innovation diagnostique : déploiement du RIHN 2.0', excerpt: '', doc: 'documents/actualites/2026-04-16-deploiement-rihn-2-0.pdf' },
-      { id: 'a9', date: '2026-02-05', cat: 'Vie du syndicat', title: 'Une ambition commune : valoriser notre expertise médicale', excerpt: '', doc: 'documents/actualites/programme-campagne-slbc-2026.pdf', docLabel: 'Lire le programme de campagne' },
+      { id: 'a8', date: '2026-04-16', cat: 'Nomenclature', title: 'Innovation diagnostique : déploiement du RIHN 2.0', excerpt: '', doc: 'documents/actualites/2026-04-16-deploiement-rihn-2-0.pdf' },
+      { id: 'a9', date: '2026-02-05', cat: 'Vie du syndicat', title: 'Une ambition commune : valoriser notre expertise médicale', excerpt: '', doc: 'documents/actualites/programme-campagne-slbc-2026.pdf', docLabel: 'Lire le programme de campagne' },
       { id: 'a10', date: '2026-02-04', cat: 'Nomenclature', title: 'Radiation de la vitesse de sédimentation (VS) de la NABM', excerpt: '', doc: 'documents/actualites/2026-02-04-radiation-vs-nabm.pdf' }
     ]
   };
@@ -298,16 +336,16 @@
      d : date affichée ; url : page officielle (lien externe) ou document lu dans la liseuse (doc: true) ; src : site d'origine. */
   const ETUDES = [
     { g: 'Assurance maladie', items: [
-      { d: 'Juillet 2026', t: 'Charges et produits pour 2027 : les propositions de l’Assurance maladie', s: 'Rapport annuel de propositions, présenté le 2 juillet 2026', url: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees/2026-rapport-propositions-pour-2027-charges-produits', src: 'ameli.fr' },
-      { d: 'Juin 2025', t: 'Charges et produits pour 2026 : les propositions de l’Assurance maladie', s: 'Rapport annuel de propositions, présenté le 24 juin 2025', url: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees/2025-rapport-propositions-pour-2026-charges-produits', src: 'ameli.fr' }
+      { d: 'Juillet 2026', t: 'Charges et produits pour 2027 : les propositions de l’Assurance maladie', s: 'Rapport annuel de propositions, présenté le 2 juillet 2026', url: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees/2026-rapport-propositions-pour-2027-charges-produits', src: 'ameli.fr' },
+      { d: 'Juin 2025', t: 'Charges et produits pour 2026 : les propositions de l’Assurance maladie', s: 'Rapport annuel de propositions, présenté le 24 juin 2025', url: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees/2025-rapport-propositions-pour-2026-charges-produits', src: 'ameli.fr' }
     ] },
     { g: 'Inspections générales (IGAS, IGF)', items: [
       { d: 'Juillet 2025', t: 'Pertinence et efficience des dépenses de biologie médicale', s: 'Rapport IGAS-IGF, publié le 15 juillet 2025', url: 'https://igas.gouv.fr/pertinence-et-efficience-des-depenses-de-biologie-medicale', src: 'igas.gouv.fr' },
-      { d: 'Juillet 2025', t: 'Causes et effets de la financiarisation du système de santé', s: 'Rapport IGAS-IGF, publié le 9 juillet 2025 ; il couvre tout le système de santé, dont la biologie médicale', url: 'https://www.igas.gouv.fr/causes-et-effets-de-la-financiarisation-du-systeme-de-sante', src: 'igas.gouv.fr' }
+      { d: 'Juillet 2025', t: 'Causes et effets de la financiarisation du système de santé', s: 'Rapport IGAS-IGF, publié le 9 juillet 2025 ; il couvre tout le système de santé, dont la biologie médicale', url: 'https://www.igas.gouv.fr/causes-et-effets-de-la-financiarisation-du-systeme-de-sante', src: 'igas.gouv.fr' }
     ] },
     { g: 'Études du secteur', items: [
-      { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : version courte', s: 'Étude du secteur des laboratoires de biologie médicale libérale français, Roland Berger', url: 'documents/observatoire-biologie-2026-court.pdf', doc: true },
-      { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : rapport complet', s: 'Même étude, version longue', url: 'documents/observatoire-biologie-2026-complet.pdf', doc: true },
+      { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : version courte', s: 'Étude du secteur des laboratoires de biologie médicale libérale français, Roland Berger', url: 'documents/observatoire-biologie-2026-court.pdf', doc: true },
+      { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : rapport complet', s: 'Même étude, version longue', url: 'documents/observatoire-biologie-2026-complet.pdf', doc: true },
       /* Rapport 2025 (troisième étude Roland Berger, novembre 2025) : PDF envoyé par Isabelle Eimer le 7 novembre 2026, lu dans la liseuse.
          Le document de travail du 31 juillet 2025 envoyé le même jour n'est pas publié (version préliminaire). Point 27. */
       { d: 'Novembre 2025', t: 'Étude du secteur des laboratoires de biologie médicale libérale français, rapport 2025', s: 'Roland Berger', url: 'documents/etude-roland-berger-2025.pdf', doc: true }
@@ -334,21 +372,21 @@
       { t: 'Décret n° 2016-839 relatif aux conditions et modalités d’exercice des biologistes médicaux et portant création de la Commission nationale de biologie médicale', y: '2016', url: 'documents/textes/52-decret-n-2016-839-relatif-aux-conditions-et-modalites-dexerc.pdf' },
       { t: 'Décret n° 2015-1152 relatif aux conditions et modalités d’exercice des biologistes médicaux et portant création de la CNBM', y: '2015', url: 'documents/textes/57-decret-2015-1152-relatif-aux-conditions-et-modalites-dexerci.pdf' },
       { t: 'Décret n° 2021-293 fixant les missions et les modalités de désignation des laboratoires de biologie médicale de référence', y: '2021', url: 'documents/textes/21-decret-no-2021-293-fixant-les-missions-et-les-modalites-de-d.pdf' },
-      { t: 'Arrêté du 18 janvier 2022 : laboratoires de référence', y: '2022', url: 'documents/textes/07-arrete-du-18-janvier-2022-laboratoires-de-reference.pdf' },
+      { t: 'Arrêté du 18 janvier 2022 : laboratoires de référence', y: '2022', url: 'documents/textes/07-arrete-du-18-janvier-2022-laboratoires-de-reference.pdf' },
       { t: 'Arrêté du 22 février 2016 fixant la composition de la Commission nationale de biologie médicale', y: '2016', url: 'documents/textes/65-arrete-fixant-la-composition-de-la-commission-nationale-de-b.pdf' },
       { t: 'Décret n° 2017-414 relatif aux sanctions administratives applicables en matière de biologie médicale', y: '2017', url: 'documents/textes/48-decret-no-2017-414-relatif-aux-sanctions-administratives-app.pdf' },
       { t: 'Décret n° 2017-1520 relatif à la reconnaissance des qualifications professionnelles dans le domaine de la santé', y: '2017', url: 'documents/textes/46-decret-no-2017-1520-relatif-a-la-reconnaissance-des-qualific.pdf' },
       { t: 'Décret n° 2014-606 relatif aux conditions de remplacement des biologistes médicaux par des internes en médecine et en pharmacie', y: '2014', url: 'documents/textes/60-decret-2014-606-relatif-aux-conditions-de-remplacement-des-b.pdf' },
       { t: 'Décret n° 2015-150 fixant les critères de compétence des praticiens exerçant au sein de structures autorisées pour pratiquer des activités d’AMP', y: '2015', url: 'documents/textes/59-decret-2015-150-fixant-les-criteres-de-competence-des-pratic.pdf' },
       { t: 'Décret n° 2011-2119 transmissions biologiques entre laboratoires de biologie médicale', y: '2011', url: 'documents/textes/61-decret-2011-2119-transmissions-biologiques-entre-laboratoire.pdf' },
-      { t: 'Décret n° 2011-1268 fixant les règles d’activité d’un LABM et le % max. d’échantillons biologiques pouvant être transmis entre LABM', y: '2011', url: 'documents/textes/62-decret-2011-1268-fixant-les-regles-dactivite-dun-labm-et-le.pdf' },
+      { t: 'Décret n° 2011-1268 fixant les règles d’activité d’un LABM et le % max. d’échantillons biologiques pouvant être transmis entre LABM', y: '2011', url: 'documents/textes/62-decret-2011-1268-fixant-les-regles-dactivite-dun-labm-et-le.pdf' },
       { t: 'Arrêté du 30 décembre 2014 relatif à l’attestation de formation aux gestes et soins d’urgence', y: '2014', url: 'documents/textes/66-arrete-du-30-decembre-2014-relatif-a-lattestation-de-formati.pdf' }
     ] },
     { theme: 'Accréditation', items: [
       { t: 'Arrêté du 8 mars 2021 fixant les examens représentatifs et les compétences associées pour l’accréditation des lignes de portée des examens de biologie médicale', y: '2021', url: 'documents/textes/19-arrete-du-8-mars-2021-fixant-les-examens-representatifs-et-l.pdf' },
       { t: 'Décret n° 2016-1430 relatif aux modalités d’accréditation des laboratoires de biologie médicale', y: '2016', url: 'documents/textes/49-decret-no-2016-1430-relatif-aux-modalites-daccreditation-des.pdf' },
-      { t: 'Décret n° 2016-45 : modalités spécifiques de la procédure d’accréditation des LBM en Guadeloupe, Guyane, Martinique', y: '2016', url: 'documents/textes/55-decret-2016-45-modalites-specifiques-procedure-d-accreditati.pdf' },
-      { t: 'Décret n° 2015-205 relatif aux modalités de dépôt des demandes d’accréditation des LABM : étape 2016', y: '2015', url: 'documents/textes/58-decret-2015-205-relatif-aux-modalites-de-depot-des-demandes.pdf' },
+      { t: 'Décret n° 2016-45 : modalités spécifiques de la procédure d’accréditation des LBM en Guadeloupe, Guyane, Martinique', y: '2016', url: 'documents/textes/55-decret-2016-45-modalites-specifiques-procedure-d-accreditati.pdf' },
+      { t: 'Décret n° 2015-205 relatif aux modalités de dépôt des demandes d’accréditation des LABM : étape 2016', y: '2015', url: 'documents/textes/58-decret-2015-205-relatif-aux-modalites-de-depot-des-demandes.pdf' },
       { t: 'Arrêté du 17 octobre 2012 définissant les conditions justificatives de l’entrée effective d’un laboratoire de biologie médicale dans une démarche d’accréditation', y: '2012', url: 'documents/textes/68-arrete-du-17-octobre-2012-definissant-les-conditions-justifi.pdf' }
     ] },
     { theme: 'Nomenclature et prise en charge', items: [
@@ -363,7 +401,7 @@
       { t: 'Décret n° 2016-545 relatif à l’évaluation et au contrôle de qualité des examens de diagnostic prénatal', y: '2016', url: 'documents/textes/53-decret-no-2016-545-relatif-a-levaluation-et-au-controle-de-q.pdf' },
       { t: 'Arrêté du 16 octobre 2019 relatif à la rougeole', y: '2019', url: 'documents/textes/35-arrete-10-oct-2019-relatif-a-la-rougeole.pdf' },
       { t: 'Arrêté du 4 octobre 2019 relatif aux AVK', y: '2019', url: 'documents/textes/36-arrete-du-4-octobre-2019-relatif-aux-avk.pdf' },
-      { t: 'Arrêté du 26 juin 2019 : dépistage de l’hépatite C en officine', y: '2019', url: 'documents/textes/37-arrete-du-26-juin-2019-depistage-hepatite-c-en-officine.pdf' },
+      { t: 'Arrêté du 26 juin 2019 : dépistage de l’hépatite C en officine', y: '2019', url: 'documents/textes/37-arrete-du-26-juin-2019-depistage-hepatite-c-en-officine.pdf' },
       { t: 'Arrêté du 30 janvier 2020 fixant les tests de diagnostic rapide pouvant être réalisés par les pharmaciens', y: '2020', url: 'documents/textes/34-arrete-du-30-janvier-2020-fixant-les-tests-de-diagnostic-rap.pdf' },
       { t: 'Arrêté du 11 juin 2013 déterminant la liste des tests, recueils et traitements de signaux biologiques qui ne constituent pas un examen de biologie médicale, les catégories de personnes pouvant les réaliser et les conditions de réalisation de certains de ces tests, recueils et traitements de signaux biologiques', y: '2013', url: 'documents/textes/67-arrete-du-11-juin-2013-determinant-la-liste-des-tests-recuei.pdf' }
     ] },
@@ -384,8 +422,8 @@
     ] },
     { theme: 'Crise sanitaire (covid-19)', items: [
       { t: 'Arrêté du 15 mars 2022 sur le criblage', y: '2022', url: 'documents/textes/03-arrete-du-15-mars-sur-le-criblage.pdf' },
-      { t: 'DGS-Urgent du 14 mars 2022 : évolution de la lutte contre la covid-19', y: '2022' },
-      { t: 'Décret n° 2022-352 du 12 mars 2022 : mesures générales nécessaires à la gestion de la sortie de crise sanitaire', y: '2022', url: 'documents/textes/05-decret-du-12-mars-mesures-generales-necessaires-a-la-gestion.pdf' },
+      { t: 'DGS-Urgent du 14 mars 2022 : évolution de la lutte contre la covid-19', y: '2022' },
+      { t: 'Décret n° 2022-352 du 12 mars 2022 : mesures générales nécessaires à la gestion de la sortie de crise sanitaire', y: '2022', url: 'documents/textes/05-decret-du-12-mars-mesures-generales-necessaires-a-la-gestion.pdf' },
       { t: 'Arrêté du 1er février 2022 modifiant la liste des actes et prestations mentionnée à l’article L. 162-1-7 du code de la sécurité sociale et l’arrêté du 12 décembre 2020 portant modification des conditions de remboursement de l’acte de détection du génome du SARS-CoV-2 par amplification génique', y: '2022', url: 'documents/textes/06-arrete-du-1er-fevrier-modifiant-la-liste-des-actes-et-presta.pdf' },
       { t: 'Arrêté du 27 décembre 2021 modifiant l’arrêté du 1er juin 2021 prescrivant les mesures générales nécessaires à la gestion de la sortie de crise sanitaire', y: '2021', url: 'documents/textes/08-arrete-du-27-decembre-2021-modifiant-larrete-du-1er-juin-202.pdf' },
       { t: 'Loi n° 2021-1465 du 10 novembre 2021 portant diverses dispositions de vigilance sanitaire', y: '2021', url: 'documents/textes/10-loi-no-2021-1465-du-10-novembre-2021-portant-diverses-dispos.pdf' },
@@ -697,7 +735,7 @@
     const map = { 'Journal officiel': 'jo', 'Parlement': 'parl', 'Hors JO': 'hors' };
     seg($('#veille-seg'), ['Tout', 'Journal officiel', 'Parlement', 'Hors JO'], state.veilleSrc, (s) => { state.veilleSrc = s; renderVeille(); });
     const list = DATA.veille.filter((v) => state.veilleSrc === 'Tout' || v.src === map[state.veilleSrc]);
-    $('#veille-list').innerHTML = list.length ? list.map(vitem).join('') : '<p class="empty">Aucun élément « ' + esc(state.veilleSrc) + ' » dans cette synthèse.</p>';
+    $('#veille-list').innerHTML = list.length ? list.map(vitem).join('') : '<p class="empty">Aucun élément « ' + esc(state.veilleSrc) + ' » dans cette synthèse.</p>';
   }
   function renderPresse() {
     const years = ['Toutes'].concat(Array.from(new Set(DATA.presse.map((p) => p.year))).sort((a, b) => b.localeCompare(a)));
@@ -856,7 +894,7 @@
     page('Nos représentants', 'Nomenclature, convention, accréditation, Europe', '#syndicat', 'representants');
     page('Les URPS', 'La représentation des biologistes en région', '#syndicat', 'urps');
     page('Statuts et comptes', 'Les statuts du SLBC, comptes des exercices 2020, 2022 et 2023', '#syndicat', 'comptes');
-    page('Veille réglementaire', 'Réservée aux adhérents : Journal officiel, Assemblée nationale, Sénat', '#veille');
+    page('Veille réglementaire', 'Réservée aux adhérents : Journal officiel, Assemblée nationale, Sénat', '#veille');
     idx.push({ type: 'Page', title: 'Lettre d’information', sub: 'La veille et les nouvelles publications par e-mail', href: '#espace', section: 'ea-lettre', text: 'newsletter abonnement abonner s’abonner s\'abonner désinscription e-mail' });
     idx.push({ type: 'Page', title: 'Écrire au bureau', sub: 'Commission, suggestion, idée, question', href: '#espace', section: 'ea-ecrire', text: 'commission participer suggestion idée question contact message adhérent' });
     idx.push({ type: 'Page', title: 'Salle de presse', sub: 'Les communiqués du SLBC', href: '#presse', section: null, text: 'contact presse journaliste kit presse logo' });
@@ -870,7 +908,7 @@
     idx.push({ type: 'Page', title: 'Données personnelles', sub: 'Usages, durées de conservation, vos droits', href: '#mentions', section: 'donnees', text: 'RGPD confidentialité vie privée CNIL droits' });
     idx.push({ type: 'Page', title: 'Cookies', sub: 'Aucun cookie de mesure d’audience ni de publicité', href: '#mentions', section: 'cookies', text: 'traceurs bandeau' });
     if (member) DATA.veille.forEach((v) => idx.push({ type: 'Veille', title: v.title, sub: v.when, href: '#espace', section: 'vi-' + v.id, text: v.resume }));
-    DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title + (p.subtitle ? ' : ' + p.subtitle : ''), sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with + ' ' + (p.quote ? p.quote.text : '') + ' ' + (p.body || []).map((sec) => sec.h + ' ' + sec.ps.join(' ')).join(' ') + ' ' + (p.points || []).map((x) => x.join(' ')).join(' ') }));
+    DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title + (p.subtitle ? ' : ' + p.subtitle : ''), sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with + ' ' + (p.quote ? p.quote.text : '') + ' ' + (p.body || []).map((sec) => sec.h + ' ' + sec.ps.join(' ')).join(' ') + ' ' + (p.points || []).map((x) => x.join(' ')).join(' ') }));
     DATA.actus.forEach((a) => idx.push({ type: 'Actualité', title: a.title, sub: longDate(a.date), href: '#actualites', section: 'ac-' + a.id, text: a.excerpt + ' ' + a.cat }));
     BUREAU.forEach((b) => idx.push({ type: 'Bureau', title: b[1], sub: b[0], href: '#syndicat', section: 'bureau', text: '' }));
     INSTANCES.forEach((i) => {
@@ -906,7 +944,7 @@
     scored.sort((a, b) => b[0] - a[0]);
     box.innerHTML = scored.length
       ? '<p class="sr-title">' + scored.length + ' résultat' + (scored.length > 1 ? 's' : '') + '</p><ul class="sr-list">' + scored.slice(0, 12).map((x) => srItem(x[1])).join('') + '</ul>'
-      : '<p class="sr-empty">Aucun résultat pour « ' + esc(q) + ' ». Essayez « nomenclature », « protocole » ou « bureau ».</p>';
+      : '<p class="sr-empty">Aucun résultat pour « ' + esc(q) + ' ». Essayez « nomenclature », « protocole » ou « bureau ».</p>';
   }
   const sPanel = $('#search-panel');
   const sScrim = $('#search-scrim');
@@ -1042,7 +1080,7 @@
     const url = 'mailto:' + ADHESION_EMAIL + '?subject=' + encodeURIComponent(mail.subject) + '&body=' + encodeURIComponent(mail.body.replace(/\n/g, '\r\n'));
     const okAdh = EMAIL_RE.test(ADHESION_EMAIL);
     $('#join-mailto').href = okAdh ? url : '#adherer'; $('#join-mailto').hidden = !okAdh;
-    $('#join-mailtext').textContent = 'À : ' + (okAdh ? ADHESION_EMAIL : 'adresse à compléter') + '\nObjet : ' + mail.subject + '\n\n' + mail.body;
+    $('#join-mailtext').textContent = 'À : ' + (okAdh ? ADHESION_EMAIL : 'adresse à compléter') + '\nObjet : ' + mail.subject + '\n\n' + mail.body;
     $('#join-copy-ok').hidden = true; $('#join-copy-ok').textContent = ''; $('.join-texte').open = false;
     $('#join-wrap').hidden = true;
     $('#join-done').hidden = false;
@@ -1054,12 +1092,12 @@
     const prenom = $('#j-prenom').value.trim(); const nom = $('#j-nom').value.trim(); const labo = $('#j-labo').value.trim();
     const qui = ((civ ? civ.value + ' ' : '') + prenom + ' ' + nom).trim();
     const lines = ['Bonjour,', '', 'Je souhaite adhérer au SLBC. Voici ma demande.', '',
-      'Nom : ' + qui, 'E-mail : ' + $('#j-email').value.trim(), 'Téléphone : ' + ($('#j-tel').value.trim() || 'non renseigné'),
-      'Laboratoire : ' + labo, 'Ville : ' + $('#j-ville').value.trim(), 'Exercice : ' + $('#j-statut').value];
+      'Nom : ' + qui, 'E-mail : ' + $('#j-email').value.trim(), 'Téléphone : ' + ($('#j-tel').value.trim() || 'non renseigné'),
+      'Laboratoire : ' + labo, 'Ville : ' + $('#j-ville').value.trim(), 'Exercice : ' + $('#j-statut').value];
     const msg = $('#j-msg').value.trim();
-    if (msg) lines.push('', 'Message :', msg);
+    if (msg) lines.push('', 'Message :', msg);
     lines.push('', 'Cordialement,', (prenom + ' ' + nom).trim());
-    return { subject: 'Demande d’adhésion au SLBC : ' + (prenom + ' ' + nom).trim() + ' (' + labo + ')', body: lines.join('\n') };
+    return { subject: 'Demande d’adhésion au SLBC : ' + (prenom + ' ' + nom).trim() + ' (' + labo + ')', body: lines.join('\n') };
   }
   function openMail(url) {
     try { if (window.top !== window.self) window.open(url, '_blank', 'noopener'); else window.location.href = url; } catch (err) { /* le repli reste affiché */ }
@@ -1067,7 +1105,7 @@
   $('#join-copy').addEventListener('click', () => {
     const okEl = $('#join-copy-ok'); const pre = $('#join-mailtext');
     const done = () => { okEl.textContent = 'Demande copiée. Collez-la dans un nouvel e-mail adressé à ' + ADHESION_EMAIL + '.'; okEl.hidden = false; };
-    const fallback = () => { $('.join-texte').open = true; selectText(pre); okEl.textContent = 'Le texte est sélectionné : copiez-le, puis collez-le dans un nouvel e-mail adressé à ' + ADHESION_EMAIL + '.'; okEl.hidden = false; };
+    const fallback = () => { $('.join-texte').open = true; selectText(pre); okEl.textContent = 'Le texte est sélectionné : copiez-le, puis collez-le dans un nouvel e-mail adressé à ' + ADHESION_EMAIL + '.'; okEl.hidden = false; };
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(pre.textContent).then(done).catch(fallback);
       else fallback();
@@ -1143,18 +1181,18 @@
       '<p class="pv-date">' + esc(longDate(date)) + '</p>';
     const mail = $('#f-mail').checked;
     const n = subscribers.length;
-    $('#preview-where').textContent = PUB[pubType].where + (mail ? (n ? (n === 1 ? ' L’abonné la recevra aussi par e-mail.' : ' ' + abonnes(n, true) + ' la recevront aussi par e-mail.') : ' Aucun abonné pour l’instant : aucun e‑mail ne partira.') : '');
+    $('#preview-where').textContent = PUB[pubType].where + (mail ? (n ? (n === 1 ? ' L’abonné la recevra aussi par e-mail.' : ' ' + abonnes(n, true) + ' la recevront aussi par e-mail.') : ' Aucun abonné pour l’instant : aucun e-mail ne partira.') : '');
     $('#g-mail-subject').hidden = !mail;
     $('#mail-preview-wrap').hidden = !mail;
     if (mail) {
       const subject = $('#f-subject').value.trim() || title;
-      $('#mp-meta').innerHTML = '<span><strong>De :</strong> SLBC</span><span><strong>À :</strong> ' + esc(n ? abonnes(n, false) + ' de la lettre d’information' : 'aucun abonné pour l’instant') + '</span>' +
-        '<span><strong>Objet :</strong> ' + esc(subject || 'Objet de l’e-mail') + '</span>';
+      $('#mp-meta').innerHTML = '<span><strong>De :</strong> SLBC</span><span><strong>À :</strong> ' + esc(n ? abonnes(n, false) + ' de la lettre d’information' : 'aucun abonné pour l’instant') + '</span>' +
+        '<span><strong>Objet :</strong> ' + esc(subject || 'Objet de l’e-mail') + '</span>';
       $('#mp-body').innerHTML = '<p class="mp-type">' + esc(PUB[pubType].label) + (pubType === 'actu' ? ' · ' + esc($('#f-cat').value) : '') + '</p>' +
         '<p class="mp-title">' + esc(title || 'Titre de la publication') + '</p>' +
         '<p class="mp-text">' + esc(resume || 'Le résumé de la publication s’affichera ici.') + '</p>' +
         '<span class="mp-btn">Lire sur le site</span>' +
-        (pubType === 'veille' || $('#f-members').checked ? '<p class="mp-note">Réservé aux adhérents : la lecture complète demande de se connecter.</p>' : '');
+        (pubType === 'veille' || $('#f-members').checked ? '<p class="mp-note">Réservé aux adhérents : la lecture complète demande de se connecter.</p>' : '');
     }
   }
   const abonnes = (n, withArticle) => (withArticle ? 'Les ' : '') + n + ' abonné' + (n > 1 ? 's' : '');
@@ -1495,9 +1533,12 @@
       const box = $('.lnav-links', nav);
       if (!box) return;
       if (!cur) { box.scrollLeft = 0; return; }
+      /* Sur téléphone, les bords du sous-menu s'effacent en fondu sur 24 px (styles.css) : la rubrique en cours s'arrête avant. */
+      const fade = getComputedStyle(box).webkitMaskImage || getComputedStyle(box).maskImage;
+      const edge = fade && fade !== 'none' ? 24 : 0;
       const br = box.getBoundingClientRect(); const ar = cur.getBoundingClientRect();
-      if (ar.left < br.left) box.scrollLeft += ar.left - br.left - 12;
-      else if (ar.right > br.right) box.scrollLeft += ar.right - br.right + 12;
+      if (ar.left < br.left + edge) box.scrollLeft += ar.left - br.left - (edge || 12);
+      else if (ar.right > br.right - edge) box.scrollLeft += ar.right - br.right + (edge || 12);
     }
     function frame(t) {
       const y = window.scrollY;
@@ -1535,7 +1576,7 @@
   if (window.claude && typeof window.claude.use === 'function') {
     window.claude.use('downloads').then((d) => { downloadsApi = d; if (readerDoc) setSaveUi(); }).catch(() => {});
   }
-  let readerDoc = null; let readerReturn = null; let readerIO = null; let saving = false;
+  let readerDoc = null; let readerReturn = null; let saving = false;
   /* Mode PDF : pdf.js est chargé à la première ouverture, sans « worker » séparé (le cadre protégé de claude.ai peut les
      bloquer) ; chaque page est dessinée quand elle approche de l'écran, puis effacée quand elle s'en éloigne (mémoire des tablettes). */
   const PDFJS = 'assets/pdfjs/';
@@ -1585,7 +1626,7 @@
       if (!pdf) return;
       if (readerDoc !== mine) { pdf.destroy(); return; }
       readerPdf = pdf;
-      $('#reader-count').textContent = d.pages + ' pages';
+      readerCount();
       if ('IntersectionObserver' in window) {
         drawIO = new IntersectionObserver((entries) => entries.forEach((en) => (en.isIntersecting ? drawPage(en.target) : hidePage(en.target))),
           { root: pages, rootMargin: '120% 0px', threshold: 0 });
@@ -1594,7 +1635,7 @@
     }).catch(() => {
       if (readerDoc !== mine) return;
       $('#reader-count').textContent = '';
-      pages.innerHTML = '<p class="reader-error">Ce document ne peut pas s’afficher ici.' + ($('#reader-save').hidden && $('#reader-link').hidden ? '' : ' Vous pouvez l’enregistrer avec le bouton « Enregistrer le PDF ».') + '</p>';
+      pages.innerHTML = '<p class="reader-error">Ce document ne peut pas s’afficher ici.' + ($('#reader-save').hidden && $('#reader-link').hidden ? '' : ' Vous pouvez l’enregistrer avec le bouton « Enregistrer le PDF ».') + '</p>';
     });
   }
   /* « Enregistrer le PDF » : par claude.ai si sa fonction de téléchargement répond ; sinon un lien
@@ -1621,13 +1662,7 @@
     /* Chaque document s'ouvre à sa première page (un défilement fait liseuse cachée serait sans effet). */
     pages.scrollTop = 0; readerSpot = { top: true }; readerW = pages.clientWidth;
     document.documentElement.style.overflow = 'hidden';
-    if (readerIO) readerIO.disconnect();
-    if ('IntersectionObserver' in window) {
-      readerIO = new IntersectionObserver((entries) => {
-        entries.forEach((en) => { if (en.isIntersecting) $('#reader-count').textContent = 'Page ' + en.target.dataset.n + ' sur ' + d.pages; });
-      }, { root: pages, rootMargin: '-45% 0px -45% 0px', threshold: 0 });
-      $$('.reader-page', pages).forEach((f) => readerIO.observe(f));
-    }
+    readerCount();
     /* Focus sur les pages : Espace, flèches et Page suivante font défiler ; Échap ferme. */
     $('#reader-pages').focus({ preventScroll: true });
   }
@@ -1637,7 +1672,6 @@
     clearTimeout(redrawTimer); readerSpot = null;
     $('#reader').hidden = true;
     document.documentElement.style.overflow = '';
-    if (readerIO) { readerIO.disconnect(); readerIO = null; }
     if (drawIO) { drawIO.disconnect(); drawIO = null; }
     if (readerTask) { readerTask.destroy(); readerTask = null; }
     readerPdf = null;
@@ -1668,7 +1702,34 @@
     const r = figs[lo].getBoundingClientRect();
     readerSpot = { i: lo, f: (y - r.top) / (r.height || 1) };
   }
-  $('#reader-pages').addEventListener('scroll', () => { if (!markRaf) markRaf = requestAnimationFrame(readerMark); }, { passive: true });
+  /* Compteur « Page n sur N » : la page qui occupe le plus de place à l'écran (la première en cas d'égalité, quand
+     plusieurs pages en largeur tiennent entières) ; page 1 tout en haut du document, dernière page tout en bas.
+     Recalculé au défilement et après une rotation. */
+  function readerCount() {
+    const d = readerDoc && DOCS[readerDoc]; const pages = $('#reader-pages'); const out = $('#reader-count');
+    if (!d || $('#reader').hidden || (d.pdf && !readerPdf)) return;
+    const figs = pages.querySelectorAll('.reader-page');
+    if (!figs.length) return;
+    let n = 1;
+    if (pages.scrollTop >= 1) {
+      if (pages.scrollTop + pages.clientHeight >= pages.scrollHeight - 2) n = figs.length;
+      else {
+        const box = pages.getBoundingClientRect();
+        let lo = 0; let hi = figs.length - 1;
+        while (lo < hi) { const mid = (lo + hi) >> 1; if (figs[mid].getBoundingClientRect().bottom <= box.top) lo = mid + 1; else hi = mid; }
+        let best = -1;
+        for (let i = lo; i < figs.length; i++) {
+          const r = figs[i].getBoundingClientRect();
+          if (r.top >= box.bottom) break;
+          const h = Math.min(r.bottom, box.bottom) - Math.max(r.top, box.top);
+          if (h > best + 1) { best = h; n = i + 1; }
+        }
+      }
+    }
+    const txt = 'Page ' + n + ' sur ' + d.pages;
+    if (out.textContent !== txt) out.textContent = txt;
+  }
+  $('#reader-pages').addEventListener('scroll', () => { if (!markRaf) markRaf = requestAnimationFrame(() => { readerMark(); readerCount(); }); }, { passive: true });
   function readerResize() {
     if ($('#reader').hidden) return;
     const pages = $('#reader-pages');
@@ -1677,6 +1738,7 @@
     const s = readerSpot; const fig = s && !s.top ? pages.querySelectorAll('.reader-page')[s.i] : null;
     if (s && s.top) pages.scrollTop = 0;
     else if (fig) { const r = fig.getBoundingClientRect(); pages.scrollTop += r.top - pages.getBoundingClientRect().top + s.f * r.height; }
+    readerCount();
     if (readerPdf) {
       clearTimeout(redrawTimer);
       redrawTimer = setTimeout(() => $$('#reader-pages .reader-page.is-drawn').forEach((f) => { if (tooSmall(f)) drawPage(f, true); }), 300);
@@ -1726,11 +1788,11 @@
      Les portes 2 et 3 ouvrent « Écrire au bureau » avec l'objet déjà choisi. */
   const ACCES = [
     { t: 'La veille réglementaire', d: 'Chaque lundi, les textes du Journal officiel, de l’Assemblée nationale et du Sénat qui concernent les laboratoires.', panel: 'veille', cta: 'Lire la veille réglementaire' },
-    { t: 'Partager votre expérience dans une commission', d: 'Vous voulez partager votre expérience dans une commission ? Dites-le-nous.', panel: 'ecrire', sujet: 'commission', cta: 'Nous écrire' },
-    { t: 'Une suggestion, une idée, une question', d: 'Vous avez une suggestion à faire, une idée, une question ? Contactez-nous.', panel: 'ecrire', sujet: 'suggestion', cta: 'Nous écrire' },
-    { t: 'La lettre d’information', d: 'La veille et les nouvelles publications du SLBC, par e‑mail.', panel: 'lettre', cta: 'M’abonner' }
+    { t: 'Partager votre expérience dans une commission', d: 'Vous voulez partager votre expérience dans une commission ? Dites-le-nous.', panel: 'ecrire', sujet: 'commission', cta: 'Nous écrire' },
+    { t: 'Une suggestion, une idée, une question', d: 'Vous avez une suggestion à faire, une idée, une question ? Contactez-nous.', panel: 'ecrire', sujet: 'suggestion', cta: 'Nous écrire' },
+    { t: 'La lettre d’information', d: 'La veille et les nouvelles publications du SLBC, par e-mail.', panel: 'lettre', cta: 'M’abonner' }
   ];
-  const PORTE_BUREAU = { t: 'Publier sur le site', d: 'Outils du bureau : messages des adhérents, communiqués, veille, actualités, comptes des adhérents, lettre d’information.', panel: 'publier' };
+  const PORTE_BUREAU = { t: 'Publier sur le site', d: 'Outils du bureau : messages des adhérents, communiqués, veille, actualités, comptes des adhérents, lettre d’information.', panel: 'publier' };
   /* Côté bureau, l'objet est dit de façon neutre. */
   const SUJETS_BUREAU = { commission: 'Expérience en commission', suggestion: 'Suggestion ou idée', question: 'Question' };
   const SUJETS = { commission: 'Partager mon expérience dans une commission', suggestion: 'Une suggestion ou une idée', question: 'Une question' };
@@ -1776,7 +1838,7 @@
     $('#oubli-form').hidden = true; $('#login-form').hidden = false;
     wantPanel = panel; wantSujet = sujet || null;
     const l = label || (PANELS.find((p) => p[0] === panel) || PANELS[0])[1];
-    $('#login-intent').textContent = 'Après la connexion, vous arriverez sur «\u00a0' + l + '\u00a0».';
+    $('#login-intent').textContent = 'Après la connexion, vous arriverez sur «\u202f' + l + '\u202f».';
     $('#login-intent').hidden = false;
     /* La carte vient à l'écran : centrée si elle tient sous l'en-tête, sinon son haut juste sous l'en-tête, pour que
        « Connexion » et « Après la connexion, vous arriverez sur … » restent visibles (téléphone à l'horizontale). */
@@ -1864,8 +1926,8 @@
     const kept = saveList(MSG_KEY, messages);
     renderMessages(); renderMesMessages();
     $('#ecrire-msg').value = '';
-    $('#ecrire-ok').innerHTML = 'Message enregistré. Démonstration : il n’est visible que dans ce navigateur, dans « Publier sur le site », partie « Messages des adhérents »' +
-      (kept ? '' : ' (ce navigateur ne permet pas de le garder : il disparaîtra à la fermeture de la page)') +
+    $('#ecrire-ok').innerHTML = 'Message enregistré. Démonstration : il n’est visible que dans ce navigateur, dans « Publier sur le site », partie « Messages des adhérents »' +
+      (kept ? '' : ' (ce navigateur ne permet pas de le garder : il disparaîtra à la fermeture de la page)') +
       '. Sur le site final, il sera envoyé au bureau. <button type="button" class="link-btn" id="ecrire-voir">Voir le message côté bureau</button>';
     $('#ecrire-ok').hidden = false; $('#ecrire-ok').focus();
   });
@@ -1936,7 +1998,7 @@
     const c = comptes.find((x) => x.email === email.toLowerCase());
     if (!c) return '';
     if (c.statut === 'desactive') return 'Ce compte est désactivé. Écrivez au bureau pour le réactiver.';
-    if (!c.hash) return 'Ce compte n’a pas encore de mot de passe : ouvrez le lien reçu par e-mail, ou utilisez « Mot de passe oublié ? ».';
+    if (!c.hash) return 'Ce compte n’a pas encore de mot de passe : ouvrez le lien reçu par e-mail, ou utilisez « Mot de passe oublié ? ».';
     return (await empreinte(c.salt, pass)) === c.hash ? '' : 'E-mail ou mot de passe incorrect.';
   }
   /* L'e-mail envoyé à l'adhérent (aperçu) : invitation ou nouveau mot de passe, avec le lien personnel. */
@@ -1944,14 +2006,14 @@
   function mailCompte(c, kind, id) {
     const inv = kind === 'invitation';
     const paras = inv
-      ? ['Bonjour ' + c.prenom + ',', 'Le bureau du SLBC vous a ouvert un compte sur l’espace adhérent du site : veille réglementaire, lettre d’information, messages au bureau.', 'Votre identifiant est votre adresse e-mail. Choisissez votre mot de passe avec le bouton ci-dessous.']
-      : ['Bonjour ' + c.prenom + ',', 'Une demande de nouveau mot de passe a été faite pour votre compte de l’espace adhérent du SLBC.', 'Si elle ne vient pas de vous, ignorez cet e-mail : votre mot de passe actuel reste valable.'];
-    return '<div class="mp-meta"><span><strong>De :</strong> SLBC, espace adhérent</span><span><strong>À :</strong> ' + esc(c.email) + '</span><span><strong>Objet :</strong> ' +
+      ? ['Bonjour ' + c.prenom + ',', 'Le bureau du SLBC vous a ouvert un compte sur l’espace adhérent du site : veille réglementaire, lettre d’information, messages au bureau.', 'Votre identifiant est votre adresse e-mail. Choisissez votre mot de passe avec le bouton ci-dessous.']
+      : ['Bonjour ' + c.prenom + ',', 'Une demande de nouveau mot de passe a été faite pour votre compte de l’espace adhérent du SLBC.', 'Si elle ne vient pas de vous, ignorez cet e-mail : votre mot de passe actuel reste valable.'];
+    return '<div class="mp-meta"><span><strong>De :</strong> SLBC, espace adhérent</span><span><strong>À :</strong> ' + esc(c.email) + '</span><span><strong>Objet :</strong> ' +
       esc(inv ? 'Créez votre mot de passe pour l’espace adhérent du SLBC' : 'Choisissez un nouveau mot de passe') + '</span></div>' +
       '<div class="mp-head">' + logoMini(id) + '<span class="mp-brand">SLBC</span></div>' +
       '<div class="mp-body"><p class="mp-title">' + (inv ? 'Bienvenue dans l’espace adhérent' : 'Nouveau mot de passe') + '</p>' + paras.map((p) => '<p class="mp-text">' + esc(p) + '</p>').join('') +
       '<button class="mp-btn" type="button" data-mdp-token="' + esc(c.token) + '">' + (inv ? 'Créer mon mot de passe' : 'Choisir un nouveau mot de passe') + '</button>' +
-      '<p class="mp-note">Ce lien est personnel et ne sert qu’une fois. S’il ne fonctionne plus, utilisez « Mot de passe oublié ? » sur la page de connexion.</p></div>' +
+      '<p class="mp-note">Ce lien est personnel et ne sert qu’une fois. S’il ne fonctionne plus, utilisez « Mot de passe oublié ? » sur la page de connexion.</p></div>' +
       '<p class="mp-foot">SLBC, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail parce qu’un compte de l’espace adhérent du SLBC est à votre nom.</p>';
   }
   function showInvitation(c) {
@@ -1986,7 +2048,7 @@
     const c = { prenom: $('#cpt-prenom').value.trim(), nom: $('#cpt-nom').value.trim(), email: addr, statut: 'invite', salt: jeton(), token: jeton(), hash: null };
     comptes.unshift(c); saveComptes(); renderComptes(); showInvitation(c); cptLast = Date.now();
     $('#cpt-form').reset();
-    ok.textContent = 'Compte créé. L’invitation part vers ' + c.email + ' : voir l’aperçu de l’e-mail.'; showOk(ok);
+    ok.textContent = 'Compte créé. L’invitation part vers ' + c.email + ' : voir l’aperçu de l’e-mail.'; showOk(ok);
   });
   $('#cpt-list').addEventListener('click', (e) => {
     const b = e.target.closest('[data-cpt]');
@@ -1995,11 +2057,11 @@
     if (!c) return;
     const act = b.dataset.cpt;
     if (act === 'renvoyer') { c.token = jeton(); showInvitation(c); showToast('Invitation renvoyée à ' + c.email + ' (démonstration).', null, null); }
-    if (act === 'desactiver') { c.statut = 'desactive'; c.ancien = c.token || c.ancien || null; c.token = null; showToast('Compte désactivé : ' + c.email + ' ne peut plus se connecter.', null, null); }
+    if (act === 'desactiver') { c.statut = 'desactive'; c.ancien = c.token || c.ancien || null; c.token = null; showToast('Compte désactivé : ' + c.email + ' ne peut plus se connecter.', null, null); }
     if (act === 'reactiver') {
       c.statut = c.hash ? 'actif' : 'invite'; c.ancien = null;
       if (!c.hash) { c.token = jeton(); showInvitation(c); }
-      showToast('Compte réactivé : ' + c.email + '.', null, null);
+      showToast('Compte réactivé : ' + c.email + '.', null, null);
     }
     saveComptes(); renderComptes();
     const again = $$('#cpt-list [data-cpt]').find((x) => x.dataset.email === c.email);
@@ -2026,8 +2088,8 @@
     if (c) { c.token = jeton(); saveComptes(); renderComptes(); $('#oubli-mail').innerHTML = mailCompte(c, c.hash ? 'oubli' : 'invitation', 'oubli'); }
     else $('#oubli-mail').innerHTML = '';
     $('#oubli-none').textContent = trouve
-      ? 'Démonstration : ce compte est désactivé. Sur le site réel, aucun e-mail ne partirait ; l’adhérent doit écrire au bureau.'
-      : 'Démonstration : aucun compte créé dans « Comptes des adhérents » ne correspond à cette adresse. Sur le site réel, aucun e-mail ne partirait.';
+      ? 'Démonstration : ce compte est désactivé. Sur le site réel, aucun e-mail ne partirait ; l’adhérent doit écrire au bureau.'
+      : 'Démonstration : aucun compte créé dans « Comptes des adhérents » ne correspond à cette adresse. Sur le site réel, aucun e-mail ne partirait.';
     $('#oubli-mail-wrap').hidden = !c; $('#oubli-none').hidden = !!c;
     showOk($('#oubli-ok'));
   });
@@ -2038,13 +2100,13 @@
     $('#mdp-form').hidden = kind !== 'form'; $('#mdp-msg').hidden = kind === 'form';
     if (kind === 'form') {
       $('#mdp-title').textContent = c.hash ? 'Choisissez un nouveau mot de passe' : 'Créez votre mot de passe';
-      $('#mdp-who').textContent = 'Compte : ' + c.email; $('#mdp-who').hidden = false;
+      $('#mdp-who').textContent = 'Compte : ' + c.email; $('#mdp-who').hidden = false;
     } else if (kind === 'desactive') {
       $('#mdp-title').textContent = 'Ce compte a été désactivé'; $('#mdp-who').hidden = true;
       $('#mdp-msg').textContent = 'Ce lien ne sert plus. Écrivez au bureau du SLBC pour réactiver votre compte.';
     } else if (kind === 'invalide') {
       $('#mdp-title').textContent = 'Ce lien n’est plus valable'; $('#mdp-who').hidden = true;
-      $('#mdp-msg').textContent = 'Il a déjà servi, ou un lien plus récent l’a remplacé. Demandez-en un nouveau avec « Mot de passe oublié ? » sur la page de connexion.';
+      $('#mdp-msg').textContent = 'Il a déjà servi, ou un lien plus récent l’a remplacé. Demandez-en un nouveau avec « Mot de passe oublié ? » sur la page de connexion.';
     } else {
       $('#mdp-title').textContent = 'Mot de passe enregistré'; $('#mdp-who').hidden = true;
       $('#mdp-msg').textContent = 'Vous pouvez maintenant vous connecter à l’espace adhérent avec ' + c.email + ' et ce mot de passe.';

@@ -55,6 +55,7 @@ Objectifs exprimés pour le site :
 - Le Dr Jean-François Perotto est décédé (actualité du 31 août 2026). Il a été retiré des listes ; ses sièges apparaissent « à désigner ».
 - Points à faire confirmer par le bureau : voir `docs/sources-et-verifications.md`.
 - Ton : sobre, phrases courtes, voix active, sans majuscules décoratives.
+- Typographie française : espace fine insécable (U+202F) avant ; ! ? et », après « ; espace insécable (U+00A0) avant : (appliqué le 7 novembre 2026 à tout le texte du site, `index.html` et chaînes de `app.js`).
 - Pas de rendu « généré par IA » (rappel d’Isabelle Eimer du 6 novembre 2026) : pas de pictogrammes décoratifs ni de listes à coches, pas de titres-slogans (« Là où se décide… », « les instances qui comptent »), pas de formules chiffrées ou exagérées (« Trois étapes, deux minutes », « en temps réel »). Titres descriptifs, faits vérifiables.
 
 ## Conventions de conception
@@ -66,6 +67,7 @@ Objectifs exprimés pour le site :
 - En-tête (6 novembre 2026, demande d’Isabelle Eimer) : bandeau « Maquette de travail » en 15 px, logo 36 px et « SLBC » en 27 px, onglets en 18 px, sous-menus des pages en 17 px ; menu complet au-dessus de 1100 px de large, menu compact en dessous.
 - Accessibilité : contraste d’au moins 4,5:1, focus clavier visible, vrais `<button>` et `<a href>`, libellés sur tous les champs.
 - Le site doit fonctionner à la largeur d’un téléphone (390 px) sans défilement horizontal.
+- Téléphones et tablettes (vérification et corrections du 7 novembre 2026, demande d’Isabelle Eimer : iPhone SE, iPhone 13, Pixel 7, iPad, en vertical, en horizontal et en tournant l’appareil) : demande d’adhésion qui ramène chaque étape sous l’en-tête (`jReveal()`, outils `barsBottom()` et `scrollUnderBars()`) ; carte de connexion alignée sous l’en-tête quand elle est plus haute que l’écran ; liseuse qui s’ouvre à la page 1, garde la page en cours en tournant l’appareil, redessine les pages PDF, compteur sur la page la plus visible, titre sur deux lignes au plus sur téléphone ; confirmations amenées à l’écran avec le focus (`showOk()`) ; menu compact qui commence sous l’en-tête et repart du haut ; sous-menus (`.lnav`) avec fondu aux bords qui défilent et rubrique en cours toujours visible ; filtres à onglets (`.seg`) qui passent à la ligne au lieu de cacher des choix ; fenêtre du mot de passe avec bouton de fermeture en haut (`#mdp-x`) et fermeture en touchant le fond ; champ de recherche collant ; en horizontal sur écran bas (`max-height:500px`), sous-menu non collant, devise visible dès l’ouverture, menu de l’espace adhérent réduit aux titres ; cibles tactiles de 44 px (liens « Lire… », pied de page, « Copier », cases) sans changer la mise en page sur ordinateur ; textes indicatifs des champs raccourcis. Numéros et mots à trait d’union (2026-2030, covid-19, e-mail…) gardés sur une ligne par `keepTogether()`. Tests de la vérification : `scratchpad/verif-mobile/` puis `verif-mobile2/` (hors dépôt).
 
 ## Pistes pour la suite
 
