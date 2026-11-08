@@ -10,7 +10,7 @@ def pastille(n):
             '<circle cx="35" cy="35" r="21" fill="#A3BE3C"/>'
             '<circle cx="27" cy="27" r="21" fill="#FFFFFF" stroke="#2E3236" stroke-width="3"/>'
             f'<text x="27" y="{27 + fs * 0.36:.1f}" text-anchor="middle" font-family="Figtree, sans-serif" font-weight="800" font-size="{fs}" fill="#2E3236">{n}</text></svg>')
-for n in range(10, 0, -1):
+for n in range(11, 0, -1):
     html = html.replace('{{P%d}}' % n, pastille(n))
 
 masc = (D / 'mascotte.svg').read_text(encoding='utf-8').strip()
@@ -57,5 +57,8 @@ html = html.replace('{{SCHEMA}}', ''.join(svg))
 assert '{{' not in html
 # « e-mail » ne se coupe pas en fin de ligne (trait d'union insécable dans le texte)
 html = html.replace('e-mail', 'e\u2011mail').replace('E-mail', 'E\u2011mail')
+# Guillemets collés à leur mot (espace fine insécable), dans le texte seulement, pas dans les styles
+tete, corps = html.split('</style>', 1)
+html = tete + '</style>' + corps.replace('« ', '«\u202f').replace(' »', '\u202f»')
 (D / 'note-mise-en-service.html').write_text(html, encoding='utf-8')
 print('ok', len(html))

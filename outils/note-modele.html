@@ -45,7 +45,7 @@ strong{color:var(--encre);font-weight:600}
 .sep svg{width:34px;height:34px;flex:none}
 
 /* Sommaire */
-.sommaire{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(5,auto);grid-auto-flow:column;gap:6px 28px;margin:0;padding:0;list-style:none}
+.sommaire{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(6,auto);grid-auto-flow:column;gap:6px 28px;margin:0;padding:0;list-style:none}
 .sommaire li{display:flex;gap:10px;align-items:baseline;font-size:16px}
 .sommaire a{color:var(--encre);text-decoration:none;font-weight:500}
 .sommaire a:hover{text-decoration:underline}
@@ -116,7 +116,7 @@ a:focus-visible{outline:3px solid var(--vert);outline-offset:3px;border-radius:4
   .feuille{box-shadow:none;border-radius:0}
   .bloc{padding:0}
   .partie{break-inside:auto}
-  .partie-tete,.decider,.important,.schema,tr,.taches li{break-inside:avoid}
+  .partie-tete,.decider,.important,.schema,tr,.taches li,.demo-note,.etapes li{break-inside:avoid}
   .partie-tete{break-after:avoid}
   .pied{margin-top:28px;border-radius:12px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   th,.decider,.important,.qui,.demo,.etapes li::before,tbody tr:nth-child(even) td,.schema,.demo-note{-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -141,7 +141,7 @@ a:focus-visible{outline:3px solid var(--vert);outline-offset:3px;border-radius:4
   <div>
     <h1>Ce qui manque pour mettre le nouveau site en service</h1>
     <p class="chapo">La maquette montre tout le site, mais elle ne fait encore rien de réel : pas de vrais comptes, pas d’e-mails envoyés par le site, et ce qu’on y publie reste dans le navigateur de la personne qui l’a fait. Voici ce qu’il faut mettre en place pour ouvrir le site, et qui doit le faire.</p>
-    <p class="date">Note de travail du 7 novembre 2026, à valider par le bureau.</p>
+    <p class="date">Note de travail du 7 novembre 2026, mise à jour le 8 novembre 2026, à valider par le bureau.</p>
   </div>
   {{MASCOTTE}}
 </div>
@@ -160,8 +160,9 @@ a:focus-visible{outline:3px solid var(--vert);outline-offset:3px;border-radius:4
     <li><span class="n">6</span><a href="#veille">Veille réglementaire</a></li>
     <li><span class="n">7</span><a href="#lettre">Lettre d’information</a></li>
     <li><span class="n">8</span><a href="#legal">Obligations légales</a></li>
-    <li><span class="n">9</span><a href="#contenus">Contenus à valider</a></li>
-    <li><span class="n">10</span><a href="#etapes">Prochaines étapes</a></li>
+    <li><span class="n">9</span><a href="#audience">Mesure d’audience et cookies</a></li>
+    <li><span class="n">10</span><a href="#contenus">Contenus à valider</a></li>
+    <li><span class="n">11</span><a href="#etapes">Prochaines étapes</a></li>
   </ol>
 </nav>
 
@@ -178,6 +179,7 @@ a:focus-visible{outline:3px solid var(--vert);outline-offset:3px;border-radius:4
       <tr><td>Publier un communiqué, une veille, une actualité</td><td>Gardé dans le navigateur, visible seulement sur cet appareil<span class="demo">démonstration</span></td><td>Outil de publication du site, réservé au bureau</td></tr>
       <tr><td>Lettre d’information</td><td>Inscriptions et envois simulés<span class="demo">démonstration</span></td><td>Service d’envoi réel</td></tr>
       <tr><td>Veille réglementaire</td><td>Une synthèse d’exemple, celle du 4 novembre 2026</td><td>Mise à jour chaque lundi</td></tr>
+      <tr><td>Bandeau des cookies et mesure d’audience</td><td>Choix du visiteur gardé 6 mois ; aucun outil de mesure installé, accepter ne lance encore rien</td><td>Relié à l’outil de mesure d’audience choisi par le bureau (partie 9)</td></tr>
       <tr><td>Informations légales</td><td>Textes proposés, plusieurs points « à compléter »</td><td>Complétées et relues par un juriste</td></tr>
     </tbody>
   </table></div>
@@ -280,7 +282,8 @@ a:focus-visible{outline:3px solid var(--vert);outline-offset:3px;border-radius:4
       <tr><td>Trace écrite de la décision de ne pas désigner de délégué à la protection des données</td><td><span class="qui qui-bureau">Bureau</span></td></tr>
       <tr><td>Prestataires : hébergeur, outil d’envoi des e-mails, transferts hors de l’Union européenne éventuels</td><td><span class="qui qui-kstudio">Kstudio</span></td></tr>
       <tr><td>Accord des élus et représentants pour la publication de leur nom</td><td><span class="qui qui-bureau">Bureau</span></td></tr>
-      <tr><td>Polices Figtree et Nunito hébergées sur le serveur du site ; contenus intégrés automatiques et Gravatar désactivés dans WordPress</td><td><span class="qui qui-kstudio">Kstudio</span></td></tr>
+      <tr><td>Police Nunito hébergée sur le serveur du site ; contenus intégrés automatiques et Gravatar désactivés dans WordPress</td><td><span class="qui qui-kstudio">Kstudio</span></td></tr>
+      <tr><td>Outil de mesure d’audience : nom, cookies déposés et leur durée, prestataire (partie 9)</td><td><span class="qui qui-bureau">Bureau</span> <span class="qui qui-kstudio">Kstudio</span></td></tr>
       <tr><td>Cession écrite des droits sur le logo au SLBC ; dépôt de marque à envisager</td><td><span class="qui qui-bureau">Bureau</span></td></tr>
       <tr><td>Relecture de l’ensemble</td><td><span class="qui qui-juriste">Juriste</span></td></tr>
     </tbody>
@@ -288,29 +291,51 @@ a:focus-visible{outline:3px solid var(--vert);outline-offset:3px;border-radius:4
   <p>Le détail, avec les sources, est dans le document de travail « Obligations légales » du projet.</p>
 </section>
 
+<section class="partie" id="audience">
+  <div class="partie-tete">{{P9}}<h2>Mesure d’audience et bandeau des cookies</h2></div>
+  <p>Pour savoir combien de personnes viennent sur le site et quelles pages elles lisent, il faut un outil de mesure d’audience. La maquette a déjà le bandeau des cookies : « Tout refuser », « Tout accepter » et « Voir et choisir », avec une case « Mesure d’audience ». Mais aucun outil n’est installé : accepter ne lance encore rien. Il faut choisir l’outil, puis le relier au bandeau.</p>
+  <div class="tableau"><table>
+    <thead><tr><th scope="col">Type d’outil</th><th scope="col">Accord du visiteur</th><th scope="col">Bandeau des cookies</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Mesure dispensée d’accord</strong> : statistiques anonymes, pour le SLBC seul, ni recoupées ni transmises, sans suivi sur d’autres sites</td><td>Pas nécessaire ; il faut seulement informer les visiteurs et leur permettre de refuser la mesure</td><td>Peut être retiré ; un lien pour refuser la mesure reste dans la partie « Cookies »</td></tr>
+      <tr><td><strong>Mesure soumise à accord</strong> : toute autre mesure, en particulier un outil qui réutilise les données pour son propre compte</td><td>Obligatoire, avant tout dépôt de cookie</td><td>Indispensable, tel qu’il est dans la maquette</td></tr>
+    </tbody>
+  </table></div>
+  <p>La CNIL publie sur son site la liste des outils qu’elle a examinés et qui peuvent être réglés pour être dispensés d’accord (Matomo, par exemple) : page « Cookies : solutions pour les outils de mesure d’audience » sur cnil.fr. Le réglage reste à faire et à vérifier par Kstudio.</p>
+  <ol class="etapes">
+    <li><span><strong>Choisir l’outil</strong> : Kstudio propose, le bureau décide.</span></li>
+    <li><span><strong>Relier l’outil au bandeau</strong> (Kstudio) : la mesure ne démarre qu’après « Tout accepter » ou la case « Mesure d’audience » cochée. Avant le choix du visiteur, ou après un refus, rien n’est déposé. Si le visiteur change d’avis avec « Gérer les cookies », en bas de chaque page, la mesure s’arrête et ses cookies sont effacés. La maquette note déjà le choix du visiteur sur la page : c’est là que l’outil se branche.</span></li>
+    <li><span><strong>Mettre à jour les textes</strong> (Kstudio, puis le juriste) : dans les Informations légales, la partie « Cookies » (nom de l’outil, ce qu’il mesure, durée de ses cookies) et la partie « Données personnelles » (prestataire, transfert hors de l’Union européenne s’il y en a un) ; dans la fenêtre « Voir et choisir », retirer la mention « Outil à choisir par le bureau ».</span></li>
+    <li><span><strong>Vérifier avant la mise en ligne</strong> (Kstudio) : aucun cookie de mesure avant le choix ni après un refus ; la mesure démarre bien après un accord ; le choix est redemandé au bout de 6 mois ; essais sur ordinateur et sur téléphone.</span></li>
+  </ol>
+  <div class="decider"><span class="etiquette">À décider par le bureau</span><p>L’outil, dispensé d’accord ou soumis à accord ; garder le bandeau ou non ; qui consulte les statistiques, et à quel rythme.</p></div>
+  <p class="demo-note"><strong>À essayer dans la maquette</strong> : le bandeau s’affiche à la première visite ; « Voir et choisir » ouvre le détail des cookies ; « Gérer les cookies », en bas de chaque page, permet de changer d’avis.</p>
+</section>
+
 <section class="partie" id="contenus">
-  <div class="partie-tete">{{P9}}<h2>Contenus à faire valider par le bureau</h2></div>
+  <div class="partie-tete">{{P10}}<h2>Contenus à faire valider par le bureau</h2></div>
   <p>Plusieurs textes ont été rédigés avec Isabelle Eimer et attendent l’accord du bureau avant la mise en ligne.</p>
   <ul>
     <li><strong>Devise et missions</strong> : « Défendre la biologie, défendre les patients. » et les quatre missions.</li>
     <li><strong>Textes repris de la note de positionnement</strong> du 10 septembre 2026 : les trois piliers de l’accueil, les introductions des pages Adhérer et Veille ; à valider par Thierry Bouchet et le bureau.</li>
-    <li><strong>Slogans des drapeaux</strong> de l’illustration du bureau (« MAKE BIOLOGY GREAT AGAIN », « YES WE CAN ») : ils reprennent des slogans de campagnes présidentielles américaines.</li>
+    <li><strong>Slogans des drapeaux</strong> de l’illustration du bureau (« MAKE BIOLOGY GREAT AGAIN ! », « YES WE CAN ! ») : ils reprennent des slogans de campagnes présidentielles américaines.</li>
     <li><strong>Représentants</strong> : sièges encore à désigner dans certaines instances (gardés dans les listes, non affichés) ; liste des URPS à vérifier.</li>
-    <li><strong>Police des textes</strong> : Figtree, à valider ; la charte graphique indique encore Nunito et sera mise à jour.</li>
+    <li><strong>Police des textes</strong> : Nunito, retenue le 7 novembre 2026 ; la charte graphique est à jour.</li>
     <li><strong>Comptes publiés</strong> : exercices 2021 à 2023 ; ajouter les suivants si le SLBC publie ses comptes sur son site.</li>
     <li><strong>Cotisation</strong> : aucun montant n’est affiché, comme sur le site actuel.</li>
   </ul>
 </section>
 
 <section class="partie" id="etapes">
-  <div class="partie-tete">{{P10}}<h2>Prochaines étapes</h2></div>
+  <div class="partie-tete">{{P11}}<h2>Prochaines étapes</h2></div>
   <p>Dans l’ordre, avec qui s’en charge.</p>
   <ul class="taches">
     <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-bureau">Bureau</span>Avec Kstudio ou l’hébergeur du domaine slbc.fr : créer les adresses contact@slbc.fr et bureau@slbc.fr, et décider qui lit chacune.</span></li>
-    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-bureau">Bureau</span>Valider les contenus et prendre les décisions listées dans cette note (adresses, rôles, durées de conservation).</span></li>
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-bureau">Bureau</span>Valider les contenus et prendre les décisions listées dans cette note (adresses, rôles, durées de conservation, outil de mesure d’audience).</span></li>
     <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-bureau">Bureau</span>Présenter la maquette et cette note à Kstudio, et demander un devis (thème WordPress, formulaires, comptes des adhérents, publication, lettre d’information).</span></li>
-    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-kstudio">Kstudio</span>Donner les informations sur l’hébergeur et proposer l’outil d’envoi des e-mails.</span></li>
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-kstudio">Kstudio</span>Donner les informations sur l’hébergeur, proposer l’outil d’envoi des e-mails et l’outil de mesure d’audience.</span></li>
     <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-kstudio">Kstudio</span>Monter le site sur une adresse de test, non publique, pour que le bureau l’essaie.</span></li>
+    <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-kstudio">Kstudio</span>Relier l’outil de mesure d’audience au bandeau des cookies et vérifier qu’aucun cookie de mesure n’est déposé sans accord.</span></li>
     <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-juriste">Juriste</span>Relire les mentions légales, les données personnelles et les cookies.</span></li>
     <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-bureau">Bureau</span>Importer la liste des adhérents et envoyer les invitations à créer un mot de passe.</span></li>
     <li><span class="case" aria-hidden="true"></span><span><span class="qui qui-kstudio">Kstudio</span>Mettre le site en ligne sur slbc.fr et faire renvoyer les anciennes adresses vers les nouvelles pages.</span></li>
@@ -321,7 +346,7 @@ a:focus-visible{outline:3px solid var(--vert);outline-offset:3px;border-radius:4
 
 <footer class="pied">
   <span><strong>SLBC</strong>, Syndicat des Laboratoires de Biologie Clinique, 6 place de la Madeleine, 75008 Paris</span>
-  <span>Note de travail, 7 novembre 2026</span>
+  <span>Note de travail, 7 novembre 2026, mise à jour le 8 novembre 2026</span>
 </footer>
 </article>
 </div>
