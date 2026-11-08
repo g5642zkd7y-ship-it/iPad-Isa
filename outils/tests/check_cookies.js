@@ -64,6 +64,47 @@ const KEY = 'slbc-maquette-cookies';
     verifie(errs.length === 0, w + ' : aucune erreur JavaScript ' + errs.join(' | '));
     await ctx.close();
   }
+  // 10. Petits écrans et écrans bas : bandeau pas trop haut, menu compact entièrement atteignable, focus après le choix
+  for (const [vw, vh] of [[320, 568], [375, 667], [390, 664], [667, 375], [750, 342], [810, 1080]]) {
+    const ctx = await b.newContext({ viewport: { width: vw, height: vh }, hasTouch: true, isMobile: vw < 800 });
+    await ctx.route('https://fonts.googleapis.com/**', (r) => r.fulfill({ status: 200, contentType: 'text/css', headers: { 'Access-Control-Allow-Origin': '*' }, body: fs.readFileSync(path.join(FONTDIR, 'google.css'), 'utf8') }));
+    await ctx.route('https://fonts.gstatic.com/**', (r) => { const n = fs.readdirSync(FONTDIR).find((x) => x.endsWith(path.basename(r.request().url()))); r.fulfill({ status: 200, contentType: 'font/woff2', headers: { 'Access-Control-Allow-Origin': '*' }, body: fs.readFileSync(path.join(FONTDIR, n)) }); });
+    const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
+    await p.goto(URL_ + '#accueil'); await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(500);
+    const t = await p.evaluate(() => { const r = document.getElementById('cookie-bar').getBoundingClientRect(); return { h: Math.round(r.height), part: r.height / innerHeight, pad: parseFloat(getComputedStyle(document.body).paddingBottom), lignes: [...document.querySelectorAll('#cookie-bar .btn')].map((x) => Math.round(x.getBoundingClientRect().height)) }; });
+    const max = vh <= 500 ? 0.45 : vw <= 400 ? 0.42 : 0.3;
+    verifie(t.part <= max, `${vw}×${vh} : le bandeau occupe ${Math.round(t.part * 100)} % de l’écran (au plus ${Math.round(max * 100)} %)`);
+    verifie(Math.abs(t.pad - t.h) <= 1, `${vw}×${vh} : la place gardée en bas suit la hauteur du bandeau (${Math.round(t.pad)} / ${t.h})`);
+    verifie(t.lignes.every((x) => x <= 50), `${vw}×${vh} : libellés des boutons sur une ligne (${t.lignes.join(', ')} px)`);
+    const btnMenu = await p.$('button[aria-controls="mmenu"]');
+    if (btnMenu && await btnMenu.isVisible()) {
+      await btnMenu.click(); await p.waitForTimeout(450);
+      const caches = await p.evaluate(async () => { const out = []; for (const a of [...document.querySelectorAll('#mmenu a')].filter((x) => x.getClientRects().length)) { a.scrollIntoView({ block: 'nearest' }); await new Promise((r) => setTimeout(r, 60)); const r = a.getBoundingClientRect(); const e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); if (!(e && a.contains(e))) out.push(a.textContent.trim()); } return out; });
+      verifie(caches.length === 0, `${vw}×${vh} : menu compact entièrement atteignable avec le bandeau (${caches.join(', ') || 'rien de caché'})`);
+      await btnMenu.click(); await p.waitForTimeout(300);
+    }
+    await p.click('#cookie-bar [data-cookies-tout="non"]'); await p.waitForTimeout(150);
+    verifie(await p.evaluate(() => getComputedStyle(document.body).paddingBottom === '0px' && document.getElementById('cookie-bar').hidden), `${vw}×${vh} : après le refus, plus de bandeau ni de place gardée`);
+    verifie(errs.length === 0, `${vw}×${vh} : aucune erreur JavaScript ${errs.join(' | ')}`);
+    await ctx.close();
+  }
+  // 11. Clavier : après « Tout refuser », le focus va sur le titre de la page ; stockage indisponible : le choix vaut pour la visite
+  {
+    const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } });
+    const p = await ctx.newPage();
+    await p.goto(URL_ + '#presse'); await p.waitForTimeout(400);
+    await p.keyboard.press('Tab'); await p.keyboard.press('Enter'); await p.waitForTimeout(200);
+    verifie(await p.evaluate(() => document.activeElement.tagName === 'H1' && !!document.activeElement.closest('.view:not([hidden])')), 'clavier : après « Tout refuser », le focus va sur le titre de la page');
+    await ctx.close();
+    const c2 = await b.newContext({ viewport: { width: 1280, height: 900 } });
+    await c2.addInitScript(() => { const k = Storage.prototype; const g = k.getItem, st = k.setItem; k.getItem = function (x) { if (x === 'slbc-maquette-cookies') throw new Error('bloqué'); return g.apply(this, arguments); }; k.setItem = function (x) { if (x === 'slbc-maquette-cookies') throw new Error('bloqué'); return st.apply(this, arguments); }; });
+    const q = await c2.newPage(); const errs = []; q.on('pageerror', (e) => errs.push(e.message));
+    await q.goto(URL_ + '#accueil'); await q.waitForTimeout(400);
+    await q.click('#cookie-bar [data-cookies-tout="oui"]'); await q.waitForTimeout(150);
+    await q.evaluate(() => document.querySelector('footer [data-cookies-voir]').click()); await q.waitForTimeout(150);
+    verifie(await q.evaluate(() => document.getElementById('ck-mesure').checked && document.documentElement.dataset.cookiesMesure === 'oui') && errs.length === 0, 'stockage indisponible : le choix de la visite est gardé et la fenêtre affiche le bon état');
+    await c2.close();
+  }
   await b.close();
   console.log(`Bilan : ${ok} contrôles bons, ${ko} en échec`);
 })();

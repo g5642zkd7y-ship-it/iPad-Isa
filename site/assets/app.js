@@ -958,7 +958,7 @@
     page('Espace adhérent', 'Veille réglementaire, lettre d’information, publications', '#espace');
     idx.push({ type: 'Page', title: 'Mentions légales', sub: 'Éditeur, directeur de la publication, hébergeur', href: '#mentions', section: null, text: 'informations légales éditeur hébergeur droit de réponse' });
     idx.push({ type: 'Page', title: 'Données personnelles', sub: 'Usages, durées de conservation, vos droits', href: '#mentions', section: 'donnees', text: 'RGPD confidentialité vie privée CNIL droits' });
-    idx.push({ type: 'Page', title: 'Cookies', sub: 'Aucun cookie de mesure d’audience ni de publicité', href: '#mentions', section: 'cookies', text: 'traceurs bandeau' });
+    idx.push({ type: 'Page', title: 'Cookies', sub: 'Cookies nécessaires et mesure d’audience avec votre accord', href: '#mentions', section: 'cookies', text: 'traceurs bandeau gérer les cookies consentement' });
     if (member) DATA.veille.forEach((v) => idx.push({ type: 'Veille', title: v.title, sub: v.when, href: '#espace', section: 'vi-' + v.id, text: v.resume }));
     DATA.presse.forEach((p) => idx.push({ type: 'Communiqué', title: p.title + (p.subtitle ? ' : ' + p.subtitle : ''), sub: p.dateLabel || longDate(p.date), href: '#presse', section: 'cp-' + p.id, text: p.chapo + ' ' + p.with + ' ' + (p.quote ? p.quote.text : '') + ' ' + (p.body || []).map((sec) => sec.h + ' ' + sec.ps.join(' ')).join(' ') + ' ' + (p.points || []).map((x) => x.join(' ')).join(' ') }));
     DATA.actus.forEach((a) => idx.push({ type: 'Actualité', title: a.title, sub: longDate(a.date), href: '#actualites', section: 'ac-' + a.id, text: a.excerpt + ' ' + a.cat }));
@@ -2231,26 +2231,31 @@
     try { const v = JSON.parse(localStorage.getItem(CK_KEY) || 'null'); if (v && typeof v.mesure === 'boolean' && Date.now() - Date.parse(v.date) < CK_DUREE) return v; } catch (e) { /* stockage indisponible */ }
     return null;
   }
+  let ckMemoire = null; /* le choix de cette visite, si le navigateur ne peut pas le garder */
   function setupCookies() {
     const bar = $('#cookie-bar'), dlg = $('#cookie-dialog'), sw = $('#ck-mesure');
     if (!bar || !dlg) return;
     const root = document.documentElement;
-    const placer = () => root.style.setProperty('--bandeau-h', bar.hidden ? '0px' : bar.offsetHeight + 'px');
+    const placer = () => root.style.setProperty('--bandeau-h', bar.hidden ? '0px' : bar.getBoundingClientRect().height + 'px');
+    /* Titre de la page affichée : le focus y revient quand le bandeau ou la fenêtre disparaissent */
+    const titrePage = () => { const t = $('.view:not([hidden]) h1'); if (t && !t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1'); return t; };
     const montrer = (on) => { bar.hidden = !on; placer(); };
     const appliquer = (v) => { root.dataset.cookiesMesure = v && v.mesure ? 'oui' : 'non'; };
-    let retour = null;
+    let retour = null, enSavoirPlus = false;
     const enregistrer = (mesure, msg) => {
       const v = { v: 1, mesure: !!mesure, date: new Date().toISOString() };
-      try { localStorage.setItem(CK_KEY, JSON.stringify(v)); } catch (e) { /* le choix vaudra pour cette visite */ }
+      ckMemoire = v;
+      try { localStorage.setItem(CK_KEY, JSON.stringify(v)); } catch (e) { /* le choix vaudra pour cette visite (ckMemoire) */ }
       const focusDansBandeau = bar.contains(document.activeElement);
+      if (focusDansBandeau && !dlg.open) retour = null;
       appliquer(v); montrer(false);
       if (dlg.open) dlg.close();
-      else if (focusDansBandeau) $('#main').focus({ preventScroll: true });
+      else if (focusDansBandeau) { const t = titrePage(); if (t) t.focus({ preventScroll: true }); }
       showToast(msg);
     };
     const ouvrir = (btn) => {
       retour = btn || null;
-      const v = ckLire(); sw.checked = !!(v && v.mesure);
+      const v = ckLire() || ckMemoire; sw.checked = !!(v && v.mesure);
       if (!dlg.open) dlg.showModal();
       $('#cookie-dlg-title').focus();
     };
@@ -2262,17 +2267,24 @@
     });
     $('#cookie-form').addEventListener('submit', (e) => { e.preventDefault(); enregistrer(sw.checked, 'Choix des cookies enregistré.'); });
     $('#cookie-x').addEventListener('click', () => dlg.close());
-    dlg.querySelector('.cookie-more a').addEventListener('click', () => dlg.close());
+    /* « En savoir plus » : la fenêtre se ferme et le focus va sur le titre « Cookies » des Informations légales */
+    dlg.querySelector('.cookie-more a').addEventListener('click', () => {
+      retour = null; enSavoirPlus = true; dlg.close();
+      setTimeout(() => { const t = $('#cookies h2'); if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); } enSavoirPlus = false; }, 450);
+    });
     dlg.addEventListener('close', () => {
       const vis = (el) => el && document.body.contains(el) && el.getClientRects().length > 0;
+      if (enSavoirPlus) { retour = null; return; }
       const cible = [retour, bar.hidden ? null : bar.querySelector('[data-cookies-voir]')].find(vis);
       if (cible) cible.focus({ preventScroll: true });
-      else if (!dlg.contains(document.activeElement)) { /* le focus est déjà ailleurs */ }
-      else $('#main').focus({ preventScroll: true });
+      else { const t = titrePage(); if (t) t.focus({ preventScroll: true }); }
       retour = null;
     });
     window.addEventListener('hashchange', () => { if (dlg.open) dlg.close(); });
     window.addEventListener('resize', placer);
+    /* La hauteur du bandeau change quand la police arrive ou que la largeur change : la place gardée suit */
+    if ('ResizeObserver' in window) new ResizeObserver(placer).observe(bar);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(placer);
     const v = ckLire();
     appliquer(v);
     montrer(!v);
