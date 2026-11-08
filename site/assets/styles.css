@@ -10,6 +10,7 @@
   --gris:#5E6266;        /* texte secondaire, rond gris du logo */
   --texte:#3F4347;       /* texte courant, nom SLBC */
   --encre:#2E3236;       /* titres, textes, traits des dessins (plus utilisé comme fond de zone depuis le 8 novembre 2026) */
+  --olive:#657B3D;       /* olive adouci : fonds des zones Veille, Espace adhérent, bannières « Chaque lundi » et « Rejoindre le SLBC » depuis le 8 novembre 2026, choix d’Isabelle Eimer (le vert du logo, un tiers de couleur en moins) ; texte blanc à 4,7:1 */
   --nardo:#74777A;       /* fonds gris de zone (Actualités, représentants, portes…) depuis le 8 novembre 2026, choix d’Isabelle Eimer ; texte blanc à 4,5:1, vert clair seulement en grand */
   --fond:#F7F8F4;        /* sections alternées, pied de page */
   --blanc:#FFFFFF;
@@ -162,7 +163,7 @@ a.more{padding-block:9px;margin-block:-9px}
 .bg-nardo .row-link{border-bottom-color:rgba(255,255,255,.32);color:#fff}
 .bg-nardo .row-title,.bg-nardo .row-date,.bg-nardo .row-sub,.bg-nardo .row-cat{color:#fff}
 .bg-nardo .row-link:hover .row-title{color:#fff;text-decoration:underline;text-underline-offset:3px}
-.bg-vert{background:var(--vert);color:#fff}
+.bg-vert{background:var(--olive);color:#fff}
 .bg-vert h1{color:#fff}
 .bg-vert-clair{background:var(--vert-clair)}
 .bg-vert-clair .lead{color:var(--texte)}
@@ -590,6 +591,12 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .bg-vert .coverage{color:#fff}
 .bg-vert .vcard{background:rgba(46,50,54,.38)}
 .bg-vert .vcard:hover{background:rgba(46,50,54,.52)}
+/* Sur l’olive adouci : le bouton d’adhésion vert anis et les flèches des cartes de veille ont un fin liseré vert clair
+   pour bien se détacher du fond (3,5:1 ; sans lui 2,2:1 et 1,3:1) ; le focus d’une carte de veille se dessine à l’intérieur
+   de la carte, sinon la rangée qui défile le coupe */
+.bg-vert .btn-anis{box-shadow:inset 0 0 0 2px var(--vert-clair)}
+.bg-vert .round-btn{box-shadow:inset 0 0 0 2px var(--vert-clair)}
+.bg-vert .vcard:focus-visible{outline-offset:-3px}
 .bg-encre .rows{border-top-color:rgba(255,255,255,.2)}
 .bg-encre .row-link{border-bottom-color:rgba(255,255,255,.2);color:var(--sombre-texte)}
 .bg-encre .row-title{color:#fff}
