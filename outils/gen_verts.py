@@ -42,7 +42,7 @@ for i, p in enumerate(P):
   <div class="vues">{''.join(figs)}</div>
 </section>''')
 
-html = f'''<title>Couleur de la veille SLBC</title>
+html = f'''<title>Vert de la veille</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
