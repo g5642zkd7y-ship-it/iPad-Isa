@@ -139,7 +139,7 @@ MASCOTTES = [
     ('lecteur-communique-sur-fond.png', '#D6E4A6', 'Le lecteur du communiqué', 'Un biologiste à lunettes lit un grand journal titré « COMMUNIQUÉ ».', 'Page Salle de presse', 'Fond vert clair, ombre au sol'),
     ('hanches-contour-actualites.png', '#74777A', 'Le biologiste aux mains sur les hanches', 'Cheveux en épis, sourcil levé, grand sourire, les deux mains sur les hanches.', 'Page Actualités et bannière Actualités de l’accueil', 'Fond gris Nardo, contour blanc'),
     ('engrenages-documentation-sur-fond.png', '#ECEEE8', 'Le biologiste qui réfléchit', 'Yeux plissés, main sur la tempe, un livre sous le bras ; au-dessus, un nuage où tournent deux engrenages.', 'Page Documentation', 'Fond gris pâle, ombre au sol'),
-    ('duo-contour-espace.png', '#657B3D', 'Les deux biologistes qui se serrent la main', 'L’un accueille l’autre d’un petit signe ; la biologiste au chignon sourit.', 'Espace adhérent (poignée de main animée) et bannière « Rejoindre le SLBC »', 'Fond olive, contour blanc'),
+    ('duo-contour-espace.png', '#657B3D', 'Les deux biologistes qui se serrent la main', 'L’un accueille l’autre d’un petit signe ; la biologiste au chignon sourit.', 'Espace adhérent et bannière « Rejoindre le SLBC » ; aux deux endroits, la poignée de main s’anime', 'Fond olive, contour blanc'),
     ('trio-bienvenue-sur-fond.png', '#FFFFFF', 'La banderole « Bienvenue »', 'Trois biologistes tiennent une grande banderole écrite à la main ; celui du milieu fait un signe.', 'Page Adhérer, sous le titre', 'Fond blanc, ombres au sol'),
 ]
 def fig_m(f, bg, n):
@@ -452,9 +452,9 @@ a{{color:var(--vert)}}
       <li>Les deux ronds du logo se rapprochent à l’ouverture de chaque page.</li>
       <li>Le séparateur se dessine ; le filet vert des trois piliers se trace ; les pastilles des missions se dessinent.</li>
       <li>L’onglet de la page en cours se souligne en vert ; l’en-tête prend une légère ombre au défilement.</li>
-      <li>Au défilement, les mascottes réagissent comme montées sur ressort puis reviennent en place ; les drapeaux flottent, les engrenages tournent.</li>
+      <li>Au défilement, les mascottes réagissent comme montées sur ressort puis reviennent en place ; les drapeaux flottent, les engrenages tournent. Seul le duo qui se serre la main ne bascule pas.</li>
       <li>Au défilement, les blocs (piliers, missions, fiches, avantages, cartes de veille) se posent à mesure qu’ils entrent dans l’écran, sans fondu ; le sous-menu souligne la rubrique en cours de lecture.</li>
-      <li>Les deux biologistes de l’espace adhérent se serrent la main à l’ouverture de la page.</li>
+      <li>Les deux biologistes qui se serrent la main (Espace adhérent, bannière « Rejoindre le SLBC ») : quatre secousses amorties et un signe de bienvenue, en deux secondes, quand ils arrivent entièrement à l’écran, à l’ouverture de l’espace adhérent et à la connexion.</li>
     </ul></div>
     <div class="encadre non"><h3>Ce qu’on ne fait pas</h3><ul class="regles">
       <li>Faire apparaître chaque bloc en fondu au défilement.</li>
