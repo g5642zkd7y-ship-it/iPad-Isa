@@ -2238,7 +2238,15 @@
     const root = document.documentElement;
     const placer = () => root.style.setProperty('--bandeau-h', bar.hidden ? '0px' : bar.getBoundingClientRect().height + 'px');
     /* Titre de la page affichée : le focus y revient quand le bandeau ou la fenêtre disparaissent */
-    const titrePage = () => { const t = $('.view:not([hidden]) h1'); if (t && !t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1'); return t; };
+    /* Titre visible le plus proche dans la page affichée (le h1 si la page est en haut) : le focus y revient quand le bandeau
+       ou la fenêtre disparaissent, sans faire défiler la page */
+    const titrePage = () => {
+      const haut = (document.querySelector('.gnav') || document.body).getBoundingClientRect().bottom;
+      const titres = [...document.querySelectorAll('.view:not([hidden]) h1, .view:not([hidden]) h2, .view:not([hidden]) h3')].filter((el) => el.getClientRects().length);
+      const t = titres.find((el) => { const r = el.getBoundingClientRect(); return r.top >= haut && r.bottom <= innerHeight; }) || titres[0];
+      if (t && !t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+      return t;
+    };
     const montrer = (on) => { bar.hidden = !on; placer(); };
     const appliquer = (v) => { root.dataset.cookiesMesure = v && v.mesure ? 'oui' : 'non'; };
     let retour = null, enSavoirPlus = false;

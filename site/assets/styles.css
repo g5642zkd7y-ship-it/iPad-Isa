@@ -1093,8 +1093,7 @@ body{padding-bottom:var(--bandeau-h,0px)}
 @media (orientation:landscape) and (max-height:500px){.cookie-bar{padding-block:8px calc(8px + env(safe-area-inset-bottom,0px))}
   .cookie-in{gap:8px}.cookie-txt{display:block;font-size:14px;line-height:1.4}.cookie-title{display:inline;margin-right:.35em;font-size:15px;line-height:inherit}.cookie-txt p{display:inline;font-size:14px;line-height:inherit}
   .cookie-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.cookie-actions .cookie-voir{grid-column:auto}
-  .cookie-actions .btn{min-height:44px;font-size:15.5px;padding-inline:10px}
-  .toast{bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+  .cookie-actions .btn{min-height:44px;font-size:15.5px;padding-inline:10px}}
 .toast{bottom:calc(20px + var(--bandeau-h,0px) + env(safe-area-inset-bottom,0px))}
 /* Tant que le bandeau est là : le focus et les ancres s'arrêtent au-dessus de lui ; le menu compact et la recherche finissent au-dessus */
 html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
@@ -1102,7 +1101,12 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
 .search-panel{max-height:calc(88vh - var(--bandeau-h,0px))}
 /* Interrupteur éteint : contour gris pour le distinguer du fond (3:1 au moins) */
 .switch:not(:checked){box-shadow:inset 0 0 0 2px var(--gris)}
-.cookie-dialog .cookie-cat-head{padding-right:48px}
+/* Écran bas : la fenêtre défile et la croix collante pourrait passer sur l'interrupteur ; le message éphémère se pose sur le bandeau */
+@media (max-height:600px){.cookie-dialog .cookie-cat-head{padding-right:48px}}
+@media (orientation:landscape) and (max-height:500px){.toast{bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+/* Partie « Cookies » des Informations légales : liste des deux catégories, espacée comme les paragraphes */
+.legal-prose ul{margin:14px 0 0;padding-left:1.25em;display:flex;flex-direction:column;gap:10px}
+.legal-prose ul + p{margin-top:14px}
 .cookie-form{display:flex;flex-direction:column;gap:16px;padding:26px clamp(20px,5vw,32px) 28px}
 .cookie-form .h-tile{padding-right:44px}
 .cookie-intro{margin:0;font-size:15.5px;color:var(--texte)}
