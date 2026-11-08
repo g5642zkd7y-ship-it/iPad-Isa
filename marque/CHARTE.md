@@ -7,6 +7,7 @@ Version de travail · novembre 2026 · à valider par le bureau
 > Mise à jour du 4 novembre 2026 : le logo est validé en **Nunito** (§ 4.1).
 > Mise à jour du 7 novembre 2026 : **Nunito** est retenue aussi pour les titres et le texte courant du site (décision d’Isabelle Eimer, après comparaison avec Figtree). La maquette est passée en Nunito.
 > Mise à jour du 8 novembre 2026 : sur le site, les fonds gris foncé passent au **gris Nardo éclairci `#74777A`** (décision d’Isabelle Eimer), avec texte blanc (§ 3.1 et 3.2).
+> Mise à jour du 8 novembre 2026 : sur le site, les fonds vert foncé passent à l’**olive adouci `#657B3D`** (décision d’Isabelle Eimer), avec texte blanc ; le vert foncé `#5F7A2B` reste la couleur des boutons, des liens et de la zone commune du logo (§ 3.1 et 3.2).
 
 ---
 
@@ -98,6 +99,7 @@ En dessous de ces tailles, la signature devient illisible : utiliser le symbole 
 | --- | --- | --- | --- |
 | **Vert anis** | `#A3BE3C` | 163 190 60 | Couleur signature : rond vert, accents graphiques, filets |
 | **Vert foncé** | `#5F7A2B` | 95 122 43 | Zone commune du symbole, seconde ligne de signature, titres d’accent, liens |
+| **Olive adouci** | `#657B3D` | 101 123 61 | Sur le site, fonds verts des bandeaux et des zones (Veille réglementaire, Espace adhérent, bannières « Chaque lundi » et « Rejoindre le SLBC » de l’accueil), depuis le 8 novembre 2026 |
 | **Vert clair** | `#D6E4A6` | 214 228 166 | Zone commune sur fond sombre, fonds d’encadrés |
 | **Gris cellule** | `#5E6266` | 94 98 102 | Rond gris, texte secondaire |
 | **Gris texte** | `#3F4347` | 63 67 71 | Nom « SLBC », titres, texte courant |
@@ -105,6 +107,8 @@ En dessous de ces tailles, la signature devient illisible : utiliser le symbole 
 | **Gris Nardo éclairci** | `#74777A` | 116 119 122 | Sur le site, fonds gris des bandeaux et des zones (Actualités, représentants…), depuis le 8 novembre 2026 |
 | Fond clair | `#F7F8F4` | 247 248 244 | Fonds de pages et de diapositives |
 | Blanc | `#FFFFFF` | 255 255 255 | Fond principal, éléments inversés |
+
+**Olive adouci** : choisi par Isabelle Eimer le 8 novembre 2026 pour les fonds verts du site (« le vert est beau mais soutenu, un peu agressif »). Même teinte que le vert foncé, avec un tiers de couleur en moins, un peu plus clair. Le vert foncé `#5F7A2B` reste la couleur des boutons, des liens et de la zone commune du logo. Sur l’olive adouci, le bouton d’adhésion reste vert anis à texte `#2E3236`, avec un liseré vert clair de 2 px qui le détache du fond (≈ 3,5 : 1 ; le vert anis seul n’y atteint que ≈ 2,2 : 1).
 
 **Impression** : les valeurs CMJN et Pantone restent à établir par l’imprimeur ou un graphiste, à partir d’une épreuve. Le vert anis a été estimé d’après le logo actuel ; s’il existe un fichier source de l’ancien logo, reprendre sa valeur exacte.
 
@@ -116,6 +120,7 @@ En dessous de ces tailles, la signature devient illisible : utiliser le symbole 
 | Vert foncé `#5F7A2B` sur blanc | ≈ 4,9 : 1 | Tout texte, y compris courant |
 | Blanc sur fond sombre `#2E3236` | ≈ 13 : 1 | Tout texte |
 | Blanc sur vert foncé `#5F7A2B` | ≈ 4,9 : 1 | Tout texte |
+| Blanc sur olive adouci `#657B3D` | ≈ 4,7 : 1 | Tout texte |
 | Vert anis `#A3BE3C` sur blanc | ≈ 2,1 : 1 | **Jamais pour du texte** ; formes et filets uniquement |
 | Vert clair `#D6E4A6` sur fond sombre | ≈ 9 : 1 | Tout texte |
 | Blanc sur gris Nardo éclairci `#74777A` | ≈ 4,5 : 1 | Tout texte (au seuil : ne pas éclaircir ce gris) |
