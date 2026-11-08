@@ -97,7 +97,7 @@ En dessous de ces tailles, la signature devient illisible : utiliser le symbole 
 
 | Nom | Hexadécimal | RVB | Rôle |
 | --- | --- | --- | --- |
-| **Vert anis** | `#A3BE3C` | 163 190 60 | Couleur signature : rond vert, accents graphiques, filets |
+| **Vert anis** | `#A3BE3C` | 163 190 60 | Couleur signature, reprise de l’ancien logo du SLBC et conservée : rond vert, accents graphiques, filets |
 | **Vert foncé** | `#5F7A2B` | 95 122 43 | Zone commune du symbole, seconde ligne de signature, titres d’accent, liens |
 | **Olive adouci** | `#657B3D` | 101 123 61 | Sur le site, fonds verts des bandeaux et des zones (Veille réglementaire, Espace adhérent, bannières « Chaque lundi » et « Rejoindre le SLBC » de l’accueil), depuis le 8 novembre 2026 |
 | **Vert clair** | `#D6E4A6` | 214 228 166 | Zone commune sur fond sombre, fonds d’encadrés |
@@ -108,7 +108,7 @@ En dessous de ces tailles, la signature devient illisible : utiliser le symbole 
 | Fond clair | `#F7F8F4` | 247 248 244 | Fonds de pages et de diapositives |
 | Blanc | `#FFFFFF` | 255 255 255 | Fond principal, éléments inversés |
 
-**Olive adouci** : choisi par Isabelle Eimer le 8 novembre 2026 pour les grandes zones vertes du site, où le vert foncé, « un très beau vert », était « assez soutenu » et « un peu agressif ». Même teinte que le vert foncé, avec un tiers de couleur en moins, un peu plus clair. Le vert foncé `#5F7A2B` reste la couleur des boutons, des liens et de la zone commune du logo, et celle des petits fonds verts : porte « La lettre d’information » de l’espace adhérent, case « Une voix dans les instances » de la page Adhérer, bandeaux des régions du conseil et des groupes des URPS, en alternance avec le vert anis. Sur l’olive adouci, le bouton d’adhésion reste vert anis à texte `#2E3236`, avec un liseré vert clair de 2 px qui le détache du fond (≈ 3,5 : 1 ; le vert anis seul n’y atteint que ≈ 2,2 : 1).
+**Olive adouci** : choisi par Isabelle Eimer le 8 novembre 2026 pour les grandes zones vertes du site, où le vert foncé, « un très beau vert », était « assez soutenu » et « un peu agressif ». Même teinte que le vert foncé, avec un tiers de couleur en moins, un peu plus clair. Le logo ne change pas : son vert anis, repris de l’ancien logo, reste la couleur signature. Le vert foncé `#5F7A2B` reste la couleur des boutons, des liens et de la zone commune du logo, et celle des petits fonds verts : porte « La lettre d’information » de l’espace adhérent, case « Une voix dans les instances » de la page Adhérer, bandeaux des régions du conseil et des groupes des URPS, en alternance avec le vert anis. Sur l’olive adouci, le bouton d’adhésion reste vert anis à texte `#2E3236`, avec un liseré vert clair de 2 px qui le détache du fond (≈ 3,5 : 1 ; le vert anis seul n’y atteint que ≈ 2,2 : 1).
 
 **Impression** : les valeurs CMJN et Pantone restent à établir par l’imprimeur ou un graphiste, à partir d’une épreuve. Le vert anis a été estimé d’après le logo actuel ; s’il existe un fichier source de l’ancien logo, reprendre sa valeur exacte.
 
