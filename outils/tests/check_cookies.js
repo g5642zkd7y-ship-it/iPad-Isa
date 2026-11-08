@@ -65,5 +65,5 @@ const KEY = 'slbc-maquette-cookies';
     await ctx.close();
   }
   await b.close();
-  console.log(`OK ${ok}, ÉCHECS ${ko}`);
+  console.log(`Bilan : ${ok} contrôles bons, ${ko} en échec`);
 })();
