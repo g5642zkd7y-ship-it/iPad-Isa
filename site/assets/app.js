@@ -1432,6 +1432,7 @@
     };
     if (svg._shake) cancelAnimationFrame(svg._shake);
     clearTimeout(svg._shakeWait);
+    svg._lastShake = performance.now();
     const T = 1400; let t0 = 0;
     const frame = (now) => {
       if (!t0) t0 = now;
@@ -1441,6 +1442,22 @@
       svg._shake = t < 1 ? requestAnimationFrame(frame) : null;
     };
     svg._shakeWait = setTimeout(() => { svg._shake = requestAnimationFrame(frame); }, delay || 0);
+  }
+
+  /* Les deux endroits du duo (espace adhérent, bannière « Rejoindre le SLBC » de l'accueil) : la poignée de main se joue
+     quand le duo arrive à l'écran, et se rejoue s'il en est sorti puis revient. Une poignée de main jouée depuis moins de
+     deux secondes (ouverture de l'espace adhérent, connexion) n'est pas doublée. Rien en animations réduites. */
+  function setupHandshakes() {
+    if (reduceMotion || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+      const svg = en.target;
+      if (!en.isIntersecting || en.intersectionRatio === 0) { svg._armed = true; return; }
+      if (en.intersectionRatio < 0.6 || svg._armed === false) return;
+      svg._armed = false;
+      if (svg._lastShake && performance.now() - svg._lastShake < 2000) return;
+      shakeHands(svg, 150);
+    }), { threshold: [0, 0.6] });
+    $$('svg.mascotte-accueil, svg.mascotte-adhesion').forEach((svg) => io.observe(svg));
   }
 
   /* ---------- Ouverture : les deux cellules se rejoignent ---------- */
@@ -1547,7 +1564,9 @@
     let lastY = window.scrollY; let lastT = performance.now(); let vel = 0; let raf = 0;
     const shown = (el) => el.getClientRects().length > 0;
 
-    function actors() { return $$('.view:not([hidden]) svg.mascotte, .view:not([hidden]) .perso'); }
+    /* Le duo qui se serre la main (espace adhérent, bannière « Rejoindre le SLBC ») ne bascule pas : sa poignée de main
+       s'anime quand il arrive à l'écran (setupHandshakes()). Demande d'Isabelle Eimer, 8 novembre 2026. */
+    function actors() { return $$('.view:not([hidden]) svg.mascotte:not(.mascotte-accueil):not(.mascotte-adhesion), .view:not([hidden]) .perso'); }
 
     function columns(el) {
       const sibs = Array.from(el.parentElement.children).filter((x) => x.matches(DRIFT));
@@ -2312,6 +2331,7 @@
   setupSeparators();
   setupMotion();
   setupScrollLife();
+  setupHandshakes();
   setupSignatures();
   showPanel('veille');
   applyMember();

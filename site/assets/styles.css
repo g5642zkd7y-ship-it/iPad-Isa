@@ -947,7 +947,8 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 body{overflow-x:clip}
 svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
 .lnav-links a[aria-current="true"]{color:var(--vert-fonce);box-shadow:inset 0 -2px 0 var(--anis)}
-.js-life svg.mascotte{transform-origin:50% 100%;transform:rotate(calc(var(--sway,0) * -6deg)) scaleY(calc(1 + var(--swayabs,0) * .05))}
+/* Le duo qui se serre la main ne bascule pas : c'est sa poignée de main qui bouge (setupHandshakes() dans app.js) */
+.js-life svg.mascotte:not(.mascotte-accueil):not(.mascotte-adhesion){transform-origin:50% 100%;transform:rotate(calc(var(--sway,0) * -6deg)) scaleY(calc(1 + var(--swayabs,0) * .05))}
 .js-life .perso{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(calc(var(--sway,0) * -6deg)) scaleY(calc(1 + var(--swayabs,0) * .05))}
 .js-life .drapeau{transform-box:fill-box;transform:skewY(calc(var(--sway,0) * 9deg))}
 .js-life .drapeau-left{transform-origin:0 50%}
