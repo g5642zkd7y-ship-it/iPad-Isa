@@ -1,4 +1,4 @@
-/* Mise en page : une idée par section, rythme blanc / fond clair / encre, contenu à 1180 px,
+/* Mise en page : une idée par section, rythme blanc / fond clair / gris Nardo éclairci et vert foncé, contenu à 1180 px,
    grands titres serrés, navigation translucide. Thème clair assumé pour garder le logo validé. */
 :root{
   color-scheme: light;
@@ -9,8 +9,8 @@
   --vert-clair:#D6E4A6;  /* surfaces douces */
   --gris:#5E6266;        /* texte secondaire, rond gris du logo */
   --texte:#3F4347;       /* texte courant, nom SLBC */
-  --encre:#2E3236;
-  --nardo:#74777A; /* gris Nardo éclairci de l’onglet Actualités (8 novembre 2026, choix d’Isabelle Eimer) ; texte blanc à 4,5:1 */       /* titres, sections sombres */
+  --encre:#2E3236;       /* titres, textes, traits des dessins (plus utilisé comme fond de zone depuis le 8 novembre 2026) */
+  --nardo:#74777A;       /* fonds gris de zone (Actualités, représentants, portes…) depuis le 8 novembre 2026, choix d’Isabelle Eimer ; texte blanc à 4,5:1, vert clair seulement en grand */
   --fond:#F7F8F4;        /* sections alternées, pied de page */
   --blanc:#FFFFFF;
   /* Neutres dérivés */
@@ -197,7 +197,7 @@ a.more{padding-block:9px;margin-block:-9px}
 /* « Publier » : la barre occupe toute la largeur de la colonne ; ses trois choix gardent leur largeur, à gauche. */
 .seg-lg{justify-content:flex-start}
 .seg-lg button{flex-grow:0}
-.seg button:focus-visible{outline-offset:-3px}
+.seg button:focus-visible{outline-offset:-3px;outline-color:var(--vert)}
 @media (max-width:520px){.seg button{padding:0 9px}}
 @media (max-width:380px){.seg button{padding:0 7px;font-size:15px}}
 
@@ -399,7 +399,7 @@ a.more{padding-block:9px;margin-block:-9px}
 .lnav-centre .lnav-links{margin-inline:auto}
 .lnav-links::-webkit-scrollbar{display:none}
 .lnav-links a{padding:16px 8px;font-size:17px;color:var(--texte);text-decoration:none;white-space:nowrap}
-.lnav-links a:hover{color:var(--vert)}
+.lnav-links a:hover{color:var(--vert-fonce)}
 .lnav-links a:focus-visible{outline-offset:-3px}
 @media (max-width:640px){.lnav-title{display:none}.lnav-links{margin-left:0}.lnav-links a{font-size:16px;padding-inline:6px}
   /* Téléphone : le sous-menu va d'un bord à l'autre de l'écran et s'efface en fondu là où des rubriques sont cachées.
@@ -462,7 +462,7 @@ a.more{padding-block:9px;margin-block:-9px}
 @media (max-width:900px){.ca-grid{columns:2}}
 @media (max-width:560px){.ca-grid{columns:1}.ca-region{padding-bottom:22px}.ca-people{font-size:16px}}
 
-/* Représentants : sur fond encre, une fiche par instance, le sigle en grand vert anis ; lignes alignées d'une fiche à l'autre */
+/* Représentants : sur le gris Nardo éclairci, une fiche par instance, le sigle en grand vert clair ; lignes alignées d'une fiche à l'autre */
 .bg-encre .ed-quote,.bg-encre .kfig-l{color:var(--sombre-texte)}
 .bg-encre .kfig-n{color:var(--anis)}
 .bg-encre .kfig{border-color:rgba(255,255,255,.2)}
@@ -473,7 +473,8 @@ a.more{padding-block:9px;margin-block:-9px}
 .inst{padding:20px 0 44px;border-top:3px solid var(--anis)}
 .inst.s1{border-top-color:#fff}
 .inst-head{display:flex;flex-direction:column;gap:8px}
-.inst-sig{font-size:clamp(36px,3.6vw,46px);line-height:1;font-weight:800;letter-spacing:-.03em;color:var(--vert-clair)}
+.inst-sig{font-size:clamp(36px,3.6vw,46px);line-height:1;font-weight:800;letter-spacing:-.03em;color:var(--vert)}
+.bg-nardo .inst-sig{color:var(--vert-clair)}
 .inst-sig-long{font-size:clamp(24px,2.1vw,28px);line-height:1.12;letter-spacing:-.02em}
 .inst-full{font-size:16px;line-height:1.35;font-weight:600;color:#fff}
 .inst-role{margin-top:8px;font-size:15px;line-height:1.4;color:#fff}
@@ -554,7 +555,9 @@ a.more{padding-block:9px;margin-block:-9px}
 .input[aria-invalid="true"]{border-color:var(--erreur)}
 .input[aria-invalid="true"]:focus{outline:2px solid var(--erreur);outline-offset:2px;box-shadow:none}
 .check-line input[aria-invalid="true"]{outline:2px solid var(--erreur);outline-offset:2px}
-.side-dark .input[aria-invalid="true"]:focus,.side-dark .check-line input[aria-invalid="true"]{outline-color:#fff}
+.side-dark .input[aria-invalid="true"]:focus{outline-color:#fff}
+.side-dark .check-line input[aria-invalid="true"]{outline:2px dashed #fff;outline-offset:2px}
+.side-dark .check-line input[aria-invalid="true"]:focus-visible{outline:3px solid #fff;outline-offset:3px}
 textarea.input{min-height:120px;resize:vertical}
 select.input{padding-right:38px;background-image:var(--chev-down);background-repeat:no-repeat;background-position:right 14px center;background-size:12px;cursor:pointer}
 .field-error{font-size:14px;font-weight:500;color:var(--erreur)}
@@ -747,7 +750,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .porte-t{font-size:18px;line-height:1.25;font-weight:700;letter-spacing:-.005em;color:var(--encre)}
 .porte-d{font-size:15.5px;line-height:1.5;color:var(--texte)}
 .porte-cta{margin-top:auto;padding-top:4px;font-size:16px}
-/* Une couleur par porte (7 novembre 2026, demande d’Isabelle Eimer) : veille en encre (comme la page Veille), commission en vert clair,
+/* Une couleur par porte (7 novembre 2026, demande d’Isabelle Eimer) : veille en gris Nardo éclairci, commission en vert clair,
    suggestion en vert anis, lettre en vert foncé. Textes contrôlés à 4,5:1 au moins sur chaque fond. */
 .porte.c0{background:var(--nardo)}.porte.c0 .porte-t,.porte.c0 .porte-d,.porte.c0 .porte-cta{color:#fff}
 .porte.c1{background:var(--vert-clair)}.porte.c1 .porte-d{color:var(--encre)}.porte.c1 .porte-cta{color:var(--encre)}
@@ -762,7 +765,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .porte-bureau{margin-top:14px;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding:14px 20px;background:var(--fond);border:1px solid var(--filet);border-top:4px solid var(--gris)}
 .porte-bureau .porte-d{font-size:15px;color:var(--gris)}
 .portes-menu .porte-bureau{border-top-color:var(--gris)}
-.portes-menu .porte-bureau[aria-pressed="true"]{border-top-color:var(--encre)}
+.portes-menu .porte-bureau[aria-pressed="true"]{border-top-color:var(--vert)}
 .portes-menu .porte-bureau[aria-pressed="true"] .porte-d{color:var(--texte)}
 .login-intent{font-size:15px;font-weight:600;color:var(--vert)}
 @media (max-width:1000px){.portes-menu .portes{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -929,13 +932,14 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 /* Message éphémère : centré, de la largeur de son texte, jusqu'à toute la largeur utile (marges de 16 px). */
 .toast{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:95;display:flex;align-items:center;gap:18px;width:-webkit-fit-content;width:fit-content;max-width:600px;margin-inline:auto;padding:14px 16px 14px 20px;border-radius:16px;background:var(--nardo);color:#fff;font-size:15px;font-weight:500;box-shadow:0 14px 34px rgba(0,0,0,.24)}
 .toast a{padding:12px 8px;margin:-12px -8px;color:#fff;font-weight:700;white-space:nowrap;text-decoration:underline;text-underline-offset:3px}
+.toast a:focus-visible{outline-offset:-3px}
 
 /* ---------- Le site bouge avec le visiteur (6 novembre 2026) ----------
    Variables posées par setupScrollLife() pendant le défilement : --sway (élan, de -1,2 à 1,2), --swayabs (sa valeur
    absolue), --turn (rotation des engrenages, en degrés). Tout revient à zéro à l'arrêt. */
 body{overflow-x:clip}
 svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
-.lnav-links a[aria-current="true"]{color:var(--vert);box-shadow:inset 0 -2px 0 var(--anis)}
+.lnav-links a[aria-current="true"]{color:var(--vert-fonce);box-shadow:inset 0 -2px 0 var(--anis)}
 .js-life svg.mascotte{transform-origin:50% 100%;transform:rotate(calc(var(--sway,0) * -6deg)) scaleY(calc(1 + var(--swayabs,0) * .05))}
 .js-life .perso{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(calc(var(--sway,0) * -6deg)) scaleY(calc(1 + var(--swayabs,0) * .05))}
 .js-life .drapeau{transform-box:fill-box;transform:skewY(calc(var(--sway,0) * 9deg))}
