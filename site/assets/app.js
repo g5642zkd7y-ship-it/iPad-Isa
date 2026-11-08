@@ -1434,22 +1434,21 @@
     clearTimeout(svg._shakeWait);
     svg._lastShake = performance.now();
     /* 8 novembre 2026 : mouvement plus visible sur iPad et téléphone (relecture) : quatre secousses de 10° en 2 s,
-       amorties plus tard ; le salut monte de 6° au plus vers la tête (le trait de mouvement ne touche plus le visage)
-       et s'ouvre jusqu'à 14° vers l'extérieur. Mains toujours jointes (vérifié jusqu'à 12°). */
+       amorties plus tard ; le salut ne va que vers l'extérieur (jusqu'à 14°, départ en douceur), pour que le trait de
+       mouvement ne touche jamais la tête. Mains toujours jointes (vérifié jusqu'à 12°). */
     const T = 2000; let t0 = 0;
     const frame = (now) => {
       if (!t0) t0 = now;
       const t = Math.min(1, (now - t0) / T);
       const damp = 1 - t * t * t;
-      const w = Math.sin(t * Math.PI * 4) * damp;
-      set(10 * Math.sin(t * Math.PI * 8) * damp, w > 0 ? 6 * w : 14 * w);
+      set(10 * Math.sin(t * Math.PI * 8) * damp, -7 * (1 - Math.cos(t * Math.PI * 4)) * damp);
       svg._shake = t < 1 ? requestAnimationFrame(frame) : null;
     };
     svg._shakeWait = setTimeout(() => { svg._shake = requestAnimationFrame(frame); }, delay || 0);
   }
 
   /* Les deux endroits du duo (espace adhérent, bannière « Rejoindre le SLBC » de l'accueil) : la poignée de main se joue
-     quand le duo est entièrement visible, au-dessus du bandeau des cookies s'il est affiché, et se rejoue s'il est sorti
+     quand le duo est entièrement visible, sous l'en-tête et au-dessus du bandeau des cookies s'il est affiché, et se rejoue s'il est sorti
      de l'écran puis revient. Une poignée de main jouée depuis moins de deux secondes (ouverture de l'espace adhérent,
      connexion) n'est pas doublée. Vérifié au défilement, au changement de taille, de page et de hauteur du bandeau.
      Rien en animations réduites. */
@@ -1459,10 +1458,11 @@
     const check = () => {
       raf = 0;
       const bas = window.innerHeight - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bandeau-h')) || 0);
+      const nav = document.querySelector('.gnav'); const haut = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
       $$('svg.mascotte-accueil, svg.mascotte-adhesion').forEach((svg) => {
         if (!svg.getClientRects().length) { svg._armed = true; return; }
         const r = svg.getBoundingClientRect();
-        const vu = Math.max(0, Math.min(r.bottom, bas) - Math.max(r.top, 0)) / (r.height || 1);
+        const vu = Math.max(0, Math.min(r.bottom, bas) - Math.max(r.top, haut)) / (r.height || 1);
         if (vu <= 0) { svg._armed = true; return; }
         if (vu < 0.95 || svg._armed === false) return;
         svg._armed = false;
