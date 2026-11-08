@@ -40,7 +40,8 @@ body{margin:0;background:var(--blanc);color:var(--texte);font-family:var(--font)
 img,svg{max-width:100%}
 a{color:var(--vert)}
 :focus-visible{outline:3px solid var(--vert);outline-offset:3px;border-radius:8px}
-.bg-encre :focus-visible,.bg-vert :focus-visible,.side-dark :focus-visible,.toast :focus-visible{outline-color:var(--vert-clair)}
+.bg-encre :focus-visible,.bg-vert :focus-visible{outline-color:var(--vert-clair)}
+.side-dark :focus-visible,.toast :focus-visible{outline-color:#fff}
 h1,h2,h3,h4{margin:0;color:var(--encre);text-wrap:balance}
 p,ul,ol,dl,figure{margin:0}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--nav-h) + 16px)}
@@ -119,7 +120,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 a.more{padding-block:9px;margin-block:-9px}
 .more:hover{text-decoration:underline;text-underline-offset:3px}
 .more:hover .fleche{transform:translateX(2px)}
-.bg-encre .more,.side-dark .more{color:var(--vert-clair)}
+.bg-encre .more{color:var(--vert-clair)}
+.side-dark .more{color:#fff}
 .bg-vert .more{color:#fff}
 .tile-vert .more{color:var(--encre)}
 /* Écart de 18 px entre deux liens empilés : leurs zones à toucher de 44 px se touchent sans se recouvrir. */
@@ -464,17 +466,20 @@ a.more{padding-block:9px;margin-block:-9px}
 .bg-encre .ed-quote,.bg-encre .kfig-l{color:var(--sombre-texte)}
 .bg-encre .kfig-n{color:var(--anis)}
 .bg-encre .kfig{border-color:rgba(255,255,255,.2)}
+.bg-nardo .ed-quote,.bg-nardo .kfig-l{color:#fff}
+.bg-nardo .kfig-n{color:var(--vert-clair)}
+.bg-nardo .kfig{border-color:rgba(255,255,255,.32)}
 .inst-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:0 clamp(24px,3vw,48px)}
 .inst{padding:20px 0 44px;border-top:3px solid var(--anis)}
 .inst.s1{border-top-color:#fff}
 .inst-head{display:flex;flex-direction:column;gap:8px}
-.inst-sig{font-size:clamp(36px,3.6vw,46px);line-height:1;font-weight:800;letter-spacing:-.03em;color:var(--anis)}
+.inst-sig{font-size:clamp(36px,3.6vw,46px);line-height:1;font-weight:800;letter-spacing:-.03em;color:var(--vert-clair)}
 .inst-sig-long{font-size:clamp(24px,2.1vw,28px);line-height:1.12;letter-spacing:-.02em}
 .inst-full{font-size:16px;line-height:1.35;font-weight:600;color:#fff}
-.inst-role{margin-top:8px;font-size:15px;line-height:1.4;color:var(--sombre-texte)}
+.inst-role{margin-top:8px;font-size:15px;line-height:1.4;color:#fff}
 .inst-reps{margin-top:18px}
-.inst-reps:not(:empty){padding-top:14px;border-top:1px solid rgba(255,255,255,.2)}
-.inst-group{margin-bottom:6px;font-size:14px;font-weight:600;color:var(--sombre-texte)}
+.inst-reps:not(:empty){padding-top:14px;border-top:1px solid rgba(255,255,255,.32)}
+.inst-group{margin-bottom:6px;font-size:14px;font-weight:600;color:#fff}
 .reps + .inst-group{margin-top:14px}
 .reps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:17px;line-height:1.4;color:#fff}
 @media (max-width:900px){.inst-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -525,7 +530,7 @@ a.more{padding-block:9px;margin-block:-9px}
 .coverage-light strong{font-weight:600;color:var(--encre)}
 .side-col{display:flex;flex-direction:column;gap:20px}
 .side-block{display:flex;flex-direction:column;gap:14px;padding:28px;border-radius:var(--r-card);background:var(--fond)}
-.side-dark{background:var(--encre);color:var(--sombre-texte)}
+.side-dark{background:var(--nardo);color:#fff}
 .side-dark h2{color:#fff}
 .track-title{margin-top:6px;font-size:16px;font-weight:700;color:var(--encre)}
 .track + .track-title{margin-top:22px}
@@ -549,13 +554,13 @@ a.more{padding-block:9px;margin-block:-9px}
 .input[aria-invalid="true"]{border-color:var(--erreur)}
 .input[aria-invalid="true"]:focus{outline:2px solid var(--erreur);outline-offset:2px;box-shadow:none}
 .check-line input[aria-invalid="true"]{outline:2px solid var(--erreur);outline-offset:2px}
-.side-dark .input[aria-invalid="true"]:focus,.side-dark .check-line input[aria-invalid="true"]{outline-color:#FFB4AB}
+.side-dark .input[aria-invalid="true"]:focus,.side-dark .check-line input[aria-invalid="true"]{outline-color:#fff}
 textarea.input{min-height:120px;resize:vertical}
 select.input{padding-right:38px;background-image:var(--chev-down);background-repeat:no-repeat;background-position:right 14px center;background-size:12px;cursor:pointer}
 .field-error{font-size:14px;font-weight:500;color:var(--erreur)}
-.side-dark .field-error{color:#FFB4AB}
+.side-dark .field-error{color:#fff;font-weight:700}
 .form-ok{font-size:15px;font-weight:600;color:var(--vert)}
-.side-dark .form-ok{color:var(--vert-clair)}
+.side-dark .form-ok{color:#fff}
 .form-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 
 /* ---------- Presse et actualités ---------- */
@@ -662,7 +667,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,40px)}
 /* Les trois cases en couleur (7 novembre 2026, demande d’Isabelle Eimer), comme les portes de l’espace adhérent. */
 .benefit{display:flex;flex-direction:column;gap:12px;padding:24px 24px 26px;border-radius:14px}
-.benefit.c0{background:var(--encre)}.benefit.c0 h2{color:#fff}.benefit.c0 p{color:#E6E9DF}
+.benefit.c0{background:var(--nardo)}.benefit.c0 h2,.benefit.c0 p{color:#fff}
 .benefit.c1{background:var(--vert-clair)}.benefit.c1 h2,.benefit.c1 p{color:var(--encre)}
 .benefit.c2{background:var(--vert)}.benefit.c2 h2,.benefit.c2 p{color:#fff}
 .benefit h2{font-size:20px;font-weight:700;line-height:1.25;letter-spacing:-.01em}
@@ -729,8 +734,8 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .legal-note{padding:16px 20px;border-left:4px solid var(--anis);border-radius:4px;background:#fff}
 .legal-note strong{color:var(--encre)}
 .form-note{font-size:14px;line-height:1.5;color:var(--gris)}
-.side-dark .form-note{color:var(--sombre-texte)}
-.side-dark .form-note a{color:var(--vert-clair)}
+.side-dark .form-note{color:#fff}
+.side-dark .form-note a{color:#fff;text-decoration:underline}
 
 /* ---------- Espace adhérent ---------- */
 /* Espace adhérent : les « portes » (ce à quoi les adhérents ont accès), à côté de la carte de connexion puis en menu */
@@ -744,7 +749,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .porte-cta{margin-top:auto;padding-top:4px;font-size:16px}
 /* Une couleur par porte (7 novembre 2026, demande d’Isabelle Eimer) : veille en encre (comme la page Veille), commission en vert clair,
    suggestion en vert anis, lettre en vert foncé. Textes contrôlés à 4,5:1 au moins sur chaque fond. */
-.porte.c0{background:var(--encre)}.porte.c0 .porte-t{color:#fff}.porte.c0 .porte-d{color:#E6E9DF}.porte.c0 .porte-cta{color:var(--vert-clair)}
+.porte.c0{background:var(--nardo)}.porte.c0 .porte-t,.porte.c0 .porte-d,.porte.c0 .porte-cta{color:#fff}
 .porte.c1{background:var(--vert-clair)}.porte.c1 .porte-d{color:var(--encre)}.porte.c1 .porte-cta{color:var(--encre)}
 .porte.c2{background:var(--anis)}.porte.c2 .porte-d{color:var(--encre)}.porte.c2 .porte-cta{color:var(--encre)}
 .porte.c3{background:var(--vert)}.porte.c3 .porte-t,.porte.c3 .porte-d,.porte.c3 .porte-cta{color:#fff}
@@ -819,7 +824,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .admin-side{display:flex;flex-direction:column;gap:12px}
 .preview{display:flex;flex-direction:column;gap:12px;padding:26px;border-radius:var(--r-card);background:#fff;box-shadow:0 0 0 1px var(--filet),0 10px 30px rgba(46,50,54,.06)}
 .pv-tags{display:flex;flex-wrap:wrap;gap:8px}
-.pv-type{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;background:var(--encre);color:#fff;font-size:14px;font-weight:600}
+.pv-type{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;background:var(--nardo);color:#fff;font-size:14px;font-weight:600}
 .pv-title{font-size:21px;font-weight:700;line-height:1.25;letter-spacing:-.01em;color:var(--encre);overflow-wrap:anywhere}
 .pv-title.is-empty{color:#868A8E}
 .pv-resume{font-size:16px;line-height:1.55;color:var(--texte);overflow-wrap:anywhere}
@@ -922,8 +927,8 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
    boutons tiennent sur la même ligne, même pour « Page 206 sur 222 ». */
 @media (max-width:360px){.reader-btn-x{display:none}}
 /* Message éphémère : centré, de la largeur de son texte, jusqu'à toute la largeur utile (marges de 16 px). */
-.toast{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:95;display:flex;align-items:center;gap:18px;width:-webkit-fit-content;width:fit-content;max-width:600px;margin-inline:auto;padding:14px 16px 14px 20px;border-radius:16px;background:var(--encre);color:#fff;font-size:15px;font-weight:500;box-shadow:0 14px 34px rgba(0,0,0,.24)}
-.toast a{padding:12px 8px;margin:-12px -8px;color:var(--vert-clair);font-weight:700;white-space:nowrap}
+.toast{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:95;display:flex;align-items:center;gap:18px;width:-webkit-fit-content;width:fit-content;max-width:600px;margin-inline:auto;padding:14px 16px 14px 20px;border-radius:16px;background:var(--nardo);color:#fff;font-size:15px;font-weight:500;box-shadow:0 14px 34px rgba(0,0,0,.24)}
+.toast a{padding:12px 8px;margin:-12px -8px;color:#fff;font-weight:700;white-space:nowrap;text-decoration:underline;text-underline-offset:3px}
 
 /* ---------- Le site bouge avec le visiteur (6 novembre 2026) ----------
    Variables posées par setupScrollLife() pendant le défilement : --sway (élan, de -1,2 à 1,2), --swayabs (sa valeur
