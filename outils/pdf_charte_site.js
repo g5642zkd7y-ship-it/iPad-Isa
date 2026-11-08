@@ -1,3 +1,5 @@
+// Charte graphique du site SLBC en PDF A4, numéros de page en pied.
+// node pdf_charte_site.js <charte-site.html> <dossier polices> <sortie.pdf>
 const { chromium } = require('playwright'); const fs = require('fs'); const path = require('path');
 const [, , FILE, FONTDIR, OUT] = process.argv;
 (async () => {
@@ -11,6 +13,7 @@ const [, , FILE, FONTDIR, OUT] = process.argv;
   await p.evaluate(() => document.querySelectorAll('img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; }));
   await p.evaluate(async () => { await Promise.all([...document.images].map((i) => i.complete ? 0 : new Promise((r) => { i.onload = i.onerror = r; }))); });
   await p.emulateMedia({ media: 'print' });
-  await p.pdf({ path: OUT, format: 'A4', printBackground: true, preferCSSPageSize: true });
+  await p.pdf({ path: OUT, format: 'A4', printBackground: true, preferCSSPageSize: true, displayHeaderFooter: true, headerTemplate: '<span></span>',
+    footerTemplate: '<div style="width:100%;text-align:center;font:9px Arial,sans-serif;color:#5E6266">Charte graphique du site SLBC · <span class="pageNumber"></span> / <span class="totalPages"></span></div>' });
   await b.close(); console.log('ok');
 })();
