@@ -12,6 +12,22 @@
 <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
+<!-- Bandeau des cookies (8 novembre 2026, demande d’Isabelle Eimer) : « Tout refuser » et « Tout accepter » ont exactement le même bouton,
+     au même niveau (refuser aussi simple qu’accepter, CNIL) ; « Voir et choisir » ouvre le détail. Placé en tête de page pour être atteint
+     le premier au clavier, affiché en bas de l’écran. Piloté par setupCookies() dans app.js. -->
+<section class="cookie-bar" id="cookie-bar" aria-labelledby="cookie-title" hidden>
+  <div class="cookie-in">
+    <div class="cookie-txt">
+      <h2 class="cookie-title" id="cookie-title">Cookies</h2>
+      <p>Le site utilise des cookies nécessaires à son fonctionnement, comme votre connexion à l’espace adhérent. Avec votre accord, il peut aussi mesurer sa fréquentation. Vous pouvez changer d’avis à tout moment en bas de page.</p>
+    </div>
+    <div class="cookie-actions">
+      <button class="btn btn-cookie" type="button" data-cookies-tout="non">Tout refuser</button>
+      <button class="btn btn-cookie" type="button" data-cookies-tout="oui">Tout accepter</button>
+      <button class="btn btn-quiet cookie-voir" type="button" data-cookies-voir>Voir et choisir</button>
+    </div>
+  </div>
+</section>
 <div class="proto-strip">Maquette de travail : proposition de refonte du site slbc.fr</div>
 
 <header class="gnav">
@@ -69,7 +85,7 @@
   </div>
 </div>
 
-<main id="main">
+<main id="main" tabindex="-1">
 
 <!-- ================= ACCUEIL ================= -->
 <div class="view" data-view="accueil">
@@ -846,7 +862,9 @@
     <div class="container narrow">
       <h2 class="h-section">Cookies</h2>
       <div class="legal-prose">
-        <p>Le site ne dépose aucun cookie de mesure d’audience, de publicité ou de réseau social. Il n’utilise que ce qui est nécessaire à son fonctionnement, comme le maintien de votre connexion à l’espace adhérent. C’est pourquoi aucun bandeau ne vous demande votre accord.</p>
+        <p>Le site ne dépose aucun cookie de mesure d’audience, de publicité ou de réseau social. Il n’utilise que ce qui est nécessaire à son fonctionnement, comme le maintien de votre connexion à l’espace adhérent, et retient votre choix sur les cookies pendant 6 mois.</p>
+        <p>Si le bureau choisit un outil de mesure d’audience, il ne fonctionnera qu’avec votre accord, donné dans le bandeau des cookies. Vous pouvez changer d’avis à tout moment. <span class="pending">(Outil à choisir.)</span></p>
+        <p><button class="btn btn-quiet" type="button" data-cookies-voir>Gérer les cookies</button></p>
         <p>Les liens vers la page LinkedIn du SLBC sont de simples liens : LinkedIn ne reçoit rien tant que vous ne cliquez pas.</p>
         <p>Les polices de caractères sont hébergées sur le serveur du site : votre adresse n’est pas transmise à un service extérieur. <span class="pending">(À mettre en place lors de l’intégration.)</span></p>
         <p>Les e-mails de la lettre d’information ne contiennent aucun outil de suivi des ouvertures ou des clics.</p>
@@ -1166,11 +1184,35 @@
     </div>
     <div class="foot-legal">
       <span>Copyright © 2026 SLBC. Tous droits réservés.</span>
-      <nav aria-label="Informations légales"><a href="#mentions">Mentions légales</a><a href="#mentions" data-section="donnees">Données personnelles</a><a href="#mentions" data-section="cookies">Cookies</a></nav>
+      <nav aria-label="Informations légales"><a href="#mentions">Mentions légales</a><a href="#mentions" data-section="donnees">Données personnelles</a><a href="#mentions" data-section="cookies">Cookies</a><button class="foot-cookie" type="button" data-cookies-voir>Gérer les cookies</button></nav>
       <span>Maquette de travail.</span>
     </div>
   </div>
 </footer>
+
+<dialog class="mdp-dialog cookie-dialog" id="cookie-dialog" aria-labelledby="cookie-dlg-title">
+  <button class="icon-btn mdp-x" type="button" id="cookie-x" aria-label="Fermer">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg>
+  </button>
+  <form class="cookie-form" id="cookie-form" novalidate>
+    <h2 class="h-tile" id="cookie-dlg-title" tabindex="-1">Choisir les cookies</h2>
+    <p class="cookie-intro">Votre choix est gardé 6 mois. Vous pouvez le changer à tout moment avec le lien « Gérer les cookies » en bas de page.</p>
+    <div class="cookie-cat">
+      <div class="cookie-cat-head"><h3 class="cookie-cat-t">Nécessaires au fonctionnement</h3><span class="cookie-on">Toujours actifs</span></div>
+      <p>Ils gardent votre connexion à l’espace adhérent jusqu’à la fermeture de l’onglet et retiennent votre choix sur les cookies pendant 6 mois. Ils ne servent à rien d’autre : ils ne demandent donc pas votre accord.</p>
+    </div>
+    <div class="cookie-cat">
+      <div class="cookie-cat-head"><label class="cookie-cat-t" for="ck-mesure">Mesure d’audience</label><input class="switch" id="ck-mesure" type="checkbox" role="switch" aria-describedby="ck-mesure-d"></div>
+      <p id="ck-mesure-d">Compter les visites et les pages consultées, pour améliorer le site. Les statistiques ne servent qu’au SLBC. <span class="pending">(Outil à choisir par le bureau : aucun n’est installé sur la maquette.)</span></p>
+    </div>
+    <div class="cookie-actions">
+      <button class="btn btn-cookie" type="button" data-cookies-tout="non">Tout refuser</button>
+      <button class="btn btn-cookie" type="button" data-cookies-tout="oui">Tout accepter</button>
+      <button class="btn btn-quiet cookie-save" type="submit">Enregistrer mes choix</button>
+    </div>
+    <p class="cookie-more"><a class="more" href="#mentions" data-section="cookies">En savoir plus sur les cookies</a></p>
+  </form>
+</dialog>
 
 <div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="reader-title" hidden>
   <div class="reader-bar">

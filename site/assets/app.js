@@ -2219,6 +2219,65 @@
   window.addEventListener('hashchange', () => { if (mdpDialog.open) mdpDialog.close(); });
   renderComptes();
 
+  /* ---------- Cookies (8 novembre 2026, demande d'Isabelle Eimer) ----------
+     Bandeau en bas de l'écran : « Tout refuser » et « Tout accepter » (même bouton, même niveau : refuser est aussi simple
+     qu'accepter, CNIL), « Voir et choisir » ouvre le détail (#cookie-dialog). Le choix est gardé 6 mois dans le navigateur
+     (clé slbc-maquette-cookies), puis redemandé ; « Gérer les cookies » en bas de page permet d'en changer à tout moment.
+     Aucun outil de mesure d'audience n'est installé : <html data-cookies-mesure="oui|non"> donne le choix à celui que le
+     bureau retiendra, qui ne devra se lancer qu'avec « oui ». */
+  const CK_KEY = 'slbc-maquette-cookies';
+  const CK_DUREE = 182 * 24 * 3600 * 1000;
+  function ckLire() {
+    try { const v = JSON.parse(localStorage.getItem(CK_KEY) || 'null'); if (v && typeof v.mesure === 'boolean' && Date.now() - Date.parse(v.date) < CK_DUREE) return v; } catch (e) { /* stockage indisponible */ }
+    return null;
+  }
+  function setupCookies() {
+    const bar = $('#cookie-bar'), dlg = $('#cookie-dialog'), sw = $('#ck-mesure');
+    if (!bar || !dlg) return;
+    const root = document.documentElement;
+    const placer = () => root.style.setProperty('--bandeau-h', bar.hidden ? '0px' : bar.offsetHeight + 'px');
+    const montrer = (on) => { bar.hidden = !on; placer(); };
+    const appliquer = (v) => { root.dataset.cookiesMesure = v && v.mesure ? 'oui' : 'non'; };
+    let retour = null;
+    const enregistrer = (mesure, msg) => {
+      const v = { v: 1, mesure: !!mesure, date: new Date().toISOString() };
+      try { localStorage.setItem(CK_KEY, JSON.stringify(v)); } catch (e) { /* le choix vaudra pour cette visite */ }
+      const focusDansBandeau = bar.contains(document.activeElement);
+      appliquer(v); montrer(false);
+      if (dlg.open) dlg.close();
+      else if (focusDansBandeau) $('#main').focus({ preventScroll: true });
+      showToast(msg);
+    };
+    const ouvrir = (btn) => {
+      retour = btn || null;
+      const v = ckLire(); sw.checked = !!(v && v.mesure);
+      if (!dlg.open) dlg.showModal();
+      $('#cookie-dlg-title').focus();
+    };
+    document.addEventListener('click', (e) => {
+      const tout = e.target.closest('[data-cookies-tout]');
+      if (tout) { const oui = tout.dataset.cookiesTout === 'oui'; enregistrer(oui, oui ? 'Cookies acceptés. Vous pouvez changer d’avis en bas de page.' : 'Cookies refusés. Vous pouvez changer d’avis en bas de page.'); return; }
+      const voir = e.target.closest('[data-cookies-voir]');
+      if (voir) { e.preventDefault(); ouvrir(voir); }
+    });
+    $('#cookie-form').addEventListener('submit', (e) => { e.preventDefault(); enregistrer(sw.checked, 'Choix des cookies enregistré.'); });
+    $('#cookie-x').addEventListener('click', () => dlg.close());
+    dlg.querySelector('.cookie-more a').addEventListener('click', () => dlg.close());
+    dlg.addEventListener('close', () => {
+      const vis = (el) => el && document.body.contains(el) && el.getClientRects().length > 0;
+      const cible = [retour, bar.hidden ? null : bar.querySelector('[data-cookies-voir]')].find(vis);
+      if (cible) cible.focus({ preventScroll: true });
+      else if (!dlg.contains(document.activeElement)) { /* le focus est déjà ailleurs */ }
+      else $('#main').focus({ preventScroll: true });
+      retour = null;
+    });
+    window.addEventListener('hashchange', () => { if (dlg.open) dlg.close(); });
+    window.addEventListener('resize', placer);
+    const v = ckLire();
+    appliquer(v);
+    montrer(!v);
+  }
+
   /* ---------- Démarrage ---------- */
   $('#f-date').value = todayISO();
   renderStatic();
@@ -2238,4 +2297,5 @@
   applyMember();
   route();
   heroIntro();
+  setupCookies();
 })();

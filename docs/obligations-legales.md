@@ -215,6 +215,7 @@ Choix du SLBC (6 novembre 2026) : pas de téléphone, un lien de contact à la p
 **Bandeau de consentement** (sous condition) :
 - il n'est nécessaire que si un traceur soumis au consentement est ajouté : mesure d'audience non exemptée, vidéo intégrée, bouton de partage, anti-robot tiers ;
 - dans ce cas, refuser doit être aussi simple qu'accepter.
+- **Ajouté à la maquette le 8 novembre 2026** (demande d'Isabelle Eimer) : « Tout refuser » et « Tout accepter » avec le même bouton, « Voir et choisir » (catégories « Nécessaires au fonctionnement », toujours actifs, et « Mesure d'audience », non cochée), lien « Gérer les cookies » en bas de page et dans la partie « Cookies », choix gardé 6 mois puis redemandé (durée recommandée par la CNIL, recommandation n° 2020-092, non relue ici). Aucun traceur soumis au consentement n'est encore déposé : le bandeau prépare l'arrivée d'un outil de mesure d'audience, qui ne devra se lancer qu'après un accord (`data-cookies-mesure="oui"` sur la page). Si le bureau n'en choisit aucun, ou choisit une mesure exemptée, le bandeau peut être retiré ; il faudrait alors rétablir la phrase « aucun bandeau ne vous demande votre accord » dans la partie « Cookies ».
 
 **Traceurs exemptés** :
 - le cookie de connexion à l'espace adhérent est dispensé de consentement (lignes directrices CNIL n° 2020-091) ;
