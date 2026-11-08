@@ -1433,31 +1433,49 @@
     if (svg._shake) cancelAnimationFrame(svg._shake);
     clearTimeout(svg._shakeWait);
     svg._lastShake = performance.now();
-    const T = 1400; let t0 = 0;
+    /* 8 novembre 2026 : mouvement plus visible sur iPad et téléphone (relecture) : quatre secousses de 10° en 2 s,
+       amorties plus tard ; le salut monte de 6° au plus vers la tête (le trait de mouvement ne touche plus le visage)
+       et s'ouvre jusqu'à 14° vers l'extérieur. Mains toujours jointes (vérifié jusqu'à 12°). */
+    const T = 2000; let t0 = 0;
     const frame = (now) => {
       if (!t0) t0 = now;
       const t = Math.min(1, (now - t0) / T);
-      const damp = 1 - t * t;
-      set(7 * Math.sin(t * Math.PI * 6) * damp, 9 * Math.sin(t * Math.PI * 4) * damp);
+      const damp = 1 - t * t * t;
+      const w = Math.sin(t * Math.PI * 4) * damp;
+      set(10 * Math.sin(t * Math.PI * 8) * damp, w > 0 ? 6 * w : 14 * w);
       svg._shake = t < 1 ? requestAnimationFrame(frame) : null;
     };
     svg._shakeWait = setTimeout(() => { svg._shake = requestAnimationFrame(frame); }, delay || 0);
   }
 
   /* Les deux endroits du duo (espace adhérent, bannière « Rejoindre le SLBC » de l'accueil) : la poignée de main se joue
-     quand le duo arrive à l'écran, et se rejoue s'il en est sorti puis revient. Une poignée de main jouée depuis moins de
-     deux secondes (ouverture de l'espace adhérent, connexion) n'est pas doublée. Rien en animations réduites. */
+     quand le duo est entièrement visible, au-dessus du bandeau des cookies s'il est affiché, et se rejoue s'il est sorti
+     de l'écran puis revient. Une poignée de main jouée depuis moins de deux secondes (ouverture de l'espace adhérent,
+     connexion) n'est pas doublée. Vérifié au défilement, au changement de taille, de page et de hauteur du bandeau.
+     Rien en animations réduites. */
   function setupHandshakes() {
-    if (reduceMotion || !('IntersectionObserver' in window)) return;
-    const io = new IntersectionObserver((entries) => entries.forEach((en) => {
-      const svg = en.target;
-      if (!en.isIntersecting || en.intersectionRatio === 0) { svg._armed = true; return; }
-      if (en.intersectionRatio < 0.6 || svg._armed === false) return;
-      svg._armed = false;
-      if (svg._lastShake && performance.now() - svg._lastShake < 2000) return;
-      shakeHands(svg, 150);
-    }), { threshold: [0, 0.6] });
-    $$('svg.mascotte-accueil, svg.mascotte-adhesion').forEach((svg) => io.observe(svg));
+    if (reduceMotion) return;
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      const bas = window.innerHeight - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bandeau-h')) || 0);
+      $$('svg.mascotte-accueil, svg.mascotte-adhesion').forEach((svg) => {
+        if (!svg.getClientRects().length) { svg._armed = true; return; }
+        const r = svg.getBoundingClientRect();
+        const vu = Math.max(0, Math.min(r.bottom, bas) - Math.max(r.top, 0)) / (r.height || 1);
+        if (vu <= 0) { svg._armed = true; return; }
+        if (vu < 0.95 || svg._armed === false) return;
+        svg._armed = false;
+        if (svg._lastShake && performance.now() - svg._lastShake < 2000) return;
+        shakeHands(svg, 300);
+      });
+    };
+    const ask = () => { if (!raf) raf = requestAnimationFrame(check); };
+    window.addEventListener('scroll', ask, { passive: true });
+    window.addEventListener('resize', ask);
+    window.addEventListener('hashchange', () => setTimeout(ask, 60));
+    new MutationObserver(ask).observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
+    ask();
   }
 
   /* ---------- Ouverture : les deux cellules se rejoignent ---------- */
