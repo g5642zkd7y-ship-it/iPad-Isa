@@ -9,7 +9,8 @@
   --vert-clair:#D6E4A6;  /* surfaces douces */
   --gris:#5E6266;        /* texte secondaire, rond gris du logo */
   --texte:#3F4347;       /* texte courant, nom SLBC */
-  --encre:#2E3236;       /* titres, sections sombres */
+  --encre:#2E3236;
+  --nardo:#74777A; /* gris Nardo éclairci de l’onglet Actualités (8 novembre 2026, choix d’Isabelle Eimer) ; texte blanc à 4,5:1 */       /* titres, sections sombres */
   --fond:#F7F8F4;        /* sections alternées, pied de page */
   --blanc:#FFFFFF;
   /* Neutres dérivés */
@@ -142,15 +143,23 @@ a.more{padding-block:9px;margin-block:-9px}
 .page-hero .mascotte-bienvenue{margin-top:4px;max-width:100%}
 .page-hero + .section-tight{padding-top:clamp(32px,4vw,56px)}
 .page-hero + .section-tight.bg-fond{padding-top:clamp(48px,6vw,72px)}
-.page-hero.bg-encre,.page-hero.bg-vert,.page-hero.bg-vert-clair,.page-hero.bg-neutre{padding-bottom:clamp(48px,6vw,72px)}
+.page-hero.bg-encre,.page-hero.bg-nardo,.page-hero.bg-vert,.page-hero.bg-vert-clair,.page-hero.bg-neutre{padding-bottom:clamp(48px,6vw,72px)}
 /* Bandeaux de couleur des pages (6 novembre 2026) : le contenu qui suit reprend de l'air */
-.page-hero.bg-encre + .section-tight,.page-hero.bg-vert + .section-tight,.page-hero.bg-vert-clair + .section-tight,.page-hero.bg-neutre + .section-tight{padding-top:clamp(40px,5vw,64px)!important}
+.page-hero.bg-encre + .section-tight,.page-hero.bg-nardo + .section-tight,.page-hero.bg-vert + .section-tight,.page-hero.bg-vert-clair + .section-tight,.page-hero.bg-neutre + .section-tight{padding-top:clamp(40px,5vw,64px)!important}
 .page-hero .container{display:flex;flex-direction:column;gap:20px}
 .sig-mark{display:block;width:52px;height:52px;overflow:visible;margin-bottom:2px}
 .sig-login{width:56px;height:56px;margin-bottom:0}
 .bg-fond{background:var(--fond)}
 .bg-encre{background:var(--encre);color:var(--sombre-texte)}
 .bg-encre h1,.bg-encre h2,.bg-encre h3{color:#fff}
+/* Onglet Actualités : gris Nardo éclairci ; sur ce gris, tous les textes sont blancs (4,5:1), y compris dates, rubriques et liens */
+.bg-nardo{background:var(--nardo);color:#fff}
+.bg-nardo h1,.bg-nardo h2,.bg-nardo h3,.bg-nardo .lead,.bg-nardo .more{color:#fff}
+.bg-nardo :focus-visible{outline-color:#fff}
+.bg-nardo .rows{border-top-color:rgba(255,255,255,.32)}
+.bg-nardo .row-link{border-bottom-color:rgba(255,255,255,.32);color:#fff}
+.bg-nardo .row-title,.bg-nardo .row-date,.bg-nardo .row-sub,.bg-nardo .row-cat{color:#fff}
+.bg-nardo .row-link:hover .row-title{color:#fff;text-decoration:underline;text-underline-offset:3px}
 .bg-vert{background:var(--vert);color:#fff}
 .bg-vert h1{color:#fff}
 .bg-vert-clair{background:var(--vert-clair)}
