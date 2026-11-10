@@ -812,11 +812,26 @@
     'doc-deonto': '<path class="mnum-digit" pathLength="1" d="M42 25 L42 56" stroke-width="3.4"/><path class="mnum-digit" pathLength="1" d="M34 57 L50 57" stroke-width="3.4"/><path class="mnum-digit" pathLength="1" d="M25 31 Q42 27 59 31" stroke-width="3.2"/><g class="mnum-fill" stroke-width="2.2"><path d="M25 31 L20 43 M25 31 L30 43 M59 31 L54 43 M59 31 L64 43"/></g><path class="mnum-fill" d="M19 43 Q25 50 31 43 Z" fill="#D6E4A6" stroke-width="2.6"/><path class="mnum-fill" d="M53 43 Q59 50 65 43 Z" fill="#D6E4A6" stroke-width="2.6"/><circle class="mnum-fill" cx="42" cy="25" r="2.6" fill="#FFFFFF" stroke-width="2.4"/>',
     'doc-etudes': '<path class="mnum-digit" pathLength="1" d="M23 57 L61 57" stroke-width="3.4"/><path class="mnum-digit" pathLength="1" d="M27 57 L27 44 L34 44 L34 57" fill="#FFFFFF" stroke-width="3.2"/><path class="mnum-fill" d="M38.5 57 L38.5 35 L45.5 35 L45.5 57" fill="#D6E4A6" stroke-width="3.2"/><path class="mnum-fill" d="M50 57 L50 27 L57 27 L57 57" fill="#5F7A2B" stroke-width="3.2"/>'
   };
-  const docBadge = (id, drawn) => '<svg class="mnum mnum-join mnum-doc' + (drawn ? ' drawn' : '') + '" viewBox="8 0 74 76" aria-hidden="true" focusable="false" fill="none" stroke="#2E3236" stroke-linecap="round" stroke-linejoin="round">' +
+  const pastille = (icon, cls, drawn) => '<svg class="mnum mnum-join ' + cls + (drawn ? ' drawn' : '') + '" viewBox="8 0 74 76" aria-hidden="true" focusable="false" fill="none" stroke="#2E3236" stroke-linecap="round" stroke-linejoin="round">' +
     '<g class="perso"><circle class="mnum-anis" cx="50" cy="47" r="29" fill="#A3BE3C" stroke="none"/>' +
     '<path class="mnum-head" pathLength="1" d="M42 11 C59.5 10.5 71 23.5 71 40 C71 57.5 58.5 69.5 42 69.5 C25 69.5 13 57 13 40 C13 23.5 25.5 11.8 39.5 11.2" fill="#FFFFFF" stroke-width="2.8"/>' +
-    (DOC_ICONS[id] || '') +
+    (icon || '') +
     '<g class="mnum-eclats" stroke-width="2.6"><path d="M67 13 L72.5 7.5"/><path d="M71.5 21.5 L79 19.5"/><path d="M60.5 8 L62 2"/></g></g></svg>';
+  const docBadge = (id, drawn) => pastille(DOC_ICONS[id], 'mnum-doc', drawn);
+
+  /* Actualités : les rubriques en pavés (10 novembre 2026, demande d'Isabelle Eimer : « Fais-en des pavés différents ou autre chose de plus
+     attractif »). Chaque pavé a sa pastille : un journal pour toutes les actualités, la lettre clé B pour la nomenclature, deux biologistes
+     pour le social, la boîte de Petri pour la santé publique, un tube à essai pour l'exercice, le porte-voix pour la vie du syndicat,
+     une ampoule pour les appels à projets. */
+  const CAT_ICONS = {
+    'Toutes': '<path class="mnum-digit" pathLength="1" d="M56 30 L60 30 Q61.5 30 61.5 31.5 L61.5 55 Q61.5 59 57.5 59" stroke-width="3"/><path class="mnum-digit" pathLength="1" d="M24 26 L56 26 L56 55 Q56 59 52 59 L28 59 Q24 59 24 55 Z" fill="#FFFFFF" stroke-width="3.4"/><path class="mnum-digit" pathLength="1" d="M29 33 L51 33" stroke-width="3.6"/><g class="mnum-fill" stroke-width="2.4"><path d="M29 40.5 L38 40.5"/><path d="M29 46.5 L38 46.5"/><path d="M29 52.5 L37 52.5"/></g><rect class="mnum-fill" x="42" y="38.5" width="9" height="15" rx="1.5" fill="#D6E4A6" stroke-width="2.4"/>',
+    'Nomenclature': DOC_ICONS['doc-nabm'],
+    'Social': JOIN_ICONS[1],
+    'Santé publique': DOC_ICONS['doc-surveillance'],
+    'Exercice': '<g transform="rotate(22 42 41)"><path class="mnum-fill" d="M37.6 40 Q42 42.5 46.4 40 L46.4 51.5 Q46.4 57.6 42 57.6 Q37.6 57.6 37.6 51.5 Z" fill="#A3BE3C" stroke="none"/><path class="mnum-digit" pathLength="1" d="M36 23 L36 51.5 Q36 59.5 42 59.5 Q48 59.5 48 51.5 L48 23" stroke-width="3.4"/><path class="mnum-digit" pathLength="1" d="M32.5 22.5 L51.5 22.5" stroke-width="3.6"/><g class="mnum-fill" stroke-width="2"><path d="M37.6 40 Q42 42.5 46.4 40"/><circle cx="40.5" cy="49" r="1.6" fill="#FFFFFF"/><circle cx="44" cy="53.5" r="1.2" fill="#FFFFFF"/></g></g>',
+    'Vie du syndicat': JOIN_ICONS[2],
+    'Appels à projets': '<path class="mnum-digit" pathLength="1" d="M42 19.5 C32.5 19.5 26.5 26.5 26.5 34 C26.5 40.5 30.5 43.5 34 47.5 L34 51 L50 51 L50 47.5 C53.5 43.5 57.5 40.5 57.5 34 C57.5 26.5 51.5 19.5 42 19.5 Z" fill="#FFFFFF" stroke-width="3.4"/><path class="mnum-fill" d="M38.5 50 L38.5 42.5 Q38.5 38.5 42 38.5 Q45.5 38.5 45.5 42.5 L45.5 50" stroke-width="2.2"/><path class="mnum-fill" d="M32 32 Q33 26.5 38.5 25" stroke="#A3BE3C" stroke-width="2.6"/><g class="mnum-fill" stroke-width="3"><path d="M35.5 55.5 L48.5 55.5"/><path d="M38 60 L46 60"/></g>'
+  };
 
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
@@ -920,8 +935,20 @@
     seg($('#home-actu-seg'), cats(), state.homeCat, (c) => { state.homeCat = c; renderHomeActus(); });
     $('#home-actus').innerHTML = DATA.actus.slice().sort(byDate).filter((a) => state.homeCat === 'Toutes' || a.cat === state.homeCat).slice(0, 5).map(arow).join('');
   }
+  function catPaves(el, current, onPick) {
+    const opts = cats();
+    const n = (c) => DATA.actus.filter((a) => c === 'Toutes' || a.cat === c).length;
+    el.innerHTML = opts.map((c) => '<button type="button" class="cat-pave" aria-pressed="' + (c === current) + '">' + pastille(CAT_ICONS[c], 'mnum-cat', catPaves.vu) +
+      '<span class="cat-txt"><span class="cat-nom">' + esc(c) + '</span><span class="cat-n">' + esc(plural(n(c), 'article')) + '</span></span></button>').join('');
+    catPaves.vu = true;
+    $$('button', el).forEach((b, i) => b.addEventListener('click', () => {
+      onPick(opts[i]);
+      const pressed = el.querySelector('[aria-pressed="true"]');
+      if (pressed) pressed.focus({ preventScroll: true });
+    }));
+  }
   function renderActus() {
-    seg($('#actu-seg'), cats(), state.actuCat, (c) => { state.actuCat = c; renderActus(); });
+    catPaves($('#actu-seg'), state.actuCat, (c) => { state.actuCat = c; renderActus(); });
     $('#actu-list').innerHTML = DATA.actus.slice().sort(byDate).filter((a) => state.actuCat === 'Toutes' || a.cat === state.actuCat).map(anews).join('');
   }
   function renderVeille() {

@@ -1214,3 +1214,25 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
 .dp-fleche .grosse-fleche{width:100%}
 @media (prefers-reduced-motion:reduce){.grosse-fleche{transition:none}.doc-entree:hover .grosse-fleche{transform:none}}
 @media (max-width:640px){.doc-entrees{grid-template-columns:minmax(0,1fr)}.de-desc{font-size:15px}}
+/* Actualités : les rubriques en pavés (10 novembre 2026, demande d'Isabelle Eimer : « Fais-en des pavés différents ou autre chose de plus
+   attractif »). Un pavé par rubrique, avec sa pastille dessinée, son nom et son nombre d'articles ; la rubrique choisie passe en gris Nardo
+   éclairci, la couleur de l'onglet Actualités. Mosaïque de quatre colonnes, « Toutes » sur deux ; sur tablette en vertical, trois colonnes,
+   et sur téléphone, deux, « Toutes » sur toute la largeur. */
+.cat-paves{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.cat-pave{display:flex;align-items:center;gap:14px;min-width:0;min-height:44px;padding:12px 18px 12px 14px;border:1px solid var(--filet);border-radius:14px;background:var(--fond);color:var(--encre);font:inherit;text-align:left;cursor:pointer;transition:background-color .2s,border-color .2s}
+.cat-pave:first-child{grid-column:span 2}
+.cat-pave .mnum-cat{flex:none;width:62px;height:auto;margin:-4px 0 -4px -2px}
+.cat-txt{display:flex;flex-direction:column;gap:3px;min-width:0}
+.cat-nom{font-size:18px;line-height:1.2;font-weight:800;letter-spacing:-.01em;overflow-wrap:break-word}
+.cat-n{font-size:15px;line-height:1.3;font-weight:500;color:var(--gris)}
+@media (hover:hover){.cat-pave:hover{background:#fff;border-color:var(--vert)}.cat-pave:hover .cat-nom{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}}
+.cat-pave[aria-pressed="true"]{background:var(--nardo);border-color:var(--nardo);color:#fff}
+.cat-pave[aria-pressed="true"] .cat-n{color:#fff}
+.cat-pave[aria-pressed="true"] .mnum-eclats{stroke:#fff}
+.cat-pave:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
+@media (max-width:1099px){.cat-pave{gap:12px;padding:10px 14px 10px 12px}.cat-pave .mnum-cat{width:52px}.cat-nom{font-size:17px}}
+@media (max-width:959px){.cat-paves{grid-template-columns:repeat(3,minmax(0,1fr))}.cat-pave:first-child{grid-column:1/-1}}
+@media (max-width:699px){.cat-paves{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.cat-paves{gap:10px}.cat-pave{gap:10px;padding:10px 12px}.cat-pave .mnum-cat{width:44px}.cat-nom{font-size:16px}.cat-n{font-size:14px}}
+@media (max-width:400px){.cat-pave{gap:7px;padding:9px 6px 9px 6px}.cat-pave .mnum-cat{width:37px;margin:-3px 0 -3px 0}.cat-nom{font-size:15px;letter-spacing:-.015em}}
+@media (max-width:340px){.cat-pave:not(:first-child){flex-direction:column;align-items:flex-start;gap:4px;padding:9px 10px}}
