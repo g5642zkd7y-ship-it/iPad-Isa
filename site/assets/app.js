@@ -168,7 +168,6 @@
     'documents/textes/31-arrete-du-5-avril-2020-completant-larrete-du-23-mars-2020-pr.pdf': ['Arrêté du 5 avril 2020 complétant l’arrêté du 23 mars 2020 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire.', 2, 595, 842],
     'documents/textes/32-decret-n-2020-293-prescrivant-les-mesures-generales-necessai.pdf': ['Décret n° 2020-293 prescrivant les mesures générales nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', 6, 595, 842],
     'documents/textes/33-arrete-du-16-mars-2020-completant-larrete-du-14-mars-2020-po.pdf': ['Arrêté du 16 mars 2020 complétant l’arrêté du 14 mars 2020 portant diverses mesures relatives à la lutte contre la propagation du virus covid-19', 2, 595, 842],
-    'documents/textes/38-dgos-et-cnam-references-juridiques-en-biologie-medicale-mise.pdf': ['Références juridiques en biologie médicale, DGOS et CNAM, mise à jour de novembre 2018', 222, 595, 842],
     'documents/actualites/2026-09-07-strategie-sante-sexuelle-texte-integral.pdf': ['Stratégie nationale de santé sexuelle 2026-2030 : le texte intégral du ministère', 2, 595, 842],
     'documents/actualites/feuille-de-route-sante-sexuelle-2026-2030.pdf': ['Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle (ministère de la Santé)', 72, 595, 839],
     'documents/actualites/2026-09-07-feuille-de-route-sante-sexuelle.pdf': ['Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle', 1, 595, 842],
@@ -528,10 +527,9 @@
       { t: 'Arrêté du 5 avril 2020 complétant l’arrêté du 23 mars 2020 prescrivant les mesures d’organisation et de fonctionnement du système de santé nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire.', y: '2020', url: 'documents/textes/31-arrete-du-5-avril-2020-completant-larrete-du-23-mars-2020-pr.pdf' },
       { t: 'Décret n° 2020-293 prescrivant les mesures générales nécessaires pour faire face à l’épidémie de covid-19 dans le cadre de l’état d’urgence sanitaire', y: '2020', url: 'documents/textes/32-decret-n-2020-293-prescrivant-les-mesures-generales-necessai.pdf' },
       { t: 'Arrêté du 16 mars 2020 complétant l’arrêté du 14 mars 2020 portant diverses mesures relatives à la lutte contre la propagation du virus covid-19', y: '2020', url: 'documents/textes/33-arrete-du-16-mars-2020-completant-larrete-du-14-mars-2020-po.pdf' }
-    ] },
-    { theme: 'Guide de référence', items: [
-      { t: 'Références juridiques en biologie médicale, DGOS et CNAM, mise à jour de novembre 2018', y: '2018', url: 'documents/textes/38-dgos-et-cnam-references-juridiques-en-biologie-medicale-mise.pdf' }
     ] }
+    /* « Guide de référence » (Références juridiques – Biologie médicale, Assurance maladie, édition 2018) retiré le 10 novembre 2026 à la demande
+       d'Isabelle Eimer : la dernière édition publiée tient compte des textes parus jusqu'au 30 novembre 2019 (point 34). */
   ];
   const PARTNERS = [
     { n: 'Cofrac', d: 'Comité français d’accréditation', url: 'https://www.cofrac.fr' },
