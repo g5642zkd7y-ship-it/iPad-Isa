@@ -46,7 +46,7 @@ a{color:var(--vert)}
 h1,h2,h3,h4{margin:0;color:var(--encre);text-wrap:balance}
 p,ul,ol,dl,figure{margin:0}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--nav-h) + 16px)}
-/* Pages avec un sous-menu collant (Le syndicat, Documentation, Informations légales) : les ancres et le focus clavier
+/* Pages avec un sous-menu collant (Le syndicat, Informations légales) : les ancres et le focus clavier
    s'arrêtent sous l'en-tête et sous le sous-menu. --lnav-h : hauteur du sous-menu. */
 :root{--lnav-h:59px}
 html:has(.view:not([hidden]) > .lnav){scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--nav-h) + var(--lnav-h) + 16px)}
