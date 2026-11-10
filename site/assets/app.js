@@ -394,11 +394,6 @@
       /* Planche « Liens pour la Documentation », n° 6 (choix d'Isabelle Eimer du 10 novembre 2026). Couverture du PDF : « Situation au
          1er janvier 2026 », « Approche territoriale des spécialités médicales et chirurgicales » ; biologie médicale pages 29 à 33. */
       { d: '2026', t: 'Approche territoriale des spécialités médicales et chirurgicales : situation au 1er janvier 2026', s: 'Ordre des médecins, démographie des médecins, dont les médecins biologistes (biologie médicale : pages 29 à 33 d’un PDF de 268 pages)', url: 'https://www.conseil-national.medecin.fr/sites/default/files/CNOM-ATLAS-DEMOGRAPHIE-2026-TOME-2.pdf', src: 'conseil-national.medecin.fr' }
-    ] },
-    /* Planche « Liens pour la Documentation », n° 1 et 2 (choix d'Isabelle Eimer du 10 novembre 2026) ; pages lues le même jour. */
-    { g: 'Santé publique France', items: [
-      { d: 'Novembre 2026', t: 'VIH en France : bilan 2025', s: 'Bulletin national sur le dépistage du VIH et les découvertes de séropositivité', url: 'https://www.santepubliquefrance.fr/infections-sexuellement-transmissibles/vihsida/bulletin-national/vih-en-france-bilan-2025', src: 'santepubliquefrance.fr' },
-      { d: 'Avril 2026', t: 'Surveillance de la résistance bactérienne aux antibiotiques en soins de ville et en établissements d’hébergement pour personnes âgées dépendantes : mission PRIMO, résultats 2024', s: 'Rapport national établi à partir des antibiogrammes des laboratoires de biologie médicale', url: 'https://www.santepubliquefrance.fr/resistance-aux-antibiotiques/rapportsynthese/surveillance-de-la-resistance-bacterienne-aux-8', src: 'santepubliquefrance.fr' }
     ] }
   ];
   /* Nomenclature : liens repris de l'ancienne page CHAB de slbc.fr (Légifrance, Journal officiel hébergé par la FHF).
@@ -407,14 +402,37 @@
     /* Planche « Liens pour la Documentation », n° 8, 9 et 10 (choix d'Isabelle Eimer du 10 novembre 2026). Légifrance bloque les lectures
        automatiques : titres et dates des décisions vérifiés par recherche sur le site officiel. Site de codage de l'Assurance maladie injoignable
        depuis la session : titre vérifié par recherche, version et date de la table non relevées. Liste des décisions non exhaustive (point 31). */
-    { t: 'Table nationale de biologie (TNB)', s: 'La NABM à jour, à télécharger sur le site de codage de l’Assurance maladie', href: 'http://www.codage.ext.cnamts.fr/codif/nabm/telecharge/index_tele.php?p_site=AMELI', src: 'Assurance maladie' },
-    { t: 'Décision de l’UNCAM du 3 mars 2026', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053749152', src: 'Légifrance' },
-    { t: 'Décision de l’UNCAM du 14 novembre 2025', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053029952', src: 'Légifrance' },
-    { t: 'Arrêté du 25 janvier 2024', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049040708', src: 'Légifrance' },
-    { t: 'Arrêté du 5 janvier 2024', s: 'Journal officiel du 10 janvier 2024', href: 'https://www.fhf.fr/sites/default/files/2024-01/joe_20240110_0007_0010.pdf', src: 'fhf.fr' },
-    { t: 'Décision de l’UNCAM du 7 mars 2023', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047388021', src: 'Légifrance' },
-    { t: 'Arrêté du 26 janvier 2023', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047074801', src: 'Légifrance' },
+    { y: 'En ligne', t: 'Table nationale de biologie (TNB)', s: 'La NABM à jour, à télécharger sur le site de codage de l’Assurance maladie', href: 'http://www.codage.ext.cnamts.fr/codif/nabm/telecharge/index_tele.php?p_site=AMELI', src: 'Assurance maladie' },
+    { y: '2026', t: 'Décision de l’UNCAM du 3 mars 2026', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053749152', src: 'Légifrance' },
+    { y: '2025', t: 'Décision de l’UNCAM du 14 novembre 2025', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053029952', src: 'Légifrance' },
+    { y: '2024', t: 'Arrêté du 25 janvier 2024', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049040708', src: 'Légifrance' },
+    { y: '2024', t: 'Arrêté du 5 janvier 2024', s: 'Journal officiel du 10 janvier 2024', href: 'https://www.fhf.fr/sites/default/files/2024-01/joe_20240110_0007_0010.pdf', src: 'fhf.fr' },
+    { y: '2023', t: 'Décision de l’UNCAM du 7 mars 2023', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047388021', src: 'Légifrance' },
+    { y: '2023', t: 'Arrêté du 26 janvier 2023', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047074801', src: 'Légifrance' },
     { t: 'Aides à la prescription', s: 'Thyroïde, vitamine D, groupe sanguin (RAI)' }
+  ];
+  /* Documentation, partie « Au laboratoire » (10 novembre 2026, demande d'Isabelle Eimer : séparer la pratique de ce qui encadre la profession).
+     Trois rubriques, dans cet ordre ; les éléments viennent de la planche des liens choisis (points 31 et 37 de docs/sources-et-verifications.md). */
+  const DOC_PRATIQUE = [
+    { id: 'doc-surveillance', g: 'Surveillance et santé publique', items: [
+      { y: 'Avril 2026', t: 'Surveillance de la résistance bactérienne aux antibiotiques en soins de ville et en établissements d’hébergement pour personnes âgées dépendantes : mission PRIMO, résultats 2024', s: 'Rapport national établi à partir des antibiogrammes des laboratoires de biologie médicale', href: 'https://www.santepubliquefrance.fr/resistance-aux-antibiotiques/rapportsynthese/surveillance-de-la-resistance-bacterienne-aux-8', src: 'santepubliquefrance.fr' },
+      { y: 'Novembre 2026', t: 'VIH en France : bilan 2025', s: 'Bulletin national sur le dépistage du VIH et les découvertes de séropositivité', href: 'https://www.santepubliquefrance.fr/infections-sexuellement-transmissibles/vihsida/bulletin-national/vih-en-france-bilan-2025', src: 'santepubliquefrance.fr' },
+      { t: 'Centres nationaux de référence pour la lutte contre les maladies transmissibles (CNR)', s: 'Missions, liste et annuaire des centres, mandature 2023-2027', y: '2026', href: 'https://www.santepubliquefrance.fr/centres-nationaux-de-reference-pour-la-lutte-contre-les-maladies-transmissibles-cnr', src: 'santepubliquefrance.fr' },
+      { t: 'Liste des maladies à signalement obligatoire', s: 'Santé publique France, fiches de signalement et modalités de transmission', y: '2026', href: 'https://www.santepubliquefrance.fr/liste-des-maladies-a-signalement-obligatoire', src: 'santepubliquefrance.fr' },
+      { t: 'e-DO : déclaration obligatoire en ligne de l’infection par le VIH, du sida et de la tuberculose', s: 'Santé publique France, critères, accès et tutoriels, dont la déclaration du biologiste', y: '2026', href: 'https://www.santepubliquefrance.fr/services/e-do-declaration-obligatoire-en-ligne-de-linfection-par-le-vih-et-du-sida-et-de-la-tuberculose', src: 'santepubliquefrance.fr' }
+    ] },
+    { id: 'doc-nabm', g: 'Nomenclature et facturation', items: [NABM[0], { t: 'Ameli, espace « Laboratoire d’analyses médicales »', s: 'Assurance maladie, rubriques exercice libéral, facturation, dossier médical partagé et actualités', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales', src: 'ameli.fr' }].concat(NABM.slice(1)) },
+    { id: 'doc-fiches', g: 'Fiches pratiques', items: [
+      { t: 'Dépistage des IST en laboratoire sans ordonnance : Mon test IST', s: 'Fiche de l’Assurance maladie pour les laboratoires', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales/exercice-liberal/prise-charge-patients/depistage-ist/mon-test-ist-depistage-en-laboratoire-sans-ordonnance', src: 'ameli.fr' },
+      { t: 'La protection des données personnelles en laboratoire de biologie médicale', s: 'Ordre des pharmaciens, fiche pratique pour les laboratoires', y: 'En ligne', href: 'https://www.ordre.pharmacien.fr/je-suis/pharmacien/je-suis-pharmacien-biologiste-medical/mon-exercice-professionnel/la-protection-des-donnees-personnelles-en-laboratoire-de-biologie-medicale', src: 'ordre.pharmacien.fr' }
+    ] }
+  ];
+  /* Déontologie : codes des pharmaciens et des médecins, commentaire de l'Ordre des pharmaciens, dispositif anti-cadeaux (points 29 et 31). */
+  const DEONTO = [
+    { t: 'Code de déontologie des pharmaciens', s: 'Ordre des pharmaciens, en vigueur depuis le 6 mars 2026', y: '2026', href: 'https://www.ordre.pharmacien.fr/les-communications/focus-sur/les-autres-publications/code-de-deontologie-des-pharmaciens2', src: 'ordre.pharmacien.fr' },
+    { t: 'Code de déontologie médicale, édition de juillet 2026', s: 'Ordre des médecins, articles R.4127-1 à R.4127-112 du code de la santé publique', y: '2026', href: 'https://www.conseil-national.medecin.fr/sites/default/files/CNOM-Code-de-deontologie.pdf', src: 'conseil-national.medecin.fr' },
+    { t: 'Le code de déontologie des pharmaciens commenté', s: 'Ordre des pharmaciens, commentaire article par article', y: '2026', href: 'https://www.ordre.pharmacien.fr/l-ordre/la-deontologie/le-code-de-deontologie-commente', src: 'ordre.pharmacien.fr' },
+    { t: 'Le dispositif anti-cadeaux : conventions et liens avec des entreprises', s: 'Ordre des pharmaciens, fiche pour les pharmaciens biologistes, mise à jour en septembre 2025, avant le nouveau code de déontologie', y: '2025', href: 'https://www.ordre.pharmacien.fr/je-suis/pharmacien/je-suis-pharmacien-biologiste-medical/mon-exercice-professionnel/le-dispositif-anti-cadeaux', src: 'ordre.pharmacien.fr' }
   ];
   /* Textes réglementaires : documents de l’ancienne page « Documentation professionnelle » de slbc.fr, recopiés dans documents/textes/
      (6 novembre 2026, demande d’Isabelle Eimer). url : PDF lu dans la liseuse ; href : texte sur Légifrance (fichier absent ou erroné sur
@@ -426,7 +444,6 @@
       { t: 'Code de la santé publique, livre II : biologie médicale (partie réglementaire, articles D6211-1 à R6241-4)', y: 'En vigueur', href: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000006145494/', src: 'Légifrance' },
       { t: 'Arrêté du 4 février 2026 modifiant les conditions de réalisation de prélèvements et d’analyses d’examens de biologie médicale en dehors d’un laboratoire de biologie médicale', y: '2026', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053447507', src: 'Légifrance' },
       { t: 'Décret n° 2025-316 du 4 avril 2025 relatif aux prélèvements effectués par les techniciens de laboratoire médical', y: '2025', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000051430002', src: 'Légifrance' },
-      { t: 'Centres nationaux de référence pour la lutte contre les maladies transmissibles (CNR)', s: 'Missions, liste et annuaire des centres, mandature 2023-2027', y: '2026', href: 'https://www.santepubliquefrance.fr/centres-nationaux-de-reference-pour-la-lutte-contre-les-maladies-transmissibles-cnr', src: 'santepubliquefrance.fr' },
       { t: 'Loi n° 2013-442 portant réforme de la biologie médicale, ratifiant l’ordonnance de 2010', y: '2013', url: 'documents/textes/42-loi-2013-442-portant-reforme-de-la-biologie-medicale-ratifia.pdf' },
       { t: 'Loi n° 2016-41 modernisation de notre système de santé', y: '2016', url: 'documents/textes/41-loi-2016-41-modernisation-de-notre-systeme-de-sante.pdf' },
       { t: 'Décret n° 2016-46 relatif à la biologie médicale', y: '2016', url: 'documents/textes/54-decret-2016-46-relatif-a-la-biologie-medicale.pdf' },
@@ -444,15 +461,6 @@
       { t: 'Décret n° 2011-1268 fixant les règles d’activité d’un LABM et le % max. d’échantillons biologiques pouvant être transmis entre LABM', y: '2011', url: 'documents/textes/62-decret-2011-1268-fixant-les-regles-dactivite-dun-labm-et-le.pdf' },
       { t: 'Arrêté du 30 décembre 2014 relatif à l’attestation de formation aux gestes et soins d’urgence', y: '2014', url: 'documents/textes/66-arrete-du-30-decembre-2014-relatif-a-lattestation-de-formati.pdf' }
     ] },
-    /* Lien envoyé par Isabelle Eimer le 10 novembre 2026. Page de l'Ordre des pharmaciens lue le même jour :
-       « Publié le 05/03/2026 », « entré en vigueur le 6 mars 2026 ». Point 29 de docs/sources-et-verifications.md. */
-    { theme: 'Déontologie', items: [
-      { t: 'Code de déontologie des pharmaciens', s: 'Ordre des pharmaciens, en vigueur depuis le 6 mars 2026', y: '2026', href: 'https://www.ordre.pharmacien.fr/les-communications/focus-sur/les-autres-publications/code-de-deontologie-des-pharmaciens2', src: 'ordre.pharmacien.fr' },
-      /* Planche « Liens pour la Documentation », n° 29, 30 et 31 (choix d'Isabelle Eimer du 10 novembre 2026) ; pages lues le même jour. */
-      { t: 'Code de déontologie médicale, édition de juillet 2026', s: 'Ordre des médecins, articles R.4127-1 à R.4127-112 du code de la santé publique', y: '2026', href: 'https://www.conseil-national.medecin.fr/sites/default/files/CNOM-Code-de-deontologie.pdf', src: 'conseil-national.medecin.fr' },
-      { t: 'Le code de déontologie des pharmaciens commenté', s: 'Ordre des pharmaciens, commentaire article par article', y: '2026', href: 'https://www.ordre.pharmacien.fr/l-ordre/la-deontologie/le-code-de-deontologie-commente', src: 'ordre.pharmacien.fr' },
-      { t: 'Le dispositif anti-cadeaux : conventions et liens avec des entreprises', s: 'Ordre des pharmaciens, fiche pour les pharmaciens biologistes, mise à jour en septembre 2025, avant le nouveau code de déontologie', y: '2025', href: 'https://www.ordre.pharmacien.fr/je-suis/pharmacien/je-suis-pharmacien-biologiste-medical/mon-exercice-professionnel/le-dispositif-anti-cadeaux', src: 'ordre.pharmacien.fr' }
-    ] },
     /* Planche « Liens pour la Documentation », n° 32 (choix d'Isabelle Eimer du 10 novembre 2026). */
     { theme: 'Certification périodique', items: [
       { t: 'Code de la santé publique : développement professionnel continu et certification périodique des professionnels de santé (articles R4021-1 à R4022-28)', y: 'En vigueur', href: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000025102395/', src: 'Légifrance' },
@@ -469,8 +477,6 @@
       { t: 'Arrêté du 17 octobre 2012 définissant les conditions justificatives de l’entrée effective d’un laboratoire de biologie médicale dans une démarche d’accréditation', y: '2012', url: 'documents/textes/68-arrete-du-17-octobre-2012-definissant-les-conditions-justifi.pdf' }
     ] },
     { theme: 'Nomenclature et prise en charge', items: [
-      /* Lien envoyé par Isabelle Eimer le 10 novembre 2026 ; ameli bloque les lectures automatiques : rubriques vues dans les résultats de recherche. */
-      { t: 'Ameli, espace « Laboratoire d’analyses médicales »', s: 'Assurance maladie, rubriques exercice libéral, facturation, dossier médical partagé et actualités', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales', src: 'ameli.fr' },
       /* Planche « Liens pour la Documentation », n° 20. */
       { t: 'Convention nationale et avenants', s: 'Assurance maladie, convention nationale des directeurs de laboratoires et ses avenants', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales/textes-reference/convention-nationale-avenants', src: 'ameli.fr' },
       { t: 'Baisses de la NABM au 6 avril 2018 (décision de l’UNCAM du 12 mars 2018)', y: '2018', url: 'documents/textes/40-nabm-baisses-au-6-avril-2018.pdf' },
@@ -480,7 +486,6 @@
     ] },
     { theme: 'Examens et dépistage', items: [
       /* Planche « Liens pour la Documentation », n° 21 et 22. */
-      { t: 'Dépistage des IST en laboratoire sans ordonnance : Mon test IST', s: 'Fiche de l’Assurance maladie pour les laboratoires', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales/exercice-liberal/prise-charge-patients/depistage-ist/mon-test-ist-depistage-en-laboratoire-sans-ordonnance', src: 'ameli.fr' },
       { t: 'Arrêté du 8 juillet 2024 fixant la liste des infections sexuellement transmissibles dépistées à la demande du patient en laboratoire de biologie médicale et les modalités de ces dépistages', y: '2024', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049908622', src: 'Légifrance' },
       { t: 'Arrêté du 15 mai 2018 fixant les conditions de réalisation des examens de biologie médicale d’immuno-hématologie érythrocytaire', y: '2018', url: 'documents/textes/43-arrete-du-15-mai-2018-fixant-les-conditions-de-realisation-d.pdf' },
       { t: 'Décret n° 2017-808 relatif à l’introduction dans la liste des examens de diagnostic prénatal des examens de génétique portant sur l’ADN foetal libre circulant dans le sang maternel', y: '2017', url: 'documents/textes/47-decret-no-2017-808-relatif-a-lintroduction-dans-la-liste-des.pdf' },
@@ -490,11 +495,6 @@
       { t: 'Arrêté du 26 juin 2019 : dépistage de l’hépatite C en officine', y: '2019', url: 'documents/textes/37-arrete-du-26-juin-2019-depistage-hepatite-c-en-officine.pdf' },
       { t: 'Arrêté du 30 janvier 2020 fixant les tests de diagnostic rapide pouvant être réalisés par les pharmaciens', y: '2020', url: 'documents/textes/34-arrete-du-30-janvier-2020-fixant-les-tests-de-diagnostic-rap.pdf' },
       { t: 'Arrêté du 11 juin 2013 déterminant la liste des tests, recueils et traitements de signaux biologiques qui ne constituent pas un examen de biologie médicale, les catégories de personnes pouvant les réaliser et les conditions de réalisation de certains de ces tests, recueils et traitements de signaux biologiques', y: '2013', url: 'documents/textes/67-arrete-du-11-juin-2013-determinant-la-liste-des-tests-recuei.pdf' }
-    ] },
-    /* Planche « Liens pour la Documentation », n° 25 et 27 (choix d'Isabelle Eimer du 10 novembre 2026) ; pages lues le même jour. */
-    { theme: 'Signalements et vigilances', items: [
-      { t: 'Liste des maladies à signalement obligatoire', s: 'Santé publique France, fiches de signalement et modalités de transmission', y: '2026', href: 'https://www.santepubliquefrance.fr/liste-des-maladies-a-signalement-obligatoire', src: 'santepubliquefrance.fr' },
-      { t: 'e-DO : déclaration obligatoire en ligne de l’infection par le VIH, du sida et de la tuberculose', s: 'Santé publique France, critères, accès et tutoriels, dont la déclaration du biologiste', y: '2026', href: 'https://www.santepubliquefrance.fr/services/e-do-declaration-obligatoire-en-ligne-de-linfection-par-le-vih-et-du-sida-et-de-la-tuberculose', src: 'santepubliquefrance.fr' }
     ] },
     /* 10 novembre 2026, demande d'Isabelle Eimer : lois pour 2021 et pour 2022 retirées, loi pour 2026 ajoutée. Légifrance bloque les lectures
        automatiques : numéro, date, adresse et Journal officiel (n° 306 du 31 décembre 2025) vérifiés par recherche sur Légifrance, le Sénat et
@@ -509,9 +509,8 @@
       { t: 'Code de la santé publique : zones du schéma régional de santé, dont les zones des laboratoires de biologie médicale (articles R1434-30 à R1434-32)', y: 'En vigueur', href: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000032944018/', src: 'Légifrance' },
       { t: 'Code de la santé publique : représentation des professions de santé libérales, unions régionales des professionnels de santé (articles R4031-1 à R4031-53)', y: 'En vigueur', href: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000022294364/', src: 'Légifrance' },
       { t: 'Loi n° 78-17 du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés', s: 'Loi Informatique et Libertés, version à jour', y: 'En vigueur', href: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000886460', src: 'Légifrance' },
-      { t: 'La protection des données personnelles en laboratoire de biologie médicale', s: 'Ordre des pharmaciens, fiche pratique pour les laboratoires', y: 'En ligne', href: 'https://www.ordre.pharmacien.fr/je-suis/pharmacien/je-suis-pharmacien-biologiste-medical/mon-exercice-professionnel/la-protection-des-donnees-personnelles-en-laboratoire-de-biologie-medicale', src: 'ordre.pharmacien.fr' },
       { t: 'Règlement (UE) 2016/679 du 27 avril 2016, règlement général sur la protection des données (RGPD)', s: 'Applicable depuis le 25 mai 2018', y: '2016', href: 'https://eur-lex.europa.eu/eli/reg/2016/679/oj?locale=fr', src: 'EUR-Lex' },
-      { t: 'Décret n° 2016-1024 du 26 juillet 2016 relatif aux territoires de démocratie sanitaire, aux zones des schémas régionaux de santé et aux conseils territoriaux de santé', y: '2016', url: 'documents/textes/50-decret-no-2016-1024-relatif-aux-territoires-de-democratie-sa.pdf' },
+      { t: 'Décret n° 2016-1024 du 26 juillet 2016 relatif aux territoires de démocratie sanitaire, aux zones des schémas régionaux de santé et aux conseils territoriaux de santé', y: '2016', url: 'documents/textes/50-decret-no-2016-1024-relatif-aux-territoires-de-democratie-sa.pdf' }
     ] },
     /* Textes de 2023 à 2026 ajoutés le 10 novembre 2026 (demande d'Isabelle Eimer) : PDF signés publiés sur le site de la convention collective
        (convention-labo.com), lus page par page ; accords de 2023 et 2024 étendus (Légifrance). Point 35 de docs/sources-et-verifications.md. */
@@ -817,40 +816,63 @@
   const docRow = (d, date, cat) => {
     const inner = '<span class="row-date">' + esc(date) + '</span><span class="row-title">' + esc(d.t) + (d.s ? '<span class="row-sub">' + esc(d.s) + '</span>' : '') + '</span>';
     if (d.url && DOCS[d.url]) return '<li><a class="row-link" href="' + esc(d.url) + '" data-doc="' + esc(d.url) + '">' + inner + '<span class="row-cat">' + esc(cat || nPages(d.url)) + '</span></a></li>';
-    if (d.href) return '<li><a class="row-link" href="' + esc(d.href) + '" target="_blank" rel="noopener">' + inner + '<span class="row-cat">' + esc(d.src || 'Légifrance') + '</span></a></li>';
+    /* Lien vers un site officiel : la source, puis la petite flèche au marqueur, tournée vers le haut (nouvel onglet) */
+    if (d.href) return '<li><a class="row-link" href="' + esc(d.href) + '" target="_blank" rel="noopener">' + inner + '<span class="row-cat row-ext">' + esc(d.src || 'Légifrance') + FLECHE +
+      '<span class="sr-only"> (nouvel onglet)</span></span></a></li>';
     return '<li><div class="row-link is-missing">' + inner + '<span class="row-cat">Document à fournir</span></div></li>';
   };
+  /* Documentation en deux parties (10 novembre 2026) : « Au laboratoire » (DOC_PRATIQUE) et « Le cadre de la profession » (textes,
+     déontologie, rapports). Le bandeau de chaque partie sert de sommaire : rubriques et nombre de documents, recalculés à chaque filtre. */
+  const plural = (n, mot) => n + ' ' + mot + (n > 1 ? 's' : '');
   function renderDocs(q) {
     const terms = norm(q).split(/\s+/).filter(Boolean);
     const ok = (s) => !terms.length || terms.every((t) => norm(s).includes(t));
+    const rubs = { labo: [], cadre: [] };
+    /* Au laboratoire */
+    DOC_PRATIQUE.forEach((grp) => {
+      const items = grp.items.filter((d) => ok(d.t + ' ' + (d.s || '') + ' ' + grp.g + ' ' + (d.src || '') + ' ' + (d.y || '') + (grp.id === 'doc-nabm' ? ' nabm nomenclature' : '')));
+      $('#' + grp.id + '-list').innerHTML = items.map((d) => docRow(d, d.y || '')).join('');
+      $('#' + grp.id).hidden = !items.length;
+      if (items.length) rubs.labo.push([grp.id, grp.g, plural(items.length, 'document')]);
+    });
+    /* Textes législatifs et réglementaires : un groupe dépliable par thème ; une recherche ouvre les groupes qui ont des résultats. */
+    let html = '';
+    let count = 0;
+    TEXTES.forEach((g, gi) => {
+      const items = g.items.filter((d) => ok(d.t + ' ' + (d.s || '') + ' ' + g.theme + ' ' + d.y)).sort((a, b) => b.y.localeCompare(a.y));
+      if (!items.length) return;
+      count += items.length;
+      html += '<details class="region doc-group" id="doc-t' + gi + '"' + (terms.length ? ' open' : '') + '><summary><span>' + esc(g.theme) + '</span><span class="count">' + plural(items.length, 'texte') + '</span></summary><ul class="rows">' +
+        items.map((d) => docRow(d, d.y)).join('') + '</ul></details>';
+    });
+    $('#doc-textes-list').innerHTML = html;
+    $('#doc-textes').hidden = !count;
+    if (count) rubs.cadre.push(['doc-textes', 'Textes législatifs et réglementaires', plural(count, 'texte')]);
+    /* Déontologie */
+    const deonto = DEONTO.filter((d) => ok(d.t + ' ' + (d.s || '') + ' déontologie ' + d.y));
+    $('#doc-deonto-list').innerHTML = deonto.map((d) => docRow(d, d.y)).join('');
+    $('#doc-deonto').hidden = !deonto.length;
+    if (deonto.length) rubs.cadre.push(['doc-deonto', 'Déontologie', plural(deonto.length, 'document')]);
+    /* Rapports et études sur le secteur, par source */
     let etudes = 0;
     $('#doc-etudes-list').innerHTML = ETUDES.map((grp) => {
       const items = grp.items.filter((d) => ok(d.t + ' ' + d.s + ' ' + grp.g + ' ' + (d.src || '') + ' étude rapport'));
       etudes += items.length;
       if (!items.length) return '';
-      return '<p class="doc-theme">' + esc(grp.g) + '</p><ul class="rows">' + items.map((d) => '<li><a class="row-link" href="' + esc(d.url) + '"' +
-        (d.doc ? ' data-doc="' + esc(d.url) + '"' : ' target="_blank" rel="noopener"') + '><span class="row-date">' + esc(d.d) + '</span><span class="row-title">' +
-        esc(d.t) + '<span class="row-sub">' + esc(d.s) + '</span></span><span class="row-cat">' + (d.doc ? DOCS[d.url].pages + ' pages' : esc(d.src)) + '</span></a></li>').join('') + '</ul>';
+      return '<p class="doc-theme">' + esc(grp.g) + '</p><ul class="rows">' +
+        items.map((d) => docRow({ t: d.t, s: d.s, url: d.doc ? d.url : '', href: d.doc ? '' : d.url, src: d.src }, d.d)).join('') + '</ul>';
     }).join('');
     $('#doc-etudes').hidden = !etudes;
-    const nabm = NABM.filter((d) => ok(d.t + ' ' + (d.s || '') + ' nabm nomenclature'));
-    $('#doc-nabm-list').innerHTML = nabm.map((d) => docRow(d, 'NABM')).join('');
-    $('#doc-nabm').hidden = !nabm.length;
-    let html = '';
-    let count = 0;
-    /* Un groupe dépliable par thème ; une recherche ouvre les groupes qui ont des résultats. */
-    TEXTES.forEach((g, gi) => {
-      const items = g.items.filter((d) => ok(d.t + ' ' + (d.s || '') + ' ' + g.theme + ' ' + d.y)).sort((a, b) => b.y.localeCompare(a.y));
-      if (!items.length) return;
-      count += items.length;
-      html += '<details class="region doc-group" id="doc-t' + gi + '"' + (terms.length ? ' open' : '') + '><summary><span>' + esc(g.theme) + '</span><span class="count">' + items.length + ' texte' + (items.length > 1 ? 's' : '') + '</span></summary><ul class="rows">' +
-        items.map((d) => docRow(d, d.y)).join('') + '</ul></details>';
+    if (etudes) rubs.cadre.push(['doc-etudes', 'Rapports et études sur le secteur', plural(etudes, 'document')]);
+    /* Sommaires des deux bandeaux ; une partie sans résultat disparaît avec le filet qui la sépare de l'autre */
+    [['labo', 'doc-pratique'], ['cadre', 'doc-cadre']].forEach(([k, id]) => {
+      $('#dp-' + k + '-rubs').innerHTML = rubs[k].map(([sec, nom, n]) => '<li><a href="#documentation" data-section="' + sec + '"><span class="dp-rub">' + esc(nom) + '</span><span class="dp-n">' + esc(n) + '</span></a></li>').join('');
+      $('#' + id).hidden = !rubs[k].length;
     });
-    $('#doc-textes-list').innerHTML = html;
-    $('#doc-textes').hidden = !count;
+    $('#doc-part-sep').hidden = !(rubs.labo.length && rubs.cadre.length);
     /* La rubrique « Partenaires » a été retirée de la Documentation le 10 novembre 2026 (demande d'Isabelle Eimer) ;
        la liste PARTNERS sert encore à la colonne « Partenaires » du pied de page. */
-    $('#doc-empty').hidden = Boolean(etudes || nabm.length || count);
+    $('#doc-empty').hidden = Boolean(rubs.labo.length || rubs.cadre.length);
   }
 
   /* ---------- Rendu du contenu publié ---------- */
@@ -1037,7 +1059,7 @@
     idx.push({ type: 'Page', title: 'Salle de presse', sub: 'Les communiqués du SLBC', href: '#presse', section: null, text: 'contact presse journaliste kit presse logo' });
     idx.push({ type: 'Page', title: 'Contacter le SLBC', sub: 'Adresse e-mail et adresse postale', href: '#mentions', section: 'mentions-legales', text: 'contact contacter nous contacter écrire e-mail courriel adresse téléphone' });
     page('Actualités', 'L’information du syndicat', '#actualites');
-    page('Nomenclature des actes (NABM)', 'Arrêtés et décisions de l’UNCAM', '#documentation', 'doc-nabm');
+    page('Nomenclature et facturation', 'Table nationale de biologie, décisions de l’UNCAM', '#documentation', 'doc-nabm');
     page('Textes réglementaires', 'Lois, décrets et arrêtés', '#documentation', 'doc-textes');
     page('Adhérer au SLBC', 'Demande d’adhésion en ligne', '#adherer');
     page('Espace adhérent', 'Veille réglementaire, lettre d’information, publications', '#espace');
@@ -1052,7 +1074,8 @@
       const names = i.reps.concat(...(i.groups || []).map((g) => g[1]));
       idx.push({ type: 'Instance', title: i.n + (i.a ? ' (' + i.a + ')' : ''), sub: i.r, href: '#syndicat', section: 'inst-' + INSTANCES.indexOf(i), text: names.join(' ') });
     });
-    NABM.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Nomenclature des actes', href: '#documentation', section: 'doc-nabm', text: d.s || '' }));
+    DOC_PRATIQUE.forEach((grp) => grp.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: grp.g, href: '#documentation', section: grp.id, text: (d.s || '') + ' ' + (d.src || '') + (grp.id === 'doc-nabm' ? ' nabm nomenclature' : '') })));
+    DEONTO.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Déontologie', href: '#documentation', section: 'doc-deonto', text: (d.s || '') + ' déontologie' }));
     TEXTES.forEach((g, gi) => g.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: g.theme, href: '#documentation', section: 'doc-t' + gi, text: d.y + ' ' + (d.s || '') })));
     ETUDES.forEach((grp) => grp.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: grp.g + ', ' + d.d, href: '#documentation', section: 'doc-etudes', text: d.s + ' ' + (d.src || '') + ' étude rapport' })));
     return idx;

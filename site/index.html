@@ -607,9 +607,10 @@
   <nav class="lnav lnav-centre" aria-label="Rubriques de la documentation">
     <div class="container lnav-in">
       <div class="lnav-links">
-        <a href="#documentation" data-section="doc-etudes">Études et rapports</a>
-        <a href="#documentation" data-section="doc-nabm">Nomenclature</a>
+        <a href="#documentation" data-section="doc-pratique">Au laboratoire</a>
         <a href="#documentation" data-section="doc-textes">Textes réglementaires</a>
+        <a href="#documentation" data-section="doc-deonto">Déontologie</a>
+        <a href="#documentation" data-section="doc-etudes">Rapports</a>
       </div>
     </div>
   </nav>
@@ -639,7 +640,7 @@
   <g class="vapeur"><path d="M96 -46 L93 -53"/><path d="M114 -49 L114 -57"/><path d="M132 -47 L136 -54"/></g>
 </svg>
       </div>
-      <p class="lead">Les textes de référence de la biologie médicale libérale : nomenclature, réglementation, guides.</p>
+      <p class="lead">Ce qui sert au laboratoire au quotidien, et ce qui encadre la profession : textes, déontologie, rapports sur le secteur.</p>
       <div class="doc-search">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
         <label class="sr-only" for="doc-q">Filtrer la documentation</label>
@@ -647,12 +648,32 @@
       </div>
     </div>
   </section>
-  <section class="section-tight" style="padding-top:0">
+  <section class="section-tight doc-page" style="padding-top:0">
     <div class="container"><div class="sep-sig" aria-hidden="true"></div></div>
     <div class="container">
-      <div class="doc-sec" id="doc-etudes"><h2 class="h-block-l">Études et rapports</h2><ul class="rows" id="doc-etudes-list"></ul></div>
-      <div class="doc-sec" id="doc-nabm"><div class="sep-sig" aria-hidden="true"></div><h2 class="h-block-l">Nomenclature des actes (NABM)</h2><ul class="rows" id="doc-nabm-list"></ul></div>
-      <div class="doc-sec" id="doc-textes"><div class="sep-sig" aria-hidden="true"></div><h2 class="h-block-l">Textes réglementaires</h2><div id="doc-textes-list"></div></div>
+      <!-- Partie 1 : la pratique au laboratoire (bandeau vert clair) -->
+      <div class="doc-part" id="doc-pratique">
+        <div class="dp-head dp-labo">
+          <div class="dp-intro"><h2 class="dp-title">Au laboratoire</h2>
+            <p class="dp-desc">Ce qui sert au quotidien : surveillance et santé publique, nomenclature et facturation, fiches pratiques.</p></div>
+          <ul class="dp-rubs" id="dp-labo-rubs"></ul>
+        </div>
+        <div class="doc-sec" id="doc-surveillance"><h3 class="doc-h">Surveillance et santé publique</h3><ul class="rows" id="doc-surveillance-list"></ul></div>
+        <div class="doc-sec" id="doc-nabm"><h3 class="doc-h">Nomenclature et facturation</h3><ul class="rows" id="doc-nabm-list"></ul></div>
+        <div class="doc-sec" id="doc-fiches"><h3 class="doc-h">Fiches pratiques</h3><ul class="rows" id="doc-fiches-list"></ul></div>
+      </div>
+      <div class="doc-part-sep" id="doc-part-sep"><div class="sep-sig" aria-hidden="true"></div></div>
+      <!-- Partie 2 : le cadre de la profession (bandeau gris Nardo éclairci) -->
+      <div class="doc-part" id="doc-cadre">
+        <div class="dp-head dp-cadre">
+          <div class="dp-intro"><h2 class="dp-title">Le cadre de la profession</h2>
+            <p class="dp-desc">Ce qui encadre l’exercice : textes législatifs et réglementaires, déontologie, rapports et études sur le secteur.</p></div>
+          <ul class="dp-rubs" id="dp-cadre-rubs"></ul>
+        </div>
+        <div class="doc-sec" id="doc-textes"><h3 class="doc-h">Textes législatifs et réglementaires</h3><div id="doc-textes-list"></div></div>
+        <div class="doc-sec" id="doc-deonto"><h3 class="doc-h">Déontologie</h3><ul class="rows" id="doc-deonto-list"></ul></div>
+        <div class="doc-sec" id="doc-etudes"><h3 class="doc-h">Rapports et études sur le secteur</h3><div id="doc-etudes-list"></div></div>
+      </div>
       <p class="empty" id="doc-empty" hidden>Aucun document ne correspond. Essayez « NABM » ou « accréditation ».</p>
     </div>
   </section>
