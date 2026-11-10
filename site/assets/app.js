@@ -890,12 +890,12 @@
     });
     $('#doc-textes-list').innerHTML = html;
     $('#doc-textes').hidden = !count;
-    if (count) rubs.cadre.push(['doc-textes', 'Textes législatifs et réglementaires', 'Code de la santé publique, lois, décrets, arrêtés, NABM, convention nationale et accords de branche, par thème', plural(count, 'texte')]);
+    if (count) rubs.cadre.push(['doc-textes', 'Textes législatifs et réglementaires', 'Les lois et règlements qui encadrent la profession', plural(count, 'texte')]);
     /* Déontologie */
     const deonto = DEONTO.filter((d) => ok(d.t + ' ' + (d.s || '') + ' déontologie ' + d.y));
     $('#doc-deonto-list').innerHTML = deonto.map((d) => docRow(docItem(d), d.y)).join('');
     $('#doc-deonto').hidden = !deonto.length;
-    if (deonto.length) rubs.cadre.push(['doc-deonto', 'Déontologie', 'Codes des pharmaciens et des médecins, dispositif anti-cadeaux', plural(deonto.length, 'document')]);
+    if (deonto.length) rubs.cadre.push(['doc-deonto', 'Déontologie', 'Les règles professionnelles des pharmaciens et des médecins', plural(deonto.length, 'document')]);
     /* Rapports et études sur le secteur, par source */
     let etudes = 0;
     $('#doc-etudes-list').innerHTML = ETUDES.map((grp) => {
@@ -906,7 +906,7 @@
         items.map((d) => docRow(docItem({ t: d.t, s: d.s, url: d.doc ? d.url : '', href: d.doc ? '' : d.url, src: d.src }), d.d)).join('') + '</ul>';
     }).join('');
     $('#doc-etudes').hidden = !etudes;
-    if (etudes) rubs.cadre.push(['doc-etudes', 'Rapports et études sur le secteur', 'Assurance maladie, IGAS et IGF, DREES, Observatoire de la biologie médicale, rapports de branche, démographie des pharmaciens et des médecins', plural(etudes, 'document')]);
+    if (etudes) rubs.cadre.push(['doc-etudes', 'Rapports et études sur le secteur', 'Analyses et chiffres publiés sur le secteur', plural(etudes, 'document')]);
     /* Sommaires des deux bandeaux ; une partie sans résultat disparaît avec le filet qui la sépare de l'autre */
     [['labo', 'doc-pratique'], ['cadre', 'doc-cadre']].forEach(([k, id]) => {
       const ul = $('#dp-' + k + '-rubs');
