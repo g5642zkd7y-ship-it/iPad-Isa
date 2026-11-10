@@ -191,6 +191,10 @@
     'documents/actualites/programme-campagne-slbc-2026.pdf': ['Programme de campagne du SLBC : « Une ambition commune : valoriser notre expertise médicale »', 2, 597, 843],
     'documents/actualites/2026-02-04-radiation-vs-nabm.pdf': ['Radiation de la vitesse de sédimentation (VS) de la NABM', 1, 595, 842],
     'documents/syndicat/statuts-slbc.pdf': ['Statuts du SLBC', 4, 595, 842],
+    'documents/comptes/comptes-2025-etats-financiers.pdf': ['Comptes 2025 : états financiers', 5, 596, 843],
+    'documents/comptes/comptes-2025-rapport-cac.pdf': ['Comptes 2025 : rapport du commissaire aux comptes', 18, 595, 842],
+    'documents/comptes/comptes-2024-etats-financiers.pdf': ['Comptes 2024 : états financiers', 17, 596, 843],
+    'documents/comptes/comptes-2024-rapport-cac.pdf': ['Comptes 2024 : rapport du commissaire aux comptes', 17, 595, 842],
     'documents/comptes/comptes-2023-rapport-cac.pdf': ['Comptes 2023 : bilan et rapport du commissaire aux comptes', 17, 595, 842],
     'documents/comptes/comptes-2022-etats-financiers.pdf': ['Comptes 2022 : états financiers', 17, 596, 843],
     'documents/comptes/comptes-2022-rapport-cac.pdf': ['Comptes 2022 : rapport du commissaire aux comptes', 18, 595, 841],
@@ -354,6 +358,11 @@
      porte sur l'exercice clos le 31 décembre 2020 : affiché ici sous 2020 (point 25 de docs/sources-et-verifications.md). */
   const STATUTS = 'documents/syndicat/statuts-slbc.pdf';
   const COMPTES = [
+    /* Comptes 2024 et 2025 : PDF envoyés par Isabelle Eimer le 10 novembre 2026 (rapports du commissaire aux comptes signés le 23 juin 2025 et le 23 juin 2026). */
+    { y: '2025', d: 'États financiers', url: 'documents/comptes/comptes-2025-etats-financiers.pdf' },
+    { y: '2025', d: 'Rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2025-rapport-cac.pdf' },
+    { y: '2024', d: 'États financiers', url: 'documents/comptes/comptes-2024-etats-financiers.pdf' },
+    { y: '2024', d: 'Rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2024-rapport-cac.pdf' },
     { y: '2023', d: 'Bilan et rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2023-rapport-cac.pdf' },
     { y: '2022', d: 'États financiers', url: 'documents/comptes/comptes-2022-etats-financiers.pdf' },
     { y: '2022', d: 'Rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2022-rapport-cac.pdf' },
