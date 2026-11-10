@@ -193,8 +193,7 @@
     'documents/comptes/comptes-2024-rapport-cac.pdf': ['Comptes 2024 : rapport du commissaire aux comptes', 17, 595, 842],
     'documents/comptes/comptes-2023-rapport-cac.pdf': ['Comptes 2023 : bilan et rapport du commissaire aux comptes', 17, 595, 842],
     'documents/comptes/comptes-2022-etats-financiers.pdf': ['Comptes 2022 : états financiers', 17, 596, 843],
-    'documents/comptes/comptes-2022-rapport-cac.pdf': ['Comptes 2022 : rapport du commissaire aux comptes', 18, 595, 841],
-    'documents/comptes/comptes-2020-rapport-cac.pdf': ['Comptes 2020 : rapport du commissaire aux comptes', 14, 595, 842]
+    'documents/comptes/comptes-2022-rapport-cac.pdf': ['Comptes 2022 : rapport du commissaire aux comptes', 18, 595, 841]
   };
   PDFS['documents/etude-roland-berger-2025.pdf'] = ['Étude du secteur des laboratoires de biologie médicale libérale français, rapport 2025 (Roland Berger)', 59, 960, 540];
   Object.keys(PDFS).forEach((u) => { const [title, pages, w, h] = PDFS[u]; DOCS[u] = { title, pages, w, h, pdf: true, file: u.split('/').pop() }; });
@@ -361,8 +360,7 @@
     { y: '2024', d: 'Rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2024-rapport-cac.pdf' },
     { y: '2023', d: 'Bilan et rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2023-rapport-cac.pdf' },
     { y: '2022', d: 'États financiers', url: 'documents/comptes/comptes-2022-etats-financiers.pdf' },
-    { y: '2022', d: 'Rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2022-rapport-cac.pdf' },
-    { y: '2020', d: 'Rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2020-rapport-cac.pdf' }
+    { y: '2022', d: 'Rapport du commissaire aux comptes', url: 'documents/comptes/comptes-2022-rapport-cac.pdf' }
   ];
   /* Études et rapports (Documentation), classés par source (demande d'Isabelle Eimer du 6 novembre 2026).
      d : date affichée ; url : page officielle (lien externe) ou document lu dans la liseuse (doc: true) ; src : site d'origine. */
