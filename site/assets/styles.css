@@ -1246,3 +1246,15 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
 @media (max-width:640px){.cat-paves{--gap:10px}.cat-pave{gap:10px;padding:10px 12px}.cat-pave .mnum-cat{width:44px}.cat-nom{font-size:16px}.cat-n{font-size:14px}}
 @media (max-width:440px){.cat-pave{gap:7px;padding:9px 6px 9px 6px}.cat-pave .mnum-cat{width:37px;margin:-3px 0 -3px 0}.cat-nom{font-size:15px;letter-spacing:-.015em}}
 @media (max-width:359px){.cat-pave:not(:first-child){flex-direction:column;align-items:flex-start;gap:4px;padding:9px 10px}}
+/* Accueil, bannière Actualités : les mêmes pavés, version pour le fond gris Nardo éclairci (10 novembre 2026, demande d'Isabelle Eimer :
+   « Bannière actualités de l'accueil : ok avec ta proposition »). Pavés transparents bordés de blanc, textes en blanc plein (4,5:1) ;
+   la rubrique choisie passe en blanc, textes en encre. Les pavés prennent toute la largeur, sous le titre. */
+.sec-head .cat-paves{flex:1 1 100%}
+.cat-paves-sombre .cat-pave{background:transparent;border-color:rgba(255,255,255,.55);color:#fff}
+.cat-paves-sombre .cat-pave .cat-n{color:#fff}
+.cat-paves-sombre .cat-pave .mnum-eclats{stroke:#fff}
+@media (hover:hover){.cat-paves-sombre .cat-pave:not([aria-pressed="true"]):hover{background:transparent;border-color:#fff}}
+.cat-paves-sombre .cat-pave[aria-pressed="true"]{background:#fff;border-color:#fff;color:var(--encre)}
+.cat-paves-sombre .cat-pave[aria-pressed="true"] .cat-n{color:var(--gris)}
+.cat-paves-sombre .cat-pave[aria-pressed="true"] .mnum-eclats{stroke:var(--encre)}
+.cat-paves-sombre .cat-pave:focus-visible{outline-color:#fff}

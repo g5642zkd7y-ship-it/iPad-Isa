@@ -940,10 +940,13 @@
   const byDate = (a, b) => b.date.localeCompare(a.date);
 
   function renderShelf() { $('#home-shelf').innerHTML = DATA.veille.map(vcard).join(''); updateShelf(); }
+  /* Accueil, bannière Actualités : les mêmes pavés que la page Actualités (10 novembre 2026, demande d'Isabelle Eimer : « Bannière actualités
+     de l'accueil : ok avec ta proposition ») ; la liste garde les cinq dernières actualités de la rubrique choisie. */
   function renderHomeActus() {
-    seg($('#home-actu-seg'), cats(), state.homeCat, (c) => { state.homeCat = c; renderHomeActus(); });
+    catPaves($('#home-actu-seg'), state.homeCat, (c) => { state.homeCat = c; renderHomeActus(); });
     $('#home-actus').innerHTML = DATA.actus.slice().sort(byDate).filter((a) => state.homeCat === 'Toutes' || a.cat === state.homeCat).slice(0, 5).map(arow).join('');
   }
+  /* Pavés des rubriques (page Actualités et bannière Actualités de l'accueil) */
   function catPaves(el, current, onPick) {
     const opts = cats();
     const n = (c) => DATA.actus.filter((a) => c === 'Toutes' || a.cat === c).length;
