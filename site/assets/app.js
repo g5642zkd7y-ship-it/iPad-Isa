@@ -138,11 +138,7 @@
     'documents/textes/37-arrete-du-26-juin-2019-depistage-hepatite-c-en-officine.pdf': ['Arrêté du 26 juin 2019 : dépistage de l’hépatite C en officine', 17, 595, 842],
     'documents/textes/34-arrete-du-30-janvier-2020-fixant-les-tests-de-diagnostic-rap.pdf': ['Arrêté du 30 janvier 2020 fixant les tests de diagnostic rapide pouvant être réalisés par les pharmaciens', 1, 595, 842],
     'documents/textes/67-arrete-du-11-juin-2013-determinant-la-liste-des-tests-recuei.pdf': ['Arrêté du 11 juin 2013 déterminant la liste des tests, recueils et traitements de signaux biologiques qui ne constituent pas un examen de biologie médicale, les catégories de personnes pouvant les réaliser et les conditions de réalisation de certains de ces tests, recueils et traitements de signaux biologiques', 7, 595, 842],
-    'documents/textes/39-loi-2018-493-du-20-juin-2018-relative-a-la-protection-des-do.pdf': ['Loi n° 2018-493 du 20 juin 2018 relative à la protection des données personnelles', 218, 595, 842],
-    'documents/textes/51-decret-n-2016-942-relatif-a-lorganisation-du-dpc-des-profess.pdf': ['Décret n° 2016-942 relatif à l’organisation du DPC des professionnels de santé', 10, 595, 842],
     'documents/textes/50-decret-no-2016-1024-relatif-aux-territoires-de-democratie-sa.pdf': ['Décret n° 2016-1024 relatif aux territoires de démocratie sanitaire aux zones des schémas régionaux de santé et aux conseils territoriaux de santé', 4, 595, 842],
-    'documents/textes/63-decret-2010-585-relatif-aux-unions-regionales-de-professionn.pdf': ['Décret n° 2010-585 relatif aux unions régionales de professionnels de santé', 14, 595, 842],
-    'documents/textes/64-decret-2010-514-relatif-au-projet-regional-de-sante.pdf': ['Décret n° 2010-514 relatif au projet régional de santé', 3, 595, 842],
     'documents/textes/01-labm-rapport-de-branche-2021.pdf': ['Rapport de branche 2021 des laboratoires de biologie médicale extra-hospitaliers (données 2020)', 97, 850, 595],
     'documents/textes/02-2022-grille-salaires-au-1er-mai.pdf': ['Grille des salaires minima au 1er mai 2022 (accord du 27 avril 2022)', 4, 595, 842],
     'documents/textes/03-2026-grille-salaires-au-1er-juin.pdf': ['Grille des salaires minima au 1er juin 2026 (accord du 10 juin 2026)', 4, 595, 842],
@@ -461,6 +457,7 @@
     ] },
     /* Planche « Liens pour la Documentation », n° 32 (choix d'Isabelle Eimer du 10 novembre 2026). */
     { theme: 'Certification périodique', items: [
+      { t: 'Code de la santé publique : développement professionnel continu et certification périodique des professionnels de santé (articles R4021-1 à R4022-28)', y: 'En vigueur', href: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000025102395/', src: 'Légifrance' },
       { t: 'Certification périodique : les référentiels publiés', s: 'Ordre des pharmaciens, avec le référentiel de la biologie médicale', y: '2026', href: 'https://www.ordre.pharmacien.fr/les-communications/focus-sur/les-actualites/certification-periodique-les-referentiels-publies', src: 'ordre.pharmacien.fr' }
     ] },
     { theme: 'Accréditation', items: [
@@ -507,12 +504,16 @@
     { theme: 'Lois de financement de la sécurité sociale', items: [
       { t: 'Loi n° 2025-1403 du 30 décembre 2025 de financement de la sécurité sociale pour 2026', s: 'Journal officiel du 31 décembre 2025', y: '2025', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053226384', src: 'Légifrance' }
     ] },
+    /* 10 novembre 2026, accord d'Isabelle Eimer (« Ok bascule les textes ») : textes d'origine remplacés par les versions à jour (point 37).
+       Légifrance et EUR-Lex bloquent les lectures automatiques : adresses et intitulés vérifiés par recherche sur ces sites. */
     { theme: 'Système de santé', items: [
-      { t: 'Loi n° 2018-493 du 20 juin 2018 relative à la protection des données personnelles', y: '2018', url: 'documents/textes/39-loi-2018-493-du-20-juin-2018-relative-a-la-protection-des-do.pdf' },
-      { t: 'Décret n° 2016-942 relatif à l’organisation du DPC des professionnels de santé', y: '2016', url: 'documents/textes/51-decret-n-2016-942-relatif-a-lorganisation-du-dpc-des-profess.pdf' },
-      { t: 'Décret n° 2016-1024 relatif aux territoires de démocratie sanitaire aux zones des schémas régionaux de santé et aux conseils territoriaux de santé', y: '2016', url: 'documents/textes/50-decret-no-2016-1024-relatif-aux-territoires-de-democratie-sa.pdf' },
-      { t: 'Décret n° 2010-585 relatif aux unions régionales de professionnels de santé', y: '2010', url: 'documents/textes/63-decret-2010-585-relatif-aux-unions-regionales-de-professionn.pdf' },
-      { t: 'Décret n° 2010-514 relatif au projet régional de santé', y: '2010', url: 'documents/textes/64-decret-2010-514-relatif-au-projet-regional-de-sante.pdf' }
+      { t: 'Code de la santé publique : projet régional de santé (articles R1434-1 à R1434-12)', y: 'En vigueur', href: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000022237611/', src: 'Légifrance' },
+      { t: 'Code de la santé publique : zones du schéma régional de santé, dont les zones des laboratoires de biologie médicale (articles R1434-30 à R1434-32)', y: 'En vigueur', href: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000032944018/', src: 'Légifrance' },
+      { t: 'Code de la santé publique : représentation des professions de santé libérales, unions régionales des professionnels de santé (articles R4031-1 à R4031-53)', y: 'En vigueur', href: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000022294364/', src: 'Légifrance' },
+      { t: 'Loi n° 78-17 du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés', s: 'Loi Informatique et Libertés, version à jour', y: 'En vigueur', href: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000886460', src: 'Légifrance' },
+      { t: 'La protection des données personnelles en laboratoire de biologie médicale', s: 'Ordre des pharmaciens, fiche pratique pour les laboratoires', y: 'En ligne', href: 'https://www.ordre.pharmacien.fr/je-suis/pharmacien/je-suis-pharmacien-biologiste-medical/mon-exercice-professionnel/la-protection-des-donnees-personnelles-en-laboratoire-de-biologie-medicale', src: 'ordre.pharmacien.fr' },
+      { t: 'Règlement (UE) 2016/679 du 27 avril 2016, règlement général sur la protection des données (RGPD)', s: 'Applicable depuis le 25 mai 2018', y: '2016', href: 'https://eur-lex.europa.eu/eli/reg/2016/679/oj?locale=fr', src: 'EUR-Lex' },
+      { t: 'Décret n° 2016-1024 du 26 juillet 2016 relatif aux territoires de démocratie sanitaire, aux zones des schémas régionaux de santé et aux conseils territoriaux de santé', y: '2016', url: 'documents/textes/50-decret-no-2016-1024-relatif-aux-territoires-de-democratie-sa.pdf' },
     ] },
     /* Textes de 2023 à 2026 ajoutés le 10 novembre 2026 (demande d'Isabelle Eimer) : PDF signés publiés sur le site de la convention collective
        (convention-labo.com), lus page par page ; accords de 2023 et 2024 étendus (Légifrance). Point 35 de docs/sources-et-verifications.md. */
