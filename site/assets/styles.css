@@ -666,12 +666,6 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .doc-group .row-title{font-size:17px}
 .row-link.is-missing .row-title{color:var(--texte)}
 .row-link.is-missing .row-cat{font-style:italic}
-.partners{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.partners a{display:flex;flex-direction:column;gap:4px;height:100%;padding:20px;border-radius:16px;background:var(--fond);color:var(--texte);text-decoration:none}
-.partners strong{font-size:17px;color:var(--encre)}
-.partners span{font-size:14px;color:var(--gris)}
-.partners a:hover strong{color:var(--vert)}
-@media (max-width:900px){.partners{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* ---------- Adhérer ---------- */
 .benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,40px)}

@@ -762,10 +762,9 @@
     });
     $('#doc-textes-list').innerHTML = html;
     $('#doc-textes').hidden = !count;
-    const parts = PARTNERS.filter((p) => ok(p.n + ' ' + p.d + ' partenaire'));
-    $('#partners-list').innerHTML = parts.map((p) => '<li><a href="' + esc(p.url) + '" target="_blank" rel="noopener"><strong>' + esc(p.n) + '</strong><span>' + esc(p.d) + '</span></a></li>').join('');
-    $('#doc-partenaires').hidden = !parts.length;
-    $('#doc-empty').hidden = Boolean(etudes || nabm.length || count || parts.length);
+    /* La rubrique « Partenaires » a été retirée de la Documentation le 10 novembre 2026 (demande d'Isabelle Eimer) ;
+       la liste PARTNERS sert encore à la colonne « Partenaires » du pied de page. */
+    $('#doc-empty').hidden = Boolean(etudes || nabm.length || count);
   }
 
   /* ---------- Rendu du contenu publié ---------- */

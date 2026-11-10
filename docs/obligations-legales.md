@@ -90,7 +90,7 @@ Choix du SLBC (6 novembre 2026) : pas de téléphone, un lien de contact à la p
 
 **Publicité et partenariats rémunérés** (sous condition) :
 - texte : LCEN, article 20 ;
-- si un partenaire affiché (par exemple Klesia) paie ou apporte une contrepartie pour sa visibilité, l'indiquer comme partenariat, avec sa nature ;
+- si un partenaire affiché paie ou apporte une contrepartie pour sa visibilité, l'indiquer comme partenariat, avec sa nature ;
 - même règle dans la lettre d'information.
 
 **Responsable de la rédaction** : la condition est floue. Rien n'est à afficher tant que personne n'est désigné.
