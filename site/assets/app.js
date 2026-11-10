@@ -403,6 +403,11 @@
       { t: 'Décret n° 2011-1268 fixant les règles d’activité d’un LABM et le % max. d’échantillons biologiques pouvant être transmis entre LABM', y: '2011', url: 'documents/textes/62-decret-2011-1268-fixant-les-regles-dactivite-dun-labm-et-le.pdf' },
       { t: 'Arrêté du 30 décembre 2014 relatif à l’attestation de formation aux gestes et soins d’urgence', y: '2014', url: 'documents/textes/66-arrete-du-30-decembre-2014-relatif-a-lattestation-de-formati.pdf' }
     ] },
+    /* Lien envoyé par Isabelle Eimer le 10 novembre 2026. Page de l'Ordre des pharmaciens lue le même jour :
+       « Publié le 05/03/2026 », « entré en vigueur le 6 mars 2026 ». Point 29 de docs/sources-et-verifications.md. */
+    { theme: 'Déontologie', items: [
+      { t: 'Code de déontologie des pharmaciens', s: 'Ordre des pharmaciens, en vigueur depuis le 6 mars 2026', y: '2026', href: 'https://www.ordre.pharmacien.fr/les-communications/focus-sur/les-autres-publications/code-de-deontologie-des-pharmaciens2', src: 'ordre.pharmacien.fr' }
+    ] },
     { theme: 'Accréditation', items: [
       { t: 'Arrêté du 8 mars 2021 fixant les examens représentatifs et les compétences associées pour l’accréditation des lignes de portée des examens de biologie médicale', y: '2021', url: 'documents/textes/19-arrete-du-8-mars-2021-fixant-les-examens-representatifs-et-l.pdf' },
       { t: 'Décret n° 2016-1430 relatif aux modalités d’accréditation des laboratoires de biologie médicale', y: '2016', url: 'documents/textes/49-decret-no-2016-1430-relatif-aux-modalites-daccreditation-des.pdf' },
@@ -754,7 +759,7 @@
     let count = 0;
     /* Un groupe dépliable par thème ; une recherche ouvre les groupes qui ont des résultats. */
     TEXTES.forEach((g, gi) => {
-      const items = g.items.filter((d) => ok(d.t + ' ' + g.theme + ' ' + d.y)).sort((a, b) => b.y.localeCompare(a.y));
+      const items = g.items.filter((d) => ok(d.t + ' ' + (d.s || '') + ' ' + g.theme + ' ' + d.y)).sort((a, b) => b.y.localeCompare(a.y));
       if (!items.length) return;
       count += items.length;
       html += '<details class="region doc-group" id="doc-t' + gi + '"' + (terms.length ? ' open' : '') + '><summary><span>' + esc(g.theme) + '</span><span class="count">' + items.length + ' texte' + (items.length > 1 ? 's' : '') + '</span></summary><ul class="rows">' +
@@ -967,7 +972,7 @@
       idx.push({ type: 'Instance', title: i.n + (i.a ? ' (' + i.a + ')' : ''), sub: i.r, href: '#syndicat', section: 'inst-' + INSTANCES.indexOf(i), text: names.join(' ') });
     });
     NABM.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Nomenclature des actes', href: '#documentation', section: 'doc-nabm', text: d.s || '' }));
-    TEXTES.forEach((g, gi) => g.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: g.theme, href: '#documentation', section: 'doc-t' + gi, text: d.y })));
+    TEXTES.forEach((g, gi) => g.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: g.theme, href: '#documentation', section: 'doc-t' + gi, text: d.y + ' ' + (d.s || '') })));
     ETUDES.forEach((grp) => grp.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: grp.g + ', ' + d.d, href: '#documentation', section: 'doc-etudes', text: d.s + ' ' + (d.src || '') + ' étude rapport' })));
     return idx;
   }
