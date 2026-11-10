@@ -1258,3 +1258,14 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
 .cat-paves-sombre .cat-pave[aria-pressed="true"] .cat-n{color:var(--gris)}
 .cat-paves-sombre .cat-pave[aria-pressed="true"] .mnum-eclats{stroke:var(--encre)}
 .cat-paves-sombre .cat-pave:focus-visible{outline-color:#fff}
+/* Menus et textes d'introduction (10 novembre 2026, demande d'Isabelle Eimer, planche « Textes d'introduction écrits à la main » :
+   « Je garde la proposition 1, mais le texte d'introduction doit correspondre à la proposition 4, écrit à la main, mais plus fin »).
+   La navigation en Nunito gras (menu principal, sous-menus des pages) ; les textes qui présentent chaque page, sous le titre, écrits à la
+   main avec l'écriture de la banderole « Bienvenue » (Kalam, Google Fonts, licence SIL OFL), d'un trait fin : la voix des mascottes.
+   Seule exception à « Nunito pour tous les textes ». Encre sur les fonds clairs, blanc sur l'olive et le gris Nardo éclairci. */
+:root{--font-main:"Kalam","Nunito",cursive}
+.gnav-links a,.gnav-member{font-weight:700;color:var(--encre)}
+.gnav-links a::after{height:3px;bottom:12px;border-radius:3px}
+.lnav-links a{font-weight:700;color:var(--encre)}
+.page-hero .lead{max-width:32em;font-family:var(--font-main);font-weight:400;font-size:clamp(22px,2.1vw,25px);line-height:1.4;color:var(--encre)}
+.page-hero.bg-vert .lead,.page-hero.bg-nardo .lead{color:#fff}
