@@ -19,12 +19,12 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   /* Pas de retour à la ligne au trait d'union d'un numéro (« 2026-2030 », « n° 2020-546 », « L. 162-1-7 », « covid-19 »),
-     de « e-mail », de « ci-dessous », d'un impératif (« Dites-le-nous ») ou d'un prénom composé (« Jean-François ») : ces mots sont mis dans un
+     de « e-mail », de « ci-dessous », d'« anti-cadeaux », d'un impératif (« Dites-le-nous ») ou d'un prénom composé (« Jean-François ») : ces mots sont mis dans un
      <span class="nobr">. La police n'a pas de trait d'union insécable (U+2011), qui s'afficherait dans une autre police.
      Fait une fois sur la page, puis sur tout ce qui s'y ajoute (MutationObserver). Les mots longs (plus de 20 lettres)
      restent sécables, pour ne jamais déborder sur un téléphone. */
   const KEEP = /[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)+/gu;
-  const keepWord = (w) => w.length <= 20 && (/\p{N}/u.test(w) || /^(?:e-mails?|ci-dessous|ci-dessus)$/i.test(w) || /^\p{Lu}\p{Ll}+-\p{Lu}\p{Ll}+$/u.test(w) || /-(?:nous|vous|le|la|les|moi|lui|leur|mêmes?)$/i.test(w));
+  const keepWord = (w) => w.length <= 20 && (/\p{N}/u.test(w) || /^(?:e-mails?|ci-dessous|ci-dessus|anti-cadeaux)$/i.test(w) || /^\p{Lu}\p{Ll}+-\p{Lu}\p{Ll}+$/u.test(w) || /-(?:nous|vous|le|la|les|moi|lui|leur|mêmes?)$/i.test(w));
   const KEEP_SKIP = /^(?:SCRIPT|STYLE|TEXTAREA|OPTION|SELECT|PRE|TITLE)$/;
   const keepText = (t) => {
     const p = t.parentNode;
@@ -389,6 +389,12 @@
     /* Lien envoyé par Isabelle Eimer le 10 novembre 2026. Page de l'Ordre des pharmaciens lue le même jour : « Publié le 17/06/2026 -
        Mis à jour le 17/08/2026 », « Au 1er janvier 2026, 75 731 pharmaciens étaient inscrits à l’Ordre », brochure nationale,
        dépliant, communiqué et brochures régionales. Point 30 de docs/sources-et-verifications.md. */
+    /* Rapports de branche des laboratoires de biologie médicale extra-hospitaliers (convention-labo.com, point 35), classés ici le 10 novembre 2026 */
+    { g: 'Branche professionnelle', items: [
+      { d: 'Novembre 2025', t: 'Rapport de branche 2025 des laboratoires de biologie médicale extra-hospitaliers (données 2024)', s: 'Données économiques et sociales de la branche', url: 'documents/textes/05-labm-rapport-de-branche-2025.pdf', doc: true },
+      { d: 'Octobre 2024', t: 'Rapport de branche 2023-2024 des laboratoires de biologie médicale extra-hospitaliers (données 2023)', s: 'Données économiques et sociales de la branche', url: 'documents/textes/07-labm-rapport-de-branche-2023-2024.pdf', doc: true },
+      { d: 'Novembre 2021', t: 'Rapport de branche 2021 des laboratoires de biologie médicale extra-hospitaliers (données 2020)', s: 'Données économiques et sociales de la branche', url: 'documents/textes/01-labm-rapport-de-branche-2021.pdf', doc: true }
+    ] },
     { g: 'Ordres professionnels', items: [
       { d: 'Juin 2026', t: 'Les pharmaciens : panorama au 1er janvier 2026', s: 'Démographie de la profession : 75 731 pharmaciens inscrits à l’Ordre au 1er janvier 2026, brochure nationale et brochures régionales', url: 'https://www.ordre.pharmacien.fr/les-communications/focus-sur/la-demographie/les-pharmaciens-panorama-au-1er-janvier-2026', src: 'ordre.pharmacien.fr' },
       /* Planche « Liens pour la Documentation », n° 6 (choix d'Isabelle Eimer du 10 novembre 2026). Couverture du PDF : « Situation au
@@ -414,6 +420,7 @@
   /* Documentation, partie « Au laboratoire » (10 novembre 2026, demande d'Isabelle Eimer : séparer la pratique de ce qui encadre la profession).
      Trois rubriques, dans cet ordre ; les éléments viennent de la planche des liens choisis (points 31 et 37 de docs/sources-et-verifications.md). */
   const DOC_PRATIQUE = [
+    /* Le rapport PRIMO (résistance aux antibiotiques) en tête : c'est l'exemple donné par Isabelle Eimer, avant l'ordre des dates */
     { id: 'doc-surveillance', g: 'Surveillance et santé publique', k: 'Résistance aux antibiotiques, VIH, centres nationaux de référence, déclarations obligatoires', items: [
       { y: 'Avril 2026', t: 'Surveillance de la résistance bactérienne aux antibiotiques en soins de ville et en établissements d’hébergement pour personnes âgées dépendantes : mission PRIMO, résultats 2024', s: 'Rapport national établi à partir des antibiogrammes des laboratoires de biologie médicale', href: 'https://www.santepubliquefrance.fr/resistance-aux-antibiotiques/rapportsynthese/surveillance-de-la-resistance-bacterienne-aux-8', src: 'santepubliquefrance.fr' },
       { y: 'Novembre 2026', t: 'VIH en France : bilan 2025', s: 'Bulletin national sur le dépistage du VIH et les découvertes de séropositivité', href: 'https://www.santepubliquefrance.fr/infections-sexuellement-transmissibles/vihsida/bulletin-national/vih-en-france-bilan-2025', src: 'santepubliquefrance.fr' },
@@ -421,7 +428,7 @@
       { t: 'Liste des maladies à signalement obligatoire', s: 'Santé publique France, fiches de signalement et modalités de transmission', y: '2026', href: 'https://www.santepubliquefrance.fr/liste-des-maladies-a-signalement-obligatoire', src: 'santepubliquefrance.fr' },
       { t: 'e-DO : déclaration obligatoire en ligne de l’infection par le VIH, du sida et de la tuberculose', s: 'Santé publique France, critères, accès et tutoriels, dont la déclaration du biologiste', y: '2026', href: 'https://www.santepubliquefrance.fr/services/e-do-declaration-obligatoire-en-ligne-de-linfection-par-le-vih-et-du-sida-et-de-la-tuberculose', src: 'santepubliquefrance.fr' }
     ] },
-    { id: 'doc-nabm', g: 'Nomenclature et facturation', k: 'Table nationale de biologie, décisions de l’UNCAM, espace des laboratoires sur ameli', items: [NABM[0], { t: 'Ameli, espace « Laboratoire d’analyses médicales »', s: 'Assurance maladie, rubriques exercice libéral, facturation, dossier médical partagé et actualités', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales', src: 'ameli.fr' }].concat(NABM.slice(1)) },
+    { id: 'doc-nabm', g: 'Nomenclature et facturation', k: 'Table nationale de biologie, espace des laboratoires sur ameli, aides à la prescription', items: [NABM[0], { t: 'Ameli, espace « Laboratoire d’analyses médicales »', s: 'Assurance maladie, rubriques exercice libéral, facturation, dossier médical partagé et actualités', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales', src: 'ameli.fr' }, NABM[NABM.length - 1]] },
     { id: 'doc-fiches', g: 'Fiches pratiques', k: 'Dépistage des IST sans ordonnance, données personnelles', items: [
       { t: 'Dépistage des IST en laboratoire sans ordonnance : Mon test IST', s: 'Fiche de l’Assurance maladie pour les laboratoires', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales/exercice-liberal/prise-charge-patients/depistage-ist/mon-test-ist-depistage-en-laboratoire-sans-ordonnance', src: 'ameli.fr' },
       { t: 'La protection des données personnelles en laboratoire de biologie médicale', s: 'Ordre des pharmaciens, fiche pratique pour les laboratoires', y: 'En ligne', href: 'https://www.ordre.pharmacien.fr/je-suis/pharmacien/je-suis-pharmacien-biologiste-medical/mon-exercice-professionnel/la-protection-des-donnees-personnelles-en-laboratoire-de-biologie-medicale', src: 'ordre.pharmacien.fr' }
@@ -464,7 +471,7 @@
     /* Planche « Liens pour la Documentation », n° 32 (choix d'Isabelle Eimer du 10 novembre 2026). */
     { theme: 'Certification périodique', items: [
       { t: 'Code de la santé publique : développement professionnel continu et certification périodique des professionnels de santé (articles R4021-1 à R4022-28)', y: 'En vigueur', href: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000025102395/', src: 'Légifrance' },
-      { t: 'Certification périodique : les référentiels publiés', s: 'Ordre des pharmaciens, avec le référentiel de la biologie médicale', y: '2026', href: 'https://www.ordre.pharmacien.fr/les-communications/focus-sur/les-actualites/certification-periodique-les-referentiels-publies', src: 'ordre.pharmacien.fr' }
+      { t: 'Certification périodique : les référentiels publiés', s: 'Ordre des pharmaciens, référentiels de certification, dont celui de la biologie médicale', y: '2026', href: 'https://www.ordre.pharmacien.fr/les-communications/focus-sur/les-actualites/certification-periodique-les-referentiels-publies', src: 'ordre.pharmacien.fr' }
     ] },
     { theme: 'Accréditation', items: [
       /* Planche « Liens pour la Documentation », n° 23 : PDF lu le 10 novembre 2026 (« A partir du 1er octobre 2025, seul le document SH REF 02 […] dans sa
@@ -476,14 +483,15 @@
       { t: 'Décret n° 2015-205 relatif aux modalités de dépôt des demandes d’accréditation des LABM : étape 2016', y: '2015', url: 'documents/textes/58-decret-2015-205-relatif-aux-modalites-de-depot-des-demandes.pdf' },
       { t: 'Arrêté du 17 octobre 2012 définissant les conditions justificatives de l’entrée effective d’un laboratoire de biologie médicale dans une démarche d’accréditation', y: '2012', url: 'documents/textes/68-arrete-du-17-octobre-2012-definissant-les-conditions-justifi.pdf' }
     ] },
-    { theme: 'Nomenclature et prise en charge', items: [
+    /* Décisions de l'UNCAM et arrêtés de la NABM (tableau NABM, sans la table en vigueur ni les aides à la prescription, qui restent « Au laboratoire ») */
+    { theme: 'Nomenclature et prise en charge', items: NABM.slice(1, -1).concat([
       /* Planche « Liens pour la Documentation », n° 20. */
       { t: 'Convention nationale et avenants', s: 'Assurance maladie, convention nationale des directeurs de laboratoires et ses avenants', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales/textes-reference/convention-nationale-avenants', src: 'ameli.fr' },
       { t: 'Baisses de la NABM au 6 avril 2018 (décision de l’UNCAM du 12 mars 2018)', y: '2018', url: 'documents/textes/40-nabm-baisses-au-6-avril-2018.pdf' },
       { t: 'Décision du 24 mai 2017 de l’Union nationale des caisses d’assurance maladie relative à la liste des actes et prestations pris en charge par l’assurance maladie', y: '2017', url: 'documents/textes/45-decision-du-24-mai-2017-de-lunion-nationale-des-caisses-dass.pdf' },
       { t: 'Instruction n° DGOS/PF4/DSS/1A/2018/101 du 16 avril 2018 relative aux actes de biologie médicale et d’anatomopathologie hors nomenclatures', y: '2018', url: 'documents/textes/44-instruction-n-dgos-pf4-dss-1a-2018-101-du-16-avril-2018-rela.pdf' },
       { t: 'Instruction DGOS 2015-258 relative aux modalités d’identification, de recueil des actes de biologie médicale et d’anatomocytopathologie hors nomenclature éligibles au financement au titre de la MERRI G03', y: '2015', url: 'documents/textes/69-instruction-dgos-2015-258-relative-aux-modalites-didentifica.pdf' }
-    ] },
+    ]) },
     { theme: 'Examens et dépistage', items: [
       /* Planche « Liens pour la Documentation », n° 21 et 22. */
       { t: 'Arrêté du 8 juillet 2024 fixant la liste des infections sexuellement transmissibles dépistées à la demande du patient en laboratoire de biologie médicale et les modalités de ces dépistages', y: '2024', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049908622', src: 'Légifrance' },
@@ -517,13 +525,10 @@
     { theme: 'Branche et rémunération', items: [
       { t: 'Grille des salaires minima au 1er juin 2026 (accord du 10 juin 2026)', s: 'Accord de branche', y: '2026', url: 'documents/textes/03-2026-grille-salaires-au-1er-juin.pdf' },
       { t: 'Grille des salaires minima au 1er janvier 2026 (recommandation patronale du 15 décembre 2025)', s: 'Recommandation des organisations patronales, dont le SLBC', y: '2026', url: 'documents/textes/04-2026-grille-salaires-au-1er-janvier-recommandation.pdf' },
-      { t: 'Rapport de branche 2025 des laboratoires de biologie médicale extra-hospitaliers (données 2024)', s: 'Données économiques et sociales de la branche, novembre 2025', y: '2025', url: 'documents/textes/05-labm-rapport-de-branche-2025.pdf' },
       { t: 'Grille des salaires minima au 1er décembre 2024 (recommandation patronale du 26 novembre 2024)', s: 'Recommandation des organisations patronales, dont le SLBC', y: '2024', url: 'documents/textes/06-2024-grille-salaires-au-1er-decembre-recommandation.pdf' },
-      { t: 'Rapport de branche 2023-2024 des laboratoires de biologie médicale extra-hospitaliers (données 2023)', s: 'Données économiques et sociales de la branche, octobre 2024', y: '2024', url: 'documents/textes/07-labm-rapport-de-branche-2023-2024.pdf' },
       { t: 'Grille des salaires minima au 1er janvier 2024 (accord du 11 janvier 2024)', s: 'Accord de branche', y: '2024', url: 'documents/textes/08-2024-grille-salaires-au-1er-janvier.pdf' },
       { t: 'Grille des salaires minima au 1er septembre 2023 (recommandation patronale)', s: 'Recommandation des organisations patronales, dont le SLBC', y: '2023', url: 'documents/textes/09-2023-grille-salaires-au-1er-septembre-recommandation.pdf' },
       { t: 'Grille des salaires minima au 1er janvier 2023 (accord du 14 décembre 2022)', s: 'Accord de branche', y: '2023', url: 'documents/textes/10-2023-grille-salaires-au-1er-janvier.pdf' },
-      { t: 'Rapport de branche 2021 des laboratoires de biologie médicale extra-hospitaliers (données 2020)', y: '2021', url: 'documents/textes/01-labm-rapport-de-branche-2021.pdf' },
       { t: 'Grille des salaires minima au 1er mai 2022 (accord du 27 avril 2022)', y: '2022', url: 'documents/textes/02-2022-grille-salaires-au-1er-mai.pdf' }
     ] },
     { theme: 'Crise sanitaire (covid-19)', items: [
@@ -823,10 +828,11 @@
   };
   /* Documentation en deux parties (10 novembre 2026) : « Au laboratoire » (DOC_PRATIQUE) et « Le cadre de la profession » (textes,
      déontologie, rapports). Le bandeau de chaque partie sert de sommaire : rubriques et nombre de documents, recalculés à chaque filtre. */
-  const plural = (n, mot) => n + ' ' + mot + (n > 1 ? 's' : '');
+  const aDoc = (d) => Boolean(d.url || d.href);
+  const plural = (n, mot) => n + ' ' + mot + (n > 1 ? 's' : '');
   /* Colonne de droite : le nom de l'organisme plutôt que l'adresse du site ; le sous-titre ne le répète pas */
   const ORGS = { 'santepubliquefrance.fr': 'Santé publique France', 'ordre.pharmacien.fr': 'Ordre des pharmaciens', 'conseil-national.medecin.fr': 'Ordre des médecins',
-    'ameli.fr': 'Assurance maladie', 'igas.gouv.fr': 'IGAS', 'drees.solidarites-sante.gouv.fr': 'DREES', 'cofrac.fr': 'Cofrac', 'fhf.fr': 'FHF' };
+    'ameli.fr': 'Assurance maladie', 'igas.gouv.fr': 'IGAS', 'drees.solidarites-sante.gouv.fr': 'DREES', 'cofrac.fr': 'Cofrac' };
   const orgOf = (src) => ORGS[src] || src;
   const sansOrg = (s, org) => (s && org && s.indexOf(org + ', ') === 0) ? s.charAt(org.length + 2).toUpperCase() + s.slice(org.length + 3) : s;
   const docItem = (d) => { const org = orgOf(d.src); return Object.assign({}, d, { src: org, s: sansOrg(d.s, org) }); };
@@ -839,7 +845,7 @@
       const items = grp.items.filter((d) => ok(d.t + ' ' + (d.s || '') + ' ' + grp.g + ' ' + (d.src || '') + ' ' + (d.y || '') + (grp.id === 'doc-nabm' ? ' nabm nomenclature' : '')));
       $('#' + grp.id + '-list').innerHTML = items.map((d) => docRow(docItem(d), d.y || '')).join('');
       $('#' + grp.id).hidden = !items.length;
-      if (items.length) rubs.labo.push([grp.id, grp.g, grp.k, plural(items.length, 'document')]);
+      if (items.length) rubs.labo.push([grp.id, grp.g, grp.k, plural(items.filter(aDoc).length, 'document')]);
     });
     /* Textes législatifs et réglementaires : un groupe dépliable par thème ; une recherche ouvre les groupes qui ont des résultats. */
     let html = '';
@@ -847,18 +853,18 @@
     TEXTES.forEach((g, gi) => {
       const items = g.items.filter((d) => ok(d.t + ' ' + (d.s || '') + ' ' + g.theme + ' ' + d.y)).sort((a, b) => b.y.localeCompare(a.y));
       if (!items.length) return;
-      count += items.length;
+      count += items.filter(aDoc).length;
       html += '<details class="region doc-group" id="doc-t' + gi + '"' + (terms.length ? ' open' : '') + '><summary><span>' + esc(g.theme) + '</span><span class="count">' + plural(items.length, 'texte') + '</span></summary><ul class="rows">' +
         items.map((d) => docRow(docItem(d), d.y)).join('') + '</ul></details>';
     });
     $('#doc-textes-list').innerHTML = html;
     $('#doc-textes').hidden = !count;
-    if (count) rubs.cadre.push(['doc-textes', 'Textes législatifs et réglementaires', 'Code de la santé publique, lois, décrets et arrêtés, par thème', plural(count, 'texte')]);
+    if (count) rubs.cadre.push(['doc-textes', 'Textes législatifs et réglementaires', 'Code de la santé publique, lois, décrets, arrêtés, NABM, convention nationale et accords de branche, par thème', plural(count, 'texte')]);
     /* Déontologie */
     const deonto = DEONTO.filter((d) => ok(d.t + ' ' + (d.s || '') + ' déontologie ' + d.y));
     $('#doc-deonto-list').innerHTML = deonto.map((d) => docRow(docItem(d), d.y)).join('');
     $('#doc-deonto').hidden = !deonto.length;
-    if (deonto.length) rubs.cadre.push(['doc-deonto', 'Déontologie', 'Codes des pharmaciens et des médecins, dispositif anti‑cadeaux', plural(deonto.length, 'document')]);
+    if (deonto.length) rubs.cadre.push(['doc-deonto', 'Déontologie', 'Codes des pharmaciens et des médecins, dispositif anti-cadeaux', plural(deonto.length, 'document')]);
     /* Rapports et études sur le secteur, par source */
     let etudes = 0;
     $('#doc-etudes-list').innerHTML = ETUDES.map((grp) => {
@@ -869,11 +875,11 @@
         items.map((d) => docRow(docItem({ t: d.t, s: d.s, url: d.doc ? d.url : '', href: d.doc ? '' : d.url, src: d.src }), d.d)).join('') + '</ul>';
     }).join('');
     $('#doc-etudes').hidden = !etudes;
-    if (etudes) rubs.cadre.push(['doc-etudes', 'Rapports et études sur le secteur', 'Assurance maladie, IGAS et IGF, DREES, Observatoire, Ordres', plural(etudes, 'document')]);
+    if (etudes) rubs.cadre.push(['doc-etudes', 'Rapports et études sur le secteur', 'Assurance maladie, IGAS et IGF, DREES, Observatoire de la biologie médicale, rapports de branche, démographie des pharmaciens et des médecins', plural(etudes, 'document')]);
     /* Sommaires des deux bandeaux ; une partie sans résultat disparaît avec le filet qui la sépare de l'autre */
     [['labo', 'doc-pratique'], ['cadre', 'doc-cadre']].forEach(([k, id]) => {
       $('#dp-' + k + '-rubs').innerHTML = rubs[k].map(([sec, nom, quoi, n]) => '<li><a href="#documentation" data-section="' + sec + '"><span class="dp-rub">' + esc(nom) +
-        '<span class="dp-k">' + esc(quoi) + '</span></span>' + (terms.length ? '<span class="dp-n">' + esc(n) + '</span>' : '') + '</a></li>').join('');
+        '<span class="dp-k">' + esc(quoi) + '</span></span>' + (terms.length ? '<span class="dp-n">' + esc(n) + '</span>' : '') + '<span class="dp-go" aria-hidden="true">' + FLECHE + '</span></a></li>').join('');
       $('#' + id).hidden = !rubs[k].length;
     });
     $('#doc-part-sep').hidden = !(rubs.labo.length && rubs.cadre.length);
@@ -881,6 +887,9 @@
     /* La rubrique « Partenaires » a été retirée de la Documentation le 10 novembre 2026 (demande d'Isabelle Eimer) ;
        la liste PARTNERS sert encore à la colonne « Partenaires » du pied de page. */
     $('#doc-empty').hidden = Boolean(rubs.labo.length || rubs.cadre.length);
+    const total = $$('[data-view="documentation"] .rows > li a').length;
+    clearTimeout(renderDocs.t);
+    renderDocs.t = setTimeout(() => { $('#doc-count').textContent = terms.length ? (total ? plural(total, 'document') + (total > 1 ? ' affichés' : ' affiché') : 'Aucun document ne correspond') : ''; }, 500);
   }
 
   /* ---------- Rendu du contenu publié ---------- */
@@ -986,12 +995,19 @@
     if (t.offsetParent === null) {
       state.veilleSrc = 'Tout'; state.actuCat = 'Toutes'; state.presseYear = 'Toutes';
       renderVeille(); renderActus(); renderPresse();
+      if ($('#doc-q') && $('#doc-q').value) { $('#doc-q').value = ''; renderDocs(''); }
       t = document.getElementById(id);
     }
     if (!t) return;
     if (t.tagName === 'DETAILS') t.open = true;
     else if (t.classList.contains('pitem')) { const full = t.querySelector('.p-full'); if (full) full.open = true; }
     t.scrollIntoView({ behavior: smooth(), block: 'start' });
+    /* Documentation : le focus va sur le titre de la rubrique (ou le résumé du groupe de textes), pour que Tab reparte de là */
+    if (t.closest('[data-view="documentation"]')) {
+      const cible = t.tagName === 'DETAILS' ? t.querySelector('summary') : (t.querySelector('h2, h3') || t);
+      if (!cible.matches('a[href], button, summary, input, [tabindex]')) cible.setAttribute('tabindex', '-1');
+      cible.focus({ preventScroll: true });
+    }
   }
 
   function route() {
@@ -1067,8 +1083,13 @@
     idx.push({ type: 'Page', title: 'Salle de presse', sub: 'Les communiqués du SLBC', href: '#presse', section: null, text: 'contact presse journaliste kit presse logo' });
     idx.push({ type: 'Page', title: 'Contacter le SLBC', sub: 'Adresse e-mail et adresse postale', href: '#mentions', section: 'mentions-legales', text: 'contact contacter nous contacter écrire e-mail courriel adresse téléphone' });
     page('Actualités', 'L’information du syndicat', '#actualites');
-    page('Nomenclature et facturation', 'Table nationale de biologie, décisions de l’UNCAM', '#documentation', 'doc-nabm');
-    page('Textes réglementaires', 'Lois, décrets et arrêtés', '#documentation', 'doc-textes');
+    page('Au laboratoire', 'Surveillance et santé publique, nomenclature et facturation, fiches pratiques', '#documentation', 'doc-pratique');
+    page('Surveillance et santé publique', 'Résistance aux antibiotiques, VIH, déclarations obligatoires', '#documentation', 'doc-surveillance');
+    page('Nomenclature et facturation', 'Table nationale de biologie, espace des laboratoires sur ameli', '#documentation', 'doc-nabm');
+    page('Le cadre de la profession', 'Textes, déontologie, rapports et études sur le secteur', '#documentation', 'doc-cadre');
+    page('Textes législatifs et réglementaires', 'Code de la santé publique, lois, décrets et arrêtés', '#documentation', 'doc-textes');
+    page('Déontologie', 'Codes des pharmaciens et des médecins', '#documentation', 'doc-deonto');
+    page('Rapports et études sur le secteur', 'Assurance maladie, IGAS, DREES, Observatoire, branche', '#documentation', 'doc-etudes');
     page('Adhérer au SLBC', 'Demande d’adhésion en ligne', '#adherer');
     page('Espace adhérent', 'Veille réglementaire, lettre d’information, publications', '#espace');
     idx.push({ type: 'Page', title: 'Mentions légales', sub: 'Éditeur, directeur de la publication, hébergeur', href: '#mentions', section: null, text: 'informations légales éditeur hébergeur droit de réponse' });
@@ -1085,7 +1106,7 @@
     DOC_PRATIQUE.forEach((grp) => grp.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: grp.g, href: '#documentation', section: grp.id, text: (d.s || '') + ' ' + (d.src || '') + (grp.id === 'doc-nabm' ? ' nabm nomenclature' : '') })));
     DEONTO.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: 'Déontologie', href: '#documentation', section: 'doc-deonto', text: (d.s || '') + ' déontologie' }));
     TEXTES.forEach((g, gi) => g.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: g.theme, href: '#documentation', section: 'doc-t' + gi, text: d.y + ' ' + (d.s || '') })));
-    ETUDES.forEach((grp) => grp.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: grp.g + ', ' + d.d, href: '#documentation', section: 'doc-etudes', text: d.s + ' ' + (d.src || '') + ' étude rapport' })));
+    ETUDES.forEach((grp) => grp.items.forEach((d) => idx.push({ type: 'Document', title: d.t, sub: grp.g + ', ' + d.d, href: '#documentation', section: 'doc-etudes', text: d.s + ' ' + (d.src || '') + ' étude études rapport rapports' })));
     return idx;
   }
   const srItem = (it) =>
@@ -1097,7 +1118,7 @@
     const box = $('#search-results');
     const terms = norm(q).split(/\s+/).filter(Boolean);
     if (!terms.length) {
-      const quick = ['Veille réglementaire', 'Adhérer au SLBC', 'Nomenclature des actes (NABM)', 'Bureau exécutif', 'Salle de presse'].map((t) => INDEX.find((i) => i.title === t)).filter(Boolean);
+      const quick = ['Veille réglementaire', 'Adhérer au SLBC', 'Nomenclature et facturation', 'Bureau exécutif', 'Salle de presse'].map((t) => INDEX.find((i) => i.title === t)).filter(Boolean);
       box.innerHTML = '<p class="sr-title">Liens rapides</p><ul class="sr-list">' + quick.map(srItem).join('') + '</ul>';
       return;
     }

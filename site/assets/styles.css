@@ -652,7 +652,7 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 
 /* ---------- Documentation ---------- */
 .doc-search{display:flex;align-items:center;gap:12px;max-width:560px;min-height:52px;margin-top:8px;padding:0 16px;border-radius:14px;background:var(--neutre);color:var(--gris)}
-.doc-search:focus-within{box-shadow:0 0 0 3px rgba(95,122,43,.35)}
+.doc-search:focus-within{box-shadow:0 0 0 3px var(--vert)}
 .doc-q{flex:1;min-width:0;min-height:50px;border:0;outline:none;background:transparent;color:var(--encre);font:400 17px/1.4 var(--font);-webkit-appearance:none;appearance:none}
 .doc-sec{display:flex;flex-direction:column;gap:20px}
 .doc-sec + .doc-sec{margin-top:56px}
@@ -1177,3 +1177,9 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
 .doc-page.bg-fond{padding-top:0}
 .doc-page.bg-fond .doc-part-sep{padding-top:clamp(40px,5vw,64px)}
 @media (max-width:900px){.doc-page .row-link{grid-template-columns:minmax(0,1fr) auto}.doc-page .row-title{grid-column:1/-1;grid-row:2}}
+.doc-page.bg-fond:has(#doc-part-sep[hidden]){padding-top:clamp(40px,5vw,64px)}
+.doc-page:has(#doc-pratique[hidden]):has(#doc-empty[hidden]){padding-bottom:0}
+.dp-go{flex:none;align-self:center}
+.dp-go .fleche{display:block;width:1.1em;height:.8em;overflow:visible;transform:rotate(90deg)}
+.dp-rub{flex:1 1 auto;min-width:0}
+.doc-page .doc-h:focus-visible,.doc-page .dp-title:focus-visible{outline:3px solid var(--vert);outline-offset:4px;border-radius:4px}
