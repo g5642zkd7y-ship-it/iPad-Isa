@@ -1190,3 +1190,25 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
 .dp-rubs .mnum-doc{flex:none;width:46px;height:auto;margin:-6px 0 -8px -6px}
 .dp-cadre .mnum-doc .mnum-eclats{stroke:#fff}
 @media (max-width:560px){.doc-h .mnum-doc{width:52px}.dp-rubs .mnum-doc{width:40px}}
+/* Entrées en début d'onglet et grosse flèche (10 novembre 2026, demande d'Isabelle Eimer) : les deux parties annoncées dès l'ouverture,
+   aux couleurs de leur bannière ; un clic mène à la bannière. La grosse flèche au marqueur, tournée vers le bas, marque les deux entrées et
+   les deux bannières (les pastilles restent pour les rubriques). Au survol, elle descend un peu ; rien ne bouge sinon. */
+.doc-entrees{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,2vw,24px);margin:clamp(-28px,-2vw,-12px) 0 clamp(40px,5vw,64px)}
+.doc-entree{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:44px;padding:clamp(20px,2.4vw,28px) clamp(22px,2.8vw,34px);border-radius:var(--r-card);text-decoration:none}
+.de-labo{background:var(--vert-clair);color:var(--encre)}
+.de-cadre{background:var(--nardo);color:#fff}
+.de-txt{display:flex;flex-direction:column;gap:6px;min-width:0}
+.de-nom{font-size:clamp(23px,2.3vw,30px);line-height:1.1;letter-spacing:-.02em;font-weight:900}
+.de-desc{font-size:16px;line-height:1.4;font-weight:500}
+.de-labo .de-desc{color:var(--texte)}
+.grosse-fleche{display:block;flex:none;width:clamp(38px,3.6vw,48px);height:auto;overflow:visible;transition:transform .25s var(--ease)}
+.doc-entree:hover .grosse-fleche{transform:translateY(4px)}
+.doc-entree:hover .de-nom{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
+.de-labo:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
+.de-cadre:focus-visible{outline:3px solid var(--encre);outline-offset:3px}
+.dp-fleche{display:block;margin-top:clamp(18px,2.4vw,30px);width:clamp(40px,3.8vw,52px)}
+.dp-fleche .grosse-fleche{width:100%}
+.dp-cadre .dp-fleche{color:#fff}
+@media (prefers-reduced-motion:reduce){.grosse-fleche{transition:none}.doc-entree:hover .grosse-fleche{transform:none}}
+@media (max-width:640px){.doc-entrees{grid-template-columns:minmax(0,1fr)}.de-desc{font-size:15px}}
+@media (max-width:899px){.dp-fleche{display:none}}
