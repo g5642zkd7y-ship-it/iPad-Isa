@@ -895,7 +895,7 @@
     if (etudes) rubs.cadre.push(['doc-etudes', 'Rapports et études sur le secteur', 'Assurance maladie, IGAS et IGF, DREES, Observatoire de la biologie médicale, rapports de branche, démographie des pharmaciens et des médecins', plural(etudes, 'document')]);
     /* Sommaires des deux bandeaux ; une partie sans résultat disparaît avec le filet qui la sépare de l'autre */
     [['labo', 'doc-pratique'], ['cadre', 'doc-cadre']].forEach(([k, id]) => {
-      $('#dp-' + k + '-rubs').innerHTML = rubs[k].map(([sec, nom, quoi, n]) => '<li><a href="#documentation" data-section="' + sec + '">' + docBadge(sec, true) + '<span class="dp-rub">' + esc(nom) +
+      $('#dp-' + k + '-rubs').innerHTML = rubs[k].map(([sec, nom, quoi, n]) => '<li><a href="#documentation" data-section="' + sec + '">' + docBadge(sec, true) + '<span class="dp-rub"><span class="dp-nom">' + esc(nom) + '</span>' +
         '<span class="dp-k">' + esc(quoi) + '</span></span>' + (terms.length ? '<span class="dp-n">' + esc(n) + '</span>' : '') + '<span class="dp-go" aria-hidden="true">' + FLECHE + '</span></a></li>').join('');
       $('#' + id).hidden = !rubs[k].length;
     });

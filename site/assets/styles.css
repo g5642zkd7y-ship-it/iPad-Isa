@@ -1152,7 +1152,7 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
 .dp-labo .dp-k{color:var(--texte)}
 .dp-cadre .dp-k{color:#fff}
 .dp-n{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
-.dp-rubs a:hover .dp-rub{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.dp-rubs a:hover .dp-nom{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
 .dp-labo a:focus-visible{outline:3px solid var(--vert);outline-offset:2px;border-radius:6px}
 .dp-cadre a:focus-visible{outline:3px solid #fff;outline-offset:2px;border-radius:6px}
 @media (min-width:900px){.dp-head{grid-template-columns:minmax(0,6fr) minmax(0,5fr);column-gap:clamp(40px,5vw,84px);align-items:start}}
@@ -1202,14 +1202,15 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
 .de-nom{font-size:clamp(23px,2.3vw,30px);line-height:1.1;letter-spacing:-.02em;font-weight:900}
 .de-desc{font-size:16px;line-height:1.4;font-weight:500}
 .de-labo .de-desc{color:var(--texte)}
-.grosse-fleche{display:block;flex:none;width:clamp(44px,4.2vw,58px);height:auto;overflow:visible;transition:transform .25s var(--ease)}
+/* Grosse flèche épaisse (10 novembre 2026, demande d'Isabelle Eimer : « une flèche un peu épaisse, comme avec un surlignage, comme la pastille », à gauche) :
+   contour au marqueur, intérieur blanc, double vert anis décalé en bas à droite comme le rond vert des pastilles */
+.grosse-fleche{display:block;flex:none;width:clamp(56px,5.4vw,74px);height:auto;overflow:visible;transition:transform .25s var(--ease)}
 .doc-entree:hover .grosse-fleche{transform:translateX(4px)}
 .doc-entree:hover .de-nom{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
 .de-labo:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
 .de-cadre:focus-visible{outline:3px solid var(--encre);outline-offset:3px}
 .dp-titre-ligne{display:flex;align-items:center;gap:clamp(14px,1.8vw,22px)}
-.dp-fleche{display:block;flex:none;width:clamp(46px,4.6vw,64px)}
+.dp-fleche{display:block;flex:none;width:clamp(56px,5.6vw,80px)}
 .dp-fleche .grosse-fleche{width:100%}
-.dp-cadre .dp-fleche{color:#fff}
 @media (prefers-reduced-motion:reduce){.grosse-fleche{transition:none}.doc-entree:hover .grosse-fleche{transform:none}}
 @media (max-width:640px){.doc-entrees{grid-template-columns:minmax(0,1fr)}.de-desc{font-size:15px}}
