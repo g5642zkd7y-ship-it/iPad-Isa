@@ -414,15 +414,15 @@
   /* Documentation, partie « Au laboratoire » (10 novembre 2026, demande d'Isabelle Eimer : séparer la pratique de ce qui encadre la profession).
      Trois rubriques, dans cet ordre ; les éléments viennent de la planche des liens choisis (points 31 et 37 de docs/sources-et-verifications.md). */
   const DOC_PRATIQUE = [
-    { id: 'doc-surveillance', g: 'Surveillance et santé publique', items: [
+    { id: 'doc-surveillance', g: 'Surveillance et santé publique', k: 'Résistance aux antibiotiques, VIH, centres nationaux de référence, déclarations obligatoires', items: [
       { y: 'Avril 2026', t: 'Surveillance de la résistance bactérienne aux antibiotiques en soins de ville et en établissements d’hébergement pour personnes âgées dépendantes : mission PRIMO, résultats 2024', s: 'Rapport national établi à partir des antibiogrammes des laboratoires de biologie médicale', href: 'https://www.santepubliquefrance.fr/resistance-aux-antibiotiques/rapportsynthese/surveillance-de-la-resistance-bacterienne-aux-8', src: 'santepubliquefrance.fr' },
       { y: 'Novembre 2026', t: 'VIH en France : bilan 2025', s: 'Bulletin national sur le dépistage du VIH et les découvertes de séropositivité', href: 'https://www.santepubliquefrance.fr/infections-sexuellement-transmissibles/vihsida/bulletin-national/vih-en-france-bilan-2025', src: 'santepubliquefrance.fr' },
       { t: 'Centres nationaux de référence pour la lutte contre les maladies transmissibles (CNR)', s: 'Missions, liste et annuaire des centres, mandature 2023-2027', y: '2026', href: 'https://www.santepubliquefrance.fr/centres-nationaux-de-reference-pour-la-lutte-contre-les-maladies-transmissibles-cnr', src: 'santepubliquefrance.fr' },
       { t: 'Liste des maladies à signalement obligatoire', s: 'Santé publique France, fiches de signalement et modalités de transmission', y: '2026', href: 'https://www.santepubliquefrance.fr/liste-des-maladies-a-signalement-obligatoire', src: 'santepubliquefrance.fr' },
       { t: 'e-DO : déclaration obligatoire en ligne de l’infection par le VIH, du sida et de la tuberculose', s: 'Santé publique France, critères, accès et tutoriels, dont la déclaration du biologiste', y: '2026', href: 'https://www.santepubliquefrance.fr/services/e-do-declaration-obligatoire-en-ligne-de-linfection-par-le-vih-et-du-sida-et-de-la-tuberculose', src: 'santepubliquefrance.fr' }
     ] },
-    { id: 'doc-nabm', g: 'Nomenclature et facturation', items: [NABM[0], { t: 'Ameli, espace « Laboratoire d’analyses médicales »', s: 'Assurance maladie, rubriques exercice libéral, facturation, dossier médical partagé et actualités', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales', src: 'ameli.fr' }].concat(NABM.slice(1)) },
-    { id: 'doc-fiches', g: 'Fiches pratiques', items: [
+    { id: 'doc-nabm', g: 'Nomenclature et facturation', k: 'Table nationale de biologie, décisions de l’UNCAM, espace des laboratoires sur ameli', items: [NABM[0], { t: 'Ameli, espace « Laboratoire d’analyses médicales »', s: 'Assurance maladie, rubriques exercice libéral, facturation, dossier médical partagé et actualités', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales', src: 'ameli.fr' }].concat(NABM.slice(1)) },
+    { id: 'doc-fiches', g: 'Fiches pratiques', k: 'Dépistage des IST sans ordonnance, données personnelles', items: [
       { t: 'Dépistage des IST en laboratoire sans ordonnance : Mon test IST', s: 'Fiche de l’Assurance maladie pour les laboratoires', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales/exercice-liberal/prise-charge-patients/depistage-ist/mon-test-ist-depistage-en-laboratoire-sans-ordonnance', src: 'ameli.fr' },
       { t: 'La protection des données personnelles en laboratoire de biologie médicale', s: 'Ordre des pharmaciens, fiche pratique pour les laboratoires', y: 'En ligne', href: 'https://www.ordre.pharmacien.fr/je-suis/pharmacien/je-suis-pharmacien-biologiste-medical/mon-exercice-professionnel/la-protection-des-donnees-personnelles-en-laboratoire-de-biologie-medicale', src: 'ordre.pharmacien.fr' }
     ] }
@@ -814,7 +814,7 @@
   }
 
   const docRow = (d, date, cat) => {
-    const inner = '<span class="row-date">' + esc(date) + '</span><span class="row-title">' + esc(d.t) + (d.s ? '<span class="row-sub">' + esc(d.s) + '</span>' : '') + '</span>';
+    const inner = '<span class="row-date' + (date && !/\d/.test(date) ? ' is-etat' : '') + '">' + esc(date) + '</span><span class="row-title">' + esc(d.t) + (d.s ? '<span class="row-sub">' + esc(d.s) + '</span>' : '') + '</span>';
     if (d.url && DOCS[d.url]) return '<li><a class="row-link" href="' + esc(d.url) + '" data-doc="' + esc(d.url) + '">' + inner + '<span class="row-cat">' + esc(cat || nPages(d.url)) + '</span></a></li>';
     /* Lien vers un site officiel : la source, puis la petite flèche au marqueur, tournée vers le haut (nouvel onglet) */
     if (d.href) return '<li><a class="row-link" href="' + esc(d.href) + '" target="_blank" rel="noopener">' + inner + '<span class="row-cat row-ext">' + esc(d.src || 'Légifrance') + FLECHE +
@@ -824,6 +824,12 @@
   /* Documentation en deux parties (10 novembre 2026) : « Au laboratoire » (DOC_PRATIQUE) et « Le cadre de la profession » (textes,
      déontologie, rapports). Le bandeau de chaque partie sert de sommaire : rubriques et nombre de documents, recalculés à chaque filtre. */
   const plural = (n, mot) => n + ' ' + mot + (n > 1 ? 's' : '');
+  /* Colonne de droite : le nom de l'organisme plutôt que l'adresse du site ; le sous-titre ne le répète pas */
+  const ORGS = { 'santepubliquefrance.fr': 'Santé publique France', 'ordre.pharmacien.fr': 'Ordre des pharmaciens', 'conseil-national.medecin.fr': 'Ordre des médecins',
+    'ameli.fr': 'Assurance maladie', 'igas.gouv.fr': 'IGAS', 'drees.solidarites-sante.gouv.fr': 'DREES', 'cofrac.fr': 'Cofrac', 'fhf.fr': 'FHF' };
+  const orgOf = (src) => ORGS[src] || src;
+  const sansOrg = (s, org) => (s && org && s.indexOf(org + ', ') === 0) ? s.charAt(org.length + 2).toUpperCase() + s.slice(org.length + 3) : s;
+  const docItem = (d) => { const org = orgOf(d.src); return Object.assign({}, d, { src: org, s: sansOrg(d.s, org) }); };
   function renderDocs(q) {
     const terms = norm(q).split(/\s+/).filter(Boolean);
     const ok = (s) => !terms.length || terms.every((t) => norm(s).includes(t));
@@ -831,9 +837,9 @@
     /* Au laboratoire */
     DOC_PRATIQUE.forEach((grp) => {
       const items = grp.items.filter((d) => ok(d.t + ' ' + (d.s || '') + ' ' + grp.g + ' ' + (d.src || '') + ' ' + (d.y || '') + (grp.id === 'doc-nabm' ? ' nabm nomenclature' : '')));
-      $('#' + grp.id + '-list').innerHTML = items.map((d) => docRow(d, d.y || '')).join('');
+      $('#' + grp.id + '-list').innerHTML = items.map((d) => docRow(docItem(d), d.y || '')).join('');
       $('#' + grp.id).hidden = !items.length;
-      if (items.length) rubs.labo.push([grp.id, grp.g, plural(items.length, 'document')]);
+      if (items.length) rubs.labo.push([grp.id, grp.g, grp.k, plural(items.length, 'document')]);
     });
     /* Textes législatifs et réglementaires : un groupe dépliable par thème ; une recherche ouvre les groupes qui ont des résultats. */
     let html = '';
@@ -843,33 +849,35 @@
       if (!items.length) return;
       count += items.length;
       html += '<details class="region doc-group" id="doc-t' + gi + '"' + (terms.length ? ' open' : '') + '><summary><span>' + esc(g.theme) + '</span><span class="count">' + plural(items.length, 'texte') + '</span></summary><ul class="rows">' +
-        items.map((d) => docRow(d, d.y)).join('') + '</ul></details>';
+        items.map((d) => docRow(docItem(d), d.y)).join('') + '</ul></details>';
     });
     $('#doc-textes-list').innerHTML = html;
     $('#doc-textes').hidden = !count;
-    if (count) rubs.cadre.push(['doc-textes', 'Textes législatifs et réglementaires', plural(count, 'texte')]);
+    if (count) rubs.cadre.push(['doc-textes', 'Textes législatifs et réglementaires', 'Code de la santé publique, lois, décrets et arrêtés, par thème', plural(count, 'texte')]);
     /* Déontologie */
     const deonto = DEONTO.filter((d) => ok(d.t + ' ' + (d.s || '') + ' déontologie ' + d.y));
-    $('#doc-deonto-list').innerHTML = deonto.map((d) => docRow(d, d.y)).join('');
+    $('#doc-deonto-list').innerHTML = deonto.map((d) => docRow(docItem(d), d.y)).join('');
     $('#doc-deonto').hidden = !deonto.length;
-    if (deonto.length) rubs.cadre.push(['doc-deonto', 'Déontologie', plural(deonto.length, 'document')]);
+    if (deonto.length) rubs.cadre.push(['doc-deonto', 'Déontologie', 'Codes des pharmaciens et des médecins, dispositif anti‑cadeaux', plural(deonto.length, 'document')]);
     /* Rapports et études sur le secteur, par source */
     let etudes = 0;
     $('#doc-etudes-list').innerHTML = ETUDES.map((grp) => {
       const items = grp.items.filter((d) => ok(d.t + ' ' + d.s + ' ' + grp.g + ' ' + (d.src || '') + ' étude rapport'));
       etudes += items.length;
       if (!items.length) return '';
-      return '<p class="doc-theme">' + esc(grp.g) + '</p><ul class="rows">' +
-        items.map((d) => docRow({ t: d.t, s: d.s, url: d.doc ? d.url : '', href: d.doc ? '' : d.url, src: d.src }, d.d)).join('') + '</ul>';
+      return '<h4 class="doc-theme">' + esc(grp.g) + '</h4><ul class="rows">' +
+        items.map((d) => docRow(docItem({ t: d.t, s: d.s, url: d.doc ? d.url : '', href: d.doc ? '' : d.url, src: d.src }), d.d)).join('') + '</ul>';
     }).join('');
     $('#doc-etudes').hidden = !etudes;
-    if (etudes) rubs.cadre.push(['doc-etudes', 'Rapports et études sur le secteur', plural(etudes, 'document')]);
+    if (etudes) rubs.cadre.push(['doc-etudes', 'Rapports et études sur le secteur', 'Assurance maladie, IGAS et IGF, DREES, Observatoire, Ordres', plural(etudes, 'document')]);
     /* Sommaires des deux bandeaux ; une partie sans résultat disparaît avec le filet qui la sépare de l'autre */
     [['labo', 'doc-pratique'], ['cadre', 'doc-cadre']].forEach(([k, id]) => {
-      $('#dp-' + k + '-rubs').innerHTML = rubs[k].map(([sec, nom, n]) => '<li><a href="#documentation" data-section="' + sec + '"><span class="dp-rub">' + esc(nom) + '</span><span class="dp-n">' + esc(n) + '</span></a></li>').join('');
+      $('#dp-' + k + '-rubs').innerHTML = rubs[k].map(([sec, nom, quoi, n]) => '<li><a href="#documentation" data-section="' + sec + '"><span class="dp-rub">' + esc(nom) +
+        '<span class="dp-k">' + esc(quoi) + '</span></span>' + (terms.length ? '<span class="dp-n">' + esc(n) + '</span>' : '') + '</a></li>').join('');
       $('#' + id).hidden = !rubs[k].length;
     });
     $('#doc-part-sep').hidden = !(rubs.labo.length && rubs.cadre.length);
+    $('#doc-cadre-sec').hidden = !rubs.cadre.length;
     /* La rubrique « Partenaires » a été retirée de la Documentation le 10 novembre 2026 (demande d'Isabelle Eimer) ;
        la liste PARTNERS sert encore à la colonne « Partenaires » du pied de page. */
     $('#doc-empty').hidden = Boolean(rubs.labo.length || rubs.cadre.length);
