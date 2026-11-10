@@ -802,6 +802,22 @@
     (JOIN_ICONS[k] || '') +
     '<g class="mnum-eclats" stroke-width="2.6"><path d="M67 13 L72.5 7.5"/><path d="M71.5 21.5 L79 19.5"/><path d="M60.5 8 L62 2"/></g></g></svg>';
 
+  /* Documentation : petit dessin de chaque rubrique, dans la même pastille que la bannière « Rejoindre le SLBC » (10 novembre 2026, demande
+     d'Isabelle Eimer : « Rajoute des pastilles ») : boîte de Petri, lettre clé B de la NABM, porte-documents, code relié, balance, graphique. */
+  const DOC_ICONS = {
+    'doc-surveillance': '<circle class="mnum-digit" pathLength="1" cx="42" cy="41" r="16.5" fill="#FFFFFF" stroke-width="3.4"/><circle class="mnum-digit" pathLength="1" cx="42" cy="41" r="12.5" stroke-width="2"/><g class="mnum-fill"><circle cx="36.5" cy="37" r="3.4" fill="#D6E4A6" stroke-width="2.2"/><circle cx="48" cy="38.5" r="3.4" fill="#D6E4A6" stroke-width="2.2"/><circle cx="41.5" cy="47.5" r="3.4" fill="#D6E4A6" stroke-width="2.2"/><circle cx="34.5" cy="45.5" r="1.3" fill="#2E3236" stroke="none"/><circle cx="49.5" cy="46.5" r="1.3" fill="#2E3236" stroke="none"/><circle cx="44" cy="31.5" r="1.3" fill="#2E3236" stroke="none"/></g>',
+    'doc-nabm': '<path class="mnum-digit" pathLength="1" d="M35 27 L35 55" stroke-width="3.8"/><path class="mnum-digit" pathLength="1" d="M35 27 L44 27 Q51.5 27 51.5 34 Q51.5 40.5 44 40.5 L35 40.5 M44 40.5 Q53.5 40.5 53.5 47.5 Q53.5 55 44 55 L35 55" stroke-width="3.8"/><path class="mnum-fill" d="M39 31 L43.5 31 Q47.5 31 47.5 34 Q47.5 37 43.5 37 L39 37 Z" fill="#D6E4A6" stroke="none"/>',
+    'doc-fiches': '<path class="mnum-digit" pathLength="1" d="M29 26 L55 26 L55 58 L29 58 Z" fill="#FFFFFF" stroke-width="3.4"/><rect class="mnum-fill" x="36" y="22" width="12" height="7.5" rx="2.5" fill="#D6E4A6" stroke-width="2.4"/><g class="mnum-fill" stroke-width="2.6"><path d="M34 37 L50 37"/><path d="M34 43.5 L50 43.5"/><path d="M34 50 L45 50"/></g>',
+    'doc-textes': '<path class="mnum-digit" pathLength="1" d="M28 25 L54 25 Q57 25 57 28 L57 57 L31 57 Q28 57 28 54 Z" fill="#FFFFFF" stroke-width="3.4"/><path class="mnum-fill" d="M29.7 26.7 L34 26.7 L34 55.3 L31 55.3 Q29.7 55.3 29.7 54 Z" fill="#D6E4A6" stroke="none"/><path class="mnum-digit" pathLength="1" d="M34 25 L34 57" stroke-width="2.6"/><g class="mnum-fill" stroke-width="2.4"><path d="M39 34 L51 34"/><path d="M39 40 L49 40"/></g><path class="mnum-fill" d="M46 57 L46 63 L49 60.5 L52 63 L52 57" fill="#5F7A2B" stroke-width="2.2"/>',
+    'doc-deonto': '<path class="mnum-digit" pathLength="1" d="M42 25 L42 56" stroke-width="3.4"/><path class="mnum-digit" pathLength="1" d="M34 57 L50 57" stroke-width="3.4"/><path class="mnum-digit" pathLength="1" d="M25 31 Q42 27 59 31" stroke-width="3.2"/><g class="mnum-fill" stroke-width="2.2"><path d="M25 31 L20 43 M25 31 L30 43 M59 31 L54 43 M59 31 L64 43"/></g><path class="mnum-fill" d="M19 43 Q25 50 31 43 Z" fill="#D6E4A6" stroke-width="2.6"/><path class="mnum-fill" d="M53 43 Q59 50 65 43 Z" fill="#D6E4A6" stroke-width="2.6"/><circle class="mnum-fill" cx="42" cy="25" r="2.6" fill="#FFFFFF" stroke-width="2.4"/>',
+    'doc-etudes': '<path class="mnum-digit" pathLength="1" d="M23 57 L61 57" stroke-width="3.4"/><path class="mnum-digit" pathLength="1" d="M27 57 L27 44 L34 44 L34 57" fill="#FFFFFF" stroke-width="3.2"/><path class="mnum-fill" d="M38.5 57 L38.5 35 L45.5 35 L45.5 57" fill="#D6E4A6" stroke-width="3.2"/><path class="mnum-fill" d="M50 57 L50 27 L57 27 L57 57" fill="#5F7A2B" stroke-width="3.2"/>'
+  };
+  const docBadge = (id, drawn) => '<svg class="mnum mnum-join mnum-doc' + (drawn ? ' drawn' : '') + '" viewBox="8 0 74 76" aria-hidden="true" focusable="false" fill="none" stroke="#2E3236" stroke-linecap="round" stroke-linejoin="round">' +
+    '<g class="perso"><circle class="mnum-anis" cx="50" cy="47" r="29" fill="#A3BE3C" stroke="none"/>' +
+    '<path class="mnum-head" pathLength="1" d="M42 11 C59.5 10.5 71 23.5 71 40 C71 57.5 58.5 69.5 42 69.5 C25 69.5 13 57 13 40 C13 23.5 25.5 11.8 39.5 11.2" fill="#FFFFFF" stroke-width="2.8"/>' +
+    (DOC_ICONS[id] || '') +
+    '<g class="mnum-eclats" stroke-width="2.6"><path d="M67 13 L72.5 7.5"/><path d="M71.5 21.5 L79 19.5"/><path d="M60.5 8 L62 2"/></g></g></svg>';
+
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
     $('#home-benefits').innerHTML = BENEFITS.map((b, k) => '<li>' + joinBadge(k) + '<span>' + esc(b.t) + '</span></li>').join('');
@@ -816,6 +832,7 @@
     $('#trackers').innerHTML = TRACKERS.map((t) => '<p class="track-title">' + esc(t.title) + '</p><ol class="track">' + t.steps.map((s) => '<li class="' + (s.done ? 'done' : '') + '"><span class="step-name">' + esc(s.n) + '</span><span class="step-when">' + esc(s.w) + '</span></li>').join('') + '</ol>').join('');
     $('#foot-partners').innerHTML = PARTNERS.slice(0, 5).map((p) => '<li><a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.n) + '</a></li>').join('');
     renderDocs('');
+    $$('.doc-page .doc-sec > .doc-h').forEach((h) => { const id = h.parentNode.id; if (DOC_ICONS[id] && !h.querySelector('.mnum')) h.insertAdjacentHTML('afterbegin', docBadge(id, false)); });
   }
 
   const docRow = (d, date, cat) => {
@@ -878,7 +895,7 @@
     if (etudes) rubs.cadre.push(['doc-etudes', 'Rapports et études sur le secteur', 'Assurance maladie, IGAS et IGF, DREES, Observatoire de la biologie médicale, rapports de branche, démographie des pharmaciens et des médecins', plural(etudes, 'document')]);
     /* Sommaires des deux bandeaux ; une partie sans résultat disparaît avec le filet qui la sépare de l'autre */
     [['labo', 'doc-pratique'], ['cadre', 'doc-cadre']].forEach(([k, id]) => {
-      $('#dp-' + k + '-rubs').innerHTML = rubs[k].map(([sec, nom, quoi, n]) => '<li><a href="#documentation" data-section="' + sec + '"><span class="dp-rub">' + esc(nom) +
+      $('#dp-' + k + '-rubs').innerHTML = rubs[k].map(([sec, nom, quoi, n]) => '<li><a href="#documentation" data-section="' + sec + '">' + docBadge(sec, true) + '<span class="dp-rub">' + esc(nom) +
         '<span class="dp-k">' + esc(quoi) + '</span></span>' + (terms.length ? '<span class="dp-n">' + esc(n) + '</span>' : '') + '<span class="dp-go" aria-hidden="true">' + FLECHE + '</span></a></li>').join('');
       $('#' + id).hidden = !rubs[k].length;
     });

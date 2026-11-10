@@ -1183,3 +1183,10 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
 .dp-go .fleche{display:block;width:1.1em;height:.8em;overflow:visible;transform:rotate(90deg)}
 .dp-rub{flex:1 1 auto;min-width:0}
 .doc-page .doc-h:focus-visible,.doc-page .dp-title:focus-visible{outline:3px solid var(--vert);outline-offset:4px;border-radius:4px}
+/* Pastilles des rubriques (10 novembre 2026) : dans le titre de chaque rubrique et dans le sommaire des bandeaux */
+.doc-h{display:flex;align-items:center;gap:14px}
+.doc-h .mnum-doc{flex:none;width:60px;height:auto;margin:-2px 0 -6px -6px}
+.dp-rubs a{gap:14px}
+.dp-rubs .mnum-doc{flex:none;width:46px;height:auto;margin:-6px 0 -8px -6px}
+.dp-cadre .mnum-doc .mnum-eclats{stroke:#fff}
+@media (max-width:560px){.doc-h .mnum-doc{width:52px}.dp-rubs .mnum-doc{width:40px}}
