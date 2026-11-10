@@ -939,7 +939,7 @@
     const opts = cats();
     const n = (c) => DATA.actus.filter((a) => c === 'Toutes' || a.cat === c).length;
     el.innerHTML = opts.map((c) => '<button type="button" class="cat-pave" aria-pressed="' + (c === current) + '">' + pastille(CAT_ICONS[c], 'mnum-cat', catPaves.vu) +
-      '<span class="cat-txt"><span class="cat-nom">' + esc(c) + '</span><span class="cat-n">' + esc(plural(n(c), 'article')) + '</span></span></button>').join('');
+      '<span class="cat-txt"><span class="cat-nom">' + esc(c).replace(/ à /g, ' à\u00a0') + '</span><span class="sr-only">, </span><span class="cat-n">' + esc(plural(n(c), 'article')) + '</span></span></button>').join('');
     catPaves.vu = true;
     $$('button', el).forEach((b, i) => b.addEventListener('click', () => {
       onPick(opts[i]);
