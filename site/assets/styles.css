@@ -996,6 +996,14 @@ svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
   .charter-item:nth-child(even) .mnum{--d:.2s}
   .pillar:nth-child(2) .mnum{--d:.2s}
   .pillar:nth-child(3) .mnum{--d:.4s}
+  .dp-rubs li:nth-child(2) .mnum{--d:.2s}
+  .dp-rubs li:nth-child(3) .mnum{--d:.4s}
+  .cat-pave:nth-child(2) .mnum{--d:.1s}
+  .cat-pave:nth-child(3) .mnum{--d:.2s}
+  .cat-pave:nth-child(4) .mnum{--d:.3s}
+  .cat-pave:nth-child(5) .mnum{--d:.4s}
+  .cat-pave:nth-child(6) .mnum{--d:.5s}
+  .cat-pave:nth-child(7) .mnum{--d:.6s}
   /* Séparateur sous la devise : le trait se déploie depuis les ronds du centre */
   .js-motion .sep-l{transform:scaleX(0);transform-origin:right center}
   .js-motion .sep-r{transform:scaleX(0);transform-origin:left center}

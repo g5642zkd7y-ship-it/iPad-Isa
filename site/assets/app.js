@@ -818,6 +818,12 @@
     (icon || '') +
     '<g class="mnum-eclats" stroke-width="2.6"><path d="M67 13 L72.5 7.5"/><path d="M71.5 21.5 L79 19.5"/><path d="M60.5 8 L62 2"/></g></g></svg>';
   const docBadge = (id, drawn) => pastille(DOC_ICONS[id], 'mnum-doc', drawn);
+  /* Pastilles refaites après le démarrage (sommaires de la Documentation, pavés des Actualités) : celles déjà dessinées le restent,
+     les autres se dessinent à leur arrivée à l'écran, comme partout ailleurs (10 novembre 2026, demande d'Isabelle Eimer : « Les pastilles
+     de la documentation doivent apparaître au fur et à mesure »). Avant setupMotion(), c'est lui qui les observe. */
+  let motionIO = null;
+  const pastillesDessinees = (root, cle) => new Set($$('.mnum.drawn', root).map(cle));
+  const observePastilles = (root) => { if (motionIO) $$('.mnum:not(.drawn)', root).forEach((el) => motionIO.observe(el)); };
 
   /* Actualités : les rubriques en pavés (10 novembre 2026, demande d'Isabelle Eimer : « Fais-en des pavés différents ou autre chose de plus
      attractif »). Chaque pavé a sa pastille : un journal pour toutes les actualités, la lettre clé B pour la nomenclature, deux biologistes
@@ -910,8 +916,11 @@
     if (etudes) rubs.cadre.push(['doc-etudes', 'Rapports et études sur le secteur', 'Assurance maladie, IGAS et IGF, DREES, Observatoire de la biologie médicale, rapports de branche, démographie des pharmaciens et des médecins', plural(etudes, 'document')]);
     /* Sommaires des deux bandeaux ; une partie sans résultat disparaît avec le filet qui la sépare de l'autre */
     [['labo', 'doc-pratique'], ['cadre', 'doc-cadre']].forEach(([k, id]) => {
-      $('#dp-' + k + '-rubs').innerHTML = rubs[k].map(([sec, nom, quoi, n]) => '<li><a href="#documentation" data-section="' + sec + '">' + docBadge(sec, true) + '<span class="dp-rub"><span class="dp-nom">' + esc(nom) + '</span>' +
+      const ul = $('#dp-' + k + '-rubs');
+      const deja = pastillesDessinees(ul, (s) => s.closest('a').dataset.section);
+      ul.innerHTML = rubs[k].map(([sec, nom, quoi, n]) => '<li><a href="#documentation" data-section="' + sec + '">' + docBadge(sec, deja.has(sec)) + '<span class="dp-rub"><span class="dp-nom">' + esc(nom) + '</span>' +
         '<span class="dp-k">' + esc(quoi) + '</span></span>' + (terms.length ? '<span class="dp-n">' + esc(n) + '</span>' : '') + '<span class="dp-go" aria-hidden="true">' + FLECHE + '</span></a></li>').join('');
+      observePastilles(ul);
       $('#' + id).hidden = !rubs[k].length;
     });
     $('#doc-part-sep').hidden = !(rubs.labo.length && rubs.cadre.length);
@@ -938,9 +947,10 @@
   function catPaves(el, current, onPick) {
     const opts = cats();
     const n = (c) => DATA.actus.filter((a) => c === 'Toutes' || a.cat === c).length;
-    el.innerHTML = opts.map((c) => '<button type="button" class="cat-pave" aria-pressed="' + (c === current) + '">' + pastille(CAT_ICONS[c], 'mnum-cat', catPaves.vu) +
+    const deja = pastillesDessinees(el, (s) => s.closest('button').dataset.cat);
+    el.innerHTML = opts.map((c) => '<button type="button" class="cat-pave" data-cat="' + esc(c) + '" aria-pressed="' + (c === current) + '">' + pastille(CAT_ICONS[c], 'mnum-cat', deja.has(c)) +
       '<span class="cat-txt"><span class="cat-nom">' + esc(c).replace(/ à /g, ' à\u00a0') + '</span><span class="sr-only">, </span><span class="cat-n">' + esc(plural(n(c), 'article')) + '</span></span></button>').join('');
-    catPaves.vu = true;
+    observePastilles(el);
     $$('button', el).forEach((b, i) => b.addEventListener('click', () => {
       onPick(opts[i]);
       const pressed = el.querySelector('[aria-pressed="true"]');
@@ -1741,6 +1751,7 @@
       });
     }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
     $$('.pillar, .timeline, .sep-sig, .mnum').forEach((el) => io.observe(el));
+    motionIO = io;
   }
 
   /* ---------- Le site bouge avec le visiteur (demande d'Isabelle Eimer du 6 novembre 2026) ----------
