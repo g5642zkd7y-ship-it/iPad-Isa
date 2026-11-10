@@ -648,13 +648,6 @@
                               : '<span class="muted" style="font-size:15px">Publié depuis l’espace adhérent (démonstration).</span>') +
     '</article>';
 
-  const arow = (a) =>
-    '<li><a class="row-link" href="#actualites" data-section="ac-' + esc(a.id) + '">' +
-      '<time class="row-date" datetime="' + esc(a.date) + '">' + esc(shortDate(a.date)) + '</time>' +
-      '<span class="row-title">' + esc(a.title) + '</span>' +
-      '<span class="row-cat">' + esc(a.cat) + '</span>' +
-    '</a></li>';
-
   /* Liens d'une actualité : l'article et sa pièce jointe s'ouvrent dans la liseuse ; une publication de démonstration
      peut renvoyer vers une page extérieure. */
   const docLink = (u, label, n) => '<a class="more" href="' + esc(u) + '" data-doc="' + esc(u) + '">' + esc(label) + (n ? ' (' + nPages(u) + ')' : '') + '</a>';
@@ -934,28 +927,31 @@
   }
 
   /* ---------- Rendu du contenu publié ---------- */
-  const state = { homeCat: 'Toutes', actuCat: 'Toutes', presseYear: 'Toutes', veilleSrc: 'Tout' };
+  const state = { actuCat: 'Toutes', presseYear: 'Toutes', veilleSrc: 'Tout' };
   const CAT_ORDER = ['Toutes', 'Nomenclature', 'Social', 'Santé publique', 'Exercice', 'Vie du syndicat', 'Appels à projets'];
   const cats = () => { const present = new Set(DATA.actus.map((a) => a.cat)); return CAT_ORDER.filter((c) => c === 'Toutes' || present.has(c)); };
   const byDate = (a, b) => b.date.localeCompare(a.date);
 
   function renderShelf() { $('#home-shelf').innerHTML = DATA.veille.map(vcard).join(''); updateShelf(); }
-  /* Accueil, bannière Actualités : les mêmes pavés que la page Actualités (10 novembre 2026, demande d'Isabelle Eimer : « Bannière actualités
-     de l'accueil : ok avec ta proposition ») ; la liste garde les cinq dernières actualités de la rubrique choisie. */
+  /* Accueil, bannière Actualités : seulement les pavés des rubriques (10 novembre 2026, demandes d'Isabelle Eimer : « Bannière actualités
+     de l'accueil : ok avec ta proposition », puis « il faut juste mettre les onglets […] et ne rien mettre de plus »). Chaque pavé est un
+     lien vers la page Actualités, ouverte sur la rubrique choisie, à la hauteur des pavés, le focus sur le pavé choisi (goSection). */
   function renderHomeActus() {
-    catPaves($('#home-actu-seg'), state.homeCat, (c) => { state.homeCat = c; renderHomeActus(); });
-    $('#home-actus').innerHTML = DATA.actus.slice().sort(byDate).filter((a) => state.homeCat === 'Toutes' || a.cat === state.homeCat).slice(0, 5).map(arow).join('');
+    catPaves($('#home-actu-seg'), null, (c) => { state.actuCat = c; renderActus(); });
   }
-  /* Pavés des rubriques (page Actualités et bannière Actualités de l'accueil) */
+  /* Pavés des rubriques : boutons qui filtrent la liste sur la page Actualités ; liens vers cette page sur l'accueil (current = null) */
   function catPaves(el, current, onPick) {
     const opts = cats();
+    const lien = current === null;
     const n = (c) => DATA.actus.filter((a) => c === 'Toutes' || a.cat === c).length;
-    const deja = pastillesDessinees(el, (s) => s.closest('button').dataset.cat);
-    el.innerHTML = opts.map((c) => '<button type="button" class="cat-pave" data-cat="' + esc(c) + '" aria-pressed="' + (c === current) + '">' + pastille(CAT_ICONS[c], 'mnum-cat', deja.has(c)) +
-      '<span class="cat-txt"><span class="cat-nom">' + esc(c).replace(/ à /g, ' à\u00a0') + '</span><span class="sr-only">, </span><span class="cat-n">' + esc(plural(n(c), 'article')) + '</span></span></button>').join('');
+    const deja = pastillesDessinees(el, (s) => s.closest('.cat-pave').dataset.cat);
+    el.innerHTML = opts.map((c) => (lien ? '<a class="cat-pave" href="#actualites" data-section="actu-seg" data-cat="' + esc(c) + '">' : '<button type="button" class="cat-pave" data-cat="' + esc(c) + '" aria-pressed="' + (c === current) + '">') +
+      pastille(CAT_ICONS[c], 'mnum-cat', deja.has(c)) +
+      '<span class="cat-txt"><span class="cat-nom">' + esc(c).replace(/ à /g, ' à\u00a0') + '</span><span class="sr-only">, </span><span class="cat-n">' + esc(plural(n(c), 'article')) + '</span></span>' + (lien ? '</a>' : '</button>')).join('');
     observePastilles(el);
-    $$('button', el).forEach((b, i) => b.addEventListener('click', () => {
+    $$('.cat-pave', el).forEach((b, i) => b.addEventListener('click', () => {
       onPick(opts[i]);
+      if (lien) return;
       const pressed = el.querySelector('[aria-pressed="true"]');
       if (pressed) pressed.focus({ preventScroll: true });
     }));
@@ -1059,6 +1055,7 @@
     if (t.tagName === 'DETAILS') t.open = true;
     else if (t.classList.contains('pitem')) { const full = t.querySelector('.p-full'); if (full) full.open = true; }
     t.scrollIntoView({ behavior: smooth(), block: 'start' });
+    if (t.id === 'actu-seg') { const choisi = t.querySelector('[aria-pressed="true"]'); if (choisi) choisi.focus({ preventScroll: true }); }
     /* Documentation : le focus va sur le titre de la rubrique (ou le résumé du groupe de textes), pour que Tab reparte de là */
     if (t.closest('[data-view="documentation"]')) {
       const cible = t.tagName === 'DETAILS' ? t.querySelector('summary') : (t.querySelector('h2, h3') || t);
@@ -1490,7 +1487,7 @@
     } else {
       kind = 'actus';
       item = { id, date, cat: $('#f-cat').value, title, excerpt: resume, url: null, members, demo: true };
-      state.homeCat = 'Toutes'; state.actuCat = 'Toutes';
+      state.actuCat = 'Toutes';
     }
     DATA[kind].unshift(item);
     demoPosts.unshift({ kind, item });

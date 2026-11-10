@@ -1228,7 +1228,7 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
    et sur téléphone, deux, « Toutes » sur toute la largeur. En boîtes souples plutôt qu'en grille : si une rubrique n'a plus d'article,
    la dernière rangée s'élargit au lieu de laisser un trou. */
 .cat-paves{--cols:4;--gap:12px;--col:calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));display:flex;flex-wrap:wrap;gap:var(--gap)}
-.cat-pave{flex:1 1 calc(var(--col) - 1px);display:flex;align-items:center;gap:14px;min-width:0;min-height:44px;padding:12px 18px 12px 14px;border:1px solid var(--filet);border-radius:14px;background:var(--fond);color:var(--encre);font:inherit;text-align:left;cursor:pointer;transition:background-color .2s,border-color .2s}
+.cat-pave{flex:1 1 calc(var(--col) - 1px);display:flex;align-items:center;gap:14px;min-width:0;min-height:44px;padding:12px 18px 12px 14px;border:1px solid var(--filet);border-radius:14px;background:var(--fond);color:var(--encre);font:inherit;text-align:left;text-decoration:none;cursor:pointer;transition:background-color .2s,border-color .2s}
 .cat-pave:first-child{flex-basis:calc(var(--col) * 2 + var(--gap) - 1px)}
 .cat-pave .mnum-cat{flex:none;width:62px;height:auto;margin:-4px 0 -4px -2px}
 .cat-txt{display:flex;flex-direction:column;gap:3px;min-width:0}
@@ -1247,8 +1247,9 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
 @media (max-width:440px){.cat-pave{gap:7px;padding:9px 6px 9px 6px}.cat-pave .mnum-cat{width:37px;margin:-3px 0 -3px 0}.cat-nom{font-size:15px;letter-spacing:-.015em}}
 @media (max-width:359px){.cat-pave:not(:first-child){flex-direction:column;align-items:flex-start;gap:4px;padding:9px 10px}}
 /* Accueil, bannière Actualités : les mêmes pavés, version pour le fond gris Nardo éclairci (10 novembre 2026, demande d'Isabelle Eimer :
-   « Bannière actualités de l'accueil : ok avec ta proposition »). Pavés transparents bordés de blanc, textes en blanc plein (4,5:1) ;
-   la rubrique choisie passe en blanc, textes en encre. Les pavés prennent toute la largeur, sous le titre. */
+   « Bannière actualités de l'accueil : ok avec ta proposition »). Pavés transparents bordés de blanc, textes en blanc plein (4,5:1).
+   Seuls les pavés, sans la liste des actualités (« ne rien mettre de plus ») : ce sont des liens vers la page Actualités, aucun n'est choisi.
+   Les pavés prennent toute la largeur, sous le titre. */
 .sec-head .cat-paves{flex:1 1 100%}
 .cat-paves-sombre .cat-pave{background:transparent;border-color:rgba(255,255,255,.55);color:#fff}
 .cat-paves-sombre .cat-pave .cat-n{color:#fff}
