@@ -638,7 +638,11 @@
   <g class="vapeur"><path d="M96 -46 L93 -53"/><path d="M114 -49 L114 -57"/><path d="M132 -47 L136 -54"/></g>
 </svg>
       </div>
-      <p class="lead">Ce qui sert à l’exercice au laboratoire, puis ce qui encadre la profession.</p>
+      <!-- Les deux parties annoncées sous le titre, à la place de la phrase d'introduction ; un clic mène à la bannière choisie -->
+      <nav class="doc-entrees" aria-label="Les deux parties de la documentation">
+        <a class="doc-entree de-labo" href="#documentation" data-section="doc-pratique"><svg class="grosse-fleche" viewBox="0 0 84 64" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 33 C25 27 42 38 70 32"/><path d="M52 15 L72 32 L52 49"/></svg><span class="de-txt"><span class="de-nom">Au laboratoire</span><span class="de-desc">Les références utiles à l’exercice au laboratoire</span></span></a>
+        <a class="doc-entree de-cadre" href="#documentation" data-section="doc-cadre"><svg class="grosse-fleche" viewBox="0 0 84 64" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 33 C25 27 42 38 70 32"/><path d="M52 15 L72 32 L52 49"/></svg><span class="de-txt"><span class="de-nom">Le cadre de la profession</span><span class="de-desc">Textes, déontologie, rapports sur le secteur</span></span></a>
+      </nav>
       <div class="doc-search">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
         <label class="sr-only" for="doc-q">Filtrer la documentation</label>
@@ -648,21 +652,13 @@
     </div>
   </section>
   <section class="section-tight doc-page" style="padding-top:0">
-    <!-- Les deux parties annoncées en début d'onglet ; un clic mène à la bannière choisie -->
-    <div class="container">
-      <nav class="doc-entrees" aria-label="Les deux parties de la documentation">
-        <a class="doc-entree de-labo" href="#documentation" data-section="doc-pratique"><span class="de-txt"><span class="de-nom">Au laboratoire</span><span class="de-desc">Les références utiles à l’exercice au laboratoire</span></span><svg class="grosse-fleche" viewBox="0 0 64 84" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M31 7 C26 25 37 41 32 70"/><path d="M15 53 L32 72 L49 52"/></svg></a>
-        <a class="doc-entree de-cadre" href="#documentation" data-section="doc-cadre"><span class="de-txt"><span class="de-nom">Le cadre de la profession</span><span class="de-desc">Textes, déontologie, rapports sur le secteur</span></span><svg class="grosse-fleche" viewBox="0 0 64 84" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M31 7 C26 25 37 41 32 70"/><path d="M15 53 L32 72 L49 52"/></svg></a>
-      </nav>
-    </div>
     <div class="container"><div class="sep-sig" aria-hidden="true"></div></div>
     <div class="container">
       <!-- Partie 1 : la pratique au laboratoire (bandeau vert clair) -->
       <div class="doc-part" id="doc-pratique">
         <div class="dp-head dp-labo">
-          <div class="dp-intro"><h2 class="dp-title">Au laboratoire</h2>
-            <p class="dp-desc">Les références officielles utiles à l’exercice au laboratoire.</p>
-            <span class="dp-fleche" aria-hidden="true"><svg class="grosse-fleche" viewBox="0 0 64 84" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M31 7 C26 25 37 41 32 70"/><path d="M15 53 L32 72 L49 52"/></svg></span></div>
+          <div class="dp-intro"><div class="dp-titre-ligne"><span class="dp-fleche" aria-hidden="true"><svg class="grosse-fleche" viewBox="0 0 84 64" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 33 C25 27 42 38 70 32"/><path d="M52 15 L72 32 L52 49"/></svg></span><h2 class="dp-title">Au laboratoire</h2></div>
+            <p class="dp-desc">Les références officielles utiles à l’exercice au laboratoire.</p></div>
           <ul class="dp-rubs" id="dp-labo-rubs"></ul>
         </div>
         <div class="doc-sec" id="doc-surveillance"><h3 class="doc-h">Surveillance et santé publique</h3><ul class="rows" id="doc-surveillance-list"></ul></div>
@@ -678,9 +674,8 @@
       <!-- Partie 2 : le cadre de la profession (bandeau gris Nardo éclairci), sur fond clair -->
       <div class="doc-part" id="doc-cadre">
         <div class="dp-head dp-cadre">
-          <div class="dp-intro"><h2 class="dp-title">Le cadre de la profession</h2>
-            <p class="dp-desc">Les textes qui organisent la profession, la déontologie, les rapports publics et les études sur le secteur.</p>
-            <span class="dp-fleche" aria-hidden="true"><svg class="grosse-fleche" viewBox="0 0 64 84" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M31 7 C26 25 37 41 32 70"/><path d="M15 53 L32 72 L49 52"/></svg></span></div>
+          <div class="dp-intro"><div class="dp-titre-ligne"><span class="dp-fleche" aria-hidden="true"><svg class="grosse-fleche" viewBox="0 0 84 64" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 33 C25 27 42 38 70 32"/><path d="M52 15 L72 32 L52 49"/></svg></span><h2 class="dp-title">Le cadre de la profession</h2></div>
+            <p class="dp-desc">Les textes qui organisent la profession, la déontologie, les rapports publics et les études sur le secteur.</p></div>
           <ul class="dp-rubs" id="dp-cadre-rubs"></ul>
         </div>
         <div class="doc-sec" id="doc-textes"><h3 class="doc-h">Textes législatifs et réglementaires</h3><div id="doc-textes-list"></div></div>
