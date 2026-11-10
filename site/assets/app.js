@@ -370,6 +370,12 @@
       /* Rapport 2025 (troisième étude Roland Berger, novembre 2025) : PDF envoyé par Isabelle Eimer le 7 novembre 2026, lu dans la liseuse.
          Le document de travail du 31 juillet 2025 envoyé le même jour n'est pas publié (version préliminaire). Point 27. */
       { d: 'Novembre 2025', t: 'Étude du secteur des laboratoires de biologie médicale libérale français, rapport 2025', s: 'Roland Berger', url: 'documents/etude-roland-berger-2025.pdf', doc: true }
+    ] },
+    /* Lien envoyé par Isabelle Eimer le 10 novembre 2026. Page de l'Ordre des pharmaciens lue le même jour : « Publié le 17/06/2026 -
+       Mis à jour le 17/08/2026 », « Au 1er janvier 2026, 75 731 pharmaciens étaient inscrits à l’Ordre », brochure nationale,
+       dépliant, communiqué et brochures régionales. Point 30 de docs/sources-et-verifications.md. */
+    { g: 'Ordre des pharmaciens', items: [
+      { d: 'Juin 2026', t: 'Les pharmaciens : panorama au 1er janvier 2026', s: 'Démographie de la profession : 75 731 pharmaciens inscrits à l’Ordre au 1er janvier 2026, brochure nationale et brochures régionales', url: 'https://www.ordre.pharmacien.fr/les-communications/focus-sur/la-demographie/les-pharmaciens-panorama-au-1er-janvier-2026', src: 'ordre.pharmacien.fr' }
     ] }
   ];
   /* Nomenclature : liens repris de l'ancienne page CHAB de slbc.fr (Légifrance, Journal officiel hébergé par la FHF).
