@@ -138,8 +138,6 @@
     'documents/textes/37-arrete-du-26-juin-2019-depistage-hepatite-c-en-officine.pdf': ['Arrêté du 26 juin 2019 : dépistage de l’hépatite C en officine', 17, 595, 842],
     'documents/textes/34-arrete-du-30-janvier-2020-fixant-les-tests-de-diagnostic-rap.pdf': ['Arrêté du 30 janvier 2020 fixant les tests de diagnostic rapide pouvant être réalisés par les pharmaciens', 1, 595, 842],
     'documents/textes/67-arrete-du-11-juin-2013-determinant-la-liste-des-tests-recuei.pdf': ['Arrêté du 11 juin 2013 déterminant la liste des tests, recueils et traitements de signaux biologiques qui ne constituent pas un examen de biologie médicale, les catégories de personnes pouvant les réaliser et les conditions de réalisation de certains de ces tests, recueils et traitements de signaux biologiques', 7, 595, 842],
-    'documents/textes/09-loi-no-2021-1754-du-23-decembre-2021-de-financement-de-la-se.pdf': ['Loi n° 2021-1754 du 23 décembre 2021 de financement de la sécurité sociale pour 2022', 68, 595, 842],
-    'documents/textes/23-loi-no-2020-1576-du-14-decembre-2020-de-financement-de-la-se.pdf': ['Loi n° 2020-1576 du 14 décembre 2020 de financement de la sécurité sociale pour 2021', 65, 595, 842],
     'documents/textes/39-loi-2018-493-du-20-juin-2018-relative-a-la-protection-des-do.pdf': ['Loi n° 2018-493 du 20 juin 2018 relative à la protection des données personnelles', 218, 595, 842],
     'documents/textes/51-decret-n-2016-942-relatif-a-lorganisation-du-dpc-des-profess.pdf': ['Décret n° 2016-942 relatif à l’organisation du DPC des professionnels de santé', 10, 595, 842],
     'documents/textes/50-decret-no-2016-1024-relatif-aux-territoires-de-democratie-sa.pdf': ['Décret n° 2016-1024 relatif aux territoires de démocratie sanitaire aux zones des schémas régionaux de santé et aux conseils territoriaux de santé', 4, 595, 842],
@@ -486,9 +484,11 @@
       { t: 'Liste des maladies à signalement obligatoire', s: 'Santé publique France, fiches de signalement et modalités de transmission', y: '2026', href: 'https://www.santepubliquefrance.fr/liste-des-maladies-a-signalement-obligatoire', src: 'santepubliquefrance.fr' },
       { t: 'e-DO : déclaration obligatoire en ligne de l’infection par le VIH, du sida et de la tuberculose', s: 'Santé publique France, critères, accès et tutoriels, dont la déclaration du biologiste', y: '2026', href: 'https://www.santepubliquefrance.fr/services/e-do-declaration-obligatoire-en-ligne-de-linfection-par-le-vih-et-du-sida-et-de-la-tuberculose', src: 'santepubliquefrance.fr' }
     ] },
+    /* 10 novembre 2026, demande d'Isabelle Eimer : lois pour 2021 et pour 2022 retirées, loi pour 2026 ajoutée. Légifrance bloque les lectures
+       automatiques : numéro, date, adresse et Journal officiel (n° 306 du 31 décembre 2025) vérifiés par recherche sur Légifrance, le Sénat et
+       l'Assemblée nationale (décision du Conseil constitutionnel n° 2025-899 DC du 30 décembre 2025). Point 33 de docs/sources-et-verifications.md. */
     { theme: 'Lois de financement de la sécurité sociale', items: [
-      { t: 'Loi n° 2021-1754 du 23 décembre 2021 de financement de la sécurité sociale pour 2022', y: '2021', url: 'documents/textes/09-loi-no-2021-1754-du-23-decembre-2021-de-financement-de-la-se.pdf' },
-      { t: 'Loi n° 2020-1576 du 14 décembre 2020 de financement de la sécurité sociale pour 2021', y: '2020', url: 'documents/textes/23-loi-no-2020-1576-du-14-decembre-2020-de-financement-de-la-se.pdf' }
+      { t: 'Loi n° 2025-1403 du 30 décembre 2025 de financement de la sécurité sociale pour 2026', s: 'Journal officiel du 31 décembre 2025', y: '2025', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053226384', src: 'Légifrance' }
     ] },
     { theme: 'Système de santé', items: [
       { t: 'Loi n° 2018-493 du 20 juin 2018 relative à la protection des données personnelles', y: '2018', url: 'documents/textes/39-loi-2018-493-du-20-juin-2018-relative-a-la-protection-des-do.pdf' },
