@@ -145,6 +145,14 @@
     'documents/textes/64-decret-2010-514-relatif-au-projet-regional-de-sante.pdf': ['Décret n° 2010-514 relatif au projet régional de santé', 3, 595, 842],
     'documents/textes/01-labm-rapport-de-branche-2021.pdf': ['Rapport de branche 2021 des laboratoires de biologie médicale extra-hospitaliers (données 2020)', 97, 850, 595],
     'documents/textes/02-2022-grille-salaires-au-1er-mai.pdf': ['Grille des salaires minima au 1er mai 2022 (accord du 27 avril 2022)', 4, 595, 842],
+    'documents/textes/03-2026-grille-salaires-au-1er-juin.pdf': ['Grille des salaires minima au 1er juin 2026 (accord du 10 juin 2026)', 4, 595, 842],
+    'documents/textes/04-2026-grille-salaires-au-1er-janvier-recommandation.pdf': ['Grille des salaires minima au 1er janvier 2026 (recommandation patronale du 15 décembre 2025)', 2, 595, 842],
+    'documents/textes/05-labm-rapport-de-branche-2025.pdf': ['Rapport de branche 2025 des laboratoires de biologie médicale extra-hospitaliers (données 2024)', 95, 842, 595],
+    'documents/textes/06-2024-grille-salaires-au-1er-decembre-recommandation.pdf': ['Grille des salaires minima au 1er décembre 2024 (recommandation patronale du 26 novembre 2024)', 2, 595, 842],
+    'documents/textes/07-labm-rapport-de-branche-2023-2024.pdf': ['Rapport de branche 2023-2024 des laboratoires de biologie médicale extra-hospitaliers (données 2023)', 95, 842, 595],
+    'documents/textes/08-2024-grille-salaires-au-1er-janvier.pdf': ['Grille des salaires minima au 1er janvier 2024 (accord du 11 janvier 2024)', 5, 595, 842],
+    'documents/textes/09-2023-grille-salaires-au-1er-septembre-recommandation.pdf': ['Grille des salaires minima au 1er septembre 2023 (recommandation patronale)', 2, 595, 842],
+    'documents/textes/10-2023-grille-salaires-au-1er-janvier.pdf': ['Grille des salaires minima au 1er janvier 2023 (accord du 14 décembre 2022)', 5, 595, 842],
     'documents/textes/03-arrete-du-15-mars-sur-le-criblage.pdf': ['Arrêté du 15 mars 2022 sur le criblage', 1, 595, 842],
     'documents/textes/05-decret-du-12-mars-mesures-generales-necessaires-a-la-gestion.pdf': ['Décret n° 2022-352 du 12 mars 2022 : mesures générales nécessaires à la gestion de la sortie de crise sanitaire', 4, 595, 842],
     'documents/textes/06-arrete-du-1er-fevrier-modifiant-la-liste-des-actes-et-presta.pdf': ['Arrêté du 1er février 2022 modifiant la liste des actes et prestations mentionnée à l’article L. 162-1-7 du code de la sécurité sociale et l’arrêté du 12 décembre 2020 portant modification des conditions de remboursement de l’acte de détection du génome du SARS-CoV-2 par amplification génique', 1, 595, 842],
@@ -497,7 +505,17 @@
       { t: 'Décret n° 2010-585 relatif aux unions régionales de professionnels de santé', y: '2010', url: 'documents/textes/63-decret-2010-585-relatif-aux-unions-regionales-de-professionn.pdf' },
       { t: 'Décret n° 2010-514 relatif au projet régional de santé', y: '2010', url: 'documents/textes/64-decret-2010-514-relatif-au-projet-regional-de-sante.pdf' }
     ] },
+    /* Textes de 2023 à 2026 ajoutés le 10 novembre 2026 (demande d'Isabelle Eimer) : PDF signés publiés sur le site de la convention collective
+       (convention-labo.com), lus page par page ; accords de 2023 et 2024 étendus (Légifrance). Point 35 de docs/sources-et-verifications.md. */
     { theme: 'Branche et rémunération', items: [
+      { t: 'Grille des salaires minima au 1er juin 2026 (accord du 10 juin 2026)', s: 'Accord de branche', y: '2026', url: 'documents/textes/03-2026-grille-salaires-au-1er-juin.pdf' },
+      { t: 'Grille des salaires minima au 1er janvier 2026 (recommandation patronale du 15 décembre 2025)', s: 'Recommandation des organisations patronales, dont le SLBC', y: '2026', url: 'documents/textes/04-2026-grille-salaires-au-1er-janvier-recommandation.pdf' },
+      { t: 'Rapport de branche 2025 des laboratoires de biologie médicale extra-hospitaliers (données 2024)', s: 'Données économiques et sociales de la branche, novembre 2025', y: '2025', url: 'documents/textes/05-labm-rapport-de-branche-2025.pdf' },
+      { t: 'Grille des salaires minima au 1er décembre 2024 (recommandation patronale du 26 novembre 2024)', s: 'Recommandation des organisations patronales, dont le SLBC', y: '2024', url: 'documents/textes/06-2024-grille-salaires-au-1er-decembre-recommandation.pdf' },
+      { t: 'Rapport de branche 2023-2024 des laboratoires de biologie médicale extra-hospitaliers (données 2023)', s: 'Données économiques et sociales de la branche, octobre 2024', y: '2024', url: 'documents/textes/07-labm-rapport-de-branche-2023-2024.pdf' },
+      { t: 'Grille des salaires minima au 1er janvier 2024 (accord du 11 janvier 2024)', s: 'Accord de branche', y: '2024', url: 'documents/textes/08-2024-grille-salaires-au-1er-janvier.pdf' },
+      { t: 'Grille des salaires minima au 1er septembre 2023 (recommandation patronale)', s: 'Recommandation des organisations patronales, dont le SLBC', y: '2023', url: 'documents/textes/09-2023-grille-salaires-au-1er-septembre-recommandation.pdf' },
+      { t: 'Grille des salaires minima au 1er janvier 2023 (accord du 14 décembre 2022)', s: 'Accord de branche', y: '2023', url: 'documents/textes/10-2023-grille-salaires-au-1er-janvier.pdf' },
       { t: 'Rapport de branche 2021 des laboratoires de biologie médicale extra-hospitaliers (données 2020)', y: '2021', url: 'documents/textes/01-labm-rapport-de-branche-2021.pdf' },
       { t: 'Grille des salaires minima au 1er mai 2022 (accord du 27 avril 2022)', y: '2022', url: 'documents/textes/02-2022-grille-salaires-au-1er-mai.pdf' }
     ] },
