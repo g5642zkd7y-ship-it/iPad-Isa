@@ -364,6 +364,12 @@
       { d: 'Juillet 2025', t: 'Pertinence et efficience des dépenses de biologie médicale', s: 'Rapport IGAS-IGF, publié le 15 juillet 2025', url: 'https://igas.gouv.fr/pertinence-et-efficience-des-depenses-de-biologie-medicale', src: 'igas.gouv.fr' },
       { d: 'Juillet 2025', t: 'Causes et effets de la financiarisation du système de santé', s: 'Rapport IGAS-IGF, publié le 9 juillet 2025 ; il couvre tout le système de santé, dont la biologie médicale', url: 'https://www.igas.gouv.fr/causes-et-effets-de-la-financiarisation-du-systeme-de-sante', src: 'igas.gouv.fr' }
     ] },
+    /* Lien envoyé par Isabelle Eimer le 10 novembre 2026, sans la clé temporaire « ?TSPD_101_R0=… » ajoutée par la protection du site.
+       Le site de la DREES bloque les lectures automatiques : titre vérifié par recherche (catalogue de la bibliothèque de l'EN3S : « Les dépenses
+       de santé en 2025 : résultats des comptes de la santé - [Édition 2026, Panoramas de la Drees] »). Point 32 de docs/sources-et-verifications.md. */
+    { g: 'DREES', items: [
+      { d: '2026', t: 'Les dépenses de santé en 2025 : résultats des comptes de la santé, édition 2026', s: 'Panorama de la DREES, dont une fiche sur les analyses et prélèvements en laboratoires de biologie médicale', url: 'https://drees.solidarites-sante.gouv.fr/sites/default/files/2026-09/Les%20d%C3%A9penses%20de%20sant%C3%A9%20en%202025_0.pdf', src: 'drees.solidarites-sante.gouv.fr' }
+    ] },
     { g: 'Études du secteur', items: [
       { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : version courte', s: 'Étude du secteur des laboratoires de biologie médicale libérale français, Roland Berger', url: 'documents/observatoire-biologie-2026-court.pdf', doc: true },
       { d: 'Mai 2026', t: 'Observatoire de la biologie médicale, édition 2026 : rapport complet', s: 'Même étude, version longue', url: 'documents/observatoire-biologie-2026-complet.pdf', doc: true },
@@ -378,20 +384,21 @@
       { d: 'Juin 2026', t: 'Les pharmaciens : panorama au 1er janvier 2026', s: 'Démographie de la profession : 75 731 pharmaciens inscrits à l’Ordre au 1er janvier 2026, brochure nationale et brochures régionales', url: 'https://www.ordre.pharmacien.fr/les-communications/focus-sur/la-demographie/les-pharmaciens-panorama-au-1er-janvier-2026', src: 'ordre.pharmacien.fr' },
       /* Planche « Liens pour la Documentation », n° 6 (choix d'Isabelle Eimer du 10 novembre 2026). Couverture du PDF : « Situation au
          1er janvier 2026 », « Approche territoriale des spécialités médicales et chirurgicales » ; biologie médicale pages 29 à 33. */
-      { d: '2026', t: 'Approche territoriale des spécialités médicales et chirurgicales : situation au 1er janvier 2026', s: 'Démographie des médecins, dont les biologistes (biologie médicale : pages 29 à 33 d’un PDF de 268 pages)', url: 'https://www.conseil-national.medecin.fr/sites/default/files/CNOM-ATLAS-DEMOGRAPHIE-2026-TOME-2.pdf', src: 'conseil-national.medecin.fr' }
+      { d: '2026', t: 'Approche territoriale des spécialités médicales et chirurgicales : situation au 1er janvier 2026', s: 'Ordre des médecins, démographie des médecins, dont les médecins biologistes (biologie médicale : pages 29 à 33 d’un PDF de 268 pages)', url: 'https://www.conseil-national.medecin.fr/sites/default/files/CNOM-ATLAS-DEMOGRAPHIE-2026-TOME-2.pdf', src: 'conseil-national.medecin.fr' }
     ] },
     /* Planche « Liens pour la Documentation », n° 1 et 2 (choix d'Isabelle Eimer du 10 novembre 2026) ; pages lues le même jour. */
     { g: 'Santé publique France', items: [
-      { d: 'Avril 2026', t: 'Surveillance de la résistance bactérienne aux antibiotiques en soins de ville et en établissements d’hébergement pour personnes âgées dépendantes : mission PRIMO, résultats 2024', s: 'Rapport national établi à partir des antibiogrammes des laboratoires de biologie médicale', url: 'https://www.santepubliquefrance.fr/resistance-aux-antibiotiques/rapportsynthese/surveillance-de-la-resistance-bacterienne-aux-8', src: 'santepubliquefrance.fr' },
-      { d: 'Novembre 2026', t: 'VIH en France : bilan 2025', s: 'Bulletin national sur le dépistage du VIH et les découvertes de séropositivité', url: 'https://www.santepubliquefrance.fr/infections-sexuellement-transmissibles/vihsida/bulletin-national/vih-en-france-bilan-2025', src: 'santepubliquefrance.fr' }
+      { d: 'Novembre 2026', t: 'VIH en France : bilan 2025', s: 'Bulletin national sur le dépistage du VIH et les découvertes de séropositivité', url: 'https://www.santepubliquefrance.fr/infections-sexuellement-transmissibles/vihsida/bulletin-national/vih-en-france-bilan-2025', src: 'santepubliquefrance.fr' },
+      { d: 'Avril 2026', t: 'Surveillance de la résistance bactérienne aux antibiotiques en soins de ville et en établissements d’hébergement pour personnes âgées dépendantes : mission PRIMO, résultats 2024', s: 'Rapport national établi à partir des antibiogrammes des laboratoires de biologie médicale', url: 'https://www.santepubliquefrance.fr/resistance-aux-antibiotiques/rapportsynthese/surveillance-de-la-resistance-bacterienne-aux-8', src: 'santepubliquefrance.fr' }
     ] }
   ];
   /* Nomenclature : liens repris de l'ancienne page CHAB de slbc.fr (Légifrance, Journal officiel hébergé par la FHF).
      Les aides à la prescription n'avaient pas de document sur l'ancien site : à fournir. */
   const NABM = [
-    /* Planche « Liens pour la Documentation », n° 8, 9 et 10 (choix d'Isabelle Eimer du 10 novembre 2026). Légifrance et le site de codage
-       de l'Assurance maladie ne se lisent pas automatiquement : titres et dates vérifiés par recherche sur le site officiel. */
-    { t: 'Table nationale de biologie (NABM) en vigueur', s: 'Téléchargement de la table à jour, sur le site de codage de l’Assurance maladie', href: 'http://www.codage.ext.cnamts.fr/codif/nabm/telecharge/index_tele.php?p_site=AMELI', src: 'Assurance maladie' },
+    /* Planche « Liens pour la Documentation », n° 8, 9 et 10 (choix d'Isabelle Eimer du 10 novembre 2026). Légifrance bloque les lectures
+       automatiques : titres et dates des décisions vérifiés par recherche sur le site officiel. Site de codage de l'Assurance maladie injoignable
+       depuis la session : titre vérifié par recherche, version et date de la table non relevées. Liste des décisions non exhaustive (point 31). */
+    { t: 'Table nationale de biologie (TNB)', s: 'La NABM à jour, à télécharger sur le site de codage de l’Assurance maladie', href: 'http://www.codage.ext.cnamts.fr/codif/nabm/telecharge/index_tele.php?p_site=AMELI', src: 'Assurance maladie' },
     { t: 'Décision de l’UNCAM du 3 mars 2026', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053749152', src: 'Légifrance' },
     { t: 'Décision de l’UNCAM du 14 novembre 2025', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053029952', src: 'Légifrance' },
     { t: 'Arrêté du 25 janvier 2024', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049040708', src: 'Légifrance' },
@@ -432,18 +439,19 @@
        « Publié le 05/03/2026 », « entré en vigueur le 6 mars 2026 ». Point 29 de docs/sources-et-verifications.md. */
     { theme: 'Déontologie', items: [
       { t: 'Code de déontologie des pharmaciens', s: 'Ordre des pharmaciens, en vigueur depuis le 6 mars 2026', y: '2026', href: 'https://www.ordre.pharmacien.fr/les-communications/focus-sur/les-autres-publications/code-de-deontologie-des-pharmaciens2', src: 'ordre.pharmacien.fr' },
-      /* Planche « Liens pour la Documentation », n° 30, 29 et 31 (choix d'Isabelle Eimer du 10 novembre 2026) ; pages lues le même jour. */
-      { t: 'Le code de déontologie des pharmaciens commenté', s: 'Ordre des pharmaciens, commentaire article par article', y: '2026', href: 'https://www.ordre.pharmacien.fr/l-ordre/la-deontologie/le-code-de-deontologie-commente', src: 'ordre.pharmacien.fr' },
+      /* Planche « Liens pour la Documentation », n° 29, 30 et 31 (choix d'Isabelle Eimer du 10 novembre 2026) ; pages lues le même jour. */
       { t: 'Code de déontologie médicale, édition de juillet 2026', s: 'Ordre des médecins, articles R.4127-1 à R.4127-112 du code de la santé publique', y: '2026', href: 'https://www.conseil-national.medecin.fr/sites/default/files/CNOM-Code-de-deontologie.pdf', src: 'conseil-national.medecin.fr' },
-      { t: 'Le dispositif anti-cadeaux : conventions et liens avec des entreprises', s: 'Ordre des pharmaciens, fiche pour les biologistes médicaux', y: '2025', href: 'https://www.ordre.pharmacien.fr/je-suis/pharmacien/je-suis-pharmacien-biologiste-medical/mon-exercice-professionnel/le-dispositif-anti-cadeaux', src: 'ordre.pharmacien.fr' }
+      { t: 'Le code de déontologie des pharmaciens commenté', s: 'Ordre des pharmaciens, commentaire article par article', y: '2026', href: 'https://www.ordre.pharmacien.fr/l-ordre/la-deontologie/le-code-de-deontologie-commente', src: 'ordre.pharmacien.fr' },
+      { t: 'Le dispositif anti-cadeaux : conventions et liens avec des entreprises', s: 'Ordre des pharmaciens, fiche pour les pharmaciens biologistes, mise à jour en septembre 2025, avant le nouveau code de déontologie', y: '2025', href: 'https://www.ordre.pharmacien.fr/je-suis/pharmacien/je-suis-pharmacien-biologiste-medical/mon-exercice-professionnel/le-dispositif-anti-cadeaux', src: 'ordre.pharmacien.fr' }
     ] },
     /* Planche « Liens pour la Documentation », n° 32 (choix d'Isabelle Eimer du 10 novembre 2026). */
     { theme: 'Certification périodique', items: [
       { t: 'Certification périodique : les référentiels publiés', s: 'Ordre des pharmaciens, avec le référentiel de la biologie médicale', y: '2026', href: 'https://www.ordre.pharmacien.fr/les-communications/focus-sur/les-actualites/certification-periodique-les-referentiels-publies', src: 'ordre.pharmacien.fr' }
     ] },
     { theme: 'Accréditation', items: [
-      /* Planche « Liens pour la Documentation », n° 23 : PDF lu le 10 novembre 2026 (« À partir du 1er octobre 2025, seul le document SH REF 02… »). */
-      { t: 'Exigences pour l’accréditation selon la norme NF EN ISO 15189 : 2022 (SH REF 02, révision 08)', s: 'Cofrac, seule version applicable depuis le 1er octobre 2025', y: '2023', href: 'https://tools.cofrac.fr/documentation/SH-REF-02-(2022)', src: 'cofrac.fr' },
+      /* Planche « Liens pour la Documentation », n° 23 : PDF lu le 10 novembre 2026 (« A partir du 1er octobre 2025, seul le document SH REF 02 […] dans sa
+         dernière révision en vigueur restera applicable »). Adresse générique : vérifier le numéro de révision à chaque mise à jour du site. */
+      { t: 'Exigences pour l’accréditation selon la norme NF EN ISO 15189 : 2022 (SH REF 02, révision 08)', s: 'Cofrac, seul document SH REF 02 applicable depuis le 1er octobre 2025', y: '2023', href: 'https://tools.cofrac.fr/documentation/SH-REF-02-(2022)', src: 'cofrac.fr' },
       { t: 'Arrêté du 8 mars 2021 fixant les examens représentatifs et les compétences associées pour l’accréditation des lignes de portée des examens de biologie médicale', y: '2021', url: 'documents/textes/19-arrete-du-8-mars-2021-fixant-les-examens-representatifs-et-l.pdf' },
       { t: 'Décret n° 2016-1430 relatif aux modalités d’accréditation des laboratoires de biologie médicale', y: '2016', url: 'documents/textes/49-decret-no-2016-1430-relatif-aux-modalites-daccreditation-des.pdf' },
       { t: 'Décret n° 2016-45 : modalités spécifiques de la procédure d’accréditation des LBM en Guadeloupe, Guyane, Martinique', y: '2016', url: 'documents/textes/55-decret-2016-45-modalites-specifiques-procedure-d-accreditati.pdf' },
@@ -451,8 +459,10 @@
       { t: 'Arrêté du 17 octobre 2012 définissant les conditions justificatives de l’entrée effective d’un laboratoire de biologie médicale dans une démarche d’accréditation', y: '2012', url: 'documents/textes/68-arrete-du-17-octobre-2012-definissant-les-conditions-justifi.pdf' }
     ] },
     { theme: 'Nomenclature et prise en charge', items: [
+      /* Lien envoyé par Isabelle Eimer le 10 novembre 2026 ; ameli bloque les lectures automatiques : rubriques vues dans les résultats de recherche. */
+      { t: 'Ameli, espace « Laboratoire d’analyses médicales »', s: 'Assurance maladie, rubriques exercice libéral, facturation, dossier médical partagé et actualités', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales', src: 'ameli.fr' },
       /* Planche « Liens pour la Documentation », n° 20. */
-      { t: 'Convention nationale et avenants', s: 'Assurance maladie : convention nationale des directeurs de laboratoires et ses avenants', y: 'En vigueur', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales/textes-reference/convention-nationale-avenants', src: 'ameli.fr' },
+      { t: 'Convention nationale et avenants', s: 'Assurance maladie, convention nationale des directeurs de laboratoires et ses avenants', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales/textes-reference/convention-nationale-avenants', src: 'ameli.fr' },
       { t: 'Baisses de la NABM au 6 avril 2018 (décision de l’UNCAM du 12 mars 2018)', y: '2018', url: 'documents/textes/40-nabm-baisses-au-6-avril-2018.pdf' },
       { t: 'Décision du 24 mai 2017 de l’Union nationale des caisses d’assurance maladie relative à la liste des actes et prestations pris en charge par l’assurance maladie', y: '2017', url: 'documents/textes/45-decision-du-24-mai-2017-de-lunion-nationale-des-caisses-dass.pdf' },
       { t: 'Instruction n° DGOS/PF4/DSS/1A/2018/101 du 16 avril 2018 relative aux actes de biologie médicale et d’anatomopathologie hors nomenclatures', y: '2018', url: 'documents/textes/44-instruction-n-dgos-pf4-dss-1a-2018-101-du-16-avril-2018-rela.pdf' },
@@ -460,7 +470,7 @@
     ] },
     { theme: 'Examens et dépistage', items: [
       /* Planche « Liens pour la Documentation », n° 21 et 22. */
-      { t: 'Mon test IST : dépistage des IST en laboratoire sans ordonnance', s: 'Fiche de l’Assurance maladie pour les laboratoires', y: 'En vigueur', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales/exercice-liberal/prise-charge-patients/depistage-ist/mon-test-ist-depistage-en-laboratoire-sans-ordonnance', src: 'ameli.fr' },
+      { t: 'Dépistage des IST en laboratoire sans ordonnance : Mon test IST', s: 'Fiche de l’Assurance maladie pour les laboratoires', y: 'En ligne', href: 'https://www.ameli.fr/laboratoire-danalyses-medicales/exercice-liberal/prise-charge-patients/depistage-ist/mon-test-ist-depistage-en-laboratoire-sans-ordonnance', src: 'ameli.fr' },
       { t: 'Arrêté du 8 juillet 2024 fixant la liste des infections sexuellement transmissibles dépistées à la demande du patient en laboratoire de biologie médicale et les modalités de ces dépistages', y: '2024', href: 'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049908622', src: 'Légifrance' },
       { t: 'Arrêté du 15 mai 2018 fixant les conditions de réalisation des examens de biologie médicale d’immuno-hématologie érythrocytaire', y: '2018', url: 'documents/textes/43-arrete-du-15-mai-2018-fixant-les-conditions-de-realisation-d.pdf' },
       { t: 'Décret n° 2017-808 relatif à l’introduction dans la liste des examens de diagnostic prénatal des examens de génétique portant sur l’ADN foetal libre circulant dans le sang maternel', y: '2017', url: 'documents/textes/47-decret-no-2017-808-relatif-a-lintroduction-dans-la-liste-des.pdf' },
@@ -473,8 +483,8 @@
     ] },
     /* Planche « Liens pour la Documentation », n° 25 et 27 (choix d'Isabelle Eimer du 10 novembre 2026) ; pages lues le même jour. */
     { theme: 'Signalements et vigilances', items: [
-      { t: 'Liste des maladies à signalement obligatoire', s: 'Santé publique France : fiches de signalement et modalités de transmission', y: '2026', href: 'https://www.santepubliquefrance.fr/liste-des-maladies-a-signalement-obligatoire', src: 'santepubliquefrance.fr' },
-      { t: 'e-DO : déclaration obligatoire en ligne de l’infection par le VIH, du sida et de la tuberculose', s: 'Santé publique France : critères, accès et tutoriels, dont la déclaration du biologiste', y: '2026', href: 'https://www.santepubliquefrance.fr/services/e-do-declaration-obligatoire-en-ligne-de-linfection-par-le-vih-et-du-sida-et-de-la-tuberculose', src: 'santepubliquefrance.fr' }
+      { t: 'Liste des maladies à signalement obligatoire', s: 'Santé publique France, fiches de signalement et modalités de transmission', y: '2026', href: 'https://www.santepubliquefrance.fr/liste-des-maladies-a-signalement-obligatoire', src: 'santepubliquefrance.fr' },
+      { t: 'e-DO : déclaration obligatoire en ligne de l’infection par le VIH, du sida et de la tuberculose', s: 'Santé publique France, critères, accès et tutoriels, dont la déclaration du biologiste', y: '2026', href: 'https://www.santepubliquefrance.fr/services/e-do-declaration-obligatoire-en-ligne-de-linfection-par-le-vih-et-du-sida-et-de-la-tuberculose', src: 'santepubliquefrance.fr' }
     ] },
     { theme: 'Lois de financement de la sécurité sociale', items: [
       { t: 'Loi n° 2021-1754 du 23 décembre 2021 de financement de la sécurité sociale pour 2022', y: '2021', url: 'documents/textes/09-loi-no-2021-1754-du-23-decembre-2021-de-financement-de-la-se.pdf' },
