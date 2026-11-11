@@ -11,7 +11,7 @@ Part du modèle de la note SLBC (outils/note-modele.html, note du 7 novembre 202
 - applique la typographie française au texte (insécables avant « : », fines avant « ; ! ? » et dans les guillemets, « 1er », n°,
   jour et mois, numéros à trait d'union gardés sur une ligne).
 Dans les fragments, ce qui est écrit entre [[ et ]] est gardé tel quel (« [[SLBC]] » pour les faits passés, « [[@slbc.fr]] »…).
-usage : python3 gen_note_slbm.py <note-modele.html> <mascotte.svg> <dossier des fragments> <sortie.html>"""
+usage : python3 gen_note_slbm.py outils/note-modele.html outils/note-mascotte.svg outils <sortie.html>"""
 import re, sys, pathlib
 MODELE, MASC, FRAG, OUT = sys.argv[1:5]
 html = pathlib.Path(MODELE).read_text(encoding='utf-8')
@@ -64,6 +64,7 @@ un('<li><strong>Police des textes</strong> : Nunito, retenue le 7 novembre 2026 
 un('<li><strong>Comptes publiés</strong> : exercices 2021 à 2023 ; ajouter les suivants si le SLBC publie ses comptes sur son site.</li>',
    '<li><strong>Comptes publiés</strong> : exercices 2022 à 2025, établis au nom du [[SLBC]] (partie 2).</li>')
 # Partie 12 : étapes
+un('Valider les contenus et prendre les décisions listées dans cette note', 'Valider les contenus et prendre les autres décisions listées dans cette note')
 un('Avec Kstudio ou l’hébergeur du domaine slbc.fr : créer les adresses contact@slbc.fr et bureau@slbc.fr, et décider qui lit chacune.',
    'Avec Kstudio ou l’hébergeur du domaine slbm.fr : créer les adresses contact@slbm.fr et bureau@slbm.fr, et décider qui lit chacune.')
 un('Donner les informations sur l’hébergeur, proposer',
@@ -73,7 +74,7 @@ un('Mettre le site en ligne sur slbc.fr et faire renvoyer les anciennes adresses
    + lire('note-slbm-etape-google.html'))
 un('<p>Dans l’ordre, avec qui s’en charge.</p>\n  <ul class="taches">',
    '<p>Dans l’ordre, avec qui s’en charge. Les étapes liées au nouveau nom avancent en même temps que la préparation du site avec Kstudio : '
-   'seule la mise en ligne sur slbm.fr attend le vote de l’assemblée.</p>\n  <ul class="taches">\n    ' + lire('note-slbm-etapes.html'))
+   'la mise en ligne sur slbm.fr, comme les étapes qui suivent le dépôt, attend que l’assemblée ait voté le changement de nom et que les statuts modifiés soient déposés.</p>\n  <ul class="taches">\n    ' + lire('note-slbm-etapes.html'))
 un('  </ul>\n</section>\n</div>\n\n<footer', '    ' + lire('note-slbm-etapes-fin.html') + '\n  </ul>\n</section>\n</div>\n\n<footer')
 
 # 2. Nouvelle partie 2 et renumérotation des suivantes (renvois « partie 9 » du modèle compris)
@@ -88,7 +89,7 @@ neuf = [items[0][1], '<a href="#slbm">Mise en ligne sous le nom SLBM</a>'] + [x[
 html = html.replace(somm, '\n' + ''.join(f'    <li><span class="n">{i + 1}</span>{t}</li>\n' for i, t in enumerate(neuf)) + '  ')
 un('<section class="partie" id="hebergement">', lire('note-slbm-partie.html') + '\n\n<section class="partie" id="hebergement">')
 un('/* Pied */', '/* Partie 2 : intertitres et sources */\n.partie h3{font-size:19.5px;line-height:1.3;font-weight:800;letter-spacing:-.01em;margin-top:10px;color:var(--encre)}\n'
-   '.sources{font-size:14px;line-height:1.55;color:var(--gris)}\n@media print{.partie h3{break-after:avoid}}\n\n/* Pied */')
+   '.sources{font-size:14px;line-height:1.55;color:var(--gris)}\n@media print{.partie h3{break-after:avoid}#etapes{break-before:page}}\n\n/* Pied */')
 
 # 3. Le nom, partout ailleurs ; ce qui est entre [[ ]] est gardé tel quel
 gardes = []
@@ -134,6 +135,7 @@ for i, m in enumerate(morceaux):
     m = re.sub(r'(\d) (%s)\b' % MOIS, r'\1' + NB + r'\2', m)
     m = re.sub(r'\b(articles?|n°) (?=[LRD]?\d)', r'\1' + NB, m)
     m = re.sub(r'(\d)-(?=\d)', '\\1\u2011', m)
+    m = m.replace('à compléter', 'à' + NB + 'compléter')
     morceaux[i] = m
 html = tete + '</style>' + ''.join(morceaux)
 # « 1er » écrit en exposant, suivi d'une insécable : « 1<sup>er</sup> octobre »
