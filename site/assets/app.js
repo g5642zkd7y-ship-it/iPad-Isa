@@ -71,6 +71,29 @@
       a.appendChild(fin);
     });
   }
+  /* Onglets : trait au marqueur (11 novembre 2026, choix d'Isabelle Eimer, planche des onglets, proposition 1). Sous l'onglet ouvert
+     (menu principal, menu compact du téléphone) et sous la rubrique en cours des sous-menus, un trait tracé à la main comme la tige des
+     petites flèches : trait vert foncé un peu penché, aux bouts arrondis, avec son double vert anis décalé en bas à droite, comme les
+     pastilles et les grosses flèches ; au survol et au focus clavier, un trait vert clair plus léger. Vrai dessin dans le lien, étiré à
+     la largeur du mot, épaisseur constante (vector-effect) ; affiché par les styles selon aria-current (bloc « Onglets : trait au
+     marqueur » de styles.css). */
+  const TRAIT = '<svg class="trait-marqueur" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" focusable="false" fill="none">' +
+    '<path class="tm-survol" vector-effect="non-scaling-stroke" d="M2.5 7.6 Q37.5 3.8 98.5 5.2"/>' +
+    '<path class="tm-double" vector-effect="non-scaling-stroke" d="M4 8.6 Q39 4.8 99.5 6.2"/>' +
+    '<path class="tm-marqueur" vector-effect="non-scaling-stroke" d="M1 6.2 Q36 2.4 96 3.8"/></svg>';
+  function addTraits() {
+    document.querySelectorAll('.gnav-links a, .gnav-member, .lnav-links a[data-section]').forEach((a) => {
+      if (!a.querySelector('.trait-marqueur')) a.insertAdjacentHTML('beforeend', TRAIT);
+    });
+    /* Menu compact : le trait sous le nom seulement, pas sur toute la ligne */
+    document.querySelectorAll('.mmenu-link').forEach((a) => {
+      if (a.querySelector('.tm-mot')) return;
+      const mot = document.createElement('span'); mot.className = 'tm-mot';
+      while (a.firstChild) mot.appendChild(a.firstChild);
+      mot.insertAdjacentHTML('beforeend', TRAIT); a.appendChild(mot);
+    });
+  }
+  addTraits();
   addArrows(document.body);
   keepTogether(document.body);
   if ('MutationObserver' in window) {

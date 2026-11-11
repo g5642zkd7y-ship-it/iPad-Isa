@@ -1269,3 +1269,44 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
 .lnav-links a{font-weight:700;color:var(--encre)}
 .page-hero .lead{max-width:32em;font-family:var(--font-main);font-weight:400;font-size:clamp(22px,2.1vw,25px);line-height:1.4;color:var(--encre)}
 .page-hero.bg-vert .lead,.page-hero.bg-nardo .lead{color:#fff}
+/* Onglets : trait au marqueur (11 novembre 2026, choix d'Isabelle Eimer sur la planche « Onglets du menu et sous-onglets du
+   syndicat » : « Je sélectionne la proposition 1 trait au marqueur »). Sous l'onglet ouvert (menu principal, menu compact du téléphone)
+   et sous la rubrique en cours des sous-menus (Le syndicat, Informations légales) : trait vert foncé au marqueur, un peu penché, avec
+   son double vert anis décalé en bas à droite ; il se trace de gauche à droite quand la rubrique change. Au survol (souris seulement :
+   sur écran tactile, le survol resterait collé au lien touché) et au focus clavier, un trait vert clair plus léger. Le nom de l'onglet
+   ouvert reste en vert foncé. Les sous-menus passent sur une bande fond clair fermée par un filet. Dessin : TRAIT et addTraits() (app.js). */
+.trait-marqueur{position:absolute;display:block;max-width:none;height:10px;overflow:visible;pointer-events:none;clip-path:inset(-8px 100% -8px -8px)}
+.trait-marqueur path{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.tm-survol{stroke:var(--vert-clair);stroke-width:6px;opacity:0}
+.tm-double{stroke:var(--anis);stroke-width:6px;opacity:0}
+.tm-marqueur{stroke:var(--vert);stroke-width:1.8px;opacity:0}
+@media (hover:hover){
+  a:not([aria-current]):hover .trait-marqueur{clip-path:inset(-8px)}
+  a:not([aria-current]):hover .tm-survol{opacity:1}
+}
+a:not([aria-current]):focus-visible .trait-marqueur{clip-path:inset(-8px)}
+a:not([aria-current]):focus-visible .tm-survol{opacity:1}
+a[aria-current] .trait-marqueur{clip-path:inset(-8px)}
+a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
+@media (prefers-reduced-motion:no-preference){
+  a[aria-current] .trait-marqueur{transition:clip-path .45s cubic-bezier(.16,1,.3,1)}
+  a:not([aria-current]):focus-visible .trait-marqueur{transition:clip-path .3s cubic-bezier(.16,1,.3,1)}
+}
+@media (prefers-reduced-motion:no-preference) and (hover:hover){a:not([aria-current]):hover .trait-marqueur{transition:clip-path .3s cubic-bezier(.16,1,.3,1)}}
+@media (forced-colors:active){.tm-double,.tm-survol{display:none}.tm-marqueur{stroke:CanvasText}}
+/* Menu principal */
+.gnav-member{position:relative}
+.gnav-links a > .trait-marqueur{left:0;width:calc(100% + 2px);top:calc(50% + 10px)}
+.gnav-member > .trait-marqueur{left:10px;width:calc(100% - 18px);top:calc(50% + 10px)}
+/* Menu compact du téléphone : même trait, plus large, sous le nom de la page ouverte */
+.tm-mot{position:relative;display:inline-block}
+.mmenu-link .trait-marqueur{left:-2px;width:calc(100% + 8px);top:calc(100% - 3px);height:12px}
+.mmenu-link .tm-double,.mmenu-link .tm-survol{stroke-width:7px}
+.mmenu-link .tm-marqueur{stroke-width:2.2px}
+/* Sous-menus des pages : bande fond clair, filet fin ; rubrique en cours en vert foncé avec son trait */
+.lnav{background:var(--fond);-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom-color:var(--filet-fort)}
+.lnav-links a[data-section]{position:relative;color:var(--encre)}
+.lnav-links a[data-section]:hover{color:var(--encre)}
+.lnav-links a[data-section][aria-current]{color:var(--vert);box-shadow:none}
+.lnav-links a[data-section] > .trait-marqueur{left:6px;width:calc(100% - 10px);top:calc(50% + 11px)}
+@media (max-width:640px){.lnav-links a[data-section] > .trait-marqueur{left:4px;width:calc(100% - 6px)}}
