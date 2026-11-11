@@ -74,8 +74,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .gnav-links a:hover,.gnav-member:hover{color:var(--encre)}
 .gnav-links a[aria-current="page"]{color:var(--encre);font-weight:600}
 .gnav-links a{position:relative}
-.gnav-links a::after{content:"";position:absolute;left:0;right:0;bottom:14px;height:2px;border-radius:2px;background:var(--vert);transform:scaleX(0)}
-.gnav-links a[aria-current="page"]::after{transform:none}
 .gnav.is-scrolled{border-bottom-color:rgba(46,50,54,.12);box-shadow:0 6px 24px rgba(46,50,54,.07)}
 .gnav-tools{display:flex;align-items:center;gap:4px;margin-left:auto}
 .icon-btn{width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--encre);display:grid;place-items:center;cursor:pointer}
@@ -968,7 +966,6 @@ svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
   .search-panel:not([hidden]){animation:dropIn .3s var(--ease)}
   .toast:not([hidden]){animation:toastIn .3s var(--ease)}
   .gnav{transition:box-shadow .35s var(--ease),border-color .35s var(--ease)}
-  .gnav-links a::after{transition:transform .35s var(--ease-out)}
   /* Ouverture de l'accueil : le nom puis la devise apparaissent quand les ronds se rejoignent */
   .hero-intro .hero-name{animation:fadeUp .8s var(--ease) 1.1s both}
   .hero-intro .hero .display{animation:fadeUp .9s var(--ease) 1.3s both}
@@ -1266,7 +1263,9 @@ html{scroll-padding-bottom:calc(var(--bandeau-h,0px) + 16px)}
    Seule exception à « Nunito pour tous les textes ». Encre sur les fonds clairs, blanc sur l'olive et le gris Nardo éclairci. */
 :root{--font-main:"Kalam","Nunito",cursive}
 .gnav-links a,.gnav-member{font-weight:700;color:var(--encre)}
-.gnav-links a::after{height:3px;bottom:12px;border-radius:3px}
+/* Onglet ouvert (11 novembre 2026, demande d'Isabelle Eimer : « Bascule les onglets de la présentation horizontale comme ceux de la
+   verticale, en couleur vert foncé quand sélectionné ») : en vert foncé, sans trait dessous, comme dans le menu compact. */
+.gnav-links a[aria-current="page"],.gnav-member[aria-current="page"]{color:var(--vert);font-weight:700}
 .lnav-links a{font-weight:700;color:var(--encre)}
 .page-hero .lead{max-width:32em;font-family:var(--font-main);font-weight:400;font-size:clamp(22px,2.1vw,25px);line-height:1.4;color:var(--encre)}
 .page-hero.bg-vert .lead,.page-hero.bg-nardo .lead{color:#fff}
