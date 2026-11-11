@@ -698,9 +698,10 @@
     return esc(names.join(', ')) + ' et <span class="pending">' + esc(todo) + '</span>';
   };
 
-  /* ---------- Commande segmentée ---------- */
-  function seg(el, options, current, onPick) {
-    el.innerHTML = options.map((o) => '<button type="button" aria-pressed="' + (o === current ? 'true' : 'false') + '">' + esc(o) + '</button>').join('');
+  /* ---------- Commande segmentée ----------
+     label (facultatif) : contenu de chaque bouton, pour les pavés de l'espace adhérent (nom, précision) ; par défaut, l'option seule. */
+  function seg(el, options, current, onPick, label) {
+    el.innerHTML = options.map((o) => '<button type="button" aria-pressed="' + (o === current ? 'true' : 'false') + '">' + (label ? label(o) : esc(o)) + '</button>').join('');
     $$('button', el).forEach((b, i) => b.addEventListener('click', () => {
       onPick(options[i]);
       const pressed = el.querySelector('[aria-pressed="true"]');
@@ -855,6 +856,24 @@
     'Appels à projets': '<path class="mnum-digit" pathLength="1" d="M42 19.5 C32.5 19.5 26.5 26.5 26.5 34 C26.5 40.5 30.5 43.5 34 47.5 L34 51 L50 51 L50 47.5 C53.5 43.5 57.5 40.5 57.5 34 C57.5 26.5 51.5 19.5 42 19.5 Z" fill="#FFFFFF" stroke-width="3.4"/><path class="mnum-fill" d="M38.5 50 L38.5 42.5 Q38.5 38.5 42 38.5 Q45.5 38.5 45.5 42.5 L45.5 50" stroke-width="2.2"/><path class="mnum-fill" d="M32 32 Q33 26.5 38.5 25" stroke="#A3BE3C" stroke-width="2.6"/><g class="mnum-fill" stroke-width="3"><path d="M35.5 55.5 L48.5 55.5"/><path d="M38 60 L46 60"/></g>'
   };
 
+  /* Espace adhérent : mise en page (11 novembre 2026, proposition validée par Isabelle Eimer : « Pour le reste ok »). Une pastille par
+     porte, par titre de rubrique et par pavé, dessinée comme les autres (rond blanc au marqueur sur le rond vert anis, traits de joie) :
+     les jumelles de la veille, les deux biologistes des commissions et des comptes, l'ampoule des suggestions, le journal de la lettre,
+     le porte-voix des messages au bureau, le porte-documents de « Publier sur le site », le code relié des textes suivis ; deux petits
+     dessins de plus : un point d'interrogation écrit au marqueur comme les chiffres des missions (« Une question ») et un crayon
+     (les publications). */
+  const EA_ICONS = {
+    veille: JOIN_ICONS[0], commission: JOIN_ICONS[1], voix: JOIN_ICONS[2],
+    suggestion: CAT_ICONS['Appels à projets'], lettre: CAT_ICONS['Toutes'],
+    bureau: DOC_ICONS['doc-fiches'], textes: DOC_ICONS['doc-textes'],
+    question: '<path class="mnum-digit" pathLength="1" d="M33.5 30 Q34 21 42.5 21 Q51 21 51 29.5 Q51 35 45.5 38 Q42 40 42 46.5" stroke-width="4.6"/><circle class="mnum-fill" cx="42" cy="55.5" r="3.3" fill="#2E3236" stroke="none"/>',
+    crayon: '<g transform="rotate(40 42 40)"><path class="mnum-fill" d="M36.5 23 L36.5 19.5 Q36.5 16 40 16 L44 16 Q47.5 16 47.5 19.5 L47.5 23 Z" fill="#D6E4A6" stroke-width="2.6"/><path class="mnum-digit" pathLength="1" d="M36 23 L48 23 L48 50 L42 61 L36 50 Z" fill="#FFFFFF" stroke-width="3.4"/><path class="mnum-fill" d="M36 50 L48 50" stroke-width="2.2"/><path class="mnum-fill" d="M42 27 L42 46" stroke-width="2"/><path class="mnum-fill" d="M39.4 56.2 L42 61 L44.6 56.2 Z" fill="#2E3236" stroke-width="1.6"/></g>'
+  };
+  const eaPastille = (k, drawn) => pastille(EA_ICONS[k], 'ea-pastille', drawn);
+  /* Sous le nom de la porte ouverte, le trait au marqueur des onglets, aux couleurs de la porte (bloc « Espace adhérent : mise en page »
+     de styles.css) */
+  const EA_TRAIT = TRAIT.replace('class="trait-marqueur"', 'class="ea-trait"');
+
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
     $('#home-benefits').innerHTML = BENEFITS.map((b, k) => '<li>' + joinBadge(k) + '<span>' + esc(b.t) + '</span></li>').join('');
@@ -985,7 +1004,14 @@
   }
   function renderVeille() {
     const map = { 'Journal officiel': 'jo', 'Parlement': 'parl', 'Hors JO': 'hors' };
-    seg($('#veille-seg'), ['Tout', 'Journal officiel', 'Parlement', 'Hors JO'], state.veilleSrc, (s) => { state.veilleSrc = s; renderVeille(); });
+    /* Sources en pavés (espace adhérent, 11 novembre 2026) : le nom, le point de la source (le même que dans la liste) et le nombre
+       de textes de la synthèse */
+    const pave = (o) => {
+      const k = map[o]; const n = DATA.veille.filter((v) => !k || v.src === k).length;
+      return '<span class="vs-nom ea-pave-n">' + (k ? '<span class="dot dot-' + k + '" aria-hidden="true"></span>' : '') + esc(o) + '</span>' +
+        '<span class="sr-only">, </span><span class="vs-n ea-pave-d">' + esc(plural(n, 'texte')) + '</span>';
+    };
+    seg($('#veille-seg'), ['Tout', 'Journal officiel', 'Parlement', 'Hors JO'], state.veilleSrc, (s) => { state.veilleSrc = s; renderVeille(); }, pave);
     const list = DATA.veille.filter((v) => state.veilleSrc === 'Tout' || v.src === map[state.veilleSrc]);
     $('#veille-list').innerHTML = list.length ? list.map(vitem).join('') : '<p class="empty">Aucun élément « ' + esc(state.veilleSrc) + ' » dans cette synthèse.</p>';
   }
@@ -1008,9 +1034,11 @@
   }
   /* Accueil : le communiqué le plus récent, juste sous la devise (demande d'Isabelle Eimer du 6 novembre 2026).
      Un nouveau communiqué le remplace de lui-même ; ceux réservés aux adhérents n'y figurent pas. */
+  const dernierCp = () => DATA.presse.filter((x) => !x.members).sort(byDate)[0];
   function renderHomeCp() {
-    const p = DATA.presse.filter((x) => !x.members).sort(byDate)[0];
+    const p = dernierCp();
     const sec = $('#home-cp');
+    renderLettreExemple(p);
     if (!p) { sec.hidden = true; return; }
     sec.hidden = false;
     const doc = p.url && DOCS[p.url];
@@ -1028,6 +1056,16 @@
       '<div class="hcp-side">' + $('#tpl-lecteurs').innerHTML +
         (p.quote ? '<figure class="p-quote hcp-quote"><blockquote><p>' + esc(p.quote.text) + '</p></blockquote><figcaption>' + esc(p.quote.by) + '</figcaption></figure>' : '') +
       '</div>';
+  }
+  /* Espace adhérent, rubrique « Lettre d'information » : exemple d'envoi, l'e-mail tel que le reçoivent les abonnés, rempli avec le dernier
+     communiqué public, celui de l'accueil (11 novembre 2026, mise en page validée par Isabelle Eimer). Rien d'inventé : sans communiqué,
+     pas d'exemple. */
+  function renderLettreExemple(p) {
+    $('#lt-exemple').hidden = !p;
+    if (!p) return;
+    $('#lt-exemple-date').textContent = 'avec le dernier communiqué, du ' + (p.dateLabel || longDate(p.date));
+    $('#lt-objet').textContent = p.title; $('#lt-titre').textContent = p.title;
+    $('#lt-chapo').textContent = p.chapo || ''; $('#lt-chapo').hidden = !p.chapo;
   }
   function renderDynamic() { renderShelf(); renderHomeCp(); renderHomeActus(); renderActus(); renderVeille(); renderPresse(); renderRecent(); INDEX = buildIndex(); }
 
@@ -1270,6 +1308,7 @@
     updatePreview();
     ok.textContent = 'Inscription enregistrée pour la démonstration.';
     em.value = ''; consent.checked = false;
+    majLettreA();
     showOk(ok);
   });
 
@@ -1412,17 +1451,22 @@
 
   /* ---------- Espace adhérent : publier ---------- */
   const PUB = {
-    cp: { label: 'Communiqué', submit: 'Publier le communiqué', toast: 'Communiqué publié', href: '#presse', prefix: 'cp-', where: 'La publication apparaîtra en tête de la salle de presse et, si elle n’est pas réservée aux adhérents, sous la devise de la page d’accueil.' },
-    veille: { label: 'Veille', submit: 'Publier dans la veille', toast: 'Publié dans la veille', href: '#espace', prefix: 'vi-', where: 'La publication apparaîtra dans la veille réglementaire de l’espace adhérent et, pour les adhérents connectés, dans le bandeau de la page d’accueil.' },
-    actu: { label: 'Actualité', submit: 'Publier l’actualité', toast: 'Actualité publiée', href: '#actualites', prefix: 'ac-', where: 'La publication apparaîtra dans les actualités et sur la page d’accueil.' }
+    cp: { label: 'Communiqué', ou: 'Dans la salle de presse', submit: 'Publier le communiqué', toast: 'Communiqué publié', href: '#presse', prefix: 'cp-', where: 'La publication apparaîtra en tête de la salle de presse et, si elle n’est pas réservée aux adhérents, sous la devise de la page d’accueil.' },
+    veille: { label: 'Veille', ou: 'Dans l’espace adhérent', submit: 'Publier dans la veille', toast: 'Publié dans la veille', href: '#espace', prefix: 'vi-', where: 'La publication apparaîtra dans la veille réglementaire de l’espace adhérent et, pour les adhérents connectés, dans le bandeau de la page d’accueil.' },
+    actu: { label: 'Actualité', ou: 'Dans les actualités', submit: 'Publier l’actualité', toast: 'Actualité publiée', href: '#actualites', prefix: 'ac-', where: 'La publication apparaîtra dans les actualités et sur la page d’accueil.' }
   };
   let pubType = 'cp';
+  /* Type de publication en trois pavés (11 novembre 2026) : le nom, puis l'onglet où la publication paraîtra ; le pavé choisi prend la
+     couleur de cet onglet (data-pub, styles.css). */
   function renderPubType() {
-    seg($('#pub-type'), ['Communiqué', 'Veille', 'Actualité'], PUB[pubType].label, (l) => {
-      pubType = Object.keys(PUB).find((k) => PUB[k].label === l) || 'cp';
+    const keys = Object.keys(PUB);
+    const pave = (l) => { const k = keys.find((x) => PUB[x].label === l); return '<span class="pub-type-t ea-pave-n">' + esc(l) + '</span><span class="pub-type-d ea-pave-d" aria-hidden="true">' + esc(PUB[k].ou) + '</span>'; };
+    seg($('#pub-type'), keys.map((k) => PUB[k].label), PUB[pubType].label, (l) => {
+      pubType = keys.find((k) => PUB[k].label === l) || 'cp';
       renderPubType();
       updatePreview();
-    });
+    }, pave);
+    $$('#pub-type button').forEach((b, i) => { b.dataset.pub = keys[i]; });
     $('#g-veille').hidden = pubType !== 'veille';
     /* La veille est toujours réservée aux adhérents : l'interrupteur ne concerne que communiqués et actualités. */
     $('#f-members').closest('.g-row').hidden = pubType === 'veille';
@@ -1547,6 +1591,7 @@
   function renderNewsletter() {
     const n = subscribers.length;
     $('#nl-count').textContent = '(' + n + ')';
+    sommairePub('lettre', n, 'abonné', 'abonnés', 'Aucun abonné');
     $('#f-mail-count').textContent = n ? abonnes(n, false) : 'Aucun abonné pour l’instant';
     $('#nl-list').innerHTML = n
       ? subscribers.map((a) => '<li><span>' + esc(a) + '</span><button class="link-btn" type="button" data-remove="' + esc(a) + '" aria-label="Retirer ' + esc(a) + '">Retirer</button></li>').join('')
@@ -2080,6 +2125,32 @@
     saving = false; btn.removeAttribute('aria-busy');
   });
 
+  /* ---------- Espace adhérent : mise en page (11 novembre 2026) ----------
+     Proposition « Pages réservées aux adhérents » validée par Isabelle Eimer : « Enlève la phrase que tu as rajoutée à l'espace adhérent
+     […]. Pour le reste ok » (pas de phrase d'accueil sous le titre). Les titres de rubrique, les objets de « Écrire au bureau », le
+     sommaire et les parties de « Publier sur le site » portent leur pastille (data-pastille dans index.html) ; elles se dessinent à leur
+     arrivée à l'écran, comme celles de la Documentation (setupMotion(), appelée ensuite). */
+  function setupEspace() {
+    $$('#member [data-pastille]').forEach((el) => { if (!el.querySelector(':scope > .ea-pastille')) el.insertAdjacentHTML('afterbegin', eaPastille(el.dataset.pastille, false)); });
+    /* Sommaire de « Publier sur le site » : chaque pavé amène sa partie à l'écran et met le focus sur son titre. */
+    $('.pub-sommaire').addEventListener('click', (e) => {
+      const a = e.target.closest('a[data-pub-cible]');
+      if (!a) return;
+      /* Le lien garde l'adresse de la page (#espace) : ni changement d'adresse, ni retour en haut de page (gestionnaire général des liens). */
+      e.preventDefault(); e.stopPropagation();
+      const sec = document.getElementById(a.dataset.pubCible);
+      if (!sec) return;
+      scrollUnderBars(sec, 12);
+      const h = sec.querySelector('h2'); h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true });
+    });
+    $('#sub-email').addEventListener('input', majLettreA);
+  }
+  /* Sommaire de « Publier sur le site » : le nombre de messages, de comptes ou d'abonnés, sous le nom de la partie. */
+  function sommairePub(id, n, un, plusieurs, aucun) {
+    const el = $('[data-pub-n="' + id + '"]');
+    if (el) el.textContent = n ? n + ' ' + (n > 1 ? plusieurs : un) : aucun;
+  }
+
   /* ---------- Espace adhérent : session de démonstration et rubriques ----------
      La veille réglementaire est réservée aux adhérents (demande d'Isabelle Eimer du 6 novembre 2026).
      Démonstration : la connexion accepte tout identifiant et reste valable jusqu'à la fermeture de l'onglet. */
@@ -2092,21 +2163,25 @@
      avant la connexion (liens : après la connexion, on arrive sur la bonne rubrique) et servent de menu une fois connecté.
      Les portes 2 et 3 ouvrent « Écrire au bureau » avec l'objet déjà choisi. */
   const ACCES = [
-    { t: 'La veille réglementaire', d: 'Chaque lundi, les textes du Journal officiel, de l’Assemblée nationale et du Sénat qui concernent les laboratoires.', panel: 'veille', cta: 'Lire la veille réglementaire' },
-    { t: 'Partager votre expérience dans une commission', d: 'Vous voulez partager votre expérience dans une commission ? Dites-le-nous.', panel: 'ecrire', sujet: 'commission', cta: 'Nous écrire' },
-    { t: 'Une suggestion, une idée, une question', d: 'Vous avez une suggestion à faire, une idée, une question ? Contactez-nous.', panel: 'ecrire', sujet: 'suggestion', cta: 'Nous écrire' },
-    { t: 'La lettre d’information', d: 'La veille et les nouvelles publications du SLBC, par e-mail.', panel: 'lettre', cta: 'M’abonner' }
+    { icone: 'veille', t: 'La veille réglementaire', d: 'Chaque lundi, les textes du Journal officiel, de l’Assemblée nationale et du Sénat qui concernent les laboratoires.', panel: 'veille', cta: 'Lire la veille réglementaire' },
+    { icone: 'commission', t: 'Partager votre expérience dans une commission', d: 'Vous voulez partager votre expérience dans une commission ? Dites-le-nous.', panel: 'ecrire', sujet: 'commission', cta: 'Nous écrire' },
+    { icone: 'suggestion', t: 'Une suggestion, une idée, une question', d: 'Vous avez une suggestion à faire, une idée, une question ? Contactez-nous.', panel: 'ecrire', sujet: 'suggestion', cta: 'Nous écrire' },
+    { icone: 'lettre', t: 'La lettre d’information', d: 'La veille et les nouvelles publications du SLBC, par e-mail.', panel: 'lettre', cta: 'M’abonner' }
   ];
-  const PORTE_BUREAU = { t: 'Publier sur le site', d: 'Outils du bureau : messages des adhérents, communiqués, veille, actualités, comptes des adhérents, lettre d’information.', panel: 'publier' };
+  const PORTE_BUREAU = { icone: 'bureau', t: 'Publier sur le site', d: 'Outils du bureau : messages des adhérents, communiqués, veille, actualités, comptes des adhérents, lettre d’information.', panel: 'publier' };
   /* Côté bureau, l'objet est dit de façon neutre. */
   const SUJETS_BUREAU = { commission: 'Expérience en commission', suggestion: 'Suggestion ou idée', question: 'Question' };
   const SUJETS = { commission: 'Partager mon expérience dans une commission', suggestion: 'Une suggestion ou une idée', question: 'Une question' };
   let wantSujet = null; let curSujet = 'commission'; let curPanel = 'veille';
-  const porteInner = (a) => '<span class="porte-t">' + esc(a.t) + '</span><span class="porte-d">' + esc(a.d) + '</span>' + (a.cta ? '<span class="porte-cta more">' + esc(a.cta) + '</span>' : '');
+  const porteInner = (a, menu) => '<span class="porte-t">' + esc(a.t) + (menu ? EA_TRAIT : '') + '</span><span class="porte-d">' + esc(a.d) + '</span>' + (a.cta ? '<span class="porte-cta more">' + esc(a.cta) + '</span>' : '');
   const porteOn = (a) => a.panel === curPanel && (curPanel !== 'ecrire' || (a.sujet === 'commission') === (curSujet === 'commission'));
+  /* Une fois connecté (11 novembre 2026, mise en page validée par Isabelle Eimer) : chaque porte en pavé, avec sa pastille (dessinée
+     d'emblée : le menu est refait à chaque choix) ; sous le nom de la porte ouverte, le trait au marqueur. Chaque porte dit quelle
+     rubrique elle ouvre (aria-controls). */
+  const porteMenu = (a, attrs, cls) => '<button type="button" class="porte ' + cls + '" ' + attrs + ' aria-controls="ea-' + a.panel + '">' + eaPastille(a.icone, true) + porteInner(a, true) + '</button>';
   function renderPortes() {
-    $('#ea-tabs').innerHTML = '<ul class="portes">' + ACCES.map((a, k) => '<li><button type="button" class="porte c' + k + '" data-porte="' + k + '" aria-pressed="' + porteOn(a) + '">' + porteInner(a) + '</button></li>').join('') + '</ul>' +
-      '<button type="button" class="porte porte-bureau" data-porte="bureau" aria-pressed="' + (curPanel === 'publier') + '">' + porteInner(PORTE_BUREAU) + '</button>';
+    $('#ea-tabs').innerHTML = '<ul class="portes">' + ACCES.map((a, k) => '<li>' + porteMenu(a, 'data-porte="' + k + '" aria-pressed="' + porteOn(a) + '"', 'c' + k) + '</li>').join('') + '</ul>' +
+      porteMenu(PORTE_BUREAU, 'data-porte="bureau" aria-pressed="' + (curPanel === 'publier') + '"', 'porte-bureau');
   }
   function setSujet(s) {
     curSujet = SUJETS[s] ? s : 'commission';
@@ -2130,8 +2205,11 @@
       const inscrit = subscribers.includes(member.toLowerCase());
       if (inscrit) { $('#sub-ok').textContent = 'Votre adresse ' + member + ' reçoit déjà la lettre d’information.'; $('#sub-ok').hidden = false; }
       else { $('#sub-ok').hidden = true; $('#sub-ok').textContent = ''; }
+      majLettreA();
     }
   }
+  /* Exemple d'envoi de la lettre : « À : » suit l'adresse saisie, à défaut celle de la connexion. */
+  function majLettreA() { $('#lt-a').textContent = $('#sub-email').value.trim() || member || 'votre adresse e-mail'; }
   /* Fait venir la rubrique à l'écran et place le focus sur son titre (lecteur d'écran, clavier). */
   function revealPanel(name) {
     const p = $('#ea-' + name); if (!p || p.hidden) return;
@@ -2206,6 +2284,7 @@
     '<p class="msg-text">' + esc(m.msg) + '</p></li>';
   function renderMessages() {
     $('#msg-count').textContent = '(' + messages.length + ')';
+    sommairePub('messages-admin', messages.length, 'message', 'messages', 'Aucun message');
     $('#msg-list').innerHTML = messages.length ? messages.map((m) => msgItem(m, true)).join('') : '<li class="nl-empty">Aucun message pour l’instant.</li>';
     $('#msg-clear').hidden = !messages.length;
   }
@@ -2327,6 +2406,7 @@
   }
   function renderComptes() {
     $('#cpt-count').textContent = '(' + comptes.length + ')';
+    sommairePub('comptes-admin', comptes.length, 'compte', 'comptes', 'Aucun compte');
     $('#cpt-list').innerHTML = comptes.length ? comptes.map((c) => {
       const qui = esc(c.prenom + ' ' + c.nom); const em = esc(c.email);
       const b = (act, label, aria) => '<button class="link-btn" type="button" data-cpt="' + act + '" data-email="' + em + '" aria-label="' + aria + ' ' + qui + '">' + label + '</button>';
@@ -2553,6 +2633,7 @@
   /* ---------- Démarrage ---------- */
   $('#f-date').value = todayISO();
   renderStatic();
+  setupEspace();
   setupLinkedin();
   setupContact();
   renderDynamic();

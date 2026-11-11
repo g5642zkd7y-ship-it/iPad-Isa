@@ -793,8 +793,6 @@ select.input{padding-right:38px;background-image:var(--chev-down);background-rep
 .login-card{display:flex;flex-direction:column;gap:18px;width:100%;max-width:440px;padding:clamp(28px,5vw,48px);border-radius:var(--r-tile);background:#fff;box-shadow:0 1px 2px rgba(46,50,54,.06)}
 .member-id{font-size:17px}
 .ea-panel{margin-top:32px}
-.ea-intro{margin-bottom:28px}
-.ea-intro .muted{margin-top:6px;max-width:46em}
 .ea-lettre{max-width:560px}
 .ea-panel .side-block:not(.side-dark){background:var(--fond)}
 .veille-public{display:flex;flex-direction:column;gap:20px;max-width:46em}
@@ -1310,3 +1308,334 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
 .lnav-links a[data-section][aria-current]{color:var(--vert);box-shadow:none}
 .lnav-links a[data-section] > .trait-marqueur{left:6px;width:calc(100% - 10px);top:calc(50% + 11px)}
 @media (max-width:640px){.lnav-links a[data-section] > .trait-marqueur{left:4px;width:calc(100% - 6px)}}
+
+/* ---------- Espace adhérent : mise en page (11 novembre 2026) ----------
+   Proposition « Pages réservées aux adhérents » (planche marque/espace-adherent.html) validée par Isabelle Eimer le 11 novembre 2026 :
+   « Enlève la phrase que tu as rajoutée à l'espace adhérent […]. Pour le reste ok ». La phrase d'accueil écrite à la main sous le titre
+   n'est donc pas reprise. Portes en pavés, chacune avec sa pastille dessinée (rond blanc au marqueur sur le rond vert anis), la porte
+   ouverte soulignée du trait au marqueur ; chaque rubrique ouverte par un titre à pastille, une phrase et un filet épais de la couleur
+   de sa porte ; choix internes en pavés (sources de la veille, objet du message, type de publication), le pavé choisi en couleur
+   pleine ; cartes blanches à filet pour les formulaires, cartes sur fond clair pour le reste, sans ombre ; listes vides en cadre
+   pointillé. Pastilles et trait : EA_ICONS, eaPastille(), renderPortes() et setupEspace() dans app.js ; pavés : renderVeille() et
+   renderPubType(). Téléphones, tablettes et petit portable : vérifiés le 11 novembre 2026, réglages à la fin du bloc. */
+#member{--ea-r-pave:14px;--ea-pad-carte:28px 32px 30px}
+/* Ligne « Connecté » : discrète, à droite, au-dessus des portes */
+#member .member-head{display:flex;align-items:center;justify-content:flex-end;gap:16px;margin-bottom:18px}
+#member .member-id{font-size:15.5px;color:var(--gris)}
+#member #member-who{font-weight:700;color:var(--encre)}
+#member #logout{min-height:40px;padding:0 16px;font-size:15px}
+@media (pointer:coarse){#member #logout{min-height:44px}}
+
+/* Portes en pavés : mêmes couleurs, une pastille par porte (jumelles, deux biologistes, ampoule, journal ; porte-documents pour
+   « Publier sur le site ») */
+.portes-menu .porte{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr);grid-template-rows:auto auto 1fr;column-gap:14px;row-gap:6px;align-items:start;padding:18px 18px 18px 14px;border-radius:16px}
+.portes-menu .porte .ea-pastille{grid-row:1 / span 3;width:54px;margin:-4px 0 0 -4px}
+.portes-menu .porte .porte-t{grid-column:2;position:relative;align-self:end;font-size:18.5px;font-weight:800;letter-spacing:-.01em}
+.portes-menu .porte .porte-d{grid-column:2;font-size:15px;line-height:1.45}
+.portes-menu .porte .porte-cta{grid-column:2;margin-top:4px}
+.portes-menu .porte.c0 .mnum-eclats,.portes-menu .porte.c3 .mnum-eclats{stroke:#fff}
+/* Trait au marqueur sous le nom de la porte ouverte (dessin TRAIT des onglets), aux couleurs de son fond */
+.ea-trait{position:absolute;left:-1px;right:-4px;top:100%;display:block;height:10px;margin-top:1px;overflow:visible;pointer-events:none}
+.ea-trait path{fill:none;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.ea-trait .tm-survol{display:none}
+.ea-trait .tm-double,.ea-trait .tm-marqueur{opacity:1}
+.porte.c0 .tm-marqueur,.porte.c3 .tm-marqueur{stroke:#fff}
+.porte.c2 .tm-double{stroke:#fff}
+.porte.c2 .tm-marqueur{stroke:var(--encre)}
+.porte[aria-pressed="false"] .ea-trait{display:none}
+.portes-menu .portes .porte[aria-pressed="true"] .porte-t{margin-bottom:6px}
+@media (forced-colors:active){.porte .ea-trait .tm-marqueur{stroke:currentColor}}
+/* Barre « Publier sur le site » : pavé clair à pastille, titre et description sur la même ligne */
+.portes-menu .porte-bureau{grid-template-columns:44px auto minmax(0,1fr);grid-template-rows:auto;align-items:center;column-gap:14px;padding:12px 18px 12px 12px;border:1px solid var(--filet);border-radius:14px;background:var(--fond)}
+.portes-menu .porte-bureau .ea-pastille{grid-column:1;grid-row:1;width:46px;margin:-4px 0}
+.portes-menu .porte-bureau .porte-t,.portes-menu .porte-bureau .porte-d{grid-row:1;align-self:center}
+.portes-menu .porte-bureau .porte-t{grid-column:2;font-size:17px}
+.portes-menu .porte-bureau .porte-d{grid-column:3;font-size:14.5px;color:var(--gris)}
+.portes-menu .porte-bureau[aria-pressed="true"]{border-color:var(--vert);background:#fff}
+
+/* Titre de rubrique : pastille, titre, phrase, filet épais de la couleur de la porte (comme les rubriques de la Documentation) */
+#member .ea-panel{margin-top:44px}
+.ea-h{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-top:20px;border-top:4px solid var(--ea-c,var(--vert))}
+.ea-h .ea-pastille{flex:none;width:60px;margin:-6px 0 -6px -6px}
+.ea-h h2{font-size:clamp(24px,2.3vw,30px);line-height:1.15;font-weight:800;letter-spacing:-.015em;color:var(--encre)}
+.ea-h p{margin-top:4px;max-width:46em;font-size:16px;line-height:1.5;color:var(--gris);text-wrap:balance}
+#ea-veille{--ea-c:var(--nardo)}
+#ea-ecrire{--ea-c:var(--vert-clair)}
+#ea-lettre,#ea-publier{--ea-c:var(--vert)}
+
+/* Repères communs aux quatre rubriques : sous-titres, cartes, pavés, listes vides */
+#member .ea-sous-titre{font-size:21px;line-height:1.25;font-weight:800;letter-spacing:-.01em}
+#member .ea-sous-titre:not(.h-block-blanc){color:var(--encre)}
+#member .ea-carte-claire{padding:var(--ea-pad-carte);border:0;border-radius:var(--r-card);background:var(--fond);box-shadow:none}
+#member .ea-carte-blanche{padding:var(--ea-pad-carte);border:1px solid var(--filet-fort);border-radius:var(--r-card);background:#fff;box-shadow:none}
+#member .ea-pave-n{font-size:17px;line-height:1.25;font-weight:800;letter-spacing:-.01em}
+#member .ea-pave-d{font-size:14.5px;line-height:1.3;font-weight:500;letter-spacing:0;color:var(--gris)}
+#member .msg-list .nl-empty,#ea-publier .pub-vide,#ea-publier #cpt-list > .nl-empty,#nl-sent:not(:has(.r-title)) li{display:block;min-height:0;margin:0;padding:18px 22px;border:1.5px dashed var(--filet-fort);border-radius:var(--ea-r-pave);background:#fff;color:var(--gris);font-size:16px;line-height:1.5}
+/* Messages (« Vos messages », « Messages des adhérents ») : cartes blanches sur deux colonnes */
+#ecrire-mes-messages,#msg-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;border-top:0}
+#ecrire-mes-messages .nl-empty,#msg-list .nl-empty{grid-column:1 / -1}
+#ecrire-mes-messages .msg,#msg-list .msg{gap:6px;padding:16px 20px 18px;border:1px solid var(--filet-fort);border-radius:var(--ea-r-pave);background:#fff}
+#ecrire-mes-messages .msg-meta,#msg-list .msg-meta{align-items:center}
+#ecrire-mes-messages .msg-sujet,#msg-list .msg-sujet{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--vert-clair);color:var(--encre);font-size:14px}
+
+/* Veille réglementaire : sources en pavés, liste en sommaire, textes suivis en frise aux points dessinés au marqueur.
+   Dessins (même tracé que le rond blanc des pastilles, réduit) : bouton d'ouverture, puis ouvert avec son double vert anis ;
+   point d'étape franchie, rond d'étape à venir. */
+#ea-veille{--ea-btn:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cg transform='translate(16 16) scale(.43) translate(-42 -40)'%3E%3Cpath d='M42 11 C59.5 10.5 71 23.5 71 40 C71 57.5 58.5 69.5 42 69.5 C25 69.5 13 57 13 40 C13 23.5 25.5 11.8 39.5 11.2' fill='%23FFFFFF' stroke='%232E3236' stroke-width='4.4' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");--ea-btn-ouvert:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cg transform='translate(16 16) scale(.43) translate(-42 -40)'%3E%3Ccircle cx='50' cy='47' r='29' fill='%23A3BE3C'/%3E%3Cpath d='M42 11 C59.5 10.5 71 23.5 71 40 C71 57.5 58.5 69.5 42 69.5 C25 69.5 13 57 13 40 C13 23.5 25.5 11.8 39.5 11.2' fill='%23FFFFFF' stroke='%232E3236' stroke-width='4.4' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");--ea-point-fait:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Ccircle cx='12.4' cy='12.1' r='7.2' fill='%23A3BE3C'/%3E%3Cg transform='translate(9.2 9) scale(.245) translate(-42 -40)'%3E%3Cpath d='M42 11 C59.5 10.5 71 23.5 71 40 C71 57.5 58.5 69.5 42 69.5 C25 69.5 13 57 13 40 C13 23.5 25.5 11.8 39.5 11.2' fill='%235F7A2B' stroke='%232E3236' stroke-width='6.4' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");--ea-point-avenir:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Cg transform='translate(9.2 9) scale(.245) translate(-42 -40)'%3E%3Cpath d='M42 11 C59.5 10.5 71 23.5 71 40 C71 57.5 58.5 69.5 42 69.5 C25 69.5 13 57 13 40 C13 23.5 25.5 11.8 39.5 11.2' fill='%23FFFFFF' stroke='%235E6266' stroke-width='6.8' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E")}
+#ea-veille .sec-head{display:block;margin-bottom:22px}
+#ea-veille .ea-edition{margin:0 0 16px}
+#veille-seg{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:10px;max-width:none;padding:0;border-radius:0;background:none}
+#veille-seg button{display:flex;flex:1 1 0;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-width:0;max-width:none;min-height:62px;padding:10px 18px 10px 16px;border:1px solid var(--filet);border-radius:var(--ea-r-pave);background:var(--fond);box-shadow:none;color:var(--encre);font:inherit;text-align:left;white-space:nowrap;transition:background-color .2s,border-color .2s}
+#veille-seg button:first-child{flex-grow:.62}
+#veille-seg .vs-nom{display:inline-flex;align-items:center;gap:9px}
+#veille-seg .vs-nom .dot{width:10px;height:10px}
+@media (hover:hover){
+  #veille-seg button:not([aria-pressed="true"]):hover{background:#fff;border-color:var(--vert)}
+  #veille-seg button:not([aria-pressed="true"]):hover .vs-nom{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+}
+#veille-seg button[aria-pressed="true"]{background:var(--nardo);border-color:var(--nardo);color:#fff;font-weight:inherit}
+#veille-seg button[aria-pressed="true"] .vs-n{color:#fff}
+#veille-seg button[aria-pressed="true"] .dot{box-shadow:0 0 0 2px #fff}
+#veille-seg button:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
+@media (forced-colors:active){#veille-seg button[aria-pressed="true"]{background:SelectedItem;color:SelectedItemText}#veille-seg button[aria-pressed="true"] .vs-n{color:SelectedItemText}}
+#ea-veille .vlist{border-top:2px solid var(--encre)}
+#ea-veille .vitem summary{gap:24px;padding:22px 6px 22px 0;border-radius:0}
+#ea-veille .v-top > span:nth-child(2){font-size:14.5px;font-weight:800;line-height:1.35;color:var(--vert)}
+#ea-veille .v-top .src{font-size:14px;font-weight:600;line-height:1.35;color:var(--gris)}
+#ea-veille .v-top .impact{padding:2px 9px;font-size:13px;font-weight:700}
+#ea-veille .v-top .impact-suivre{background:#fff;color:var(--encre);box-shadow:inset 0 0 0 1px var(--filet-fort)}
+#ea-veille .v-top .impact-faible{padding-left:0;background:transparent;color:var(--gris);box-shadow:none}
+#ea-veille .v-title{font-size:19.5px;line-height:1.35}
+@media (hover:hover){#ea-veille .vitem summary:hover .v-title{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;text-decoration-color:var(--vert)}}
+#ea-veille .v-plus{width:36px;height:36px;margin-top:-2px;border-radius:0;background:var(--ea-btn) center / 36px 36px no-repeat;transform:none;transition:none}
+#ea-veille .v-plus::before,#ea-veille .v-plus::after{top:16px;left:16px;width:12px;height:2.2px;margin:-1.1px 0 0 -6px;background:var(--encre)}
+@media (hover:hover){#ea-veille .vitem summary:hover .v-plus{background-image:var(--ea-btn-ouvert)}}
+#ea-veille .vitem[open] .v-plus{background-image:var(--ea-btn-ouvert)}
+#ea-veille .vitem[open] .v-plus::after{transform:rotate(90deg) scaleX(0)}
+#ea-veille .vitem summary:focus-visible{outline-offset:-3px}
+/* Texte ouvert : le résumé et les repères sur un fond clair */
+#ea-veille .vitem[open]{background:var(--fond);border-bottom-color:var(--filet-fort)}
+#ea-veille .vitem[open] summary{padding-left:14px;padding-right:14px}
+#ea-veille .v-body{max-width:none;gap:18px}
+#ea-veille .v-body > p{max-width:40em;font-size:17px;line-height:1.6;color:var(--texte)}
+#ea-veille .v-facts{grid-template-columns:max-content minmax(0,1fr);gap:0;border-top:1px solid var(--filet-fort);font-size:15px}
+#ea-veille .v-facts dt,#ea-veille .v-facts dd{padding:9px 0;border-bottom:1px solid var(--filet)}
+#ea-veille .v-facts dt{padding-right:22px;font-weight:600;color:var(--gris)}
+#ea-veille .v-facts dd{color:var(--encre)}
+#ea-veille .vlist .empty{padding:26px 0}
+/* Contrôle de couverture : note discrète en bas de la liste */
+#ea-veille .coverage-light{max-width:none;margin-top:18px;font-size:14px;line-height:1.55;color:var(--gris)}
+#ea-veille .coverage-light strong{display:block;font-size:14px;font-weight:700;color:var(--encre)}
+/* Textes suivis : carte claire, pastille du code relié (Documentation), frise aux points dessinés */
+#ea-veille .side-block{gap:0}
+#ea-veille .ea-suivis-tete{display:flex;align-items:center;gap:12px;margin:0 0 2px}
+#ea-veille .ea-suivis-tete .ea-pastille{flex:none;width:48px;margin:-6px 0 -6px -4px}
+#ea-veille .ea-suivis-h{margin:0}
+#ea-veille .track-title{margin:18px 0 12px;padding-top:16px;border-top:1px solid var(--filet-fort);font-size:16.5px;font-weight:800;line-height:1.3;color:var(--encre)}
+#ea-veille #trackers > .track-title:first-child{margin-top:14px;padding-top:0;border-top:0}
+#ea-veille .track li{padding:0 0 14px 34px}
+#ea-veille .track li:last-child{padding-bottom:0}
+#ea-veille .track li::after{top:0;left:0;width:22px;height:22px;border-radius:0;box-shadow:none;background:var(--ea-point-avenir) center / 22px 22px no-repeat}
+#ea-veille .track li.done::after{background-image:var(--ea-point-fait)}
+#ea-veille .track li::before{top:22px;bottom:0;left:8.2px;width:0;background:none;border-left:2px dotted var(--filet-fort)}
+#ea-veille .track li.done::before{border-left:2px solid var(--vert)}
+#ea-veille .track li.done:has(+ li:not(.done))::before{border-left-style:dotted}
+#ea-veille .step-name{font-size:15px;font-weight:700;line-height:1.35;color:var(--encre)}
+#ea-veille .track li:not(.done) .step-name{font-weight:600;color:var(--texte)}
+#ea-veille .step-when{font-size:14px;line-height:1.4;color:var(--gris)}
+/* Sur ordinateur : colonne des textes suivis plus étroite ; liste en sommaire de journal (date, source et impact à gauche, titre à droite) */
+@media (min-width:981px){#ea-veille .veille-layout{grid-template-columns:minmax(0,1fr) 310px;gap:52px}}
+@media (min-width:700px){
+  #ea-veille .v-sum{display:grid;flex:1 1 auto;grid-template-columns:196px minmax(0,1fr);grid-template-rows:auto auto 1fr;column-gap:28px;row-gap:5px}
+  #ea-veille .v-top{display:contents}
+  #ea-veille .v-top > span:nth-child(2){grid-column:1;grid-row:1}
+  #ea-veille .v-top .src{grid-column:1;grid-row:2}
+  #ea-veille .v-top .impact{grid-column:1;grid-row:3;justify-self:start;align-self:start;margin-top:6px}
+  #ea-veille .v-title{grid-column:2;grid-row:1 / span 3}
+  #ea-veille .vitem[open] .v-sum{grid-template-columns:182px minmax(0,1fr)}
+  #ea-veille .v-body{padding:0 64px 26px 224px}
+  #ea-veille .coverage-light{padding-left:224px}
+}
+@media (max-width:699px){#ea-veille .v-body{padding:0 14px 24px}}
+
+/* Écrire au bureau : l'objet en trois pavés (les vrais boutons radio restent, invisibles mais actifs au clavier et pour les lecteurs
+   d'écran), le pavé choisi en vert clair, la couleur de la porte ; formulaire en carte blanche sur deux colonnes ; vos messages dessous */
+#ea-ecrire .ecrire{display:flex;flex-direction:column;align-items:stretch;gap:20px}
+#ea-ecrire .ecrire-form{gap:24px}
+#ea-ecrire .ecrire-sujets{gap:0}
+#ea-ecrire .ecrire-sujets legend{margin-bottom:12px;font-size:16px;font-weight:700}
+#ea-ecrire .ecr-paves{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+#ea-ecrire .ecr-pave{position:relative;display:flex;align-items:center;gap:12px;min-height:76px;margin:0;padding:12px 18px 12px 12px;border:1px solid var(--filet);border-radius:var(--ea-r-pave);background:var(--fond);color:var(--encre);cursor:pointer;transition:background-color .2s,border-color .2s}
+#ea-ecrire .ecr-pave input{position:absolute;inset:0;z-index:1;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+#ea-ecrire .ecr-pave .ea-pastille{flex:none;width:52px;margin:-4px 0 -4px -2px}
+#ea-ecrire .ecr-pave-t{display:block;text-wrap:balance}
+@media (hover:hover){#ea-ecrire .ecr-pave:not(:has(input:checked)):hover{background:#fff;border-color:var(--vert)}}
+#ea-ecrire .ecr-pave:has(input:checked){background:var(--vert-clair);border-color:var(--vert);box-shadow:inset 0 0 0 1px var(--vert)}
+#ea-ecrire .ecr-pave:has(input:focus-visible){outline:3px solid var(--vert);outline-offset:3px}
+@media (forced-colors:active){#ea-ecrire .ecr-pave:has(input:checked){border:3px solid Highlight}}
+/* Champs : à gauche commission, nom, e-mail ; à droite le message, à la même hauteur */
+#ea-ecrire .ecr-champs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px 28px;align-items:stretch}
+#ea-ecrire .ecr-gauche{display:flex;flex-direction:column;gap:18px;min-width:0}
+#ea-ecrire .ecr-droite{display:flex;flex-direction:column;min-width:0}
+#ea-ecrire .ecr-droite .field{flex:1}
+#ea-ecrire .ecr-droite textarea.input{flex:1;min-height:168px}
+/* Pied du formulaire : le bouton, à côté les deux mentions, la confirmation dessous */
+#ea-ecrire .ecr-pied{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:28px;row-gap:6px;align-items:center;padding-top:22px;border-top:1px solid var(--filet)}
+#ea-ecrire .ecr-pied > button[type="submit"]{grid-column:1;grid-row:1 / span 2;align-self:center;padding-inline:30px}
+#ea-ecrire .ecr-pied > .form-note{grid-column:2}
+#ea-ecrire .ecr-pied > #ecrire-ok{grid-column:1 / -1;grid-row:3;margin-top:10px;padding:14px 18px;border-left:4px solid var(--anis);border-radius:var(--ea-r-pave);background:var(--fond)}
+#ea-ecrire .ecrire-side{gap:16px}
+
+/* Lettre d'information : l'inscription dans une carte vert foncé, la couleur de la porte ; à côté, l'e-mail tel que le reçoivent
+   les abonnés, rempli avec le dernier communiqué public (celui de l'accueil) */
+#ea-lettre .ea-lettre{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:28px;align-items:stretch;max-width:none}
+#ea-lettre #abonnement{gap:20px;padding:var(--ea-pad-carte);border-radius:var(--r-card);background:var(--vert)}
+#ea-lettre #abonnement .h-block{color:#fff}
+#ea-lettre .lt-rythme{display:grid;grid-template-columns:auto minmax(0,1fr);margin:0 0 6px;border-top:1px solid rgba(255,255,255,.4)}
+#ea-lettre .lt-rythme dt,#ea-lettre .lt-rythme dd{margin:0;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.4);font-size:16px;line-height:1.4}
+#ea-lettre .lt-rythme dt{padding-right:22px;font-weight:800;white-space:nowrap}
+#ea-lettre .lt-rythme dd{color:#fff}
+#ea-lettre #abonnement .input{border-color:#fff}
+#ea-lettre #abonnement .check-line{font-size:15.5px}
+#ea-lettre #abonnement .check-line input{accent-color:#fff}
+#ea-lettre #abonnement > button[type="submit"]{align-self:flex-start;min-width:200px;margin-top:2px;padding-inline:32px}
+#ea-lettre #abonnement .form-note{margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.4)}
+#ea-lettre #sub-ok{padding:12px 16px;border-left:4px solid var(--anis);border-radius:var(--ea-r-pave);background:rgba(46,50,54,.2)}
+#ea-lettre .lt-exemple-t{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:10px;margin:0 0 16px;font-size:21px;line-height:1.25;font-weight:800;letter-spacing:-.01em;color:var(--encre)}
+#ea-lettre .lt-exemple-t span{font-size:15px;font-weight:400;color:var(--gris)}
+#ea-lettre .lt-de-a{display:flex;flex-wrap:wrap;column-gap:22px}
+#ea-lettre .lt-exemple .mp-head{padding-top:16px}
+#ea-lettre .lt-exemple .mail-preview{border-radius:var(--ea-r-pave);box-shadow:0 0 0 1px var(--filet-fort)}
+#ea-lettre .lt-exemple .mp-text{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+
+/* Publier sur le site : sommaire en quatre pavés vers les parties ; chaque partie dans un bloc clair, ouverte par sa pastille
+   (porte-voix, crayon, deux biologistes, journal), son titre et sa phrase ; le type de publication en trois pavés, le pavé choisi
+   aux couleurs de l'onglet où la publication paraîtra (vert clair : Salle de presse ; olive : Veille ; gris Nardo éclairci : Actualités) */
+#ea-publier .pub-sommaire{margin:0 0 4px}
+#ea-publier .pub-sommaire ul{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none}
+#ea-publier .pub-sommaire a{display:flex;align-items:center;gap:12px;height:100%;min-height:80px;padding:12px 16px 12px 12px;border:1px solid var(--filet);border-radius:var(--ea-r-pave);background:var(--fond);color:var(--encre);text-decoration:none;transition:background-color .2s,border-color .2s}
+#ea-publier .pub-sommaire .ea-pastille{flex:none;width:52px;margin:-4px 0 -4px -2px}
+#ea-publier .pub-s{display:flex;flex-direction:column;gap:3px;min-width:0}
+#ea-publier .pub-s-t,#ea-publier .pub-s-n{text-wrap:balance}
+@media (hover:hover){
+  #ea-publier .pub-sommaire a:hover{background:#fff;border-color:var(--vert)}
+  #ea-publier .pub-sommaire a:hover .pub-s-t{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+}
+#ea-publier .pub-sommaire a:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
+#ea-publier .pub-sec{display:flex;flex-direction:column;gap:0;margin:20px 0 0}
+#ea-publier .pub-h{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;align-items:center;margin-bottom:22px}
+#ea-publier .pub-h .ea-pastille{grid-row:1 / span 2;align-self:start;width:58px;margin:-14px 0 -6px -6px}
+#ea-publier .pub-h h2{align-self:end;font-size:21px;line-height:1.25;font-weight:800;letter-spacing:-.01em;color:var(--encre)}
+#ea-publier .pub-h h2 > span{font-weight:600;color:var(--gris)}
+#ea-publier .pub-h > p{align-self:start;max-width:54em;margin-top:4px;font-size:15.5px;line-height:1.5;color:var(--gris)}
+#ea-publier .pub-h:not(:has(> p)) h2{align-self:center}
+#ea-publier .pub-h:not(:has(> p)) .ea-pastille{align-self:center;margin-top:-6px}
+#ea-publier .g-title{padding:0 2px 8px;font-size:15px;font-weight:700;color:var(--encre)}
+#ea-publier .group,#ea-publier .recent,#ea-publier .preview,#ea-publier .mail-preview{border-radius:var(--ea-r-pave);box-shadow:0 0 0 1px var(--filet-fort)}
+#ea-publier #msg-clear{margin-top:10px}
+#pub-type{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:none;margin:0 0 26px;padding:0;border-radius:0;background:none}
+#pub-type button{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;max-width:none;min-height:70px;padding:12px 20px;border:1px solid var(--filet-fort);border-radius:var(--ea-r-pave);background:#fff;box-shadow:none;color:var(--encre);font:inherit;text-align:left;white-space:normal;transition:background-color .2s,border-color .2s,color .2s}
+#pub-type .pub-type-t{display:block}
+@media (hover:hover){#pub-type button[aria-pressed="false"]:hover{border-color:var(--vert)}}
+#pub-type button[data-pub="cp"][aria-pressed="true"]{background:var(--vert-clair);border-color:var(--vert);box-shadow:inset 0 0 0 1px var(--vert)}
+#pub-type button[data-pub="veille"][aria-pressed="true"]{background:var(--olive);border-color:var(--olive);color:#fff}
+#pub-type button[data-pub="actu"][aria-pressed="true"]{background:var(--nardo);border-color:var(--nardo);color:#fff}
+#pub-type button[data-pub="cp"][aria-pressed="true"] .pub-type-d{color:var(--encre)}
+#pub-type button[data-pub="veille"][aria-pressed="true"] .pub-type-d,#pub-type button[data-pub="actu"][aria-pressed="true"] .pub-type-d{color:#fff}
+#pub-type button:focus-visible{outline:3px solid var(--vert);outline-offset:3px}
+@media (forced-colors:active){#pub-type button[aria-pressed="true"]{border:3px solid Highlight}}
+#ea-publier .admin-grid{gap:32px}
+#ea-publier .admin-form{gap:22px}
+#ea-publier .admin-side{gap:10px}
+#preview-where{margin:2px 2px 0;line-height:1.5}
+#ea-publier .form-actions{padding-top:4px}
+#ea-publier .nl-grid{gap:32px;margin-top:0}
+#ea-publier .nl-list li:last-child{border-bottom:0}
+#ea-publier .nl-add{border-top:1px solid var(--filet)}
+#ea-publier #cpt-mail-note{margin-top:10px}
+/* Listes vides des comptes et des envois : le cadre pointillé seul, sans la carte autour */
+#ea-publier .group:has(> #cpt-list > .nl-empty),#nl-sent:not(:has(.r-title)){overflow:visible;background:none;box-shadow:none}
+#nl-sent:not(:has(.r-title)) .r-kind{font-size:16px}
+
+/* Téléphones, tablettes et petit portable (vérification du 11 novembre 2026, après la validation d'Isabelle Eimer : « Ne vérifie pas
+   la faisabilité sur iPad, iPhone… tu feras quand j'aurai validé ») : iPhone SE, iPhone 13, Pixel 7, iPad, portable de 1024 px et
+   320 px de large, en vertical et en horizontal. Au-dessus de 1100 px, rien ne change. */
+/* Portable et tablette : les quatre portes en 2 × 2 (en quatre colonnes, à 1024 px, leurs textes ne gardaient que deux mots par
+   ligne). Une rubrique ouverte par une porte arrive juste sous l'en-tête, sans la marge des ancres de page. */
+@media (min-width:561px) and (max-width:1099px){.portes-menu .portes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:1099px){
+  #member .ea-panel{scroll-margin-top:0}
+  /* Sources de la veille : le nom peut passer à la ligne (« Journal officiel » sortait de son pavé à 1024 et à 320 px) ; le point
+     reste en face de la première ligne */
+  #veille-seg button{white-space:normal}
+  #veille-seg .vs-nom{align-items:flex-start;text-wrap:balance}
+  #veille-seg .vs-nom .dot{flex:none;margin-top:5.5px}
+}
+/* Textes suivis, sous la liste (tablette en vertical) : les deux frises côte à côte, chaque titre au-dessus de sa frise */
+@media (min-width:700px) and (max-width:980px){
+  #ea-veille #trackers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:row dense;column-gap:44px;align-items:start}
+  #ea-veille #trackers > p:nth-of-type(odd),#ea-veille #trackers > ol:nth-of-type(odd){grid-column:1}
+  #ea-veille #trackers > p:nth-of-type(even),#ea-veille #trackers > ol:nth-of-type(even){grid-column:2}
+  #ea-veille #trackers > .track-title,#ea-veille #trackers > .track-title:first-child{margin:14px 0 12px;padding-top:0;border-top:0}
+  #ea-veille #trackers > p:nth-of-type(n+3){margin-top:26px}
+}
+@media (max-width:980px){
+  #ea-lettre .lt-rythme{grid-template-columns:minmax(0,1fr)}
+  #ea-lettre .lt-rythme dt{padding-bottom:0;border-bottom:0}
+  #ea-lettre .lt-rythme dd{padding-top:2px}
+}
+/* Jusqu'à 900 px : la lettre en une colonne ; le sommaire de « Publier sur le site » en 2 × 2 ; le type de publication reste en trois
+   pavés */
+@media (max-width:900px){
+  #ea-lettre .ea-lettre{grid-template-columns:minmax(0,1fr)}
+  #member #ea-ecrire .ecrire-form,#member #ea-ecrire .ecrire-side,#member #ea-lettre #abonnement,#member #ea-lettre .lt-exemple{padding:24px 20px}
+  #ea-lettre .lt-exemple-t span{text-wrap:balance}
+  #ea-publier .pub-sommaire ul{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #pub-type button{padding:12px 16px}
+  #member #ea-publier .pub-sec{padding:22px 20px 24px}
+}
+/* Écrire au bureau : les trois pavés de l'objet et les deux colonnes du formulaire tiennent jusqu'à 780 px (iPad en vertical,
+   téléphones à l'horizontale), avec une pastille un peu plus petite sous 900 px ; en dessous, tout passe l'un sous l'autre */
+@media (min-width:780px) and (max-width:900px){
+  #ea-ecrire .ecr-pave{gap:10px;padding:12px 14px 12px 10px}
+  #ea-ecrire .ecr-pave .ea-pastille{width:46px}
+}
+@media (max-width:779px){
+  #ea-ecrire .ecr-paves,#ea-ecrire .ecr-champs,#ecrire-mes-messages,#msg-list{grid-template-columns:minmax(0,1fr)}
+  #ea-ecrire .ecr-pied{grid-template-columns:minmax(0,1fr)}
+  #ea-ecrire .ecr-pied > button[type="submit"],#ea-ecrire .ecr-pied > .form-note{grid-column:1;grid-row:auto;justify-self:start}
+  #ea-ecrire .ecr-pied > #ecrire-ok{grid-row:auto}
+}
+@media (max-width:640px){#veille-seg button,#veille-seg button:first-child{flex:1 1 calc(50% - 5px)}}
+/* Téléphone, et téléphone tourné : les portes ne gardent que leur titre, à côté de la pastille ; pavés de l'objet plus bas */
+@media (max-width:560px),(orientation:landscape) and (max-height:500px){
+  .portes-menu .porte{grid-template-rows:auto;align-items:center;padding:10px 14px 10px 10px;column-gap:12px}
+  .portes-menu .porte .ea-pastille{grid-row:1;width:46px;margin:-4px 0}
+  .portes-menu .porte .porte-t{align-self:center}
+  #ea-ecrire .ecr-pave{min-height:62px;padding:10px 16px 10px 10px}
+  #ea-ecrire .ecr-pave .ea-pastille{width:46px}
+}
+/* Téléphone tenu droit : la pastille à côté du titre, la phrase dessous sur toute la largeur (titres des rubriques et des parties de
+   « Publier sur le site ») ; sommaire et type de publication en une colonne */
+@media (max-width:560px){
+  .ea-h{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;align-items:center}
+  .ea-h > div{display:contents}
+  .ea-h .ea-pastille{width:54px;margin:-6px 0 -6px -4px}
+  .ea-h h2{grid-column:2}
+  .ea-h p{grid-column:1 / -1;margin-top:10px}
+  #ea-publier .pub-h .ea-pastille{grid-row:1;align-self:center;width:52px;margin:-6px 0 -6px -4px}
+  #ea-publier .pub-h h2{align-self:center}
+  #ea-publier .pub-h > p{grid-column:1 / -1;margin-top:10px}
+  #ea-publier .pub-sommaire ul{grid-template-columns:minmax(0,1fr);gap:10px}
+  #ea-publier .pub-sommaire a{min-height:64px;padding:10px 16px 10px 10px}
+  #ea-publier .pub-sommaire .ea-pastille{width:46px}
+  #pub-type{grid-template-columns:minmax(0,1fr);gap:10px;margin-bottom:22px}
+  #pub-type button{flex-direction:row;flex-wrap:wrap;align-items:baseline;justify-content:flex-start;column-gap:10px;row-gap:0;min-height:52px;padding:11px 16px}
+}
+/* Très petits écrans (320 px) : pavés des sources et cartes un peu moins rembourrés */
+@media (max-width:400px){
+  #veille-seg button{padding:10px 12px}
+  #veille-seg .vs-nom{gap:7px}
+  #member #ea-ecrire .ecrire-form,#member #ea-ecrire .ecrire-side,#member #ea-lettre #abonnement,#member #ea-lettre .lt-exemple{padding:22px 16px}
+  #member #ea-publier .pub-sec{padding:20px 16px 22px}
+}

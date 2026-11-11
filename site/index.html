@@ -951,70 +951,85 @@
         <button class="btn btn-quiet" type="button" id="logout">Se déconnecter</button>
       </div>
       <div class="portes-menu" id="ea-tabs" role="group" aria-label="Rubriques de l’espace adhérent"></div>
+      <!-- Rubriques de l'espace adhérent : mise en page validée par Isabelle Eimer le 11 novembre 2026 (« Pour le reste ok »).
+           Chaque rubrique s'ouvre sur un titre à pastille (data-pastille : dessin posé par setupEspace() dans app.js), une phrase et
+           un filet épais de la couleur de sa porte. -->
       <div class="ea-panel" id="ea-veille">
+        <div class="ea-h" data-pastille="veille"><div><h2>La veille réglementaire</h2><p>La synthèse de la semaine et le suivi des textes en cours.</p></div></div>
         <div class="veille-layout">
         <div class="veille-main">
           <div class="sec-head sec-head-s">
-            <h2 class="h-block-l">Synthèse d’exemple du 4 novembre 2026</h2>
+            <h3 class="ea-edition ea-sous-titre">Synthèse d’exemple du 4 novembre 2026</h3>
             <div class="seg" id="veille-seg" role="group" aria-label="Filtrer par source"></div>
           </div>
           <div class="vlist" id="veille-list"></div>
           <p class="coverage-light"><strong>Contrôle de couverture.</strong> Sommaires consultés : JO n° 0254 du 30 octobre 2026 (texte n° 34) et JO n° 0258 du 4 novembre 2026 (91 textes, aucun ne concerne directement la biologie médicale).</p>
         </div>
         <aside class="side-col">
-          <section class="side-block" aria-labelledby="h-suivis">
-            <h2 class="h-block" id="h-suivis">Textes suivis</h2>
+          <section class="side-block ea-carte-claire" aria-labelledby="h-suivis">
+            <div class="ea-suivis-tete" data-pastille="textes"><h3 class="ea-suivis-h ea-sous-titre" id="h-suivis">Textes suivis</h3></div>
             <div id="trackers"></div>
           </section>
         </aside>
       </div>
       </div>
       <div class="ea-panel" id="ea-ecrire" hidden>
+        <div class="ea-h" data-pastille="voix"><div><h2>Écrire au bureau</h2><p>Partager votre expérience dans une commission, faire une suggestion, poser une question : écrivez au bureau du SLBC.</p></div></div>
         <div class="ecrire">
-          <form class="side-block ecrire-form" id="ecrire-form" novalidate>
-            <h2 class="h-block-l">Écrire au bureau</h2>
-            <p>Partager votre expérience dans une commission, faire une suggestion, poser une question : écrivez au bureau du SLBC.</p>
+          <form class="side-block ecrire-form ea-carte-blanche" id="ecrire-form" novalidate>
+            <!-- L'objet en trois pavés : les vrais boutons radio restent, invisibles mais actifs au clavier et pour les lecteurs d'écran -->
             <fieldset class="ecrire-sujets">
               <legend class="field-label">Objet</legend>
-              <label class="check-line"><input type="radio" name="ecrire-sujet" value="commission"><span>Partager mon expérience dans une commission</span></label>
-              <label class="check-line"><input type="radio" name="ecrire-sujet" value="suggestion"><span>Une suggestion ou une idée</span></label>
-              <label class="check-line"><input type="radio" name="ecrire-sujet" value="question"><span>Une question</span></label>
+              <div class="ecr-paves">
+                <label class="check-line ecr-pave" data-pastille="commission"><input type="radio" name="ecrire-sujet" value="commission"><span class="ecr-pave-t ea-pave-n">Partager mon expérience dans une commission</span></label>
+                <label class="check-line ecr-pave" data-pastille="suggestion"><input type="radio" name="ecrire-sujet" value="suggestion"><span class="ecr-pave-t ea-pave-n">Une suggestion ou une idée</span></label>
+                <label class="check-line ecr-pave" data-pastille="question"><input type="radio" name="ecrire-sujet" value="question"><span class="ecr-pave-t ea-pave-n">Une question</span></label>
+              </div>
             </fieldset>
-            <div class="field" id="ecrire-inst-wrap">
-              <label class="field-label" for="ecrire-inst">Commission ou instance qui vous intéresse</label>
-              <select class="input" id="ecrire-inst"></select>
+            <div class="ecr-champs">
+              <div class="ecr-gauche">
+                <div class="field" id="ecrire-inst-wrap">
+                  <label class="field-label" for="ecrire-inst">Commission ou instance qui vous intéresse</label>
+                  <select class="input" id="ecrire-inst"></select>
+                </div>
+                <div class="field">
+                  <label class="field-label" for="ecrire-nom">Nom et prénom</label>
+                  <input class="input" id="ecrire-nom" type="text" autocomplete="name" aria-describedby="ecrire-nom-err">
+                  <p class="field-error" id="ecrire-nom-err" hidden></p>
+                </div>
+                <div class="field">
+                  <label class="field-label" for="ecrire-email">E-mail</label>
+                  <input class="input" id="ecrire-email" type="email" autocomplete="email" placeholder="nom@laboratoire.fr" aria-describedby="ecrire-email-err">
+                  <p class="field-error" id="ecrire-email-err" hidden></p>
+                </div>
+              </div>
+              <div class="ecr-droite">
+                <div class="field">
+                  <label class="field-label" for="ecrire-msg">Votre message</label>
+                  <textarea class="input" id="ecrire-msg" rows="6" maxlength="3000" aria-describedby="ecrire-msg-err"></textarea>
+                  <p class="field-error" id="ecrire-msg-err" hidden></p>
+                </div>
+              </div>
             </div>
-            <div class="field">
-              <label class="field-label" for="ecrire-nom">Nom et prénom</label>
-              <input class="input" id="ecrire-nom" type="text" autocomplete="name" aria-describedby="ecrire-nom-err">
-              <p class="field-error" id="ecrire-nom-err" hidden></p>
-            </div>
-            <div class="field">
-              <label class="field-label" for="ecrire-email">E-mail</label>
-              <input class="input" id="ecrire-email" type="email" autocomplete="email" placeholder="nom@laboratoire.fr" aria-describedby="ecrire-email-err">
-              <p class="field-error" id="ecrire-email-err" hidden></p>
-            </div>
-            <div class="field">
-              <label class="field-label" for="ecrire-msg">Votre message</label>
-              <textarea class="input" id="ecrire-msg" rows="6" maxlength="3000" aria-describedby="ecrire-msg-err"></textarea>
-              <p class="field-error" id="ecrire-msg-err" hidden></p>
-            </div>
+            <div class="ecr-pied">
             <button class="btn btn-primary" type="submit">Envoyer au bureau</button>
             <p class="form-ok" id="ecrire-ok" role="status" tabindex="-1" hidden></p>
             <p class="form-note">Démonstration : le message reste dans ce navigateur. Il apparaît dans « Publier sur le site », partie « Messages des adhérents ». Aucun e-mail n’est envoyé.</p>
             <p class="form-note">Vos informations servent seulement à traiter votre message. <a href="#mentions" data-section="donnees">Vos données personnelles</a></p>
+            </div>
           </form>
-          <aside class="ecrire-side">
-            <h3 class="h-block">Vos messages</h3>
+          <aside class="ecrire-side ea-carte-claire">
+            <h3 class="h-block ea-sous-titre">Vos messages</h3>
             <ul class="msg-list" id="ecrire-mes-messages"></ul>
           </aside>
         </div>
       </div>
       <div class="ea-panel" id="ea-lettre" hidden>
+        <div class="ea-h" data-pastille="lettre"><div><h2>La lettre d’information</h2><p>La veille et les nouvelles publications du SLBC, par e-mail.</p></div></div>
         <div class="ea-lettre">
           <form class="side-block side-dark" id="abonnement" novalidate>
-            <h2 class="h-block">Recevoir la lettre d’information</h2>
-            <p>La veille chaque lundi, et les nouvelles publications du SLBC dès leur mise en ligne.</p>
+            <h3 class="h-block ea-sous-titre h-block-blanc">Recevoir la lettre d’information</h3>
+            <dl class="lt-rythme"><dt>Chaque lundi</dt><dd>La veille réglementaire</dd><dt>Dès leur mise en ligne</dt><dd>Les nouvelles publications du SLBC</dd></dl>
             <div class="field">
               <label class="field-label" for="sub-email">Votre e-mail d’adhérent</label>
               <input class="input" id="sub-email" type="email" placeholder="nom@laboratoire.fr" autocomplete="email">
@@ -1025,20 +1040,42 @@
             <p class="form-ok" id="sub-ok" role="status" tabindex="-1" hidden></p>
             <p class="form-note">Votre e-mail sert seulement à l’envoi de la lettre. Chaque envoi contient un lien de désinscription. <a href="#mentions" data-section="donnees">Vos données personnelles</a></p>
           </form>
+          <!-- Exemple d'envoi : l'e-mail tel que le reçoivent les abonnés (modèle de l'aperçu de « Publier sur le site »), rempli avec le dernier
+               communiqué public, celui de l'accueil ; « À : » suit l'adresse saisie (renderLettreExemple() dans app.js) -->
+          <figure class="lt-exemple ea-carte-claire" id="lt-exemple" hidden>
+            <figcaption class="lt-exemple-t">Exemple d’envoi<span id="lt-exemple-date"></span></figcaption>
+            <div class="mail-preview">
+              <div class="mp-meta"><span class="lt-de-a"><span><strong>De :</strong> SLBC</span><span><strong>À :</strong> <span id="lt-a"></span></span></span><span><strong>Objet :</strong> <span id="lt-objet"></span></span></div>
+              <div class="mp-head"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="clip-mail-lettre"><circle cx="44" cy="44" r="36"/></clipPath></defs><circle cx="44" cy="44" r="36" fill="#5E6266"/><circle cx="76" cy="76" r="36" fill="#A3BE3C"/><circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-mail-lettre)"/></svg><span class="mp-brand">SLBC</span></div>
+              <div class="mp-body"><p class="mp-type">Communiqué</p><p class="mp-title" id="lt-titre"></p><p class="mp-text" id="lt-chapo"></p><span class="mp-btn">Lire sur le site</span></div>
+              <p class="mp-foot">SLBC, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBC. <span class="mp-link">Se désinscrire</span></p>
+            </div>
+          </figure>
         </div>
       </div>
       <div class="ea-panel" id="ea-publier" hidden>
+        <div class="ea-h" data-pastille="bureau"><div><h2>Publier sur le site</h2><p>Messages des adhérents, communiqués, veille réglementaire, actualités, comptes des adhérents et lettre d’information. Réservé aux membres du bureau habilités ; dans cette démonstration, tout adhérent connecté y accède.</p></div></div>
         <div id="admin">
-          <div class="ea-intro"><h2 class="h-block-l">Publier sur le site</h2><p class="muted">Messages des adhérents, communiqués, veille réglementaire, actualités, comptes des adhérents et lettre d’information. Réservé aux membres du bureau habilités ; dans cette démonstration, tout adhérent connecté y accède.</p></div>
-      <div class="newsletter-admin messages-admin" id="messages-admin">
-        <h2 class="h-block-l">Messages des adhérents <span id="msg-count"></span></h2>
-        <p class="muted">Messages envoyés par les adhérents depuis « Écrire au bureau » : expérience en commission, suggestions, questions. Démonstration : ils restent dans ce navigateur.</p>
+          <!-- Sommaire : quatre pavés vers les quatre parties ; les nombres sont tenus à jour par renderMessages(), renderComptes() et renderNewsletter() -->
+          <nav class="pub-sommaire" aria-label="Parties de « Publier sur le site »">
+            <ul>
+              <li><a href="#espace" data-pub-cible="messages-admin" data-pastille="voix"><span class="pub-s"><span class="pub-s-t ea-pave-n">Messages des adhérents</span><span class="sr-only">, </span><span class="pub-s-n ea-pave-d" data-pub-n="messages-admin"></span></span></a></li>
+              <li><a href="#espace" data-pub-cible="pub-publications" data-pastille="crayon"><span class="pub-s"><span class="pub-s-t ea-pave-n">Publications</span><span class="sr-only">, </span><span class="pub-s-n ea-pave-d">Communiqué, veille, actualité</span></span></a></li>
+              <li><a href="#espace" data-pub-cible="comptes-admin" data-pastille="commission"><span class="pub-s"><span class="pub-s-t ea-pave-n">Comptes des adhérents</span><span class="sr-only">, </span><span class="pub-s-n ea-pave-d" data-pub-n="comptes-admin"></span></span></a></li>
+              <li><a href="#espace" data-pub-cible="lettre" data-pastille="lettre"><span class="pub-s"><span class="pub-s-t ea-pave-n">Lettre d’information</span><span class="sr-only">, </span><span class="pub-s-n ea-pave-d" data-pub-n="lettre"></span></span></a></li>
+            </ul>
+          </nav>
+      <div class="newsletter-admin messages-admin pub-sec ea-carte-claire" id="messages-admin">
+        <div class="pub-h" data-pastille="voix"><h2 class="h-block-l">Messages des adhérents <span id="msg-count"></span></h2>
+        <p class="muted">Messages envoyés par les adhérents depuis « Écrire au bureau » : expérience en commission, suggestions, questions. Démonstration : ils restent dans ce navigateur.</p></div>
         <ul class="msg-list" id="msg-list"></ul>
         <button class="link-btn" type="button" id="msg-clear" hidden>Effacer les messages de démonstration</button>
       </div>
+      <div class="pub-sec ea-carte-claire" id="pub-publications">
+      <div class="pub-h" data-pastille="crayon"><h2 class="h-block-l">Communiqués, veille réglementaire et actualités</h2></div>
+      <div class="seg seg-lg" id="pub-type" role="group" aria-label="Type de publication"></div>
       <div class="admin-grid">
         <form class="admin-form" id="pub-form" novalidate>
-          <div class="seg seg-lg" id="pub-type" role="group" aria-label="Type de publication"></div>
           <div>
             <p class="g-title">Contenu</p>
             <div class="group">
@@ -1082,7 +1119,7 @@
           <div class="preview" id="preview"></div>
           <p class="muted" style="font-size:14px" id="preview-where"></p>
           <div id="mail-preview-wrap">
-            <p class="g-title" style="margin-top:16px">Aperçu de l’e-mail</p>
+            <p class="g-title" style="margin-top:14px">Aperçu de l’e-mail</p>
             <div class="mail-preview" id="mail-preview">
               <div class="mp-meta" id="mp-meta"></div>
               <div class="mp-head"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="clip-mail"><circle cx="44" cy="44" r="36"/></clipPath></defs><circle cx="44" cy="44" r="36" fill="#5E6266"/><circle cx="76" cy="76" r="36" fill="#A3BE3C"/><circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-mail)"/></svg><span class="mp-brand">SLBC</span></div>
@@ -1090,14 +1127,15 @@
               <p class="mp-foot">SLBC, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBC. <span class="mp-link">Se désinscrire</span></p>
             </div>
           </div>
-          <p class="g-title" style="margin-top:16px" id="recent-title" tabindex="-1">Publications récentes</p>
+          <p class="g-title" style="margin-top:14px" id="recent-title" tabindex="-1">Publications récentes</p>
           <ul class="recent" id="recent"></ul>
           <button class="link-btn" type="button" id="reset-demo" hidden>Effacer les publications et envois de démonstration</button>
         </aside>
       </div>
-      <div class="newsletter-admin" id="comptes-admin">
-        <h2 class="h-block-l" id="cpt-title" tabindex="-1">Comptes des adhérents <span id="cpt-count"></span></h2>
-        <p class="muted">Le bureau crée le compte ; l’adhérent reçoit un e-mail avec un lien pour choisir lui-même son mot de passe. Aucun mot de passe n’est envoyé, et personne d’autre que lui ne le connaît. Démonstration : les comptes restent dans ce navigateur et aucun e-mail n’est envoyé.</p>
+      </div>
+      <div class="newsletter-admin pub-sec ea-carte-claire" id="comptes-admin">
+        <div class="pub-h" data-pastille="commission"><h2 class="h-block-l" id="cpt-title" tabindex="-1">Comptes des adhérents <span id="cpt-count"></span></h2>
+        <p class="muted">Le bureau crée le compte ; l’adhérent reçoit un e-mail avec un lien pour choisir lui-même son mot de passe. Aucun mot de passe n’est envoyé, et personne d’autre que lui ne le connaît. Démonstration : les comptes restent dans ce navigateur et aucun e-mail n’est envoyé.</p></div>
         <div class="nl-grid">
           <div>
             <p class="g-title">Créer un compte</p>
@@ -1115,15 +1153,15 @@
           </div>
           <div>
             <p class="g-title">Aperçu de l’e-mail envoyé</p>
-            <p class="muted" id="cpt-mail-empty">Créez un compte pour voir l’e-mail d’invitation.</p>
+            <p class="muted pub-vide" id="cpt-mail-empty">Créez un compte pour voir l’e-mail d’invitation.</p>
             <div class="mail-preview" id="cpt-mail" hidden></div>
             <p class="form-note" id="cpt-mail-note" hidden>Démonstration : aucun e-mail n’est envoyé. Le bouton de l’e-mail ouvre la page que verrait l’adhérent.</p>
           </div>
         </div>
       </div>
-      <div class="newsletter-admin" id="lettre">
-        <h2 class="h-block-l">Lettre d’information</h2>
-        <p class="muted">Les adhérents s’inscrivent depuis leur espace, rubrique « Lettre d’information ». Chaque publication peut leur être envoyée par e-mail. Démonstration : la liste reste dans ce navigateur et aucun e-mail n’est envoyé.</p>
+      <div class="newsletter-admin pub-sec ea-carte-claire" id="lettre">
+        <div class="pub-h" data-pastille="lettre"><h2 class="h-block-l">Lettre d’information</h2>
+        <p class="muted">Les adhérents s’inscrivent depuis leur espace, rubrique « Lettre d’information ». Chaque publication peut leur être envoyée par e-mail. Démonstration : la liste reste dans ce navigateur et aucun e-mail n’est envoyé.</p></div>
         <div class="nl-grid">
           <div>
             <p class="g-title">Abonnés <span id="nl-count"></span></p>
