@@ -45,7 +45,7 @@ const prop = PROP === 'actuel' ? { css: '', script: '' } : PROP.split(',').map((
   await ouvrir('veille'); await pleine('veille', 2600);
   await ouvrir('ecrire'); await pleine('ecrire', 2400);
   await ouvrir('lettre'); await pleine('lettre', 1800);
-  await ouvrir('publier'); await pleine('publier', 3200);
+  await ouvrir('publier'); await pleine('publier', 4800);
   await b.close();
   console.log(K, 'ok', errs.length ? 'ERREURS ' + errs.join(' | ') : 'aucune erreur');
 })();
