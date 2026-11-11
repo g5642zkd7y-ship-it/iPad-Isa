@@ -46,7 +46,7 @@ un('<li><strong>Police des textes</strong>' + NB + ': Nunito, retenue le 7 novem
    '<li><strong>Polices</strong>' + NB + ': Nunito, retenue le 7 novembre 2026' + NB + '; les textes d’introduction des pages sont écrits à la main (Kalam), depuis le 10 novembre 2026. '
    'La charte graphique existe au nom SLBM (variante du 10 novembre 2026)' + NB + '; les proportions du logo SLBM sont à revérifier, le M étant plus large que le C.</li>')
 un('<li><strong>Comptes publiés</strong>' + NB + ': exercices 2021 à 2023' + NB + '; ajouter les suivants si le SLBC publie ses comptes sur son site.</li>',
-   '<li><strong>Comptes publiés</strong>' + NB + ': exercices 2022 à 2025, établis au nom du SLBC (partie 2).</li>')
+   '<li><strong>Comptes publiés</strong>' + NB + ': exercices 2022 à 2025, établis au nom du [[SLBC]] (partie 2).</li>')
 un('<td>Police Nunito hébergée sur le serveur du site' + NB + ';', '<td>Polices Nunito et Kalam hébergées sur le serveur du site' + NB + ';')
 un('<td>Cession écrite des droits sur le logo au SLBC' + NB + '; dépôt de marque à envisager</td>',
    '<td>Cession écrite des droits sur le logo au syndicat' + NB + '; dépôt de la marque SLBM à envisager, après la recherche d’antériorité (partie 2)</td>')
@@ -64,7 +64,12 @@ html = html.replace(somm, '\n' + ''.join(f'    <li><span class="n">{i + 1}</span
 partie = (F / 'note-slbm-partie.html').read_text(encoding='utf-8').strip()
 un('<section class="partie" id="hebergement">', partie + '\n\n<section class="partie" id="hebergement">')
 etapes = (F / 'note-slbm-etapes.html').read_text(encoding='utf-8').strip()
-un('<p>Dans l’ordre, avec qui s’en charge.</p>\n  <ul class="taches">', '<p>Dans l’ordre, avec qui s’en charge.</p>\n  <ul class="taches">\n' + etapes)
+un('<p>Dans l’ordre, avec qui s’en charge.</p>\n  <ul class="taches">', '<p>Dans l’ordre, avec qui s’en charge.</p>\n  <ul class="taches">\n    ' + etapes)
+fin = (F / 'note-slbm-etapes-fin.html').read_text(encoding='utf-8').strip()
+un('  </ul>\n</section>\n</div>\n\n<footer', '    ' + fin + '\n  </ul>\n</section>\n</div>\n\n<footer')
+# Intertitres et sources de la partie 2
+un('/* Pied */', '/* Partie 2 : intertitres et sources */\n.partie h3{font-size:19.5px;line-height:1.3;font-weight:800;letter-spacing:-.01em;margin-top:10px;color:var(--encre)}\n'
+   '.sources{font-size:14px;line-height:1.55;color:var(--gris)}\n@media print{.partie h3{break-after:avoid}}\n\n/* Pied */')
 
 # 3. Le nom, partout ailleurs
 garde = '\u0000GARDE\u0000'
