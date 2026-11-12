@@ -10,6 +10,7 @@ Part de la page unique de la maquette SLBC et ne change le nom que dans les titr
   où il sert de lien (menu, boutons, recherche), ainsi que « Contacter le SLBM » dans la recherche ;
 - le copyright du pied de page (« Copyright © 2026 SLBM », demande du 12 novembre 2026 : « Change le copyright en slbm ») ;
 - la phrase d'introduction de « Nos représentants » (« Les instances où le SLBM est représenté, et ses représentants. », même jour) ;
+- sur la page Veille, « La veille est réservée aux adhérents du SLBM. » (même jour) ;
 - les adresses e-mail en @slbc.fr passent en @slbm.fr (demande du 11 novembre) ;
 - le bandeau « Maquette de travail » précise qu'il s'agit de la variante au nom SLBM.
 Tout le reste garde « SLBC » : communiqués, actualités, fiche de veille, citations, signatures (protocole, recommandations, accords),
@@ -45,6 +46,8 @@ remplacer("title: 'Contacter le SLBC'", "title: 'Contacter le SLBM'")
 remplacer('Copyright © 2026 SLBC.', 'Copyright © 2026 SLBM.')
 # Phrase d'introduction de « Nos représentants » (12 novembre 2026, demande d'Isabelle Eimer : « Change les instances ou le SLBM est représenté »)
 remplacer('Les instances où le SLBC est représenté', 'Les instances où le SLBM est représenté')
+# Page Veille (12 novembre 2026, demande d'Isabelle Eimer : « Change la veille et réservée aux adhérents du SLB M »)
+remplacer('La veille est réservée aux adhérents du SLBC.', 'La veille est réservée aux adhérents du SLBM.')
 # Adresses e-mail (demande du 11 novembre 2026) et bandeau de la maquette
 n_mail = t.count('@slbc.fr')
 t = t.replace('@slbc.fr', '@slbm.fr')
