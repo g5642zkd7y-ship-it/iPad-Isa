@@ -14,7 +14,7 @@ Part de la page unique de la maquette SLBC et ne change le nom que dans les titr
 - le texte d'introduction de la Salle de presse (« Les communiqués que le SLBM publie seul ou avec les autres syndicats de biologistes. », même jour) ;
 - le lien « Suivre le SLBM sur LinkedIn » de la Salle de presse (même jour ; il mène toujours à la page LinkedIn actuelle du SLBC) ;
 - le texte d'introduction de l'Espace adhérent (« Réservé aux adhérents du SLBM. », même jour) ;
-- la phrase de la lettre d'information (« La veille et les nouvelles publications du SLBM, par e-mail. », sous le titre de la rubrique et sur sa porte, même jour) ;
+- la phrase de la lettre d'information (« La veille et les nouvelles publications du SLBM, par e-mail. », sous le titre de la rubrique et sur sa porte, même jour), le contenu de la lettre (« Les nouvelles publications du SLBM ») et la case « J’accepte de recevoir la lettre d’information du SLBM. » ;
 - les adresses e-mail en @slbc.fr passent en @slbm.fr (demande du 11 novembre) ;
 - le bandeau « Maquette de travail » précise qu'il s'agit de la variante au nom SLBM.
 Tout le reste garde « SLBC » : communiqués, actualités, fiche de veille, citations, signatures (protocole, recommandations, accords),
@@ -60,6 +60,9 @@ remplacer('Suivre le SLBC sur LinkedIn', 'Suivre le SLBM sur LinkedIn')
 remplacer('Réservé aux adhérents du SLBC.', 'Réservé aux adhérents du SLBM.')
 # Lettre d'information, sous le titre de la rubrique et sur sa porte (12 novembre 2026, demande d'Isabelle Eimer : « Dans la lettre d’information, la veille et les nouvelles publications du SLBM par e-mail »)
 remplacer('La veille et les nouvelles publications du SLBC, par e-mail.', 'La veille et les nouvelles publications du SLBM, par e-mail.', 2)
+# Lettre d'information, contenu de la lettre et case de consentement (même jour, réponse « Oui » d'Isabelle Eimer)
+remplacer('<dd>Les nouvelles publications du SLBC</dd>', '<dd>Les nouvelles publications du SLBM</dd>')
+remplacer('J’accepte de recevoir la lettre d’information du SLBC.', 'J’accepte de recevoir la lettre d’information du SLBM.')
 # Adresses e-mail (demande du 11 novembre 2026) et bandeau de la maquette
 n_mail = t.count('@slbc.fr')
 t = t.replace('@slbc.fr', '@slbm.fr')
