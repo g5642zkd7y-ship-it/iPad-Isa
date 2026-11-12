@@ -11,6 +11,7 @@ Part de la page unique de la maquette SLBC et ne change le nom que dans les titr
 - le copyright du pied de page (« Copyright © 2026 SLBM », demande du 12 novembre 2026 : « Change le copyright en slbm ») ;
 - la phrase d'introduction de « Nos représentants » (« Les instances où le SLBM est représenté, et ses représentants. », même jour) ;
 - sur la page Veille, « La veille est réservée aux adhérents du SLBM. » (même jour) ;
+- le texte d'introduction de la Salle de presse (« Les communiqués que le SLBM publie seul ou avec les autres syndicats de biologistes. », même jour) ;
 - les adresses e-mail en @slbc.fr passent en @slbm.fr (demande du 11 novembre) ;
 - le bandeau « Maquette de travail » précise qu'il s'agit de la variante au nom SLBM.
 Tout le reste garde « SLBC » : communiqués, actualités, fiche de veille, citations, signatures (protocole, recommandations, accords),
@@ -48,6 +49,8 @@ remplacer('Copyright © 2026 SLBC.', 'Copyright © 2026 SLBM.')
 remplacer('Les instances où le SLBC est représenté', 'Les instances où le SLBM est représenté')
 # Page Veille (12 novembre 2026, demande d'Isabelle Eimer : « Change la veille et réservée aux adhérents du SLB M »)
 remplacer('La veille est réservée aux adhérents du SLBC.', 'La veille est réservée aux adhérents du SLBM.')
+# Salle de presse, texte d'introduction (12 novembre 2026, demande d'Isabelle Eimer : « Modifie les communiqué que le SLBM publie seul etc. »)
+remplacer('Les communiqués que le SLBC publie seul', 'Les communiqués que le SLBM publie seul')
 # Adresses e-mail (demande du 11 novembre 2026) et bandeau de la maquette
 n_mail = t.count('@slbc.fr')
 t = t.replace('@slbc.fr', '@slbm.fr')
