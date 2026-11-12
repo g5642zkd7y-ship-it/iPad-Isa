@@ -8,6 +8,7 @@ Part de la page unique de la maquette SLBC et ne change le nom que dans les titr
 - le logo (en-tête, pied de page, signature sous les deux ronds de l'accueil, logo des aperçus d'e-mails) et le titre de l'onglet ;
 - les titres des pages et des rubriques qui portent le nom (« Adhérer au SLBM », « Rejoindre le SLBM »), et ce même nom de page partout
   où il sert de lien (menu, boutons, recherche), ainsi que « Contacter le SLBM » dans la recherche ;
+- le copyright du pied de page (« Copyright © 2026 SLBM », demande du 12 novembre 2026 : « Change le copyright en slbm ») ;
 - les adresses e-mail en @slbc.fr passent en @slbm.fr (demande du 11 novembre) ;
 - le bandeau « Maquette de travail » précise qu'il s'agit de la variante au nom SLBM.
 Tout le reste garde « SLBC » : communiqués, actualités, fiche de veille, citations, signatures (protocole, recommandations, accords),
@@ -39,6 +40,8 @@ remplacer('<span class="mp-brand">SLBC</span>', '<span class="mp-brand">SLBM</sp
 remplacer('id="h-join">Rejoindre le SLBC</h2>', 'id="h-join">Rejoindre le SLBM</h2>')
 remplacer('Adhérer au SLBC', 'Adhérer au SLBM', 7)
 remplacer("title: 'Contacter le SLBC'", "title: 'Contacter le SLBM'")
+# Copyright du pied de page (12 novembre 2026, demande d'Isabelle Eimer : « Change le copyright en slbm »)
+remplacer('Copyright © 2026 SLBC.', 'Copyright © 2026 SLBM.')
 # Adresses e-mail (demande du 11 novembre 2026) et bandeau de la maquette
 n_mail = t.count('@slbc.fr')
 t = t.replace('@slbc.fr', '@slbm.fr')
