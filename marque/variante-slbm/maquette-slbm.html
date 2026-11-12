@@ -14,9 +14,9 @@
   --vert-fonce:#4E6623;
   --vert-clair:#D6E4A6;  /* surfaces douces */
   --gris:#5E6266;        /* texte secondaire, rond gris du logo */
-  --texte:#3F4347;       /* texte courant, nom SLBC */
+  --texte:#3F4347;       /* texte courant, nom SLBM */
   --encre:#2E3236;       /* titres, textes, traits des dessins (plus utilisé comme fond de zone depuis le 8 novembre 2026) */
-  --olive:#657B3D;       /* olive adouci : fonds des zones Veille, Espace adhérent, bannières « Chaque lundi » et « Rejoindre le SLBC » depuis le 8 novembre 2026, choix d’Isabelle Eimer (le vert du logo, un tiers de couleur en moins) ; texte blanc à 4,7:1 */
+  --olive:#657B3D;       /* olive adouci : fonds des zones Veille, Espace adhérent, bannières « Chaque lundi » et « Rejoindre le SLBM » depuis le 8 novembre 2026, choix d’Isabelle Eimer (le vert du logo, un tiers de couleur en moins) ; texte blanc à 4,7:1 */
   --nardo:#74777A;       /* fonds gris de zone (Actualités, représentants, portes…) depuis le 8 novembre 2026, choix d’Isabelle Eimer ; texte blanc à 4,5:1, vert clair seulement en grand */
   --fond:#F7F8F4;        /* sections alternées, pied de page */
   --blanc:#FFFFFF;
@@ -303,7 +303,7 @@ a.more{padding-block:9px;margin-block:-9px}
 @media (max-width:560px){.name-wall{grid-template-columns:minmax(0,1fr)}}
 
 /* ---------- Piliers (accueil) ---------- */
-/* Mascotte du SLBC à gauche du titre « Ce que nous défendons » (6 novembre 2026) */
+/* Mascotte du SLBM à gauche du titre « Ce que nous défendons » (6 novembre 2026) */
 .piliers-head,.tete-mascotte{display:flex;align-items:center;gap:clamp(20px,3vw,40px)}
 .piliers-head > div{min-width:0}
 .piliers-head .h-section + .lead{margin-top:18px}
@@ -334,12 +334,12 @@ a.more{padding-block:9px;margin-block:-9px}
 /* ---------- Adhésion (bandeau) ---------- */
 .join{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,6vw,96px);align-items:center}
 .join-lead{display:flex;flex-direction:column;gap:20px}
-/* Accroche de la bannière « Rejoindre le SLBC » (7 novembre 2026, demande d’Isabelle Eimer) */
+/* Accroche de la bannière « Rejoindre le SLBM » (7 novembre 2026, demande d’Isabelle Eimer) */
 .join-accroche{font-weight:700}
 .join-list{list-style:none;margin:0;padding:0}
 .join-list li{display:flex;align-items:center;gap:16px;padding:14px 0;border-top:1px solid rgba(255,255,255,.28);font-size:19px;font-weight:600;line-height:1.35;color:#fff}
 .join-list li:last-child{border-bottom:1px solid rgba(255,255,255,.28)}
-/* Pastilles dessinées de la bannière « Rejoindre le SLBC » (même style que les numéros des missions) */
+/* Pastilles dessinées de la bannière « Rejoindre le SLBM » (même style que les numéros des missions) */
 .join-list .mnum-join{flex:none;width:80px;height:auto}
 .join-list .mnum-join .mnum-eclats{stroke:#fff}
 @media (max-width:520px){.join-list .mnum-join{width:66px}}
@@ -956,7 +956,7 @@ svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
 .js-life .engrenage-inverse{transform:rotate(calc(var(--turn,0) * -1.35deg))}
 @media print{.js-life svg.mascotte,.js-life .perso,.pillar,.charter-item,.person,.ca-region,.inst,.urps-item,.benefit,.vcard{transform:none!important}}
 /* ---------- Mouvement ----------
-   Peu d'animations, et seulement celles qui ont un sens pour le SLBC (demande d'Isabelle Eimer du
+   Peu d'animations, et seulement celles qui ont un sens pour le SLBM (demande d'Isabelle Eimer du
    6 novembre 2026 : « attractif mais professionnel », « pas IA like ») : les deux ronds du logo qui se
    rejoignent, puis le nom et la devise ; le filet vert des trois piliers ; la frise du protocole qui
    avance dans le temps ; l'onglet du menu de la page en cours ; l'ombre de l'en-tête au défilement.
@@ -2370,7 +2370,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <fieldset data-panel="3" hidden>
             <legend id="j-recap-title" tabindex="-1">Vérifiez et envoyez</legend>
             <dl class="recap" id="j-recap"></dl>
-            <p class="join-dest">Votre demande sera envoyée au bureau du SLBC, à <strong><span data-adhesion>bureau@slbm.fr</span></strong>. En cliquant sur « Envoyer ma demande », votre messagerie s’ouvre avec l’e-mail déjà rédigé : il ne reste qu’à l’envoyer.</p>
+            <p class="join-dest">Votre demande sera envoyée au bureau du SLBM, à <strong><span data-adhesion>bureau@slbm.fr</span></strong>. En cliquant sur « Envoyer ma demande », votre messagerie s’ouvre avec l’e-mail déjà rédigé : il ne reste qu’à l’envoyer.</p>
           </fieldset>
           <div class="form-actions">
             <button class="btn btn-primary" type="submit" id="join-next">Continuer</button>
@@ -2420,29 +2420,29 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       <h2 class="h-section">Mentions légales</h2>
       <dl class="legal-dl">
         <dt>Éditeur du site</dt>
-        <dd>Syndicat des Laboratoires de Biologie Clinique (SLBC), syndicat professionnel.<br>6 place de la Madeleine, 75008 Paris.<br>Contact : <a data-contact href="mailto:contact@slbm.fr">contact@slbm.fr</a></dd>
+        <dd>Syndicat des Laboratoires de Biologie Médicale (SLBM), syndicat professionnel.<br>6 place de la Madeleine, 75008 Paris.<br>Contact : <a data-contact href="mailto:contact@slbm.fr">contact@slbm.fr</a></dd>
         <dt>Directeur de la publication</dt>
-        <dd>Thierry Bouchet, président du SLBC.</dd>
+        <dd>Thierry Bouchet, président du SLBM.</dd>
         <dt>Hébergeur</dt>
         <dd>Nom, adresse et téléphone de l’hébergeur : <span class="pending">à compléter</span>.</dd>
         <dt>Droit de réponse</dt>
         <dd>Toute personne nommée ou désignée sur ce site peut demander l’insertion d’une réponse. Elle l’adresse au directeur de la publication, à <a data-contact href="mailto:contact@slbm.fr">contact@slbm.fr</a>.</dd>
         <dt>Propriété intellectuelle</dt>
-        <dd>Le logo et les textes du site appartiennent au SLBC, sauf mention contraire. Leur reproduction demande son accord. Pour les textes officiels cités, la source et la date sont indiquées.</dd>
+        <dd>Le logo et les textes du site appartiennent au SLBM, sauf mention contraire. Leur reproduction demande son accord. Pour les textes officiels cités, la source et la date sont indiquées.</dd>
       </dl>
     </div>
   </section>
   <section class="section-tight bg-fond" id="donnees">
     <div class="container narrow">
       <h2 class="h-section">Données personnelles</h2>
-      <p class="lead">Le SLBC est responsable des données recueillies sur ce site. Il les utilise seulement pour les usages décrits ici et ne les vend pas.</p>
+      <p class="lead">Le SLBM est responsable des données recueillies sur ce site. Il les utilise seulement pour les usages décrits ici et ne les vend pas.</p>
       <ul class="legal-list">
         <li>
           <h3 class="h-block">Demande d’adhésion</h3>
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>Nom, prénom, e-mail, laboratoire, ville, mode d’exercice ; civilité, téléphone et message s’ils sont indiqués.</dd></div>
             <div><dt>Usage</dt><dd>Examiner votre demande, puis gérer votre adhésion.</dd></div>
-            <div><dt>Destinataire</dt><dd>La demande est envoyée par e-mail, depuis votre messagerie, au bureau du SLBC (<span data-adhesion>bureau@slbm.fr</span>).</dd></div>
+            <div><dt>Destinataire</dt><dd>La demande est envoyée par e-mail, depuis votre messagerie, au bureau du SLBM (<span data-adhesion>bureau@slbm.fr</span>).</dd></div>
             <div><dt>Base légale</dt><dd>Les démarches préalables à l’adhésion, puis l’adhésion elle-même.</dd></div>
             <div><dt>Durée</dt><dd>Le temps de l’adhésion, renouvelée chaque année. Après la fin de l’adhésion, ou si la demande n’aboutit pas : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
           </dl>
@@ -2451,7 +2451,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <h3 class="h-block">Lettre d’information</h3>
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>E-mail, date et texte de votre accord.</dd></div>
-            <div><dt>Usage</dt><dd>Vous envoyer la veille réglementaire et les nouvelles publications du SLBC.</dd></div>
+            <div><dt>Usage</dt><dd>Vous envoyer la veille réglementaire et les nouvelles publications du SLBM.</dd></div>
             <div><dt>Base légale</dt><dd>Votre consentement, que vous pouvez retirer à tout moment par le lien présent dans chaque e-mail.</dd></div>
             <div><dt>Durée</dt><dd>Jusqu’à votre désinscription. La preuve de votre accord : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
           </dl>
@@ -2461,7 +2461,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>Nom, prénom, e-mail ; le mot de passe, enregistré seulement sous une forme illisible : personne ne peut le lire, pas même le bureau.</dd></div>
             <div><dt>Usage</dt><dd>Vous donner accès à l’espace adhérent.</dd></div>
-            <div><dt>Destinataire</dt><dd>Le bureau du SLBC, qui crée et désactive les comptes.</dd></div>
+            <div><dt>Destinataire</dt><dd>Le bureau du SLBM, qui crée et désactive les comptes.</dd></div>
             <div><dt>Base légale</dt><dd>L’adhésion.</dd></div>
             <div><dt>Durée</dt><dd>Le temps de l’adhésion ; le compte est désactivé à sa fin. Ensuite : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
           </dl>
@@ -2471,7 +2471,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>Nom, e-mail, objet, commission choisie le cas échéant, message.</dd></div>
             <div><dt>Usage</dt><dd>Répondre à votre message et, si vous le proposez, organiser votre participation à une commission.</dd></div>
-            <div><dt>Destinataire</dt><dd>Le bureau du SLBC.</dd></div>
+            <div><dt>Destinataire</dt><dd>Le bureau du SLBM.</dd></div>
             <div><dt>Base légale</dt><dd>L’adhésion.</dd></div>
             <div><dt>Durée</dt><dd><span class="pending">Durée à fixer par le bureau</span>.</dd></div>
           </dl>
@@ -2481,7 +2481,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>Identifiant, mot de passe, journal des connexions.</dd></div>
             <div><dt>Usage</dt><dd>Donner accès aux contenus réservés aux adhérents et protéger les comptes.</dd></div>
-            <div><dt>Base légale</dt><dd>L’adhésion ; la sécurité du site, intérêt légitime du SLBC.</dd></div>
+            <div><dt>Base légale</dt><dd>L’adhésion ; la sécurité du site, intérêt légitime du SLBM.</dd></div>
             <div><dt>Durée</dt><dd>Compte : le temps de l’adhésion. Journal des connexions : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
           </dl>
         </li>
@@ -2497,15 +2497,15 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       </ul>
       <div class="legal-prose">
         <h3 class="h-block">Qui a accès à vos données</h3>
-        <p>Les personnes chargées de l’adhésion et de la communication au SLBC. Ses prestataires techniques, qui agissent pour son compte et selon ses instructions : hébergeur du site et outil d’envoi des e-mails, <span class="pending">à compléter</span>. Si l’un d’eux traite des données hors de l’Union européenne, les garanties prévues seront indiquées ici.</p>
+        <p>Les personnes chargées de l’adhésion et de la communication au SLBM. Ses prestataires techniques, qui agissent pour son compte et selon ses instructions : hébergeur du site et outil d’envoi des e-mails, <span class="pending">à compléter</span>. Si l’un d’eux traite des données hors de l’Union européenne, les garanties prévues seront indiquées ici.</p>
         <h3 class="h-block">Appartenance au syndicat</h3>
-        <p>Votre adhésion au SLBC est une information protégée. Le SLBC ne publie pas la liste de ses adhérents et ne la communique pas en dehors du syndicat, sauf à ses prestataires techniques.</p>
+        <p>Votre adhésion au SLBM est une information protégée. Le SLBM ne publie pas la liste de ses adhérents et ne la communique pas en dehors du syndicat, sauf à ses prestataires techniques.</p>
         <h3 class="h-block">Vos droits</h3>
         <p>Vous pouvez accéder à vos données, les corriger, les faire effacer, en limiter l’usage et les récupérer. Vous pouvez retirer votre accord à tout moment.</p>
-        <p class="legal-note"><strong>Droit d’opposition.</strong> Vous pouvez à tout moment vous opposer à un usage de vos données fondé sur l’intérêt légitime du SLBC.</p>
-        <p>Pour exercer ces droits, écrivez à <a data-contact href="mailto:contact@slbm.fr">contact@slbm.fr</a>. Le SLBC vous répond dans un délai d’un mois. Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL, sur cnil.fr.</p>
+        <p class="legal-note"><strong>Droit d’opposition.</strong> Vous pouvez à tout moment vous opposer à un usage de vos données fondé sur l’intérêt légitime du SLBM.</p>
+        <p>Pour exercer ces droits, écrivez à <a data-contact href="mailto:contact@slbm.fr">contact@slbm.fr</a>. Le SLBM vous répond dans un délai d’un mois. Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL, sur cnil.fr.</p>
         <h3 class="h-block">Après un décès</h3>
-        <p>Vous pouvez indiquer au SLBC si vous souhaitez qu’après votre décès vos données soient communiquées, ou non, à une personne que vous désignez. Vous pouvez aussi laisser des directives sur leur conservation, leur effacement et leur communication (article 85 de la loi Informatique et Libertés).</p>
+        <p>Vous pouvez indiquer au SLBM si vous souhaitez qu’après votre décès vos données soient communiquées, ou non, à une personne que vous désignez. Vous pouvez aussi laisser des directives sur leur conservation, leur effacement et leur communication (article 85 de la loi Informatique et Libertés).</p>
       </div>
     </div>
   </section>
@@ -2516,11 +2516,11 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
         <p>Le site utilise deux sortes de cookies :</p>
         <ul>
           <li><strong>Nécessaires au fonctionnement</strong> : le maintien de votre connexion à l’espace adhérent, jusqu’à la fermeture de l’onglet, et la mémorisation de votre choix sur les cookies, pendant 6 mois. Ils ne demandent pas votre accord.</li>
-          <li><strong>Mesure d’audience, seulement avec votre accord</strong> : compter les visites et les pages consultées, pour améliorer le site. Les statistiques ne servent qu’au SLBC. <span class="pending">(Aucun outil de mesure n’est installé sur la maquette.)</span></li>
+          <li><strong>Mesure d’audience, seulement avec votre accord</strong> : compter les visites et les pages consultées, pour améliorer le site. Les statistiques ne servent qu’au SLBM. <span class="pending">(Aucun outil de mesure n’est installé sur la maquette.)</span></li>
         </ul>
         <p>Le site ne dépose aucun cookie de publicité ni de réseau social. Le bandeau des cookies vous demande votre accord à la première visite ; vous pouvez changer d’avis à tout moment.</p>
         <p><button class="btn btn-quiet" type="button" data-cookies-voir>Gérer les cookies</button></p>
-        <p>Les liens vers la page LinkedIn du SLBC sont de simples liens : LinkedIn ne reçoit rien tant que vous ne cliquez pas.</p>
+        <p>Les liens vers la page LinkedIn du SLBM sont de simples liens : LinkedIn ne reçoit rien tant que vous ne cliquez pas.</p>
         <p>Les polices de caractères sont hébergées sur le serveur du site : votre adresse n’est pas transmise à un service extérieur. <span class="pending">(À mettre en place lors de l’intégration.)</span></p>
         <p>Les e-mails de la lettre d’information ne contiennent aucun outil de suivi des ouvertures ou des clics.</p>
       </div>
@@ -2608,7 +2608,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       </div>
       </div>
       <div class="ea-panel" id="ea-ecrire" hidden>
-        <div class="ea-h" data-pastille="voix"><div><h2>Écrire au bureau</h2><p>Partager votre expérience dans une commission, faire une suggestion, poser une question : écrivez au bureau du SLBC.</p></div></div>
+        <div class="ea-h" data-pastille="voix"><div><h2>Écrire au bureau</h2><p>Partager votre expérience dans une commission, faire une suggestion, poser une question : écrivez au bureau du SLBM.</p></div></div>
         <div class="ecrire">
           <form class="side-block ecrire-form ea-carte-blanche" id="ecrire-form" novalidate>
             <!-- L'objet en trois pavés : les vrais boutons radio restent, invisibles mais actifs au clavier et pour les lecteurs d'écran -->
@@ -2679,10 +2679,10 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <figure class="lt-exemple ea-carte-claire" id="lt-exemple" hidden>
             <figcaption class="lt-exemple-t">Exemple d’envoi<span id="lt-exemple-date"></span></figcaption>
             <div class="mail-preview">
-              <div class="mp-meta"><span class="lt-de-a"><span><strong>De :</strong> SLBC</span><span><strong>À :</strong> <span id="lt-a"></span></span></span><span><strong>Objet :</strong> <span id="lt-objet"></span></span></div>
+              <div class="mp-meta"><span class="lt-de-a"><span><strong>De :</strong> SLBM</span><span><strong>À :</strong> <span id="lt-a"></span></span></span><span><strong>Objet :</strong> <span id="lt-objet"></span></span></div>
               <div class="mp-head"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="clip-mail-lettre"><circle cx="44" cy="44" r="36"/></clipPath></defs><circle cx="44" cy="44" r="36" fill="#5E6266"/><circle cx="76" cy="76" r="36" fill="#A3BE3C"/><circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-mail-lettre)"/></svg><span class="mp-brand">SLBM</span></div>
               <div class="mp-body"><p class="mp-type">Communiqué</p><p class="mp-title" id="lt-titre"></p><p class="mp-text" id="lt-chapo"></p><span class="mp-btn">Lire sur le site</span></div>
-              <p class="mp-foot">SLBC, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBC. <span class="mp-link">Se désinscrire</span></p>
+              <p class="mp-foot">SLBM, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBM. <span class="mp-link">Se désinscrire</span></p>
             </div>
           </figure>
         </div>
@@ -2758,7 +2758,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
               <div class="mp-meta" id="mp-meta"></div>
               <div class="mp-head"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="clip-mail"><circle cx="44" cy="44" r="36"/></clipPath></defs><circle cx="44" cy="44" r="36" fill="#5E6266"/><circle cx="76" cy="76" r="36" fill="#A3BE3C"/><circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-mail)"/></svg><span class="mp-brand">SLBM</span></div>
               <div class="mp-body" id="mp-body"></div>
-              <p class="mp-foot">SLBC, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBC. <span class="mp-link">Se désinscrire</span></p>
+              <p class="mp-foot">SLBM, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBM. <span class="mp-link">Se désinscrire</span></p>
             </div>
           </div>
           <p class="g-title" style="margin-top:14px" id="recent-title" tabindex="-1">Publications récentes</p>
@@ -2896,7 +2896,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     </div>
     <div class="cookie-cat">
       <div class="cookie-cat-head"><h3 class="cookie-cat-t"><label for="ck-mesure">Mesure d’audience</label></h3><input class="switch" id="ck-mesure" type="checkbox" role="switch" aria-describedby="ck-mesure-d"></div>
-      <p id="ck-mesure-d">Compter les visites et les pages consultées, pour améliorer le site. Les statistiques ne servent qu’au SLBC. <span class="pending">(Aucun outil de mesure n’est installé sur la maquette.)</span></p>
+      <p id="ck-mesure-d">Compter les visites et les pages consultées, pour améliorer le site. Les statistiques ne servent qu’au SLBM. <span class="pending">(Aucun outil de mesure n’est installé sur la maquette.)</span></p>
     </div>
     <div class="cookie-actions">
       <button class="btn btn-cookie" type="button" data-cookies-tout="non">Tout refuser</button>
@@ -3200,7 +3200,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
        Les communiqués de 2024, 2019 et 2014 ont été retirés. Le communiqué sur la signature du protocole
        2027-2029 et le commentaire publié par Nicolas sur LinkedIn sont attendus. */
     presse: [
-      /* Communiqué de presse du SLBC du 4 novembre 2026 (image envoyée par Isabelle Eimer le 6 novembre 2026),
+      /* Communiqué de presse du SLBM du 4 novembre 2026 (image envoyée par Isabelle Eimer le 6 novembre 2026),
          repris mot pour mot. Le protocole signé est joint en PDF (site/documents/protocole-biologie-2027-2029.pdf). */
       { id: 'p4', date: '2026-11-04', year: '2026',
         title: 'Protocole d’accord pour la biologie médicale 2027-2029',
@@ -3243,11 +3243,11 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     ['Vice-présidente', 'Isabelle Eimer'], ['Secrétaire général', 'Nicolas Roquigny'],
     ['Membre du bureau', 'Éric Flatin'], ['Membre du bureau', 'Alexandre Guiard']
   ];
-  /* Page LinkedIn du SLBC (adresse fournie par Isabelle Eimer le 5 novembre 2026).
+  /* Page LinkedIn du SLBM (adresse fournie par Isabelle Eimer le 5 novembre 2026).
      Si elle est vidée, les liens LinkedIn signalent qu’elle reste à compléter. */
   const LINKEDIN_URL = 'https://www.linkedin.com/company/slbc-syndicat-des-laboratoires-de-biologie-clinique/';
-  /* Adresse de contact unique du SLBC : contact général, contact presse et demandes d’adhésion
-     (décisions d’Isabelle Eimer du 6 novembre 2026). Le SLBC n’affiche pas de téléphone.
+  /* Adresse de contact unique du SLBM : contact général, contact presse et demandes d’adhésion
+     (décisions d’Isabelle Eimer du 6 novembre 2026). Le SLBM n’affiche pas de téléphone.
      Provisoire : contact@slbm.fr, en attendant l’adresse définitive.
      Si elle est vidée, la maquette affiche « adresse à compléter ». */
   const CONTACT_EMAIL = 'contact@slbm.fr';
@@ -3715,7 +3715,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     (MISSION_DIGITS[n] || []).map((d) => '<path class="mnum-digit" pathLength="1" d="' + d + '" stroke-width="5"/>').join('') +
     '<g class="mnum-eclats" stroke-width="2.6"><path d="M67 13 L72.5 7.5"/><path d="M71.5 21.5 L79 19.5"/><path d="M60.5 8 L62 2"/></g></g></svg>';
 
-  /* Pastilles de la bannière « Rejoindre le SLBC » (accueil, 7 novembre 2026, demande d'Isabelle Eimer) : même dessin
+  /* Pastilles de la bannière « Rejoindre le SLBM » (accueil, 7 novembre 2026, demande d'Isabelle Eimer) : même dessin
      et même animation que les numéros des missions, mais un petit dessin au marqueur à la place du chiffre :
      des jumelles (la veille), deux biologistes (les groupes de travail), un porte-voix (une voix dans les instances).
      Pas d'ombre au sol : la bannière est vert foncé, comme pour les mascottes sur fond sombre. Les traits se tracent
@@ -3745,7 +3745,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     (JOIN_ICONS[k] || '') +
     '<g class="mnum-eclats" stroke-width="2.6"><path d="M67 13 L72.5 7.5"/><path d="M71.5 21.5 L79 19.5"/><path d="M60.5 8 L62 2"/></g></g></svg>';
 
-  /* Documentation : petit dessin de chaque rubrique, dans la même pastille que la bannière « Rejoindre le SLBC » (10 novembre 2026, demande
+  /* Documentation : petit dessin de chaque rubrique, dans la même pastille que la bannière « Rejoindre le SLBM » (10 novembre 2026, demande
      d'Isabelle Eimer : « Rajoute des pastilles ») : boîte de Petri, lettre clé B de la NABM, porte-documents, code relié, balance, graphique. */
   const DOC_ICONS = {
     'doc-surveillance': '<circle class="mnum-digit" pathLength="1" cx="42" cy="41" r="16.5" fill="#FFFFFF" stroke-width="3.4"/><circle class="mnum-digit" pathLength="1" cx="42" cy="41" r="12.5" stroke-width="2"/><g class="mnum-fill"><circle cx="36.5" cy="37" r="3.4" fill="#D6E4A6" stroke-width="2.2"/><circle cx="48" cy="38.5" r="3.4" fill="#D6E4A6" stroke-width="2.2"/><circle cx="41.5" cy="47.5" r="3.4" fill="#D6E4A6" stroke-width="2.2"/><circle cx="34.5" cy="45.5" r="1.3" fill="#2E3236" stroke="none"/><circle cx="49.5" cy="46.5" r="1.3" fill="#2E3236" stroke="none"/><circle cx="44" cy="31.5" r="1.3" fill="#2E3236" stroke="none"/></g>',
@@ -3803,7 +3803,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
     $('#home-benefits').innerHTML = BENEFITS.map((b, k) => '<li>' + joinBadge(k) + '<span>' + esc(b.t) + '</span></li>').join('');
-    /* Page Adhérer : les mêmes pastilles dessinées que la bannière « Rejoindre le SLBC » de l'accueil (demande d'Isabelle Eimer, 7 novembre 2026) */
+    /* Page Adhérer : les mêmes pastilles dessinées que la bannière « Rejoindre le SLBM » de l'accueil (demande d'Isabelle Eimer, 7 novembre 2026) */
     $('#benefits-grid').innerHTML = BENEFITS.map((b, k) => '<div class="benefit c' + k + '">' + joinBadge(k) + '<h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
     /* Piliers de « Ce que nous défendons » (accueil) : mêmes numéros dessinés et même animation que les missions */
     $$('#piliers .pillar').forEach((el, k) => { if (!el.querySelector('.mnum')) el.insertAdjacentHTML('afterbegin', missionBadge(k + 1)); });
@@ -4121,7 +4121,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     page('Veille réglementaire', 'Réservée aux adhérents : Journal officiel, Assemblée nationale, Sénat', '#veille');
     idx.push({ type: 'Page', title: 'Lettre d’information', sub: 'La veille et les nouvelles publications par e-mail', href: '#espace', section: 'ea-lettre', text: 'newsletter abonnement abonner s’abonner s\'abonner désinscription e-mail' });
     idx.push({ type: 'Page', title: 'Écrire au bureau', sub: 'Commission, suggestion, idée, question', href: '#espace', section: 'ea-ecrire', text: 'commission participer suggestion idée question contact message adhérent' });
-    idx.push({ type: 'Page', title: 'Salle de presse', sub: 'Les communiqués du SLBC', href: '#presse', section: null, text: 'contact presse journaliste kit presse logo' });
+    idx.push({ type: 'Page', title: 'Salle de presse', sub: 'Les communiqués du SLBM', href: '#presse', section: null, text: 'contact presse journaliste kit presse logo' });
     idx.push({ type: 'Page', title: 'Contacter le SLBM', sub: 'Adresse e-mail et adresse postale', href: '#mentions', section: 'mentions-legales', text: 'contact contacter nous contacter écrire e-mail courriel adresse téléphone' });
     page('Actualités', 'L’information du syndicat', '#actualites');
     page('Au laboratoire', 'Surveillance et santé publique, nomenclature et facturation, fiches pratiques', '#documentation', 'doc-pratique');
@@ -4322,13 +4322,13 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     const civ = jf.querySelector('input[name="civ"]:checked');
     const prenom = $('#j-prenom').value.trim(); const nom = $('#j-nom').value.trim(); const labo = $('#j-labo').value.trim();
     const qui = ((civ ? civ.value + ' ' : '') + prenom + ' ' + nom).trim();
-    const lines = ['Bonjour,', '', 'Je souhaite adhérer au SLBC. Voici ma demande.', '',
+    const lines = ['Bonjour,', '', 'Je souhaite adhérer au SLBM. Voici ma demande.', '',
       'Nom : ' + qui, 'E-mail : ' + $('#j-email').value.trim(), 'Téléphone : ' + ($('#j-tel').value.trim() || 'non renseigné'),
       'Laboratoire : ' + labo, 'Ville : ' + $('#j-ville').value.trim(), 'Exercice : ' + $('#j-statut').value];
     const msg = $('#j-msg').value.trim();
     if (msg) lines.push('', 'Message :', msg);
     lines.push('', 'Cordialement,', (prenom + ' ' + nom).trim());
-    return { subject: 'Demande d’adhésion au SLBC : ' + (prenom + ' ' + nom).trim() + ' (' + labo + ')', body: lines.join('\n') };
+    return { subject: 'Demande d’adhésion au SLBM : ' + (prenom + ' ' + nom).trim() + ' (' + labo + ')', body: lines.join('\n') };
   }
   function openMail(url) {
     try { if (window.top !== window.self) window.open(url, '_blank', 'noopener'); else window.location.href = url; } catch (err) { /* le repli reste affiché */ }
@@ -4422,7 +4422,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     $('#mail-preview-wrap').hidden = !mail;
     if (mail) {
       const subject = $('#f-subject').value.trim() || title;
-      $('#mp-meta').innerHTML = '<span><strong>De :</strong> SLBC</span><span><strong>À :</strong> ' + esc(n ? abonnes(n, false) + ' de la lettre d’information' : 'aucun abonné pour l’instant') + '</span>' +
+      $('#mp-meta').innerHTML = '<span><strong>De :</strong> SLBM</span><span><strong>À :</strong> ' + esc(n ? abonnes(n, false) + ' de la lettre d’information' : 'aucun abonné pour l’instant') + '</span>' +
         '<span><strong>Objet :</strong> ' + esc(subject || 'Objet de l’e-mail') + '</span>';
       $('#mp-body').innerHTML = '<p class="mp-type">' + esc(PUB[pubType].label) + (pubType === 'actu' ? ' · ' + esc($('#f-cat').value) : '') + '</p>' +
         '<p class="mp-title">' + esc(title || 'Titre de la publication') + '</p>' +
@@ -4470,7 +4470,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     let item;
     if (pubType === 'cp') {
       kind = 'presse';
-      item = { id, date, year: date.slice(0, 4), title, with: 'Communiqué du SLBC', chapo: resume, url: null, members, demo: true };
+      item = { id, date, year: date.slice(0, 4), title, with: 'Communiqué du SLBM', chapo: resume, url: null, members, demo: true };
       state.presseYear = 'Toutes';
     } else if (pubType === 'veille') {
       const src = $('#f-src').value;
@@ -4632,7 +4632,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     svg._shakeWait = setTimeout(() => { svg._shake = requestAnimationFrame(frame); }, delay || 0);
   }
 
-  /* Les deux endroits du duo (espace adhérent, bannière « Rejoindre le SLBC » de l'accueil) : la poignée de main se joue
+  /* Les deux endroits du duo (espace adhérent, bannière « Rejoindre le SLBM » de l'accueil) : la poignée de main se joue
      quand le duo est entièrement visible, sous l'en-tête et au-dessus du bandeau des cookies s'il est affiché, et se rejoue s'il est sorti
      de l'écran puis revient. Une poignée de main jouée depuis moins de deux secondes (ouverture de l'espace adhérent,
      connexion) n'est pas doublée. Vérifié au défilement, au changement de taille, de page et de hauteur du bandeau.
@@ -4676,7 +4676,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
   function setupLinkedin() {
     $$('[data-linkedin]').forEach((a) => {
       if (isHttp(LINKEDIN_URL)) { a.href = LINKEDIN_URL; a.target = '_blank'; a.rel = 'noopener'; return; }
-      a.addEventListener('click', (e) => { e.preventDefault(); showToast('Adresse de la page LinkedIn du SLBC à compléter.', null, null); });
+      a.addEventListener('click', (e) => { e.preventDefault(); showToast('Adresse de la page LinkedIn du SLBM à compléter.', null, null); });
     });
   }
 
@@ -4768,7 +4768,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     let lastY = window.scrollY; let lastT = performance.now(); let vel = 0; let raf = 0;
     const shown = (el) => el.getClientRects().length > 0;
 
-    /* Le duo qui se serre la main (espace adhérent, bannière « Rejoindre le SLBC ») ne bascule pas : sa poignée de main
+    /* Le duo qui se serre la main (espace adhérent, bannière « Rejoindre le SLBM ») ne bascule pas : sa poignée de main
        s'anime quand il arrive à l'écran (setupHandshakes()). Demande d'Isabelle Eimer, 8 novembre 2026. */
     function actors() { return $$('.view:not([hidden]) svg.mascotte:not(.mascotte-accueil):not(.mascotte-adhesion), .view:not([hidden]) .perso'); }
 
@@ -5206,7 +5206,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
   $('#ecrire-form').addEventListener('input', () => { $('#ecrire-ok').hidden = true; });
   const msgItem = (m, bureau) => '<li class="msg"><p class="msg-meta"><span class="msg-sujet">' + esc((bureau ? SUJETS_BUREAU : SUJETS)[m.sujet] || 'Message') + '</span><time datetime="' + esc(m.date) + '">' + esc(longDate(localDay(m.date))) + '</time></p>' +
     (m.inst ? '<p class="msg-inst">' + esc(m.inst) + '</p>' : '') +
-    (bureau ? '<p class="msg-from">' + esc(m.nom) + ', <a href="mailto:' + esc(m.email) + '?subject=' + encodeURIComponent('Votre message au SLBC') + '">' + esc(m.email) + '</a></p>' : '') +
+    (bureau ? '<p class="msg-from">' + esc(m.nom) + ', <a href="mailto:' + esc(m.email) + '?subject=' + encodeURIComponent('Votre message au SLBM') + '">' + esc(m.email) + '</a></p>' : '') +
     '<p class="msg-text">' + esc(m.msg) + '</p></li>';
   function renderMessages() {
     $('#msg-count').textContent = '(' + messages.length + ')';
@@ -5316,15 +5316,15 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
   function mailCompte(c, kind, id) {
     const inv = kind === 'invitation';
     const paras = inv
-      ? ['Bonjour ' + c.prenom + ',', 'Le bureau du SLBC vous a ouvert un compte sur l’espace adhérent du site : veille réglementaire, lettre d’information, messages au bureau.', 'Votre identifiant est votre adresse e-mail. Choisissez votre mot de passe avec le bouton ci-dessous.']
-      : ['Bonjour ' + c.prenom + ',', 'Une demande de nouveau mot de passe a été faite pour votre compte de l’espace adhérent du SLBC.', 'Si elle ne vient pas de vous, ignorez cet e-mail : votre mot de passe actuel reste valable.'];
-    return '<div class="mp-meta"><span><strong>De :</strong> SLBC, espace adhérent</span><span><strong>À :</strong> ' + esc(c.email) + '</span><span><strong>Objet :</strong> ' +
-      esc(inv ? 'Créez votre mot de passe pour l’espace adhérent du SLBC' : 'Choisissez un nouveau mot de passe') + '</span></div>' +
+      ? ['Bonjour ' + c.prenom + ',', 'Le bureau du SLBM vous a ouvert un compte sur l’espace adhérent du site : veille réglementaire, lettre d’information, messages au bureau.', 'Votre identifiant est votre adresse e-mail. Choisissez votre mot de passe avec le bouton ci-dessous.']
+      : ['Bonjour ' + c.prenom + ',', 'Une demande de nouveau mot de passe a été faite pour votre compte de l’espace adhérent du SLBM.', 'Si elle ne vient pas de vous, ignorez cet e-mail : votre mot de passe actuel reste valable.'];
+    return '<div class="mp-meta"><span><strong>De :</strong> SLBM, espace adhérent</span><span><strong>À :</strong> ' + esc(c.email) + '</span><span><strong>Objet :</strong> ' +
+      esc(inv ? 'Créez votre mot de passe pour l’espace adhérent du SLBM' : 'Choisissez un nouveau mot de passe') + '</span></div>' +
       '<div class="mp-head">' + logoMini(id) + '<span class="mp-brand">SLBM</span></div>' +
       '<div class="mp-body"><p class="mp-title">' + (inv ? 'Bienvenue dans l’espace adhérent' : 'Nouveau mot de passe') + '</p>' + paras.map((p) => '<p class="mp-text">' + esc(p) + '</p>').join('') +
       '<button class="mp-btn" type="button" data-mdp-token="' + esc(c.token) + '">' + (inv ? 'Créer mon mot de passe' : 'Choisir un nouveau mot de passe') + '</button>' +
       '<p class="mp-note">Ce lien est personnel et ne sert qu’une fois. S’il ne fonctionne plus, utilisez « Mot de passe oublié ? » sur la page de connexion.</p></div>' +
-      '<p class="mp-foot">SLBC, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail parce qu’un compte de l’espace adhérent du SLBC est à votre nom.</p>';
+      '<p class="mp-foot">SLBM, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail parce qu’un compte de l’espace adhérent du SLBM est à votre nom.</p>';
   }
   function showInvitation(c) {
     $('#cpt-mail').innerHTML = mailCompte(c, 'invitation', 'cpt'); $('#cpt-mail').hidden = false;
@@ -5414,7 +5414,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       $('#mdp-who').textContent = 'Compte : ' + c.email; $('#mdp-who').hidden = false;
     } else if (kind === 'desactive') {
       $('#mdp-title').textContent = 'Ce compte a été désactivé'; $('#mdp-who').hidden = true;
-      $('#mdp-msg').textContent = 'Ce lien ne sert plus. Écrivez au bureau du SLBC pour réactiver votre compte.';
+      $('#mdp-msg').textContent = 'Ce lien ne sert plus. Écrivez au bureau du SLBM pour réactiver votre compte.';
     } else if (kind === 'invalide') {
       $('#mdp-title').textContent = 'Ce lien n’est plus valable'; $('#mdp-who').hidden = true;
       $('#mdp-msg').textContent = 'Il a déjà servi, ou un lien plus récent l’a remplacé. Demandez-en un nouveau avec « Mot de passe oublié ? » sur la page de connexion.';

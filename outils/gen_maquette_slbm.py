@@ -6,8 +6,8 @@ Demandes d'Isabelle Eimer :
   aujourd'hui en terme de communiqué ou article doit garder le nom slbc », puis, après plusieurs changements ponctuels :
   « Il faut faire comme si le syndicat venait de changer de nom. Donc on garde les antériorités en slbc et on passe le reste en slbm ».
 Part de la page unique de la maquette SLBC :
-- garde « SLBC » dans tout ce qui est antérieur au changement de nom (liste ANTERIEUR ci-dessous : communiqué du 4 novembre 2026 et sa
-  citation, fiches de veille sur la signature du protocole et sur la proposition de loi, actualité de la recommandation patronale,
+- garde « SLBC » dans tout ce qui est antérieur au changement de nom (liste ANTERIEUR ci-dessous : communiqué du 4 novembre 2026 en entier,
+  titre, chapeau, citation et texte intégral, fiches de veille sur la signature du protocole et sur la proposition de loi, actualité de la recommandation patronale,
   recommandations « dont le SLBC », statuts de 2013, programme de campagne, journal « SLBC » de la mascotte qui lit le communiqué) ;
 - passe tout le reste en « SLBM » (« Biologie Clinique » en « Biologie Médicale ») : logo, titres, textes des pages, informations
   légales, formulaires, e-mails d'exemple, recherche ;
@@ -30,17 +30,18 @@ ANTERIEUR = [
     ("biologistes médicaux, dont le SLBC, ont signé le 2 novembre 2026", 1),
     ("SDBIO, SLBC et SNMB", 1),
     ("Le SLBC suit chaque étape de son examen.", 1),                         # fiche de veille du 23 juin 2026
-    ("Le SLBC signe et alerte sur la pression tarifaire", 1),                # communiqué du 4 novembre 2026
-    ("with: 'Communiqué du SLBC',\n", 1),
-    ("Le Syndicat des Laboratoires de Biologie Clinique (SLBC) a signé", 1),
-    ("by: 'Thierry Bouchet, président du SLBC'", 1),
-    ("Pour le SLBC, cette trajectoire", 1),
-    ("Le SLBC sera vigilant", 1),
     ("Les organisations patronales, dont le SLBC, ont émis", 1),             # actualité du 1er juillet 2026
     ("'Recommandation des organisations patronales, dont le SLBC'", 3),      # recommandations signées (Documentation)
     ('stroke="none">SLBC</text>', 1),                                        # journal de la mascotte, à côté du communiqué
 ]
 gardes = []
+# Le communiqué du 4 novembre 2026 est gardé en entier (titre, chapeau, citation, texte intégral) : tout son texte est antérieur
+debut = t.index("{ id: 'p4',")
+fin = t.index("linkLabel: 'Lire le protocole signé (13\\u00a0pages)' }", debut)
+fin += len("linkLabel: 'Lire le protocole signé (13\\u00a0pages)' }")
+bloc = t[debut:fin]
+assert t.count(bloc) == 1 and bloc.count('SLBC') >= 9 and "{ id: 'p5'" not in bloc and 'actus:' not in bloc
+ANTERIEUR.insert(0, (bloc, 1))
 for texte, n in ANTERIEUR:
     assert t.count(texte) == n, (texte, t.count(texte), n)
     gardes.append(texte)
