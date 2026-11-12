@@ -342,7 +342,7 @@
      Santé publique France, SFBC, Bio Qualité, CNPS, Agence nationale du DPC, Klesia et Commission sociale paritaire retirés).
      Les descriptifs, retirés un moment le même jour, ont été rétablis à sa demande. */
   const INSTANCES = [
-    { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Vieillefond'] },
+    { n: 'Commission de hiérarchisation des actes de biologie', a: 'CHAB', r: 'Inscription et cotation des actes', reps: ['Thierry Bouchet', 'Éric Flatin', 'Vincent Garcia', 'Vincent Vieillefond'] },
     { n: 'Commission conventionnelle paritaire nationale', a: 'CPPNI', r: 'Dialogue social de la branche', reps: ['Antoine Crinquette', 'Éric Flatin'] },
     { n: 'Commission nationale permanente de biologie médicale', a: 'CNPBM', r: 'Conditions d’exercice de la profession', reps: [],
       groups: [['Bureau', ['Thierry Bouchet'], 'un représentant à désigner'], ['Assemblée générale', ['Harla Sarmini'], 'deux représentants à désigner']] },
