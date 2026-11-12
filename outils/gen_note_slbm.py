@@ -33,10 +33,10 @@ un('family=Figtree:wght@400;500;600;700;800&family=Nunito:wght@700;900', 'family
 un('--font:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;', '--font:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;')
 un('--font-marque:"Nunito","Figtree",system-ui,sans-serif;', '--font-marque:"Nunito",system-ui,sans-serif;')
 un('<p class="date">Note de travail du 7 novembre 2026, mise à jour le 8 novembre 2026, à valider par le bureau.</p>',
-   '<p class="date">Note de travail du 11 novembre 2026, à valider par le bureau. Elle reprend au nom SLBM la note du 7 novembre 2026, '
+   '<p class="date">Note de travail du 11 novembre 2026, mise à jour le 12 novembre 2026, à valider par le bureau. Elle reprend au nom SLBM la note du 7 novembre 2026, '
    'mise à jour le 8 novembre, ajoute la partie 2 sur le passage au nouveau nom et met à jour quelques points (polices, comptes publiés). '
    'Tant que l’assemblée n’a pas voté le changement, le syndicat s’appelle toujours [[SLBC]].</p>')
-un('<span>Note de travail, 7 novembre 2026, mise à jour le 8 novembre 2026</span>', '<span>Note de travail au nom SLBM, 11 novembre 2026</span>')
+un('<span>Note de travail, 7 novembre 2026, mise à jour le 8 novembre 2026</span>', '<span>Note de travail au nom SLBM, 11 novembre 2026, mise à jour le 12 novembre 2026</span>')
 # Partie 1 : l'adresse de la maquette SLBM n'existe pas encore
 un('Part par la messagerie du visiteur vers bureau@slbc.fr</td>',
    'Part par la messagerie du visiteur vers bureau@slbc.fr, une adresse qui n’existe pas encore</td>')

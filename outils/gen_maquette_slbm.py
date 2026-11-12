@@ -1,28 +1,53 @@
-"""Variante de la maquette au nom SLBM, Syndicat des Laboratoires de Biologie Médicale (11 novembre 2026, demande d'Isabelle Eimer :
-« Prépare un artefact avec le logo SLBM syndicat des laboratoires de biologie médicale. Change SLBC partout par SLBM »).
-Part de la page unique publiée de la maquette SLBC et change le nom partout où il est écrit :
-- « SLBC » (en capitales) devient « SLBM » ;
-- « Biologie Clinique » (avec capitales, le nom du syndicat) devient « Biologie Médicale » ;
-- le bandeau « Maquette de travail » précise qu'il s'agit de la variante au nom SLBM ;
-- les adresses e-mail en @slbc.fr passent en @slbm.fr (contact@slbm.fr, bureau@slbm.fr ; demande d'Isabelle Eimer du 11 novembre 2026 :
-  « Remplace les @slbc.fr par @slbm.fr aussi »).
-Ne changent pas : l'adresse slbc.fr du site actuel (bandeau), le lien LinkedIn, les noms de
-fichiers et les clés de stockage du navigateur (tout en minuscules), la « Société française de biologie clinique » (SFBC, un partenaire),
-et le contenu des documents PDF lus dans la liseuse.
+"""Variante de la maquette au nom SLBM, Syndicat des Laboratoires de Biologie Médicale.
+Demandes d'Isabelle Eimer :
+- 11 novembre 2026 : « Prépare un artefact avec le logo SLBM syndicat des laboratoires de biologie médicale. Change SLBC partout par SLBM »,
+  puis « Remplace les @slbc.fr par @slbm.fr aussi » ;
+- 12 novembre 2026 : « On ne change que dans les titres, c'est bien le slbc qui a signé le protocole et tout ce qui est antérieur à
+  aujourd'hui en terme de communiqué ou article doit garder le nom slbc ».
+Part de la page unique de la maquette SLBC et ne change le nom que dans les titres :
+- le logo (en-tête, pied de page, signature sous les deux ronds de l'accueil, logo des aperçus d'e-mails) et le titre de l'onglet ;
+- les titres des pages et des rubriques qui portent le nom (« Adhérer au SLBM », « Rejoindre le SLBM »), et ce même nom de page partout
+  où il sert de lien (menu, boutons, recherche), ainsi que « Contacter le SLBM » dans la recherche ;
+- les adresses e-mail en @slbc.fr passent en @slbm.fr (demande du 11 novembre) ;
+- le bandeau « Maquette de travail » précise qu'il s'agit de la variante au nom SLBM.
+Tout le reste garde « SLBC » : communiqués, actualités, fiche de veille, citations, signatures (protocole, recommandations, accords),
+statuts, comptes, informations légales, textes des pages, e-mails d'exemple, le journal « SLBC » d'une mascotte, documents PDF.
 La maquette SLBC, la charte SLBC et la charte du site ne changent pas.
 usage : python3 gen_maquette_slbm.py <page unique SLBC> <page unique SLBM>"""
-import re, sys
+import sys
 src, out = sys.argv[1], sys.argv[2]
 t = open(src, encoding='utf-8').read()
-n_sigle = len(re.findall(r'\bSLBC\b', t)); n_nom = t.count('Biologie Clinique'); n_mail = t.count('@slbc.fr')
-t = re.sub(r'\bSLBC\b', 'SLBM', t)
-t = t.replace('Biologie Clinique', 'Biologie Médicale')
+NB = ' '
+
+def remplacer(old, new, n=1):
+    global t
+    assert t.count(old) == n, (old, t.count(old), n)
+    t = t.replace(old, new)
+
+# Titre de l'onglet
+assert t.startswith('<title>SLBC – maquette du site</title>')
+remplacer('<title>SLBC – maquette du site</title>', '<title>SLBM – maquette du site</title>')
+# Logo : en-tête, signature de l'accueil, pied de page, aperçus d'e-mails
+remplacer('aria-label="SLBC, accueil"', 'aria-label="SLBM, accueil"')
+remplacer('<span class="brand-word">SLBC</span>', '<span class="brand-word">SLBM</span>')
+remplacer('<p class="hero-name">Syndicat des Laboratoires de Biologie Clinique</p>', '<p class="hero-name">Syndicat des Laboratoires de Biologie Médicale</p>')
+remplacer('aria-label="SLBC, Syndicat des Laboratoires de Biologie Clinique"', 'aria-label="SLBM, Syndicat des Laboratoires de Biologie Médicale"')
+remplacer('<span class="lockup-word">SLBC</span>', '<span class="lockup-word">SLBM</span>')
+remplacer('<span>de Biologie Clinique</span></span></span>', '<span>de Biologie Médicale</span></span></span>')
+remplacer('<span class="mp-brand">SLBC</span>', '<span class="mp-brand">SLBM</span>', 3)
+# Titres des pages et des rubriques, et noms de pages repris dans les liens et la recherche
+remplacer('id="h-join">Rejoindre le SLBC</h2>', 'id="h-join">Rejoindre le SLBM</h2>')
+remplacer('Adhérer au SLBC', 'Adhérer au SLBM', 7)
+remplacer("title: 'Contacter le SLBC'", "title: 'Contacter le SLBM'")
+# Adresses e-mail (demande du 11 novembre 2026) et bandeau de la maquette
+n_mail = t.count('@slbc.fr')
 t = t.replace('@slbc.fr', '@slbm.fr')
-ancien = 'Maquette de travail\u00a0: proposition de refonte du site slbc.fr'
-assert t.count(ancien) == 1, t.count(ancien)
-t = t.replace(ancien, 'Maquette de travail, variante au nom SLBM\u00a0: proposition de refonte du site slbc.fr')
-# Contrôles : plus aucun « SLBC », le partenaire SFBC garde son nom, les adresses restent
-assert not re.search(r'\bSLBC\b', t)
-assert 'Société française de biologie clinique' in t and 'contact@slbm.fr' in t and '@slbc.fr' not in t
+remplacer('Maquette de travail' + NB + ': proposition de refonte du site slbc.fr',
+          'Maquette de travail, variante au nom SLBM' + NB + ': proposition de refonte du site slbc.fr')
+# Contrôles : les faits passés gardent « SLBC »
+for garde in ('Le SLBC signe et alerte sur la pression tarifaire', 'Le Syndicat des Laboratoires de Biologie Clinique (SLBC) a signé le 2 novembre 2026',
+              'président du SLBC', 'dont le SLBC', 'Statuts du SLBC', 'Syndicat des Laboratoires de Biologie Clinique (SLBC), syndicat professionnel'):
+    assert garde in t, garde
+assert 'Société française de biologie clinique' in t and '@slbc.fr' not in t
 open(out, 'w', encoding='utf-8').write(t)
-print('ok', n_sigle, 'SLBC changés,', n_nom, '« Biologie Clinique » changés,', n_mail, 'adresses @slbc.fr changées')
+print('ok :', n_mail, 'adresses @slbc.fr changées ;', t.count('SLBM'), '« SLBM » ;', t.count('SLBC'), '« SLBC » gardés')

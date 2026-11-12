@@ -14,9 +14,9 @@
   --vert-fonce:#4E6623;
   --vert-clair:#D6E4A6;  /* surfaces douces */
   --gris:#5E6266;        /* texte secondaire, rond gris du logo */
-  --texte:#3F4347;       /* texte courant, nom SLBM */
+  --texte:#3F4347;       /* texte courant, nom SLBC */
   --encre:#2E3236;       /* titres, textes, traits des dessins (plus utilisé comme fond de zone depuis le 8 novembre 2026) */
-  --olive:#657B3D;       /* olive adouci : fonds des zones Veille, Espace adhérent, bannières « Chaque lundi » et « Rejoindre le SLBM » depuis le 8 novembre 2026, choix d’Isabelle Eimer (le vert du logo, un tiers de couleur en moins) ; texte blanc à 4,7:1 */
+  --olive:#657B3D;       /* olive adouci : fonds des zones Veille, Espace adhérent, bannières « Chaque lundi » et « Rejoindre le SLBC » depuis le 8 novembre 2026, choix d’Isabelle Eimer (le vert du logo, un tiers de couleur en moins) ; texte blanc à 4,7:1 */
   --nardo:#74777A;       /* fonds gris de zone (Actualités, représentants, portes…) depuis le 8 novembre 2026, choix d’Isabelle Eimer ; texte blanc à 4,5:1, vert clair seulement en grand */
   --fond:#F7F8F4;        /* sections alternées, pied de page */
   --blanc:#FFFFFF;
@@ -303,7 +303,7 @@ a.more{padding-block:9px;margin-block:-9px}
 @media (max-width:560px){.name-wall{grid-template-columns:minmax(0,1fr)}}
 
 /* ---------- Piliers (accueil) ---------- */
-/* Mascotte du SLBM à gauche du titre « Ce que nous défendons » (6 novembre 2026) */
+/* Mascotte du SLBC à gauche du titre « Ce que nous défendons » (6 novembre 2026) */
 .piliers-head,.tete-mascotte{display:flex;align-items:center;gap:clamp(20px,3vw,40px)}
 .piliers-head > div{min-width:0}
 .piliers-head .h-section + .lead{margin-top:18px}
@@ -334,12 +334,12 @@ a.more{padding-block:9px;margin-block:-9px}
 /* ---------- Adhésion (bandeau) ---------- */
 .join{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,6vw,96px);align-items:center}
 .join-lead{display:flex;flex-direction:column;gap:20px}
-/* Accroche de la bannière « Rejoindre le SLBM » (7 novembre 2026, demande d’Isabelle Eimer) */
+/* Accroche de la bannière « Rejoindre le SLBC » (7 novembre 2026, demande d’Isabelle Eimer) */
 .join-accroche{font-weight:700}
 .join-list{list-style:none;margin:0;padding:0}
 .join-list li{display:flex;align-items:center;gap:16px;padding:14px 0;border-top:1px solid rgba(255,255,255,.28);font-size:19px;font-weight:600;line-height:1.35;color:#fff}
 .join-list li:last-child{border-bottom:1px solid rgba(255,255,255,.28)}
-/* Pastilles dessinées de la bannière « Rejoindre le SLBM » (même style que les numéros des missions) */
+/* Pastilles dessinées de la bannière « Rejoindre le SLBC » (même style que les numéros des missions) */
 .join-list .mnum-join{flex:none;width:80px;height:auto}
 .join-list .mnum-join .mnum-eclats{stroke:#fff}
 @media (max-width:520px){.join-list .mnum-join{width:66px}}
@@ -956,7 +956,7 @@ svg.mascotte,.bureau-ill,.hcp-ill{overflow:visible}
 .js-life .engrenage-inverse{transform:rotate(calc(var(--turn,0) * -1.35deg))}
 @media print{.js-life svg.mascotte,.js-life .perso,.pillar,.charter-item,.person,.ca-region,.inst,.urps-item,.benefit,.vcard{transform:none!important}}
 /* ---------- Mouvement ----------
-   Peu d'animations, et seulement celles qui ont un sens pour le SLBM (demande d'Isabelle Eimer du
+   Peu d'animations, et seulement celles qui ont un sens pour le SLBC (demande d'Isabelle Eimer du
    6 novembre 2026 : « attractif mais professionnel », « pas IA like ») : les deux ronds du logo qui se
    rejoignent, puis le nom et la devise ; le filet vert des trois piliers ; la frise du protocole qui
    avance dans le temps ; l'onglet du menu de la page en cours ; l'ombre de l'en-tête au défilement.
@@ -1748,7 +1748,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     <template id="tpl-lecteurs">
       <svg class="hcp-ill" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="28 6 384 206" fill="none" stroke="#2E3236" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
         <g class="perso"><g transform="translate(0 6)"><ellipse cx="96" cy="201" rx="36" ry="4" fill="#E6E9DF" stroke="none"/><path d="M84 114 L112 112 L118 158 L80 160 Z" fill="#A3BE3C" stroke="none"/><path d="M87 158 L85 195 L74 196"/><path d="M101 158 L104 195 L116 196"/><path d="M80 109 L75 158 L111 158 L106 109" fill="#FFFFFF"/><path d="M84 109 L93 123 L102 109"/><path d="M93 123 L93 157"/><circle cx="95" cy="72" r="35" fill="#FFFFFF"/><path d="M88 37 C86 29 92 22 99 22 C95 26 95 31 99 33"/><path d="M60 66 L88 66" stroke-width="2.5"/><circle cx="99" cy="66" r="10.5" fill="#FFFFFF" stroke-width="3"/><circle cx="124" cy="64" r="10.5" fill="#FFFFFF" stroke-width="3"/><path d="M109.5 65 Q111.5 62.5 113.5 64.5" stroke-width="2.5"/><circle cx="101" cy="70" r="2.6" fill="#2E3236" stroke="none"/><circle cx="125" cy="68" r="2.6" fill="#2E3236" stroke="none"/><path d="M105 94 Q113 87 121 93" stroke-width="3"/><path d="M88 50 L106 55" stroke-width="3.2"/><path d="M117 53 L133 46" stroke-width="3.2"/></g><path d="M52 111 L138 110 L138 162 L52 163 Z" fill="#FFFFFF"/><text x="95" y="123" text-anchor="middle" font-family="Nunito, Arial, sans-serif" font-weight="800" font-size="10" letter-spacing="0.3" fill="#2E3236" stroke="none">PROTOCOLE</text><path d="M57 128 L133 128" stroke-width="1.6"/><rect x="57" y="133" width="35.5" height="23" rx="1.5" fill="#D6E4A6" stroke="none"/><path d="M97.5 135 L133 135" stroke="#5E6266" stroke-width="1.8"/><path d="M97.5 142 L133 142" stroke="#5E6266" stroke-width="1.8"/><path d="M97.5 149 L133 149" stroke="#5E6266" stroke-width="1.8"/><path d="M97.5 156 L125 156" stroke="#5E6266" stroke-width="1.8"/><ellipse cx="52" cy="138" rx="5" ry="6.5" fill="#2E3236" stroke="none"/><ellipse cx="138" cy="138" rx="5" ry="6.5" fill="#2E3236" stroke="none"/></g>
-        <g class="perso"><g transform="translate(118 6)"><ellipse cx="96" cy="201" rx="36" ry="4" fill="#E6E9DF" stroke="none"/><path d="M84 114 L112 112 L118 158 L80 160 Z" fill="#A3BE3C" stroke="none"/><path d="M87 158 L85 195 L74 196"/><path d="M101 158 L104 195 L116 196"/><path d="M80 109 L75 158 L111 158 L106 109" fill="#FFFFFF"/><path d="M84 109 L93 123 L102 109"/><path d="M93 123 L93 157"/><circle cx="95" cy="72" r="35" fill="#FFFFFF"/><path d="M89 37 C86 27 90 18 99 13"/><path d="M97 37 C98 29 103 24 110 23"/><circle cx="100" cy="67" r="3.3" fill="#2E3236" stroke="none"/><circle cx="120" cy="65" r="3.3" fill="#2E3236" stroke="none"/><ellipse cx="114" cy="89" rx="5" ry="6" fill="#FFFFFF" stroke-width="3"/></g><path d="M170 111 L256 110 L256 162 L170 163 Z" fill="#FFFFFF"/><text x="213" y="123" text-anchor="middle" font-family="Nunito, Arial, sans-serif" font-weight="800" font-size="10" letter-spacing="0.3" fill="#2E3236" stroke="none">SLBM</text><path d="M175 128 L251 128" stroke-width="1.6"/><rect x="215.5" y="133" width="35.5" height="23" rx="1.5" fill="#D6E4A6" stroke="none"/><path d="M175 135 L210.5 135" stroke="#5E6266" stroke-width="1.8"/><path d="M175 142 L210.5 142" stroke="#5E6266" stroke-width="1.8"/><path d="M175 149 L210.5 149" stroke="#5E6266" stroke-width="1.8"/><path d="M175 156 L202.5 156" stroke="#5E6266" stroke-width="1.8"/><ellipse cx="170" cy="138" rx="5" ry="6.5" fill="#2E3236" stroke="none"/><ellipse cx="256" cy="138" rx="5" ry="6.5" fill="#2E3236" stroke="none"/></g>
+        <g class="perso"><g transform="translate(118 6)"><ellipse cx="96" cy="201" rx="36" ry="4" fill="#E6E9DF" stroke="none"/><path d="M84 114 L112 112 L118 158 L80 160 Z" fill="#A3BE3C" stroke="none"/><path d="M87 158 L85 195 L74 196"/><path d="M101 158 L104 195 L116 196"/><path d="M80 109 L75 158 L111 158 L106 109" fill="#FFFFFF"/><path d="M84 109 L93 123 L102 109"/><path d="M93 123 L93 157"/><circle cx="95" cy="72" r="35" fill="#FFFFFF"/><path d="M89 37 C86 27 90 18 99 13"/><path d="M97 37 C98 29 103 24 110 23"/><circle cx="100" cy="67" r="3.3" fill="#2E3236" stroke="none"/><circle cx="120" cy="65" r="3.3" fill="#2E3236" stroke="none"/><ellipse cx="114" cy="89" rx="5" ry="6" fill="#FFFFFF" stroke-width="3"/></g><path d="M170 111 L256 110 L256 162 L170 163 Z" fill="#FFFFFF"/><text x="213" y="123" text-anchor="middle" font-family="Nunito, Arial, sans-serif" font-weight="800" font-size="10" letter-spacing="0.3" fill="#2E3236" stroke="none">SLBC</text><path d="M175 128 L251 128" stroke-width="1.6"/><rect x="215.5" y="133" width="35.5" height="23" rx="1.5" fill="#D6E4A6" stroke="none"/><path d="M175 135 L210.5 135" stroke="#5E6266" stroke-width="1.8"/><path d="M175 142 L210.5 142" stroke="#5E6266" stroke-width="1.8"/><path d="M175 149 L210.5 149" stroke="#5E6266" stroke-width="1.8"/><path d="M175 156 L202.5 156" stroke="#5E6266" stroke-width="1.8"/><ellipse cx="170" cy="138" rx="5" ry="6.5" fill="#2E3236" stroke="none"/><ellipse cx="256" cy="138" rx="5" ry="6.5" fill="#2E3236" stroke="none"/></g>
         <g class="perso"><g transform="translate(236 6) translate(190 0) scale(-1 1)"><ellipse cx="96" cy="201" rx="36" ry="4" fill="#E6E9DF" stroke="none"/><path d="M84 114 L112 112 L118 158 L80 160 Z" fill="#A3BE3C" stroke="none"/><path d="M87 158 L85 195 L74 196"/><path d="M101 158 L104 195 L116 196"/><path d="M80 109 L75 158 L111 158 L106 109" fill="#FFFFFF"/><path d="M84 109 L93 123 L102 109"/><path d="M93 123 L93 157"/><path d="M106 116 Q152 104 128 42"/><circle cx="70" cy="42" r="11" fill="#FFFFFF"/><circle cx="95" cy="72" r="35" fill="#FFFFFF"/><path d="M60 66 L88 66" stroke-width="2.5"/><circle cx="99" cy="66" r="10.5" fill="#FFFFFF" stroke-width="3"/><circle cx="124" cy="64" r="10.5" fill="#FFFFFF" stroke-width="3"/><path d="M109.5 65 Q111.5 62.5 113.5 64.5" stroke-width="2.5"/><circle cx="101" cy="67" r="2.6" fill="#2E3236" stroke="none"/><circle cx="125" cy="65" r="2.6" fill="#2E3236" stroke="none"/><path d="M106 92 Q110 88 114 91 Q118 94 122 89" stroke-width="3"/><path d="M89 49 Q97 42 106 48" stroke-width="3.2"/><path d="M117 53 L132 52" stroke-width="3.2"/><path d="M80 116 Q50 124 38 104"/><g transform="translate(-16 2) rotate(-14 52 86)"><path d="M36 62 L68 62 L68 104 L36 104 Z" fill="#FFFFFF" stroke-width="3"/><path d="M41 71 L63 71" stroke="#2E3236" stroke-width="3"/><path d="M41 80 L63 80" stroke="#5E6266" stroke-width="1.8"/><path d="M41 87 L63 87" stroke="#5E6266" stroke-width="1.8"/><path d="M41 94 L57 94" stroke="#5E6266" stroke-width="1.8"/></g><ellipse cx="36" cy="101" rx="5" ry="6.5" fill="#2E3236" stroke="none"/><ellipse cx="125" cy="39" rx="5.5" ry="7" fill="#2E3236" stroke="none" transform="rotate(25 125 39)"/></g><text x="384" y="40" text-anchor="middle" font-family="Nunito, Arial, sans-serif" font-weight="800" font-size="26" fill="#2E3236" stroke="none">?</text></g>
       </svg>
     </template>
@@ -2029,7 +2029,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       <div class="ed-head">
         <div class="ed-intro">
           <h2 class="h-section">Nos représentants</h2>
-          <p class="ed-quote">Les instances où le SLBM est représenté, et ses représentants.</p>
+          <p class="ed-quote">Les instances où le SLBC est représenté, et ses représentants.</p>
         </div>
         <ul class="kfigs" id="inst-figs"></ul>
       </div>
@@ -2116,7 +2116,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <ellipse cx="154" cy="68" rx="6" ry="7.5" fill="#2E3236" stroke="none" transform="rotate(20 154 68)"/>
         </svg>
       </div>
-      <p class="lead">Une décision de santé se fonde sur des données, pas sur des opinions. Chaque lundi : le Journal officiel lu numéro par numéro, les travaux de l’Assemblée nationale et du Sénat, l’Assurance maladie et la HAS. La veille est réservée aux adhérents du SLBM.</p>
+      <p class="lead">Une décision de santé se fonde sur des données, pas sur des opinions. Chaque lundi : le Journal officiel lu numéro par numéro, les travaux de l’Assemblée nationale et du Sénat, l’Assurance maladie et la HAS. La veille est réservée aux adhérents du SLBC.</p>
     </div>
   </section>
   <section class="section-tight">
@@ -2144,7 +2144,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <ellipse cx="96" cy="201" rx="36" ry="4" fill="#E6E9DF" stroke="none"/><path d="M84 114 L112 112 L118 158 L80 160 Z" fill="#A3BE3C" stroke="none"/><path d="M87 158 L85 195 L74 196"/><path d="M101 158 L104 195 L116 196"/><path d="M80 109 L75 158 L111 158 L106 109" fill="#FFFFFF"/><path d="M84 109 L93 123 L102 109"/><path d="M93 123 L93 157"/><circle cx="95" cy="72" r="35" fill="#FFFFFF"/><path d="M63 60 C61 48 66 40 73 37"/><path d="M67 70 C64 62 66 54 70 50"/><path d="M60 66 L88 66" stroke-width="2.5"/><circle cx="99" cy="66" r="10.5" fill="#FFFFFF" stroke-width="3"/><circle cx="124" cy="64" r="10.5" fill="#FFFFFF" stroke-width="3"/><path d="M109.5 65 Q111.5 62.5 113.5 64.5" stroke-width="2.5"/><circle cx="101" cy="70" r="2.6" fill="#2E3236" stroke="none"/><circle cx="125" cy="68" r="2.6" fill="#2E3236" stroke="none"/><path d="M106 88 Q114 93 121 86" stroke-width="3"/><path d="M52 105 L138 104 L138 156 L52 157 Z" fill="#FFFFFF"/><text x="95" y="117" text-anchor="middle" font-family="Nunito, Arial, sans-serif" font-weight="800" font-size="10" letter-spacing="0.3" fill="#2E3236" stroke="none">COMMUNIQUÉ</text><path d="M57 122 L133 122" stroke-width="1.6"/><rect x="57" y="127" width="35.5" height="23" rx="1.5" fill="#D6E4A6" stroke="none"/><path d="M97.5 129 L133 129" stroke="#5E6266" stroke-width="1.8"/><path d="M97.5 136 L133 136" stroke="#5E6266" stroke-width="1.8"/><path d="M97.5 143 L133 143" stroke="#5E6266" stroke-width="1.8"/><path d="M97.5 150 L125 150" stroke="#5E6266" stroke-width="1.8"/><ellipse cx="52" cy="132" rx="5" ry="6.5" fill="#2E3236" stroke="none"/><ellipse cx="138" cy="132" rx="5" ry="6.5" fill="#2E3236" stroke="none"/>
         </svg>
       </div>
-      <p class="lead">Les communiqués que le SLBM publie seul ou avec les autres syndicats de biologistes.</p>
+      <p class="lead">Les communiqués que le SLBC publie seul ou avec les autres syndicats de biologistes.</p>
     </div>
   </section>
   <section class="section-tight" style="padding-top:0">
@@ -2158,7 +2158,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
         <div class="side-block">
           <h2 class="h-block">Contact presse</h2>
           <div class="copy-line"><a data-contact href="mailto:contact@slbm.fr">contact@slbm.fr</a><button class="btn-copy" type="button" data-copy="contact@slbm.fr" data-contact-copy>Copier</button></div>
-          <a class="social-link" href="#" data-linkedin><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.03-3.06-1.86-3.06-1.87 0-2.15 1.46-2.15 2.96V21H9z"/></svg><span>Suivre le SLBM sur LinkedIn</span></a>
+          <a class="social-link" href="#" data-linkedin><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.03-3.06-1.86-3.06-1.87 0-2.15 1.46-2.15 2.96V21H9z"/></svg><span>Suivre le SLBC sur LinkedIn</span></a>
         </div>
         <div class="side-block">
           <h2 class="h-block">Kit presse</h2>
@@ -2370,7 +2370,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <fieldset data-panel="3" hidden>
             <legend id="j-recap-title" tabindex="-1">Vérifiez et envoyez</legend>
             <dl class="recap" id="j-recap"></dl>
-            <p class="join-dest">Votre demande sera envoyée au bureau du SLBM, à <strong><span data-adhesion>bureau@slbm.fr</span></strong>. En cliquant sur « Envoyer ma demande », votre messagerie s’ouvre avec l’e-mail déjà rédigé : il ne reste qu’à l’envoyer.</p>
+            <p class="join-dest">Votre demande sera envoyée au bureau du SLBC, à <strong><span data-adhesion>bureau@slbm.fr</span></strong>. En cliquant sur « Envoyer ma demande », votre messagerie s’ouvre avec l’e-mail déjà rédigé : il ne reste qu’à l’envoyer.</p>
           </fieldset>
           <div class="form-actions">
             <button class="btn btn-primary" type="submit" id="join-next">Continuer</button>
@@ -2420,29 +2420,29 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       <h2 class="h-section">Mentions légales</h2>
       <dl class="legal-dl">
         <dt>Éditeur du site</dt>
-        <dd>Syndicat des Laboratoires de Biologie Médicale (SLBM), syndicat professionnel.<br>6 place de la Madeleine, 75008 Paris.<br>Contact : <a data-contact href="mailto:contact@slbm.fr">contact@slbm.fr</a></dd>
+        <dd>Syndicat des Laboratoires de Biologie Clinique (SLBC), syndicat professionnel.<br>6 place de la Madeleine, 75008 Paris.<br>Contact : <a data-contact href="mailto:contact@slbm.fr">contact@slbm.fr</a></dd>
         <dt>Directeur de la publication</dt>
-        <dd>Thierry Bouchet, président du SLBM.</dd>
+        <dd>Thierry Bouchet, président du SLBC.</dd>
         <dt>Hébergeur</dt>
         <dd>Nom, adresse et téléphone de l’hébergeur : <span class="pending">à compléter</span>.</dd>
         <dt>Droit de réponse</dt>
         <dd>Toute personne nommée ou désignée sur ce site peut demander l’insertion d’une réponse. Elle l’adresse au directeur de la publication, à <a data-contact href="mailto:contact@slbm.fr">contact@slbm.fr</a>.</dd>
         <dt>Propriété intellectuelle</dt>
-        <dd>Le logo et les textes du site appartiennent au SLBM, sauf mention contraire. Leur reproduction demande son accord. Pour les textes officiels cités, la source et la date sont indiquées.</dd>
+        <dd>Le logo et les textes du site appartiennent au SLBC, sauf mention contraire. Leur reproduction demande son accord. Pour les textes officiels cités, la source et la date sont indiquées.</dd>
       </dl>
     </div>
   </section>
   <section class="section-tight bg-fond" id="donnees">
     <div class="container narrow">
       <h2 class="h-section">Données personnelles</h2>
-      <p class="lead">Le SLBM est responsable des données recueillies sur ce site. Il les utilise seulement pour les usages décrits ici et ne les vend pas.</p>
+      <p class="lead">Le SLBC est responsable des données recueillies sur ce site. Il les utilise seulement pour les usages décrits ici et ne les vend pas.</p>
       <ul class="legal-list">
         <li>
           <h3 class="h-block">Demande d’adhésion</h3>
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>Nom, prénom, e-mail, laboratoire, ville, mode d’exercice ; civilité, téléphone et message s’ils sont indiqués.</dd></div>
             <div><dt>Usage</dt><dd>Examiner votre demande, puis gérer votre adhésion.</dd></div>
-            <div><dt>Destinataire</dt><dd>La demande est envoyée par e-mail, depuis votre messagerie, au bureau du SLBM (<span data-adhesion>bureau@slbm.fr</span>).</dd></div>
+            <div><dt>Destinataire</dt><dd>La demande est envoyée par e-mail, depuis votre messagerie, au bureau du SLBC (<span data-adhesion>bureau@slbm.fr</span>).</dd></div>
             <div><dt>Base légale</dt><dd>Les démarches préalables à l’adhésion, puis l’adhésion elle-même.</dd></div>
             <div><dt>Durée</dt><dd>Le temps de l’adhésion, renouvelée chaque année. Après la fin de l’adhésion, ou si la demande n’aboutit pas : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
           </dl>
@@ -2451,7 +2451,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <h3 class="h-block">Lettre d’information</h3>
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>E-mail, date et texte de votre accord.</dd></div>
-            <div><dt>Usage</dt><dd>Vous envoyer la veille réglementaire et les nouvelles publications du SLBM.</dd></div>
+            <div><dt>Usage</dt><dd>Vous envoyer la veille réglementaire et les nouvelles publications du SLBC.</dd></div>
             <div><dt>Base légale</dt><dd>Votre consentement, que vous pouvez retirer à tout moment par le lien présent dans chaque e-mail.</dd></div>
             <div><dt>Durée</dt><dd>Jusqu’à votre désinscription. La preuve de votre accord : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
           </dl>
@@ -2461,7 +2461,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>Nom, prénom, e-mail ; le mot de passe, enregistré seulement sous une forme illisible : personne ne peut le lire, pas même le bureau.</dd></div>
             <div><dt>Usage</dt><dd>Vous donner accès à l’espace adhérent.</dd></div>
-            <div><dt>Destinataire</dt><dd>Le bureau du SLBM, qui crée et désactive les comptes.</dd></div>
+            <div><dt>Destinataire</dt><dd>Le bureau du SLBC, qui crée et désactive les comptes.</dd></div>
             <div><dt>Base légale</dt><dd>L’adhésion.</dd></div>
             <div><dt>Durée</dt><dd>Le temps de l’adhésion ; le compte est désactivé à sa fin. Ensuite : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
           </dl>
@@ -2471,7 +2471,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>Nom, e-mail, objet, commission choisie le cas échéant, message.</dd></div>
             <div><dt>Usage</dt><dd>Répondre à votre message et, si vous le proposez, organiser votre participation à une commission.</dd></div>
-            <div><dt>Destinataire</dt><dd>Le bureau du SLBM.</dd></div>
+            <div><dt>Destinataire</dt><dd>Le bureau du SLBC.</dd></div>
             <div><dt>Base légale</dt><dd>L’adhésion.</dd></div>
             <div><dt>Durée</dt><dd><span class="pending">Durée à fixer par le bureau</span>.</dd></div>
           </dl>
@@ -2481,7 +2481,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <dl class="legal-kv">
             <div><dt>Données</dt><dd>Identifiant, mot de passe, journal des connexions.</dd></div>
             <div><dt>Usage</dt><dd>Donner accès aux contenus réservés aux adhérents et protéger les comptes.</dd></div>
-            <div><dt>Base légale</dt><dd>L’adhésion ; la sécurité du site, intérêt légitime du SLBM.</dd></div>
+            <div><dt>Base légale</dt><dd>L’adhésion ; la sécurité du site, intérêt légitime du SLBC.</dd></div>
             <div><dt>Durée</dt><dd>Compte : le temps de l’adhésion. Journal des connexions : <span class="pending">durée à fixer par le bureau</span>.</dd></div>
           </dl>
         </li>
@@ -2497,15 +2497,15 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       </ul>
       <div class="legal-prose">
         <h3 class="h-block">Qui a accès à vos données</h3>
-        <p>Les personnes chargées de l’adhésion et de la communication au SLBM. Ses prestataires techniques, qui agissent pour son compte et selon ses instructions : hébergeur du site et outil d’envoi des e-mails, <span class="pending">à compléter</span>. Si l’un d’eux traite des données hors de l’Union européenne, les garanties prévues seront indiquées ici.</p>
+        <p>Les personnes chargées de l’adhésion et de la communication au SLBC. Ses prestataires techniques, qui agissent pour son compte et selon ses instructions : hébergeur du site et outil d’envoi des e-mails, <span class="pending">à compléter</span>. Si l’un d’eux traite des données hors de l’Union européenne, les garanties prévues seront indiquées ici.</p>
         <h3 class="h-block">Appartenance au syndicat</h3>
-        <p>Votre adhésion au SLBM est une information protégée. Le SLBM ne publie pas la liste de ses adhérents et ne la communique pas en dehors du syndicat, sauf à ses prestataires techniques.</p>
+        <p>Votre adhésion au SLBC est une information protégée. Le SLBC ne publie pas la liste de ses adhérents et ne la communique pas en dehors du syndicat, sauf à ses prestataires techniques.</p>
         <h3 class="h-block">Vos droits</h3>
         <p>Vous pouvez accéder à vos données, les corriger, les faire effacer, en limiter l’usage et les récupérer. Vous pouvez retirer votre accord à tout moment.</p>
-        <p class="legal-note"><strong>Droit d’opposition.</strong> Vous pouvez à tout moment vous opposer à un usage de vos données fondé sur l’intérêt légitime du SLBM.</p>
-        <p>Pour exercer ces droits, écrivez à <a data-contact href="mailto:contact@slbm.fr">contact@slbm.fr</a>. Le SLBM vous répond dans un délai d’un mois. Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL, sur cnil.fr.</p>
+        <p class="legal-note"><strong>Droit d’opposition.</strong> Vous pouvez à tout moment vous opposer à un usage de vos données fondé sur l’intérêt légitime du SLBC.</p>
+        <p>Pour exercer ces droits, écrivez à <a data-contact href="mailto:contact@slbm.fr">contact@slbm.fr</a>. Le SLBC vous répond dans un délai d’un mois. Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL, sur cnil.fr.</p>
         <h3 class="h-block">Après un décès</h3>
-        <p>Vous pouvez indiquer au SLBM si vous souhaitez qu’après votre décès vos données soient communiquées, ou non, à une personne que vous désignez. Vous pouvez aussi laisser des directives sur leur conservation, leur effacement et leur communication (article 85 de la loi Informatique et Libertés).</p>
+        <p>Vous pouvez indiquer au SLBC si vous souhaitez qu’après votre décès vos données soient communiquées, ou non, à une personne que vous désignez. Vous pouvez aussi laisser des directives sur leur conservation, leur effacement et leur communication (article 85 de la loi Informatique et Libertés).</p>
       </div>
     </div>
   </section>
@@ -2516,11 +2516,11 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
         <p>Le site utilise deux sortes de cookies :</p>
         <ul>
           <li><strong>Nécessaires au fonctionnement</strong> : le maintien de votre connexion à l’espace adhérent, jusqu’à la fermeture de l’onglet, et la mémorisation de votre choix sur les cookies, pendant 6 mois. Ils ne demandent pas votre accord.</li>
-          <li><strong>Mesure d’audience, seulement avec votre accord</strong> : compter les visites et les pages consultées, pour améliorer le site. Les statistiques ne servent qu’au SLBM. <span class="pending">(Aucun outil de mesure n’est installé sur la maquette.)</span></li>
+          <li><strong>Mesure d’audience, seulement avec votre accord</strong> : compter les visites et les pages consultées, pour améliorer le site. Les statistiques ne servent qu’au SLBC. <span class="pending">(Aucun outil de mesure n’est installé sur la maquette.)</span></li>
         </ul>
         <p>Le site ne dépose aucun cookie de publicité ni de réseau social. Le bandeau des cookies vous demande votre accord à la première visite ; vous pouvez changer d’avis à tout moment.</p>
         <p><button class="btn btn-quiet" type="button" data-cookies-voir>Gérer les cookies</button></p>
-        <p>Les liens vers la page LinkedIn du SLBM sont de simples liens : LinkedIn ne reçoit rien tant que vous ne cliquez pas.</p>
+        <p>Les liens vers la page LinkedIn du SLBC sont de simples liens : LinkedIn ne reçoit rien tant que vous ne cliquez pas.</p>
         <p>Les polices de caractères sont hébergées sur le serveur du site : votre adresse n’est pas transmise à un service extérieur. <span class="pending">(À mettre en place lors de l’intégration.)</span></p>
         <p>Les e-mails de la lettre d’information ne contiennent aucun outil de suivi des ouvertures ou des clics.</p>
       </div>
@@ -2540,7 +2540,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
         </div>
         <svg class="mascotte mascotte-accueil" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="38 2 206 210" fill="none" stroke="#2E3236" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><g stroke="#FFFFFF" stroke-width="9" fill="#FFFFFF"><path d="M84 114 L112 112 L118 158 L80 160 Z"/><path d="M87 158 L85 195 L74 196"/><path d="M101 158 L104 195 L116 196"/><path d="M80 109 L75 158 L111 158 L106 109"/><path d="M84 109 L93 123 L102 109"/><path d="M93 123 L93 157"/><circle cx="95" cy="72" r="35"/><path d="M88 37 C86 29 92 22 99 22 C95 26 95 31 99 33"/><path d="M60 66 L88 66"/><circle cx="99" cy="66" r="10.5"/><circle cx="124" cy="64" r="10.5"/><path d="M109.5 65 Q111.5 62.5 113.5 64.5"/><circle cx="101" cy="67" r="2.6"/><circle cx="125" cy="65" r="2.6"/><path d="M104 86 Q114 90 123 84 Q121 97 112 97 Q104 96 104 86 Z"/><path d="M93 49 Q99 45 105 47"/><path d="M118 47 Q124 43 130 45"/><g class="bras-poignee"><path d="M106 117 Q124 127 139 133"/></g><g class="bras-salut"><path d="M80 116 Q63 113 57 99"/><circle cx="56" cy="96" r="4.8"/><path d="M45 92 Q43 86 46 81"/><path d="M51 82 Q51 77 55 74"/></g><g transform="translate(284 0) scale(-1 1)"><path d="M84 114 L112 112 L118 158 L80 160 Z"/><path d="M87 158 L85 195 L74 196"/><path d="M101 158 L104 195 L116 196"/><path d="M80 109 L75 158 L111 158 L106 109"/><path d="M84 109 L93 123 L102 109"/><path d="M93 123 L93 157"/><circle cx="70" cy="42" r="11"/><circle cx="95" cy="72" r="35"/><circle cx="100" cy="64" r="3.3"/><circle cx="120" cy="62" r="3.3"/><path d="M106 88 Q114 93 121 86"/><g class="bras-poignee"><path d="M106 117 Q124 127 139 133"/></g><path d="M80 116 Q64 132 66 150"/><circle cx="66" cy="152" r="4.5"/></g><g class="poignee"><ellipse cx="142" cy="133" rx="8" ry="5.5"/><path d="M133 120 Q142 115 151 120"/><path d="M137 112 Q142 109 147 112"/></g></g><path d="M84 114 L112 112 L118 158 L80 160 Z" fill="#A3BE3C" stroke="none"/><path d="M87 158 L85 195 L74 196"/><path d="M101 158 L104 195 L116 196"/><path d="M80 109 L75 158 L111 158 L106 109" fill="#FFFFFF"/><path d="M84 109 L93 123 L102 109"/><path d="M93 123 L93 157"/><circle cx="95" cy="72" r="35" fill="#FFFFFF"/><path d="M88 37 C86 29 92 22 99 22 C95 26 95 31 99 33"/><path d="M60 66 L88 66" stroke-width="2.5"/><circle cx="99" cy="66" r="10.5" fill="#FFFFFF" stroke-width="3"/><circle cx="124" cy="64" r="10.5" fill="#FFFFFF" stroke-width="3"/><path d="M109.5 65 Q111.5 62.5 113.5 64.5" stroke-width="2.5"/><circle cx="101" cy="67" r="2.6" fill="#2E3236" stroke="none"/><circle cx="125" cy="65" r="2.6" fill="#2E3236" stroke="none"/><path d="M104 86 Q114 90 123 84 Q121 97 112 97 Q104 96 104 86 Z" fill="#FFFFFF" stroke-width="3"/><path d="M93 49 Q99 45 105 47" stroke-width="3"/><path d="M118 47 Q124 43 130 45" stroke-width="3"/><g class="bras-poignee"><path d="M106 117 Q124 127 139 133"/></g><g class="bras-salut"><path d="M80 116 Q63 113 57 99"/><circle cx="56" cy="96" r="4.8" fill="#2E3236" stroke="none"/><path d="M45 92 Q43 86 46 81" stroke-width="2.6"/><path d="M51 82 Q51 77 55 74" stroke-width="2.6"/></g><g transform="translate(284 0) scale(-1 1)"><path d="M84 114 L112 112 L118 158 L80 160 Z" fill="#A3BE3C" stroke="none"/><path d="M87 158 L85 195 L74 196"/><path d="M101 158 L104 195 L116 196"/><path d="M80 109 L75 158 L111 158 L106 109" fill="#FFFFFF"/><path d="M84 109 L93 123 L102 109"/><path d="M93 123 L93 157"/><circle cx="70" cy="42" r="11" fill="#FFFFFF"/><circle cx="95" cy="72" r="35" fill="#FFFFFF"/><circle cx="100" cy="64" r="3.3" fill="#2E3236" stroke="none"/><circle cx="120" cy="62" r="3.3" fill="#2E3236" stroke="none"/><path d="M106 88 Q114 93 121 86" stroke-width="3"/><g class="bras-poignee"><path d="M106 117 Q124 127 139 133"/></g><path d="M80 116 Q64 132 66 150"/><circle cx="66" cy="152" r="4.5" fill="#2E3236" stroke="none"/></g><g class="poignee"><ellipse cx="142" cy="133" rx="8" ry="5.5" fill="#2E3236" stroke="none"/><path d="M133 120 Q142 115 151 120" stroke-width="2.6"/><path d="M137 112 Q142 109 147 112" stroke-width="2.6"/></g></svg>
       </div>
-      <p class="lead" data-guest>Réservé aux adhérents du SLBM. Connectez-vous pour accéder aux rubriques ci-dessous.</p>
+      <p class="lead" data-guest>Réservé aux adhérents du SLBC. Connectez-vous pour accéder aux rubriques ci-dessous.</p>
     </div>
   </section>
   <section class="section-tight bg-fond" id="login">
@@ -2608,7 +2608,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       </div>
       </div>
       <div class="ea-panel" id="ea-ecrire" hidden>
-        <div class="ea-h" data-pastille="voix"><div><h2>Écrire au bureau</h2><p>Partager votre expérience dans une commission, faire une suggestion, poser une question : écrivez au bureau du SLBM.</p></div></div>
+        <div class="ea-h" data-pastille="voix"><div><h2>Écrire au bureau</h2><p>Partager votre expérience dans une commission, faire une suggestion, poser une question : écrivez au bureau du SLBC.</p></div></div>
         <div class="ecrire">
           <form class="side-block ecrire-form ea-carte-blanche" id="ecrire-form" novalidate>
             <!-- L'objet en trois pavés : les vrais boutons radio restent, invisibles mais actifs au clavier et pour les lecteurs d'écran -->
@@ -2659,17 +2659,17 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
         </div>
       </div>
       <div class="ea-panel" id="ea-lettre" hidden>
-        <div class="ea-h" data-pastille="lettre"><div><h2>La lettre d’information</h2><p>La veille et les nouvelles publications du SLBM, par e-mail.</p></div></div>
+        <div class="ea-h" data-pastille="lettre"><div><h2>La lettre d’information</h2><p>La veille et les nouvelles publications du SLBC, par e-mail.</p></div></div>
         <div class="ea-lettre">
           <form class="side-block side-dark" id="abonnement" novalidate>
             <h3 class="h-block ea-sous-titre h-block-blanc">Recevoir la lettre d’information</h3>
-            <dl class="lt-rythme"><dt>Chaque lundi</dt><dd>La veille réglementaire</dd><dt>Dès leur mise en ligne</dt><dd>Les nouvelles publications du SLBM</dd></dl>
+            <dl class="lt-rythme"><dt>Chaque lundi</dt><dd>La veille réglementaire</dd><dt>Dès leur mise en ligne</dt><dd>Les nouvelles publications du SLBC</dd></dl>
             <div class="field">
               <label class="field-label" for="sub-email">Votre e-mail d’adhérent</label>
               <input class="input" id="sub-email" type="email" placeholder="nom@laboratoire.fr" autocomplete="email">
               <p class="field-error" id="sub-error" role="alert" hidden></p>
             </div>
-            <label class="check-line"><input type="checkbox" id="sub-consent"><span>J’accepte de recevoir la lettre d’information du SLBM. Je peux me désinscrire à tout moment.</span></label>
+            <label class="check-line"><input type="checkbox" id="sub-consent"><span>J’accepte de recevoir la lettre d’information du SLBC. Je peux me désinscrire à tout moment.</span></label>
             <button class="btn btn-light" type="submit">M’abonner</button>
             <p class="form-ok" id="sub-ok" role="status" tabindex="-1" hidden></p>
             <p class="form-note">Votre e-mail sert seulement à l’envoi de la lettre. Chaque envoi contient un lien de désinscription. <a href="#mentions" data-section="donnees">Vos données personnelles</a></p>
@@ -2679,10 +2679,10 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
           <figure class="lt-exemple ea-carte-claire" id="lt-exemple" hidden>
             <figcaption class="lt-exemple-t">Exemple d’envoi<span id="lt-exemple-date"></span></figcaption>
             <div class="mail-preview">
-              <div class="mp-meta"><span class="lt-de-a"><span><strong>De :</strong> SLBM</span><span><strong>À :</strong> <span id="lt-a"></span></span></span><span><strong>Objet :</strong> <span id="lt-objet"></span></span></div>
+              <div class="mp-meta"><span class="lt-de-a"><span><strong>De :</strong> SLBC</span><span><strong>À :</strong> <span id="lt-a"></span></span></span><span><strong>Objet :</strong> <span id="lt-objet"></span></span></div>
               <div class="mp-head"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="clip-mail-lettre"><circle cx="44" cy="44" r="36"/></clipPath></defs><circle cx="44" cy="44" r="36" fill="#5E6266"/><circle cx="76" cy="76" r="36" fill="#A3BE3C"/><circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-mail-lettre)"/></svg><span class="mp-brand">SLBM</span></div>
               <div class="mp-body"><p class="mp-type">Communiqué</p><p class="mp-title" id="lt-titre"></p><p class="mp-text" id="lt-chapo"></p><span class="mp-btn">Lire sur le site</span></div>
-              <p class="mp-foot">SLBM, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBM. <span class="mp-link">Se désinscrire</span></p>
+              <p class="mp-foot">SLBC, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBC. <span class="mp-link">Se désinscrire</span></p>
             </div>
           </figure>
         </div>
@@ -2758,7 +2758,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
               <div class="mp-meta" id="mp-meta"></div>
               <div class="mp-head"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="clip-mail"><circle cx="44" cy="44" r="36"/></clipPath></defs><circle cx="44" cy="44" r="36" fill="#5E6266"/><circle cx="76" cy="76" r="36" fill="#A3BE3C"/><circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#clip-mail)"/></svg><span class="mp-brand">SLBM</span></div>
               <div class="mp-body" id="mp-body"></div>
-              <p class="mp-foot">SLBM, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBM. <span class="mp-link">Se désinscrire</span></p>
+              <p class="mp-foot">SLBC, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail car vous êtes inscrit à la lettre d’information du SLBC. <span class="mp-link">Se désinscrire</span></p>
             </div>
           </div>
           <p class="g-title" style="margin-top:14px" id="recent-title" tabindex="-1">Publications récentes</p>
@@ -2876,7 +2876,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       <div><h3>Partenaires</h3><ul id="foot-partners"></ul></div>
     </div>
     <div class="foot-legal">
-      <span>Copyright © 2026 SLBM. Tous droits réservés.</span>
+      <span>Copyright © 2026 SLBC. Tous droits réservés.</span>
       <nav aria-label="Informations légales"><a href="#mentions">Mentions légales</a><a href="#mentions" data-section="donnees">Données personnelles</a><a href="#mentions" data-section="cookies">Cookies</a><button class="foot-cookie" type="button" data-cookies-voir>Gérer les cookies</button></nav>
       <span>Maquette de travail.</span>
     </div>
@@ -2896,7 +2896,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     </div>
     <div class="cookie-cat">
       <div class="cookie-cat-head"><h3 class="cookie-cat-t"><label for="ck-mesure">Mesure d’audience</label></h3><input class="switch" id="ck-mesure" type="checkbox" role="switch" aria-describedby="ck-mesure-d"></div>
-      <p id="ck-mesure-d">Compter les visites et les pages consultées, pour améliorer le site. Les statistiques ne servent qu’au SLBM. <span class="pending">(Aucun outil de mesure n’est installé sur la maquette.)</span></p>
+      <p id="ck-mesure-d">Compter les visites et les pages consultées, pour améliorer le site. Les statistiques ne servent qu’au SLBC. <span class="pending">(Aucun outil de mesure n’est installé sur la maquette.)</span></p>
     </div>
     <div class="cookie-actions">
       <button class="btn btn-cookie" type="button" data-cookies-tout="non">Tout refuser</button>
@@ -3133,9 +3133,9 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     'documents/actualites/2026-06-09-appel-candidatures-pnmr4.pdf': ['Appel à candidatures PNMR4 pour les tests fonctionnels', 1, 595, 842],
     'documents/actualites/2026-05-04-greve-nationale-salaries-laboratoires.pdf': ['Grève nationale historique des salariés des laboratoires', 1, 595, 842],
     'documents/actualites/2026-04-16-deploiement-rihn-2-0.pdf': ['Innovation diagnostique : déploiement du RIHN 2.0', 1, 595, 842],
-    'documents/actualites/programme-campagne-slbc-2026.pdf': ['Programme de campagne du SLBM : « Une ambition commune : valoriser notre expertise médicale »', 2, 597, 843],
+    'documents/actualites/programme-campagne-slbc-2026.pdf': ['Programme de campagne du SLBC : « Une ambition commune : valoriser notre expertise médicale »', 2, 597, 843],
     'documents/actualites/2026-02-04-radiation-vs-nabm.pdf': ['Radiation de la vitesse de sédimentation (VS) de la NABM', 1, 595, 842],
-    'documents/syndicat/statuts-slbc.pdf': ['Statuts du SLBM', 4, 595, 842],
+    'documents/syndicat/statuts-slbc.pdf': ['Statuts du SLBC', 4, 595, 842],
     'documents/comptes/comptes-2025-etats-financiers.pdf': ['Comptes 2025 : états financiers', 5, 596, 843],
     'documents/comptes/comptes-2025-rapport-cac.pdf': ['Comptes 2025 : rapport du commissaire aux comptes', 18, 595, 842],
     'documents/comptes/comptes-2024-etats-financiers.pdf': ['Comptes 2024 : états financiers', 17, 596, 843],
@@ -3162,10 +3162,10 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     veille: [
       { id: 'v0', src: 'hors', where: 'Assurance maladie', date: '2026-11-02', when: '2 novembre 2026',
         title: 'Protocole 2027-2029 : l’Assurance maladie et les syndicats représentatifs de biologistes signent',
-        teaser: 'Tous les syndicats représentatifs de biologistes médicaux le signent, dont le SLBM.',
-        resume: 'L’Assurance maladie et l’ensemble des syndicats représentatifs de biologistes médicaux, dont le SLBM, ont signé le 2 novembre 2026 un nouveau protocole d’accord pour la période 2027-2029. Il prend le relais de l’accord du 20 décembre 2024, qui gèle la nomenclature jusqu’en décembre 2026.',
+        teaser: 'Tous les syndicats représentatifs de biologistes médicaux le signent, dont le SLBC.',
+        resume: 'L’Assurance maladie et l’ensemble des syndicats représentatifs de biologistes médicaux, dont le SLBC, ont signé le 2 novembre 2026 un nouveau protocole d’accord pour la période 2027-2029. Il prend le relais de l’accord du 20 décembre 2024, qui gèle la nomenclature jusqu’en décembre 2026.',
         impact: 'fort',
-        facts: [['Signature', '2 novembre 2026'], ['Période couverte', '2027 à 2029'], ['Signataires', 'UNCAM, UNOCAM, Les Biologistes Médicaux (Biomed), SDBIO, SLBM et SNMB']],
+        facts: [['Signature', '2 novembre 2026'], ['Période couverte', '2027 à 2029'], ['Signataires', 'UNCAM, UNOCAM, Les Biologistes Médicaux (Biomed), SDBIO, SLBC et SNMB']],
         url: 'https://toute-la.veille-acteurs-sante.fr/246686/lassurance-maladie-et-lensemble-des-syndicats-representatifs-de-biologistes-medicaux-signent-un-nouveau-protocole-daccord-pour-la-periode-2027-2029/', linkLabel: 'Lire le communiqué, relayé par La Veille Acteurs de Santé' },
       { id: 'v1', src: 'jo', where: 'Journal officiel', date: '2026-10-30', when: 'JO du 30 octobre 2026',
         title: 'Décret n° 2026-1009 du 28 octobre 2026 sur la transmission obligatoire de données à l’autorité sanitaire',
@@ -3184,7 +3184,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       { id: 'v3', src: 'parl', where: 'Assemblée nationale', date: '2026-06-23', when: 'Suivie depuis le 23 juin 2026',
         title: 'Proposition de loi n° 2956 contre les excès de la financiarisation en santé',
         teaser: 'Déposée le 23 juin 2026 et renvoyée à la commission des affaires sociales.',
-        resume: 'La proposition de loi portant mesures visant à lutter contre les excès de la financiarisation en santé a été déposée à l’Assemblée nationale le 23 juin 2026 et renvoyée à la commission des affaires sociales. Le SLBM suit chaque étape de son examen.',
+        resume: 'La proposition de loi portant mesures visant à lutter contre les excès de la financiarisation en santé a été déposée à l’Assemblée nationale le 23 juin 2026 et renvoyée à la commission des affaires sociales. Le SLBC suit chaque étape de son examen.',
         impact: 'suivre',
         facts: [['Dépôt', '23 juin 2026'], ['Commission', 'Affaires sociales']],
         url: 'https://www.assemblee-nationale.fr/dyn/17/textes/l17b2956_proposition-loi', linkLabel: 'Voir le texte sur assemblee-nationale.fr' },
@@ -3200,25 +3200,25 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
        Les communiqués de 2024, 2019 et 2014 ont été retirés. Le communiqué sur la signature du protocole
        2027-2029 et le commentaire publié par Nicolas sur LinkedIn sont attendus. */
     presse: [
-      /* Communiqué de presse du SLBM du 4 novembre 2026 (image envoyée par Isabelle Eimer le 6 novembre 2026),
+      /* Communiqué de presse du SLBC du 4 novembre 2026 (image envoyée par Isabelle Eimer le 6 novembre 2026),
          repris mot pour mot. Le protocole signé est joint en PDF (site/documents/protocole-biologie-2027-2029.pdf). */
       { id: 'p4', date: '2026-11-04', year: '2026',
         title: 'Protocole d’accord pour la biologie médicale 2027-2029',
-        subtitle: 'Le SLBM signe et alerte sur la pression tarifaire',
-        with: 'Communiqué du SLBM',
-        chapo: 'Le Syndicat des Laboratoires de Biologie Médicale (SLBM) a signé le 2 novembre 2026, avec l’Assurance Maladie et les autres syndicats représentatifs, le protocole d’accord pour les années 2027-2029. Il reconnaît l’intérêt des dispositions relatives à la prévention et à l’innovation, mais alerte sur une trajectoire qui maintient la pression sur les tarifs des examens. Il a signé pour conserver sa place dans les instances de suivi et sa capacité d’intervention dans les discussions sur l’avenir de la profession.',
-        quote: { text: '« Nous signons pour défendre les laboratoires dans les discussions à venir. Notre signature n’efface pas notre désaccord sur l’équilibre économique de cet accord. »', by: 'Thierry Bouchet, président du SLBM' },
+        subtitle: 'Le SLBC signe et alerte sur la pression tarifaire',
+        with: 'Communiqué du SLBC',
+        chapo: 'Le Syndicat des Laboratoires de Biologie Clinique (SLBC) a signé le 2 novembre 2026, avec l’Assurance Maladie et les autres syndicats représentatifs, le protocole d’accord pour les années 2027-2029. Il reconnaît l’intérêt des dispositions relatives à la prévention et à l’innovation, mais alerte sur une trajectoire qui maintient la pression sur les tarifs des examens. Il a signé pour conserver sa place dans les instances de suivi et sa capacité d’intervention dans les discussions sur l’avenir de la profession.',
+        quote: { text: '« Nous signons pour défendre les laboratoires dans les discussions à venir. Notre signature n’efface pas notre désaccord sur l’équilibre économique de cet accord. »', by: 'Thierry Bouchet, président du SLBC' },
         body: [
           { h: 'Une enveloppe de dépenses autorisées qui laisse les tarifs sous pression', ps: [
-            'Face à une croissance des besoins en examens liée au vieillissement de la population et à l’augmentation des maladies chroniques, l’accord limite la croissance de l’enveloppe des actes courants à 1,1 % chaque année. La dernière estimation de la CNAM fait état d’une croissance des volumes de 4,1 % en 2026. À tarifs et à structure d’activité constants, la hausse annuelle de l’enveloppe permettrait de financer une progression des volumes de 1,1 %. Le SLBM anticipe une baisse tarifaire d’au moins 2 %, pouvant atteindre 2,5 % selon les hypothèses d’activité retenues.',
+            'Face à une croissance des besoins en examens liée au vieillissement de la population et à l’augmentation des maladies chroniques, l’accord limite la croissance de l’enveloppe des actes courants à 1,1 % chaque année. La dernière estimation de la CNAM fait état d’une croissance des volumes de 4,1 % en 2026. À tarifs et à structure d’activité constants, la hausse annuelle de l’enveloppe permettrait de financer une progression des volumes de 1,1 %. Le SLBC anticipe une baisse tarifaire d’au moins 2 %, pouvant atteindre 2,5 % selon les hypothèses d’activité retenues.',
             'En métropole, la lettre clé B est passée de 0,27 € à 0,26 € le 1er février 2023, puis à 0,25 € le 15 janvier 2024. Une nouvelle baisse d’un centime au 1er janvier 2027 la ramènerait à 0,24 €, soit un recul cumulé de 11,1 % en moins de quatre ans, auquel s’ajoutent des diminutions de cotations des actes représentant plus de 19 % de baisses tarifaires totales, dans un contexte de hausse des charges des laboratoires.',
             'Le partage du risque reste très déséquilibré. Le mécanisme de régulation prévoit un premier ajustement tarifaire couvrant 100 % de l’écart prévisionnel dès le mois de janvier, puis une prise en charge par la profession de 80 % du dépassement en juillet, contre 20 % pour l’Assurance Maladie.',
-            'Les dépenses de biologie délocalisée sont intégrées à l’enveloppe courante. Un suivi spécifique est prévu, mais sans seuil chiffré déclenchant une renégociation de leur financement. Le SLBM a alerté la CNAM sur le risque de dépassement lié à ces dépenses. Il sera vigilant sur leur évolution et sur l’efficacité du suivi prévu par le protocole.',
-            'Pour le SLBM, cette trajectoire fragilisera l’équilibre économique des laboratoires et leur capacité à maintenir l’accès des patients aux examens sur tout le territoire.'
+            'Les dépenses de biologie délocalisée sont intégrées à l’enveloppe courante. Un suivi spécifique est prévu, mais sans seuil chiffré déclenchant une renégociation de leur financement. Le SLBC a alerté la CNAM sur le risque de dépassement lié à ces dépenses. Il sera vigilant sur leur évolution et sur l’efficacité du suivi prévu par le protocole.',
+            'Pour le SLBC, cette trajectoire fragilisera l’équilibre économique des laboratoires et leur capacité à maintenir l’accès des patients aux examens sur tout le territoire.'
           ] },
           { h: 'Des missions de prévention dont les moyens restent à sécuriser', ps: [
-            'Le protocole prévoit une enveloppe non limitative de 100 millions d’euros sur trois ans, dédiée aux actes nouveaux, et une enveloppe spécifique pour les missions de santé publique. Un soutien aux activités d’assistance médicale à la procréation est également prévu. Le SLBM en reconnaît l’intérêt. La vaccination et la remise de kits de dépistage du cancer colorectal figurent parmi les perspectives mises en avant, de même que le suivi du diabète et le dépistage de la maladie rénale chronique.',
-            'Ces perspectives ne valent pas mise en œuvre immédiate. Elles dépendent encore, selon les mesures, de textes législatifs ou réglementaires et de négociations conventionnelles. Le SLBM sera vigilant sur le financement intégral des nouvelles missions en dehors de l’enveloppe courante. Pour les futurs actes de santé publique, la part des dépenses affectée à l’enveloppe spécifique reste à négocier.'
+            'Le protocole prévoit une enveloppe non limitative de 100 millions d’euros sur trois ans, dédiée aux actes nouveaux, et une enveloppe spécifique pour les missions de santé publique. Un soutien aux activités d’assistance médicale à la procréation est également prévu. Le SLBC en reconnaît l’intérêt. La vaccination et la remise de kits de dépistage du cancer colorectal figurent parmi les perspectives mises en avant, de même que le suivi du diabète et le dépistage de la maladie rénale chronique.',
+            'Ces perspectives ne valent pas mise en œuvre immédiate. Elles dépendent encore, selon les mesures, de textes législatifs ou réglementaires et de négociations conventionnelles. Le SLBC sera vigilant sur le financement intégral des nouvelles missions en dehors de l’enveloppe courante. Pour les futurs actes de santé publique, la part des dépenses affectée à l’enveloppe spécifique reste à négocier.'
           ] }
         ],
         url: 'documents/protocole-biologie-2027-2029.pdf', linkLabel: 'Lire le protocole signé (13\u00a0pages)' }
@@ -3228,7 +3228,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       { id: 'a2', date: '2026-09-07', cat: 'Santé publique', title: 'Feuille de route 2026-2030 de la stratégie nationale de santé sexuelle', excerpt: 'La feuille de route prévoit le déploiement de la biologie médicale délocalisée.', doc: 'documents/actualites/2026-09-07-feuille-de-route-sante-sexuelle.pdf', att: { url: 'documents/actualites/depeche-apmnews-2026-09-07-feuille-de-route-sante-sexuelle.pdf', label: 'La dépêche APMnews' } },
       { id: 'a3', date: '2026-08-31', cat: 'Exercice', title: 'Rapport Beaudeux-Bouvier : biologistes médicaux et assistance médicale à la procréation', excerpt: 'Une mission ministérielle propose de reconnaître et de rémunérer les consultations des biologistes médicaux en assistance médicale à la procréation.', doc: 'documents/actualites/2026-08-31-rapport-beaudeux-bouvier.pdf', att: { url: 'documents/actualites/rapport-mission-biologistes-amp-beaudeux-bouvier.pdf', label: 'Le rapport' } },
       { id: 'a4', date: '2026-08-31', cat: 'Vie du syndicat', title: 'Décès du Docteur Jean-François Perotto', excerpt: '', doc: 'documents/actualites/2026-08-31-deces-jean-francois-perotto.pdf' },
-      { id: 'a5', date: '2026-07-01', cat: 'Social', title: 'Négociations salariales : recommandation patronale et grille 2026', excerpt: 'Les organisations patronales, dont le SLBM, ont émis une recommandation le 15 décembre 2025.', doc: 'documents/actualites/2026-07-01-negociations-salariales-grille-2026.pdf' },
+      { id: 'a5', date: '2026-07-01', cat: 'Social', title: 'Négociations salariales : recommandation patronale et grille 2026', excerpt: 'Les organisations patronales, dont le SLBC, ont émis une recommandation le 15 décembre 2025.', doc: 'documents/actualites/2026-07-01-negociations-salariales-grille-2026.pdf' },
       { id: 'a6', date: '2026-06-09', cat: 'Appels à projets', title: 'Appel à candidatures PNMR4 pour les tests fonctionnels', excerpt: 'La DGOS a lancé le 9 juin 2026 un appel à candidatures dans le cadre du 4e plan national maladies rares.', doc: 'documents/actualites/2026-06-09-appel-candidatures-pnmr4.pdf' },
       { id: 'a7', date: '2026-05-04', cat: 'Social', title: 'Grève nationale historique des salariés des laboratoires', excerpt: '', doc: 'documents/actualites/2026-05-04-greve-nationale-salaries-laboratoires.pdf' },
       { id: 'a8', date: '2026-04-16', cat: 'Nomenclature', title: 'Innovation diagnostique : déploiement du RIHN 2.0', excerpt: '', doc: 'documents/actualites/2026-04-16-deploiement-rihn-2-0.pdf' },
@@ -3243,11 +3243,11 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     ['Vice-présidente', 'Isabelle Eimer'], ['Secrétaire général', 'Nicolas Roquigny'],
     ['Membre du bureau', 'Éric Flatin'], ['Membre du bureau', 'Alexandre Guiard']
   ];
-  /* Page LinkedIn du SLBM (adresse fournie par Isabelle Eimer le 5 novembre 2026).
+  /* Page LinkedIn du SLBC (adresse fournie par Isabelle Eimer le 5 novembre 2026).
      Si elle est vidée, les liens LinkedIn signalent qu’elle reste à compléter. */
   const LINKEDIN_URL = 'https://www.linkedin.com/company/slbc-syndicat-des-laboratoires-de-biologie-clinique/';
-  /* Adresse de contact unique du SLBM : contact général, contact presse et demandes d’adhésion
-     (décisions d’Isabelle Eimer du 6 novembre 2026). Le SLBM n’affiche pas de téléphone.
+  /* Adresse de contact unique du SLBC : contact général, contact presse et demandes d’adhésion
+     (décisions d’Isabelle Eimer du 6 novembre 2026). Le SLBC n’affiche pas de téléphone.
      Provisoire : contact@slbm.fr, en attendant l’adresse définitive.
      Si elle est vidée, la maquette affiche « adresse à compléter ». */
   const CONTACT_EMAIL = 'contact@slbm.fr';
@@ -3473,10 +3473,10 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
        (convention-labo.com), lus page par page ; accords de 2023 et 2024 étendus (Légifrance). Point 35 de docs/sources-et-verifications.md. */
     { theme: 'Branche et rémunération', items: [
       { t: 'Grille des salaires minima au 1er juin 2026 (accord du 10 juin 2026)', s: 'Accord de branche', y: '2026', url: 'documents/textes/03-2026-grille-salaires-au-1er-juin.pdf' },
-      { t: 'Grille des salaires minima au 1er janvier 2026 (recommandation patronale du 15 décembre 2025)', s: 'Recommandation des organisations patronales, dont le SLBM', y: '2026', url: 'documents/textes/04-2026-grille-salaires-au-1er-janvier-recommandation.pdf' },
-      { t: 'Grille des salaires minima au 1er décembre 2024 (recommandation patronale du 26 novembre 2024)', s: 'Recommandation des organisations patronales, dont le SLBM', y: '2024', url: 'documents/textes/06-2024-grille-salaires-au-1er-decembre-recommandation.pdf' },
+      { t: 'Grille des salaires minima au 1er janvier 2026 (recommandation patronale du 15 décembre 2025)', s: 'Recommandation des organisations patronales, dont le SLBC', y: '2026', url: 'documents/textes/04-2026-grille-salaires-au-1er-janvier-recommandation.pdf' },
+      { t: 'Grille des salaires minima au 1er décembre 2024 (recommandation patronale du 26 novembre 2024)', s: 'Recommandation des organisations patronales, dont le SLBC', y: '2024', url: 'documents/textes/06-2024-grille-salaires-au-1er-decembre-recommandation.pdf' },
       { t: 'Grille des salaires minima au 1er janvier 2024 (accord du 11 janvier 2024)', s: 'Accord de branche', y: '2024', url: 'documents/textes/08-2024-grille-salaires-au-1er-janvier.pdf' },
-      { t: 'Grille des salaires minima au 1er septembre 2023 (recommandation patronale)', s: 'Recommandation des organisations patronales, dont le SLBM', y: '2023', url: 'documents/textes/09-2023-grille-salaires-au-1er-septembre-recommandation.pdf' },
+      { t: 'Grille des salaires minima au 1er septembre 2023 (recommandation patronale)', s: 'Recommandation des organisations patronales, dont le SLBC', y: '2023', url: 'documents/textes/09-2023-grille-salaires-au-1er-septembre-recommandation.pdf' },
       { t: 'Grille des salaires minima au 1er janvier 2023 (accord du 14 décembre 2022)', s: 'Accord de branche', y: '2023', url: 'documents/textes/10-2023-grille-salaires-au-1er-janvier.pdf' },
       { t: 'Grille des salaires minima au 1er mai 2022 (accord du 27 avril 2022)', y: '2022', url: 'documents/textes/02-2022-grille-salaires-au-1er-mai.pdf' }
     ] },
@@ -3715,7 +3715,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     (MISSION_DIGITS[n] || []).map((d) => '<path class="mnum-digit" pathLength="1" d="' + d + '" stroke-width="5"/>').join('') +
     '<g class="mnum-eclats" stroke-width="2.6"><path d="M67 13 L72.5 7.5"/><path d="M71.5 21.5 L79 19.5"/><path d="M60.5 8 L62 2"/></g></g></svg>';
 
-  /* Pastilles de la bannière « Rejoindre le SLBM » (accueil, 7 novembre 2026, demande d'Isabelle Eimer) : même dessin
+  /* Pastilles de la bannière « Rejoindre le SLBC » (accueil, 7 novembre 2026, demande d'Isabelle Eimer) : même dessin
      et même animation que les numéros des missions, mais un petit dessin au marqueur à la place du chiffre :
      des jumelles (la veille), deux biologistes (les groupes de travail), un porte-voix (une voix dans les instances).
      Pas d'ombre au sol : la bannière est vert foncé, comme pour les mascottes sur fond sombre. Les traits se tracent
@@ -3745,7 +3745,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     (JOIN_ICONS[k] || '') +
     '<g class="mnum-eclats" stroke-width="2.6"><path d="M67 13 L72.5 7.5"/><path d="M71.5 21.5 L79 19.5"/><path d="M60.5 8 L62 2"/></g></g></svg>';
 
-  /* Documentation : petit dessin de chaque rubrique, dans la même pastille que la bannière « Rejoindre le SLBM » (10 novembre 2026, demande
+  /* Documentation : petit dessin de chaque rubrique, dans la même pastille que la bannière « Rejoindre le SLBC » (10 novembre 2026, demande
      d'Isabelle Eimer : « Rajoute des pastilles ») : boîte de Petri, lettre clé B de la NABM, porte-documents, code relié, balance, graphique. */
   const DOC_ICONS = {
     'doc-surveillance': '<circle class="mnum-digit" pathLength="1" cx="42" cy="41" r="16.5" fill="#FFFFFF" stroke-width="3.4"/><circle class="mnum-digit" pathLength="1" cx="42" cy="41" r="12.5" stroke-width="2"/><g class="mnum-fill"><circle cx="36.5" cy="37" r="3.4" fill="#D6E4A6" stroke-width="2.2"/><circle cx="48" cy="38.5" r="3.4" fill="#D6E4A6" stroke-width="2.2"/><circle cx="41.5" cy="47.5" r="3.4" fill="#D6E4A6" stroke-width="2.2"/><circle cx="34.5" cy="45.5" r="1.3" fill="#2E3236" stroke="none"/><circle cx="49.5" cy="46.5" r="1.3" fill="#2E3236" stroke="none"/><circle cx="44" cy="31.5" r="1.3" fill="#2E3236" stroke="none"/></g>',
@@ -3803,13 +3803,13 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
   /* ---------- Rendu du contenu fixe ---------- */
   function renderStatic() {
     $('#home-benefits').innerHTML = BENEFITS.map((b, k) => '<li>' + joinBadge(k) + '<span>' + esc(b.t) + '</span></li>').join('');
-    /* Page Adhérer : les mêmes pastilles dessinées que la bannière « Rejoindre le SLBM » de l'accueil (demande d'Isabelle Eimer, 7 novembre 2026) */
+    /* Page Adhérer : les mêmes pastilles dessinées que la bannière « Rejoindre le SLBC » de l'accueil (demande d'Isabelle Eimer, 7 novembre 2026) */
     $('#benefits-grid').innerHTML = BENEFITS.map((b, k) => '<div class="benefit c' + k + '">' + joinBadge(k) + '<h2>' + esc(b.t) + '</h2><p>' + esc(b.d) + '</p></div>').join('');
     /* Piliers de « Ce que nous défendons » (accueil) : mêmes numéros dessinés et même animation que les missions */
     $$('#piliers .pillar').forEach((el, k) => { if (!el.querySelector('.mnum')) el.insertAdjacentHTML('afterbegin', missionBadge(k + 1)); });
     $('#missions-list').innerHTML = MISSIONS.map((m, k) => '<div class="charter-item">' + missionBadge(k + 1) + '<div class="charter-text"><h3 class="h-block"><span class="sr-only">Mission ' + (k + 1) + '\u00a0: </span>' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p></div></div>').join('');
     renderSyndicat();
-    $('#comptes-list').innerHTML = docRow({ t: 'Les statuts du SLBM', s: 'Paris, le 16 novembre 2013', url: STATUTS }, 'Statuts') +
+    $('#comptes-list').innerHTML = docRow({ t: 'Les statuts du SLBC', s: 'Paris, le 16 novembre 2013', url: STATUTS }, 'Statuts') +
       COMPTES.map((c) => docRow({ t: c.d, url: c.url }, 'Exercice ' + c.y)).join('');
     $('#trackers').innerHTML = TRACKERS.map((t) => '<p class="track-title">' + esc(t.title) + '</p><ol class="track">' + t.steps.map((s) => '<li class="' + (s.done ? 'done' : '') + '"><span class="step-name">' + esc(s.n) + '</span><span class="step-when">' + esc(s.w) + '</span></li>').join('') + '</ol>').join('');
     $('#foot-partners').innerHTML = PARTNERS.slice(0, 5).map((p) => '<li><a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.n) + '</a></li>').join('');
@@ -4117,11 +4117,11 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     page('Conseil d’administration', 'Les administrateurs par région', '#syndicat', 'conseil');
     page('Nos représentants', 'Nomenclature, convention, accréditation, Europe', '#syndicat', 'representants');
     page('Les URPS', 'La représentation des biologistes en région', '#syndicat', 'urps');
-    page('Statuts et comptes', 'Les statuts du SLBM, comptes des exercices 2020, 2022 et 2023', '#syndicat', 'comptes');
+    page('Statuts et comptes', 'Les statuts du SLBC, comptes des exercices 2020, 2022 et 2023', '#syndicat', 'comptes');
     page('Veille réglementaire', 'Réservée aux adhérents : Journal officiel, Assemblée nationale, Sénat', '#veille');
     idx.push({ type: 'Page', title: 'Lettre d’information', sub: 'La veille et les nouvelles publications par e-mail', href: '#espace', section: 'ea-lettre', text: 'newsletter abonnement abonner s’abonner s\'abonner désinscription e-mail' });
     idx.push({ type: 'Page', title: 'Écrire au bureau', sub: 'Commission, suggestion, idée, question', href: '#espace', section: 'ea-ecrire', text: 'commission participer suggestion idée question contact message adhérent' });
-    idx.push({ type: 'Page', title: 'Salle de presse', sub: 'Les communiqués du SLBM', href: '#presse', section: null, text: 'contact presse journaliste kit presse logo' });
+    idx.push({ type: 'Page', title: 'Salle de presse', sub: 'Les communiqués du SLBC', href: '#presse', section: null, text: 'contact presse journaliste kit presse logo' });
     idx.push({ type: 'Page', title: 'Contacter le SLBM', sub: 'Adresse e-mail et adresse postale', href: '#mentions', section: 'mentions-legales', text: 'contact contacter nous contacter écrire e-mail courriel adresse téléphone' });
     page('Actualités', 'L’information du syndicat', '#actualites');
     page('Au laboratoire', 'Surveillance et santé publique, nomenclature et facturation, fiches pratiques', '#documentation', 'doc-pratique');
@@ -4322,13 +4322,13 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     const civ = jf.querySelector('input[name="civ"]:checked');
     const prenom = $('#j-prenom').value.trim(); const nom = $('#j-nom').value.trim(); const labo = $('#j-labo').value.trim();
     const qui = ((civ ? civ.value + ' ' : '') + prenom + ' ' + nom).trim();
-    const lines = ['Bonjour,', '', 'Je souhaite adhérer au SLBM. Voici ma demande.', '',
+    const lines = ['Bonjour,', '', 'Je souhaite adhérer au SLBC. Voici ma demande.', '',
       'Nom : ' + qui, 'E-mail : ' + $('#j-email').value.trim(), 'Téléphone : ' + ($('#j-tel').value.trim() || 'non renseigné'),
       'Laboratoire : ' + labo, 'Ville : ' + $('#j-ville').value.trim(), 'Exercice : ' + $('#j-statut').value];
     const msg = $('#j-msg').value.trim();
     if (msg) lines.push('', 'Message :', msg);
     lines.push('', 'Cordialement,', (prenom + ' ' + nom).trim());
-    return { subject: 'Demande d’adhésion au SLBM : ' + (prenom + ' ' + nom).trim() + ' (' + labo + ')', body: lines.join('\n') };
+    return { subject: 'Demande d’adhésion au SLBC : ' + (prenom + ' ' + nom).trim() + ' (' + labo + ')', body: lines.join('\n') };
   }
   function openMail(url) {
     try { if (window.top !== window.self) window.open(url, '_blank', 'noopener'); else window.location.href = url; } catch (err) { /* le repli reste affiché */ }
@@ -4422,7 +4422,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     $('#mail-preview-wrap').hidden = !mail;
     if (mail) {
       const subject = $('#f-subject').value.trim() || title;
-      $('#mp-meta').innerHTML = '<span><strong>De :</strong> SLBM</span><span><strong>À :</strong> ' + esc(n ? abonnes(n, false) + ' de la lettre d’information' : 'aucun abonné pour l’instant') + '</span>' +
+      $('#mp-meta').innerHTML = '<span><strong>De :</strong> SLBC</span><span><strong>À :</strong> ' + esc(n ? abonnes(n, false) + ' de la lettre d’information' : 'aucun abonné pour l’instant') + '</span>' +
         '<span><strong>Objet :</strong> ' + esc(subject || 'Objet de l’e-mail') + '</span>';
       $('#mp-body').innerHTML = '<p class="mp-type">' + esc(PUB[pubType].label) + (pubType === 'actu' ? ' · ' + esc($('#f-cat').value) : '') + '</p>' +
         '<p class="mp-title">' + esc(title || 'Titre de la publication') + '</p>' +
@@ -4470,7 +4470,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     let item;
     if (pubType === 'cp') {
       kind = 'presse';
-      item = { id, date, year: date.slice(0, 4), title, with: 'Communiqué du SLBM', chapo: resume, url: null, members, demo: true };
+      item = { id, date, year: date.slice(0, 4), title, with: 'Communiqué du SLBC', chapo: resume, url: null, members, demo: true };
       state.presseYear = 'Toutes';
     } else if (pubType === 'veille') {
       const src = $('#f-src').value;
@@ -4632,7 +4632,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     svg._shakeWait = setTimeout(() => { svg._shake = requestAnimationFrame(frame); }, delay || 0);
   }
 
-  /* Les deux endroits du duo (espace adhérent, bannière « Rejoindre le SLBM » de l'accueil) : la poignée de main se joue
+  /* Les deux endroits du duo (espace adhérent, bannière « Rejoindre le SLBC » de l'accueil) : la poignée de main se joue
      quand le duo est entièrement visible, sous l'en-tête et au-dessus du bandeau des cookies s'il est affiché, et se rejoue s'il est sorti
      de l'écran puis revient. Une poignée de main jouée depuis moins de deux secondes (ouverture de l'espace adhérent,
      connexion) n'est pas doublée. Vérifié au défilement, au changement de taille, de page et de hauteur du bandeau.
@@ -4676,7 +4676,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
   function setupLinkedin() {
     $$('[data-linkedin]').forEach((a) => {
       if (isHttp(LINKEDIN_URL)) { a.href = LINKEDIN_URL; a.target = '_blank'; a.rel = 'noopener'; return; }
-      a.addEventListener('click', (e) => { e.preventDefault(); showToast('Adresse de la page LinkedIn du SLBM à compléter.', null, null); });
+      a.addEventListener('click', (e) => { e.preventDefault(); showToast('Adresse de la page LinkedIn du SLBC à compléter.', null, null); });
     });
   }
 
@@ -4768,7 +4768,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     let lastY = window.scrollY; let lastT = performance.now(); let vel = 0; let raf = 0;
     const shown = (el) => el.getClientRects().length > 0;
 
-    /* Le duo qui se serre la main (espace adhérent, bannière « Rejoindre le SLBM ») ne bascule pas : sa poignée de main
+    /* Le duo qui se serre la main (espace adhérent, bannière « Rejoindre le SLBC ») ne bascule pas : sa poignée de main
        s'anime quand il arrive à l'écran (setupHandshakes()). Demande d'Isabelle Eimer, 8 novembre 2026. */
     function actors() { return $$('.view:not([hidden]) svg.mascotte:not(.mascotte-accueil):not(.mascotte-adhesion), .view:not([hidden]) .perso'); }
 
@@ -5092,7 +5092,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
     { icone: 'veille', t: 'La veille réglementaire', d: 'Chaque lundi, les textes du Journal officiel, de l’Assemblée nationale et du Sénat qui concernent les laboratoires.', panel: 'veille', cta: 'Lire la veille réglementaire' },
     { icone: 'commission', t: 'Partager votre expérience dans une commission', d: 'Vous voulez partager votre expérience dans une commission ? Dites-le-nous.', panel: 'ecrire', sujet: 'commission', cta: 'Nous écrire' },
     { icone: 'suggestion', t: 'Une suggestion, une idée, une question', d: 'Vous avez une suggestion à faire, une idée, une question ? Contactez-nous.', panel: 'ecrire', sujet: 'suggestion', cta: 'Nous écrire' },
-    { icone: 'lettre', t: 'La lettre d’information', d: 'La veille et les nouvelles publications du SLBM, par e-mail.', panel: 'lettre', cta: 'M’abonner' }
+    { icone: 'lettre', t: 'La lettre d’information', d: 'La veille et les nouvelles publications du SLBC, par e-mail.', panel: 'lettre', cta: 'M’abonner' }
   ];
   const PORTE_BUREAU = { icone: 'bureau', t: 'Publier sur le site', d: 'Outils du bureau : messages des adhérents, communiqués, veille, actualités, comptes des adhérents, lettre d’information.', panel: 'publier' };
   /* Côté bureau, l'objet est dit de façon neutre. */
@@ -5206,7 +5206,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
   $('#ecrire-form').addEventListener('input', () => { $('#ecrire-ok').hidden = true; });
   const msgItem = (m, bureau) => '<li class="msg"><p class="msg-meta"><span class="msg-sujet">' + esc((bureau ? SUJETS_BUREAU : SUJETS)[m.sujet] || 'Message') + '</span><time datetime="' + esc(m.date) + '">' + esc(longDate(localDay(m.date))) + '</time></p>' +
     (m.inst ? '<p class="msg-inst">' + esc(m.inst) + '</p>' : '') +
-    (bureau ? '<p class="msg-from">' + esc(m.nom) + ', <a href="mailto:' + esc(m.email) + '?subject=' + encodeURIComponent('Votre message au SLBM') + '">' + esc(m.email) + '</a></p>' : '') +
+    (bureau ? '<p class="msg-from">' + esc(m.nom) + ', <a href="mailto:' + esc(m.email) + '?subject=' + encodeURIComponent('Votre message au SLBC') + '">' + esc(m.email) + '</a></p>' : '') +
     '<p class="msg-text">' + esc(m.msg) + '</p></li>';
   function renderMessages() {
     $('#msg-count').textContent = '(' + messages.length + ')';
@@ -5316,15 +5316,15 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
   function mailCompte(c, kind, id) {
     const inv = kind === 'invitation';
     const paras = inv
-      ? ['Bonjour ' + c.prenom + ',', 'Le bureau du SLBM vous a ouvert un compte sur l’espace adhérent du site : veille réglementaire, lettre d’information, messages au bureau.', 'Votre identifiant est votre adresse e-mail. Choisissez votre mot de passe avec le bouton ci-dessous.']
-      : ['Bonjour ' + c.prenom + ',', 'Une demande de nouveau mot de passe a été faite pour votre compte de l’espace adhérent du SLBM.', 'Si elle ne vient pas de vous, ignorez cet e-mail : votre mot de passe actuel reste valable.'];
-    return '<div class="mp-meta"><span><strong>De :</strong> SLBM, espace adhérent</span><span><strong>À :</strong> ' + esc(c.email) + '</span><span><strong>Objet :</strong> ' +
-      esc(inv ? 'Créez votre mot de passe pour l’espace adhérent du SLBM' : 'Choisissez un nouveau mot de passe') + '</span></div>' +
+      ? ['Bonjour ' + c.prenom + ',', 'Le bureau du SLBC vous a ouvert un compte sur l’espace adhérent du site : veille réglementaire, lettre d’information, messages au bureau.', 'Votre identifiant est votre adresse e-mail. Choisissez votre mot de passe avec le bouton ci-dessous.']
+      : ['Bonjour ' + c.prenom + ',', 'Une demande de nouveau mot de passe a été faite pour votre compte de l’espace adhérent du SLBC.', 'Si elle ne vient pas de vous, ignorez cet e-mail : votre mot de passe actuel reste valable.'];
+    return '<div class="mp-meta"><span><strong>De :</strong> SLBC, espace adhérent</span><span><strong>À :</strong> ' + esc(c.email) + '</span><span><strong>Objet :</strong> ' +
+      esc(inv ? 'Créez votre mot de passe pour l’espace adhérent du SLBC' : 'Choisissez un nouveau mot de passe') + '</span></div>' +
       '<div class="mp-head">' + logoMini(id) + '<span class="mp-brand">SLBM</span></div>' +
       '<div class="mp-body"><p class="mp-title">' + (inv ? 'Bienvenue dans l’espace adhérent' : 'Nouveau mot de passe') + '</p>' + paras.map((p) => '<p class="mp-text">' + esc(p) + '</p>').join('') +
       '<button class="mp-btn" type="button" data-mdp-token="' + esc(c.token) + '">' + (inv ? 'Créer mon mot de passe' : 'Choisir un nouveau mot de passe') + '</button>' +
       '<p class="mp-note">Ce lien est personnel et ne sert qu’une fois. S’il ne fonctionne plus, utilisez « Mot de passe oublié ? » sur la page de connexion.</p></div>' +
-      '<p class="mp-foot">SLBM, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail parce qu’un compte de l’espace adhérent du SLBM est à votre nom.</p>';
+      '<p class="mp-foot">SLBC, 6 place de la Madeleine, 75008 Paris.<br>Vous recevez cet e-mail parce qu’un compte de l’espace adhérent du SLBC est à votre nom.</p>';
   }
   function showInvitation(c) {
     $('#cpt-mail').innerHTML = mailCompte(c, 'invitation', 'cpt'); $('#cpt-mail').hidden = false;
@@ -5414,7 +5414,7 @@ a[aria-current] .tm-double,a[aria-current] .tm-marqueur{opacity:1}
       $('#mdp-who').textContent = 'Compte : ' + c.email; $('#mdp-who').hidden = false;
     } else if (kind === 'desactive') {
       $('#mdp-title').textContent = 'Ce compte a été désactivé'; $('#mdp-who').hidden = true;
-      $('#mdp-msg').textContent = 'Ce lien ne sert plus. Écrivez au bureau du SLBM pour réactiver votre compte.';
+      $('#mdp-msg').textContent = 'Ce lien ne sert plus. Écrivez au bureau du SLBC pour réactiver votre compte.';
     } else if (kind === 'invalide') {
       $('#mdp-title').textContent = 'Ce lien n’est plus valable'; $('#mdp-who').hidden = true;
       $('#mdp-msg').textContent = 'Il a déjà servi, ou un lien plus récent l’a remplacé. Demandez-en un nouveau avec « Mot de passe oublié ? » sur la page de connexion.';
