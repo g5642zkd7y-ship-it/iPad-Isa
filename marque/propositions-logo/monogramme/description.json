@@ -1,0 +1,10 @@
+{
+ "key": "monogramme",
+ "titre": "Le monogramme B",
+ "idee": "Le signe est le B de Biologie, la lettre commune à SLBC et à SLBM, tiré tel quel de la police du site, posé dans un carré aux angles arrondis. Ses deux boucles intérieures prennent les couleurs des deux ronds du logo actuel : gris en haut, vert anis en bas.",
+ "plus_fort": "Une lettre se lit et se retient : le B reste lisible même en tout petit, dans un onglet du navigateur ou sur LinkedIn, et il rappelle aux biologistes la lettre clé B de la nomenclature. Le carré plein donne une forme nette qui tient seule, sans le nom à côté.",
+ "mastercard": "Il n’y a plus deux disques qui se chevauchent : les deux boucles sont séparées, de couleurs différentes, et rangées dans une lettre.",
+ "animation": "À l’ouverture de chaque page, la boucle grise puis la boucle vert anis se remplissent l’une après l’autre dans le B, puis plus rien ne bouge.",
+ "a_verifier": "Un graphiste devra faire une recherche d’antériorité de marque (INPI, EUIPO), car un B dans un carré aux angles arrondis est une forme courante, et vérifier qu’on ne le rapproche pas du logo AB de l’agriculture biologique, lui aussi en lettres blanches sur fond vert. Même vérification pour les icônes d’application à B blanc dans un carré arrondi (Bootstrap, Blogger, Booking.com).",
+ "note": "Le carré seul sert aux petits formats (onglet du navigateur, réseaux sociaux) ; le logo horizontal sert partout ailleurs. Le B reste le même au nom SLBM."
+}

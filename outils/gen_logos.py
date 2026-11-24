@@ -29,16 +29,21 @@ def e(s):
     return html.escape(s, quote=False)
 
 
+def petit(cle):
+    """Symbole des petits formats (16 à 32 px) : symbole-petit.svg s'il existe, sinon le symbole."""
+    return 'symbole-petit.svg' if os.path.exists(f'{DOS}/{cle}/symbole-petit.svg') else 'symbole.svg'
+
+
 def entete(cle):
     return f'''<div class="site-tete" aria-hidden="true"><span class="st-logo">{svg(cle, "symbole.svg", "st-mark")}<span class="st-mot">SLBC</span></span>
 <span class="st-onglets"><span class="st-on">Accueil</span><span>Le syndicat</span><span>Veille</span><span>Presse</span></span><span class="st-btn">Adhérer</span></div>'''
 
 
 def petits(cle):
-    tailles = ''.join(f'<span class="taille"><span class="t-img" style="--t:{px}px">{svg(cle, "symbole.svg")}</span><span class="t-n">{px}{NB}px</span></span>' for px in (64, 32, 16))
+    tailles = ''.join(f'<span class="taille"><span class="t-img" style="--t:{px}px">{svg(cle, "symbole.svg" if px > 32 else petit(cle))}</span><span class="t-n">{px}{NB}px</span></span>' for px in (64, 32, 16))
     return f'''<div class="petits">
   <div class="bloc"><p class="bloc-t">En petit</p><div class="tailles">{tailles}</div></div>
-  <div class="bloc"><p class="bloc-t">Onglet du navigateur</p><div class="onglet"><span class="o-fav">{svg(cle, "symbole.svg")}</span><span>SLBC{NB}– Accueil</span></div></div>
+  <div class="bloc"><p class="bloc-t">Onglet du navigateur</p><div class="onglet"><span class="o-fav">{svg(cle, petit(cle))}</span><span>SLBC{NB}– Accueil</span></div></div>
   <div class="bloc"><p class="bloc-t">Une couleur</p><div class="mono">{svg(cle, "symbole-mono.svg")}</div></div>
   <div class="bloc"><p class="bloc-t">Réseaux sociaux</p><div class="avatar">{svg(cle, "symbole.svg")}</div></div>
 </div>'''
@@ -171,7 +176,7 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 <main class="page">
   <header class="titre">
     <h1>Propositions de logo</h1>
-    <p>Vous avez écrit{NB}: <span class="citation">«{FINE}les deux ronds ressemblent à Mastercard{FINE}»</span>, et demandé des logos un peu moins simples et plus impactants. Voici {len(CLES)} pistes. Toutes gardent les couleurs du SLBC et la police Nunito{FINE}; seul le symbole change. Le site n’est pas modifié.</p>
+    <p>Vous avez écrit{NB}: <span class="citation">«{FINE}les deux ronds ressemblent à Mastercard{FINE}»</span>, et demandé des logos un peu moins simples et plus impactants. Voici {len(CLES)} pistes. Toutes gardent les couleurs du SLBC et la police Nunito{FINE}; seul le symbole change. Chacune a été vérifiée en tout petit, en une couleur et sur le vert du site, puis relue deux fois. Deux autres pistes, une plaque de laboratoire et une bulle de parole, ont été écartées{NB}: on ne les reconnaissait plus en petit. Le site n’est pas modifié.</p>
   </header>
   <section class="actuel" aria-labelledby="t-actuel">
     <div>{svg("actuel", "logo-slbc.svg", "lockup")}</div>

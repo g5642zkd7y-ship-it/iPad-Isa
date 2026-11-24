@@ -1,0 +1,347 @@
+<title>Propositions de logo SLBC</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap">
+<style>
+/* Propositions de logo pour le SLBC, à côté du logo actuel. Charte du site : thème clair seulement, palette du logo, Nunito.
+   Une carte par proposition : le logo en grand sur blanc et sur le vert du site, dans l'en-tête, en petit, puis les explications. */
+:root{
+  --anis:#A3BE3C; --vert:#5F7A2B; --vert-clair:#D6E4A6; --gris:#5E6266; --texte:#3F4347; --encre:#2E3236;
+  --olive:#657B3D; --fond:#F7F8F4; --blanc:#FFFFFF; --filet:#E3E6DD;
+  --font:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--texte);font:400 16px/1.55 var(--font);-webkit-font-smoothing:antialiased}
+.page{max-width:1180px;margin:0 auto;padding-block:clamp(20px,4vw,48px) 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{color:var(--encre);margin:0;text-wrap:balance}
+p,figure{margin:0}
+a{color:var(--vert)}
+a:focus-visible{outline:3px solid var(--vert);outline-offset:3px;border-radius:6px}
+.lu{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.titre{display:flex;flex-direction:column;gap:10px;max-width:52em}
+.titre h1{font-size:clamp(30px,4.4vw,42px);line-height:1.1;font-weight:800;letter-spacing:-.02em}
+.titre p{font-size:18px}
+.citation{font-weight:700;color:var(--encre)}
+.actuel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px;align-items:center;padding:22px;border-radius:22px;background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet)}
+.actuel .lockup{width:100%;max-width:420px;height:auto;display:block}
+.actuel h2{font-size:20px;font-weight:800;margin-bottom:6px}
+.actuel ul{margin:8px 0 0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+.apercus{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.ap{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 10px 14px;border-radius:16px;background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet);text-decoration:none;color:var(--encre);font-weight:700;font-size:15px;text-align:center;line-height:1.3}
+a.ap:hover{box-shadow:inset 0 0 0 2px var(--vert)}
+.ap-actuel{background:transparent;box-shadow:inset 0 0 0 1px var(--filet);color:var(--gris)}
+.ap-img svg{width:84px;height:84px;display:block}
+.prop{display:flex;flex-direction:column;gap:18px;padding:clamp(16px,2.4vw,26px);border-radius:24px;background:var(--blanc);box-shadow:0 1px 2px rgba(46,50,54,.06);scroll-margin-top:16px}
+.prop-tete{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:start}
+.num{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--vert-clair);color:var(--encre);font-weight:900;font-size:23px}
+.prop-tete h2{font-size:24px;font-weight:800;line-height:1.2}
+.idee{font-size:17px;margin-top:4px;max-width:52em}
+.vues{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.vue{display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;padding:clamp(20px,3.4vw,40px) 18px 14px;border-radius:18px;min-width:0}
+.vue figcaption{font-size:13.5px;font-weight:700;letter-spacing:.03em;align-self:flex-start}
+.v-blanc{background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet)}
+.v-blanc figcaption{color:var(--gris)}
+.v-olive{background:var(--olive)}
+.v-olive figcaption{color:var(--blanc)}
+.lockup{width:100%;max-width:400px;height:auto;display:block}
+.v-slbm{background:var(--fond);padding-top:22px;align-items:flex-start}
+.v-slbm .lockup{max-width:300px}
+.v-slbm figcaption{color:var(--gris)}
+.note{font-size:15.5px;color:var(--gris);margin-top:-6px}
+.variante{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:18px;align-items:center;padding:16px 18px;border-radius:16px;background:var(--fond)}
+.var-txt h3{font-size:16px;font-weight:800;margin-bottom:4px}
+.var-txt p{font-size:15.5px}
+.var-img{display:flex;align-items:center;gap:22px;min-width:0}
+.var-sym{width:64px;height:64px;flex:none;display:block}
+.var-lock{max-width:300px}
+.site-tete{display:flex;align-items:center;gap:22px;padding:12px 18px;border-radius:14px;background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet),0 6px 16px -10px rgba(46,50,54,.25);overflow:hidden;min-width:0}
+.st-logo{display:inline-flex;align-items:center;gap:10px;flex:none}
+.st-mark{width:36px;height:36px;display:block}
+.st-mot{font-weight:900;font-size:27px;line-height:1;letter-spacing:.02em;color:var(--texte)}
+.st-onglets{display:flex;gap:22px;font-weight:700;font-size:17px;color:var(--encre);min-width:0;overflow:hidden;white-space:nowrap}
+.st-on{color:var(--vert)}
+.st-btn{margin-left:auto;flex:none;background:var(--vert);color:var(--blanc);font-weight:800;font-size:16px;padding:8px 18px;border-radius:999px}
+.petits{display:grid;grid-template-columns:1.3fr 1.3fr .8fr .8fr;gap:10px}
+.bloc{display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:14px;background:var(--fond);min-width:0}
+.bloc-t{font-size:13.5px;font-weight:700;letter-spacing:.03em;color:var(--gris)}
+.tailles{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap}
+.taille{display:flex;flex-direction:column;align-items:center;gap:6px}
+.t-img svg{width:var(--t);height:var(--t);display:block}
+.t-n{font-size:12.5px;color:var(--gris);font-variant-numeric:tabular-nums}
+.onglet{display:flex;align-items:center;gap:8px;align-self:flex-start;max-width:100%;padding:8px 14px;border-radius:10px 10px 0 0;background:var(--blanc);box-shadow:0 -1px 0 var(--filet);font-size:13px;color:var(--encre);white-space:nowrap;overflow:hidden}
+.o-fav svg{width:16px;height:16px;display:block}
+.mono svg,.avatar svg{width:64px;height:64px;display:block}
+.avatar{align-self:flex-start;display:grid;place-items:center;width:84px;height:84px;border-radius:12px;background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet)}
+.textes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;padding-top:4px}
+.textes h3{font-size:16px;font-weight:800;padding-bottom:6px;margin-bottom:6px;border-bottom:2px solid var(--anis)}
+.textes p{font-size:15.5px}
+.suite{padding:22px;border-radius:22px;background:var(--vert-clair);color:var(--encre)}
+.suite h2{font-size:21px;font-weight:800;margin-bottom:8px}
+.suite ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+@media (max-width:900px){.petits{grid-template-columns:repeat(2,minmax(0,1fr))}.textes{grid-template-columns:repeat(2,minmax(0,1fr))}.actuel{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:700px){.st-onglets{display:none}}
+@media (max-width:560px){.variante{grid-template-columns:minmax(0,1fr)}.var-sym{display:none}.vues,.textes{grid-template-columns:minmax(0,1fr)}.prop-tete h2{font-size:21px}.num{width:40px;height:40px;font-size:20px}.st-btn{padding:6px 14px;font-size:15px}}
+</style>
+<main class="page">
+  <header class="titre">
+    <h1>Propositions de logo</h1>
+    <p>Vous avez écrit : <span class="citation">« les deux ronds ressemblent à Mastercard »</span>, et demandé des logos un peu moins simples et plus impactants. Voici 4 pistes. Toutes gardent les couleurs du SLBC et la police Nunito ; seul le symbole change. Chacune a été vérifiée en tout petit, en une couleur et sur le vert du site, puis relue deux fois. Deux autres pistes, une plaque de laboratoire et une bulle de parole, ont été écartées : on ne les reconnaissait plus en petit. Le site n’est pas modifié.</p>
+  </header>
+  <section class="actuel" aria-labelledby="t-actuel">
+    <div><svg aria-hidden="true" focusable="false" class="lockup" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 364 120">
+  <defs><clipPath id="act-commun-u48"><circle cx="44" cy="44" r="36"/></clipPath></defs>
+  <circle cx="44" cy="44" r="36" fill="#5E6266"/>
+  <circle cx="76" cy="76" r="36" fill="#A3BE3C"/>
+  <circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#act-commun-u48)"/>
+  <text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBC</text>
+  <text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text>
+  <text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Clinique</text>
+</svg></div>
+    <div><h2 id="t-actuel">Le logo d’aujourd’hui</h2>
+    <p>Deux ronds qui se chevauchent, le gris et le vert anis, la zone commune en vert foncé.</p>
+    <ul><li>Ce qui reste dans toutes les pistes : le vert anis de l’ancien logo, le gris, le vert foncé, le nom en Nunito très gras et la signature sur deux lignes.</li>
+    <li>Ce qui change : le symbole, pour qu’il ait plus de caractère et qu’on ne pense plus à une carte bancaire.</li></ul></div>
+  </section>
+  <nav aria-label="Les 4 propositions, à côté du logo d’aujourd’hui"><div class="apercus"><div class="ap ap-actuel"><span class="ap-img"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs><clipPath id="slbc-commun-u43"><circle cx="44" cy="44" r="36"/></clipPath></defs>
+  <circle cx="44" cy="44" r="36" fill="#5E6266"/>
+  <circle cx="76" cy="76" r="36" fill="#A3BE3C"/>
+  <circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#slbc-commun-u43)"/>
+</svg></span><span class="ap-n">Aujourd’hui</span></div><a class="ap" href="#p1"><span class="ap-img"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path d="M100.76 57C94.86 83.91 78.28 102.94 63 110.9Q60 112.5 57 110.9C41.72 102.94 25.14 83.91 19.24 57Z" fill="#5F7A2B"/><path d="M29 9H91Q103 9 103 21V36C103 43.82 102.11 51.17 100.53 58H19.47C17.89 51.17 17 43.82 17 36V21Q17 9 29 9Z" fill="#5E6266"/><path d="M61.49 17.55L82.74 23.24Q85.63 24.02 84.86 26.92L84.6 27.88Q83.82 30.78 80.93 30.01L66.17 85.06A11 11 0 0 1 44.92 79.37L59.67 24.31Q56.78 23.54 57.55 20.64L57.81 19.67Q58.59 16.77 61.49 17.55Z" fill="#FFFFFF"/><path d="M69.08 58L63.2 79.92A6.8 6.8 0 0 1 50.07 76.4L55 58Z" fill="#A3BE3C"/></svg></span><span class="ap-n">1. Le bouclier</span></a><a class="ap" href="#p2"><span class="ap-img"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<rect x="8" y="8" width="104" height="104" rx="20" fill="#5F7A2B"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5E6266" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+</svg></span><span class="ap-n">2. Le monogramme B</span></a><a class="ap" href="#p3"><span class="ap-img"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="52" fill="#5F7A2B"/><circle cx="60" cy="55" r="39.5" fill="#D6E4A6"/><circle cx="71" cy="64" r="15.5" fill="#5F7A2B"/><circle cx="47" cy="39" r="11" fill="#5E6266"/><circle cx="39.5" cy="62" r="8" fill="#A3BE3C"/><circle cx="52" cy="82.5" r="6.5" fill="#A3BE3C"/>
+</svg></span><span class="ap-n">3. La boîte de Petri</span></a><a class="ap" href="#p4"><span class="ap-img"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <path d="M65.78 86.91A29 29 0 1 1 24.5 56.8A30 30 0 0 0 40.8 36.26A36 36 0 1 1 74.11 80.01A8 8 0 0 0 65.78 86.91Z" fill="#5F7A2B"/>
+  <path d="M60.83 86.22A24 24 0 1 1 26.66 61.31A35 35 0 0 0 45.68 37.34A31 31 0 1 1 74.37 75.02A13 13 0 0 0 60.83 86.22Z" fill="#A3BE3C"/>
+  <circle cx="34.6" cy="84.4" r="13.5" fill="#5E6266"/>
+  <circle cx="79.6" cy="42.4" r="17" fill="#5E6266"/>
+</svg></span><span class="ap-n">4. La cellule qui se divise</span></a></div></nav>
+  <section class="prop" id="p1" aria-labelledby="t1">
+  <header class="prop-tete"><span class="num" aria-hidden="true">1</span><div><h2 id="t1"><span class="lu">Proposition 1 : </span>Le bouclier</h2><p class="idee">Un bouclier aux angles arrondis protège un tube à essai : le syndicat défend la biologie médicale, comme le dit sa devise. Le vert foncé du bouclier s’arrête exactement au niveau du liquide dans le tube : la défense et le travail du laboratoire tiennent dans le même signe.</p></div></header>
+  <div class="vues">
+    <figure class="vue v-blanc"><svg aria-hidden="true" focusable="false" class="lockup" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 346 120"><g transform="translate(-9 0)"><path d="M100.76 57C94.86 83.91 78.28 102.94 63 110.9Q60 112.5 57 110.9C41.72 102.94 25.14 83.91 19.24 57Z" fill="#5F7A2B"/><path d="M29 9H91Q103 9 103 21V36C103 43.82 102.11 51.17 100.53 58H19.47C17.89 51.17 17 43.82 17 36V21Q17 9 29 9Z" fill="#5E6266"/><path d="M61.49 17.55L82.74 23.24Q85.63 24.02 84.86 26.92L84.6 27.88Q83.82 30.78 80.93 30.01L66.17 85.06A11 11 0 0 1 44.92 79.37L59.67 24.31Q56.78 23.54 57.55 20.64L57.81 19.67Q58.59 16.77 61.49 17.55Z" fill="#FFFFFF"/><path d="M69.08 58L63.2 79.92A6.8 6.8 0 0 1 50.07 76.4L55 58Z" fill="#A3BE3C"/></g><text x="126" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBC</text><text x="128" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text><text x="128" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Clinique</text></svg><figcaption>Sur fond blanc</figcaption></figure>
+    <figure class="vue v-olive"><svg aria-hidden="true" focusable="false" class="lockup" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 346 120"><g transform="translate(-9 0)"><path fill-rule="evenodd" d="M100.76 57C94.86 83.91 78.28 102.94 63 110.9Q60 112.5 57 110.9C41.72 102.94 25.14 83.91 19.24 57ZM73.69 57L66.17 85.06A11 11 0 0 1 44.92 79.37L50.92 57Z" fill="#A3BE3C"/><path fill-rule="evenodd" d="M29 9H91Q103 9 103 21V36C103 43.82 102.11 51.17 100.53 58H19.47C17.89 51.17 17 43.82 17 36V21Q17 9 29 9ZM61.49 17.55L82.74 23.24Q85.63 24.02 84.86 26.92L84.6 27.88Q83.82 30.78 80.93 30.01L73.42 58L50.65 58L59.67 24.31Q56.78 23.54 57.55 20.64L57.81 19.67Q58.59 16.77 61.49 17.55Z" fill="#FFFFFF"/><path d="M69.08 58L63.2 79.92A6.8 6.8 0 0 1 50.07 76.4L55 58Z" fill="#D6E4A6"/></g><text x="126" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#FFFFFF">SLBC</text><text x="128" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#FFFFFF">Syndicat des Laboratoires</text><text x="128" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#D6E4A6">de Biologie Clinique</text></svg><figcaption>Sur le vert du site</figcaption></figure>
+  </div>
+  <p class="note">En tout petit (onglet du navigateur, réseaux sociaux), le tube est droit : penché, il se lirait comme un éclair. Le logo en grand garde le tube penché.</p>
+  
+  <div class="site-tete" aria-hidden="true"><span class="st-logo"><svg aria-hidden="true" focusable="false" class="st-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path d="M100.76 57C94.86 83.91 78.28 102.94 63 110.9Q60 112.5 57 110.9C41.72 102.94 25.14 83.91 19.24 57Z" fill="#5F7A2B"/><path d="M29 9H91Q103 9 103 21V36C103 43.82 102.11 51.17 100.53 58H19.47C17.89 51.17 17 43.82 17 36V21Q17 9 29 9Z" fill="#5E6266"/><path d="M61.49 17.55L82.74 23.24Q85.63 24.02 84.86 26.92L84.6 27.88Q83.82 30.78 80.93 30.01L66.17 85.06A11 11 0 0 1 44.92 79.37L59.67 24.31Q56.78 23.54 57.55 20.64L57.81 19.67Q58.59 16.77 61.49 17.55Z" fill="#FFFFFF"/><path d="M69.08 58L63.2 79.92A6.8 6.8 0 0 1 50.07 76.4L55 58Z" fill="#A3BE3C"/></svg><span class="st-mot">SLBC</span></span>
+<span class="st-onglets"><span class="st-on">Accueil</span><span>Le syndicat</span><span>Veille</span><span>Presse</span></span><span class="st-btn">Adhérer</span></div>
+  <div class="petits">
+  <div class="bloc"><p class="bloc-t">En petit</p><div class="tailles"><span class="taille"><span class="t-img" style="--t:64px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path d="M100.76 57C94.86 83.91 78.28 102.94 63 110.9Q60 112.5 57 110.9C41.72 102.94 25.14 83.91 19.24 57Z" fill="#5F7A2B"/><path d="M29 9H91Q103 9 103 21V36C103 43.82 102.11 51.17 100.53 58H19.47C17.89 51.17 17 43.82 17 36V21Q17 9 29 9Z" fill="#5E6266"/><path d="M61.49 17.55L82.74 23.24Q85.63 24.02 84.86 26.92L84.6 27.88Q83.82 30.78 80.93 30.01L66.17 85.06A11 11 0 0 1 44.92 79.37L59.67 24.31Q56.78 23.54 57.55 20.64L57.81 19.67Q58.59 16.77 61.49 17.55Z" fill="#FFFFFF"/><path d="M69.08 58L63.2 79.92A6.8 6.8 0 0 1 50.07 76.4L55 58Z" fill="#A3BE3C"/></svg></span><span class="t-n">64 px</span></span><span class="taille"><span class="t-img" style="--t:32px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path d="M100.76 57C94.86 83.91 78.28 102.94 63 110.9Q60 112.5 57 110.9C41.72 102.94 25.14 83.91 19.24 57Z" fill="#5F7A2B"/><path d="M29 9H91Q103 9 103 21V36C103 43.82 102.11 51.17 100.53 58H19.47C17.89 51.17 17 43.82 17 36V21Q17 9 29 9Z" fill="#5E6266"/><path d="M48 17H72Q75 17 75 20V21Q75 24 72 24H71V80A11 11 0 0 1 49 80V24H48Q45 24 45 21V20Q45 17 48 17Z" fill="#FFFFFF"/><path d="M66.8 58V80A6.8 6.8 0 0 1 53.2 80V58Z" fill="#A3BE3C"/></svg></span><span class="t-n">32 px</span></span><span class="taille"><span class="t-img" style="--t:16px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path d="M100.76 57C94.86 83.91 78.28 102.94 63 110.9Q60 112.5 57 110.9C41.72 102.94 25.14 83.91 19.24 57Z" fill="#5F7A2B"/><path d="M29 9H91Q103 9 103 21V36C103 43.82 102.11 51.17 100.53 58H19.47C17.89 51.17 17 43.82 17 36V21Q17 9 29 9Z" fill="#5E6266"/><path d="M48 17H72Q75 17 75 20V21Q75 24 72 24H71V80A11 11 0 0 1 49 80V24H48Q45 24 45 21V20Q45 17 48 17Z" fill="#FFFFFF"/><path d="M66.8 58V80A6.8 6.8 0 0 1 53.2 80V58Z" fill="#A3BE3C"/></svg></span><span class="t-n">16 px</span></span></div></div>
+  <div class="bloc"><p class="bloc-t">Onglet du navigateur</p><div class="onglet"><span class="o-fav"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path d="M100.76 57C94.86 83.91 78.28 102.94 63 110.9Q60 112.5 57 110.9C41.72 102.94 25.14 83.91 19.24 57Z" fill="#5F7A2B"/><path d="M29 9H91Q103 9 103 21V36C103 43.82 102.11 51.17 100.53 58H19.47C17.89 51.17 17 43.82 17 36V21Q17 9 29 9Z" fill="#5E6266"/><path d="M48 17H72Q75 17 75 20V21Q75 24 72 24H71V80A11 11 0 0 1 49 80V24H48Q45 24 45 21V20Q45 17 48 17Z" fill="#FFFFFF"/><path d="M66.8 58V80A6.8 6.8 0 0 1 53.2 80V58Z" fill="#A3BE3C"/></svg></span><span>SLBC – Accueil</span></div></div>
+  <div class="bloc"><p class="bloc-t">Une couleur</p><div class="mono"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path fill-rule="evenodd" d="M29 9H91Q103 9 103 21V36C103 43.17 102.25 49.95 100.91 56.3H19.09C17.75 49.95 17 43.17 17 36V21Q17 9 29 9ZM61.49 17.55L82.74 23.24Q85.63 24.02 84.86 26.92L84.6 27.88Q83.82 30.78 80.93 30.01L73.88 56.3L51.1 56.3L59.67 24.31Q56.78 23.54 57.55 20.64L57.81 19.67Q58.59 16.77 61.49 17.55Z" fill="#2E3236"/><path fill-rule="evenodd" d="M100.13 59.7C93.74 85.19 77.77 103.21 63 110.9Q60 112.5 57 110.9C42.23 103.21 26.26 85.19 19.87 59.7ZM72.97 59.7L66.17 85.06A11 11 0 0 1 44.92 79.37L50.19 59.7Z" fill="#2E3236"/><path d="M68.62 59.7L63.2 79.92A6.8 6.8 0 0 1 50.07 76.4L54.54 59.7Z" fill="#2E3236"/></svg></div></div>
+  <div class="bloc"><p class="bloc-t">Réseaux sociaux</p><div class="avatar"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path d="M100.76 57C94.86 83.91 78.28 102.94 63 110.9Q60 112.5 57 110.9C41.72 102.94 25.14 83.91 19.24 57Z" fill="#5F7A2B"/><path d="M29 9H91Q103 9 103 21V36C103 43.82 102.11 51.17 100.53 58H19.47C17.89 51.17 17 43.82 17 36V21Q17 9 29 9Z" fill="#5E6266"/><path d="M61.49 17.55L82.74 23.24Q85.63 24.02 84.86 26.92L84.6 27.88Q83.82 30.78 80.93 30.01L66.17 85.06A11 11 0 0 1 44.92 79.37L59.67 24.31Q56.78 23.54 57.55 20.64L57.81 19.67Q58.59 16.77 61.49 17.55Z" fill="#FFFFFF"/><path d="M69.08 58L63.2 79.92A6.8 6.8 0 0 1 50.07 76.4L55 58Z" fill="#A3BE3C"/></svg></div></div>
+</div>
+  <div class="textes">
+    <div><h3>Pourquoi plus fort</h3><p>Le bouclier évoque la défense et le tube la biologie : le signe rejoint la devise du syndicat. La forme est pleine et contrastée : le bouclier reste reconnaissable en tout petit, jusqu’à l’icône de l’onglet du navigateur.</p></div>
+    <div><h3>Et Mastercard ?</h3><p>Il n’y a plus deux disques égaux qui se croisent, mais une seule forme, un bouclier, qui porte un tube à essai.</p></div>
+    <div><h3>À l’ouverture des pages</h3><p>À l’ouverture de chaque page, le vert foncé monte du bas du bouclier pendant que le liquide monte dans le tube, et les deux s’arrêtent ensemble sur la même ligne.</p></div>
+    <div><h3>À vérifier</h3><p>Le bouclier et le tube à essai sont des signes courants dans la santé : un graphiste devra faire une recherche d’antériorité (INPI, EUIPO) et vérifier qu’aucun laboratoire, syndicat ou assureur des professions de santé n’utilise déjà un écu proche. Il faudra aussi vérifier qu’on ne le prend pas pour un logo de sécurité informatique, où le bouclier est le signe le plus courant (McAfee, Sécurité Windows).</p></div>
+  </div>
+  <figure class="vue v-slbm"><svg aria-hidden="true" focusable="false" class="lockup lockup-slbm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 349 120"><g transform="translate(-9 0)"><path d="M100.76 57C94.86 83.91 78.28 102.94 63 110.9Q60 112.5 57 110.9C41.72 102.94 25.14 83.91 19.24 57Z" fill="#5F7A2B"/><path d="M29 9H91Q103 9 103 21V36C103 43.82 102.11 51.17 100.53 58H19.47C17.89 51.17 17 43.82 17 36V21Q17 9 29 9Z" fill="#5E6266"/><path d="M61.49 17.55L82.74 23.24Q85.63 24.02 84.86 26.92L84.6 27.88Q83.82 30.78 80.93 30.01L66.17 85.06A11 11 0 0 1 44.92 79.37L59.67 24.31Q56.78 23.54 57.55 20.64L57.81 19.67Q58.59 16.77 61.49 17.55Z" fill="#FFFFFF"/><path d="M69.08 58L63.2 79.92A6.8 6.8 0 0 1 50.07 76.4L55 58Z" fill="#A3BE3C"/></g><text x="126" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBM</text><text x="128" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text><text x="128" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Médicale</text></svg><figcaption>Au nom SLBM, si le bureau retient ce nom</figcaption></figure>
+</section><section class="prop" id="p2" aria-labelledby="t2">
+  <header class="prop-tete"><span class="num" aria-hidden="true">2</span><div><h2 id="t2"><span class="lu">Proposition 2 : </span>Le monogramme B</h2><p class="idee">Le signe est le B de Biologie, la lettre commune à SLBC et à SLBM, tiré tel quel de la police du site, posé dans un carré aux angles arrondis. Ses deux boucles intérieures prennent les couleurs des deux ronds du logo actuel : gris en haut, vert anis en bas.</p></div></header>
+  <div class="vues">
+    <figure class="vue v-blanc"><svg aria-hidden="true" focusable="false" class="lockup" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 364 120">
+<rect x="8" y="8" width="104" height="104" rx="20" fill="#5F7A2B"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5E6266" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+<text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBC</text>
+<text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text>
+<text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Clinique</text>
+</svg><figcaption>Sur fond blanc</figcaption></figure>
+    <figure class="vue v-olive"><svg aria-hidden="true" focusable="false" class="lockup" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 364 120">
+<rect x="10" y="10" width="100" height="100" rx="19" fill="#5F7A2B" stroke="#FFFFFF" stroke-width="4"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5E6266" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+<text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#FFFFFF">SLBC</text>
+<text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#FFFFFF">Syndicat des Laboratoires</text>
+<text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#D6E4A6">de Biologie Clinique</text>
+</svg><figcaption>Sur le vert du site</figcaption></figure>
+  </div>
+  <p class="note">Le carré seul sert aux petits formats (onglet du navigateur, réseaux sociaux) ; le logo horizontal sert partout ailleurs. Le B reste le même au nom SLBM.</p>
+  <div class="variante"><div class="var-txt"><h3>Variante en gris</h3><p>Sur un carré gris, celui du logo actuel, le B blanc fait moins penser à « bio » que sur le carré vert. Les deux boucles gardent les couleurs du SLBC : vert foncé en haut, vert anis en bas.</p></div>
+  <div class="var-img"><svg aria-hidden="true" focusable="false" class="var-sym" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<rect x="8" y="8" width="104" height="104" rx="20" fill="#5E6266"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5F7A2B" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+</svg><svg aria-hidden="true" focusable="false" class="lockup var-lock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 364 120">
+<rect x="8" y="8" width="104" height="104" rx="20" fill="#5E6266"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5F7A2B" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+<text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBC</text>
+<text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text>
+<text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Clinique</text>
+</svg></div></div>
+  <div class="site-tete" aria-hidden="true"><span class="st-logo"><svg aria-hidden="true" focusable="false" class="st-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<rect x="8" y="8" width="104" height="104" rx="20" fill="#5F7A2B"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5E6266" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+</svg><span class="st-mot">SLBC</span></span>
+<span class="st-onglets"><span class="st-on">Accueil</span><span>Le syndicat</span><span>Veille</span><span>Presse</span></span><span class="st-btn">Adhérer</span></div>
+  <div class="petits">
+  <div class="bloc"><p class="bloc-t">En petit</p><div class="tailles"><span class="taille"><span class="t-img" style="--t:64px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<rect x="8" y="8" width="104" height="104" rx="20" fill="#5F7A2B"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5E6266" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+</svg></span><span class="t-n">64 px</span></span><span class="taille"><span class="t-img" style="--t:32px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<rect x="8" y="8" width="104" height="104" rx="20" fill="#5F7A2B"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5E6266" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+</svg></span><span class="t-n">32 px</span></span><span class="taille"><span class="t-img" style="--t:16px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<rect x="8" y="8" width="104" height="104" rx="20" fill="#5F7A2B"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5E6266" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+</svg></span><span class="t-n">16 px</span></span></div></div>
+  <div class="bloc"><p class="bloc-t">Onglet du navigateur</p><div class="onglet"><span class="o-fav"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<rect x="8" y="8" width="104" height="104" rx="20" fill="#5F7A2B"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5E6266" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+</svg></span><span>SLBC – Accueil</span></div></div>
+  <div class="bloc"><p class="bloc-t">Une couleur</p><div class="mono"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<path fill="#2E3236" fill-rule="evenodd" d="M28 8L92 8A20 20 0 0 1 112 28L112 92A20 20 0 0 1 92 112L28 112A20 20 0 0 1 8 92L8 28A20 20 0 0 1 28 8ZM40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#2E3236" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#2E3236" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+</svg></div></div>
+  <div class="bloc"><p class="bloc-t">Réseaux sociaux</p><div class="avatar"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<rect x="8" y="8" width="104" height="104" rx="20" fill="#5F7A2B"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5E6266" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+</svg></div></div>
+</div>
+  <div class="textes">
+    <div><h3>Pourquoi plus fort</h3><p>Une lettre se lit et se retient : le B reste lisible même en tout petit, dans un onglet du navigateur ou sur LinkedIn, et il rappelle aux biologistes la lettre clé B de la nomenclature. Le carré plein donne une forme nette qui tient seule, sans le nom à côté.</p></div>
+    <div><h3>Et Mastercard ?</h3><p>Il n’y a plus deux disques qui se chevauchent : les deux boucles sont séparées, de couleurs différentes, et rangées dans une lettre.</p></div>
+    <div><h3>À l’ouverture des pages</h3><p>À l’ouverture de chaque page, la boucle grise puis la boucle vert anis se remplissent l’une après l’autre dans le B, puis plus rien ne bouge.</p></div>
+    <div><h3>À vérifier</h3><p>Un graphiste devra faire une recherche d’antériorité de marque (INPI, EUIPO), car un B dans un carré aux angles arrondis est une forme courante, et vérifier qu’on ne le rapproche pas du logo AB de l’agriculture biologique, lui aussi en lettres blanches sur fond vert. Même vérification pour les icônes d’application à B blanc dans un carré arrondi (Bootstrap, Blogger, Booking.com).</p></div>
+  </div>
+  <figure class="vue v-slbm"><svg aria-hidden="true" focusable="false" class="lockup lockup-slbm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 367 120">
+<rect x="8" y="8" width="104" height="104" rx="20" fill="#5F7A2B"/><path fill="#FFFFFF" d="M40.34 95.5Q35.66 95.5 33.19 93.03Q30.72 90.56 30.72 85.89L30.72 34.11Q30.72 29.44 33.19 26.97Q35.66 24.5 40.34 24.5L64.96 24.5Q72.6 24.5 77.97 26.75Q83.33 29 86.17 33.12Q89 37.25 89 42.87Q89 49.12 85.43 53.55Q81.87 57.98 75.75 58.74Q83.01 59.28 86.94 63.78Q90.88 68.28 90.88 75.34Q90.88 84.68 84.19 90.09Q77.51 95.5 65.94 95.5Z"/><path fill="#A3BE3C" d="M48.39 81.94L63.43 81.94Q68.60 81.94 70.96 79.98Q73.31 78.02 73.31 74.09Q73.31 70.13 70.96 68.19Q68.60 66.25 63.43 66.25L48.39 66.25Z"/><path fill="#5E6266" d="M48.39 52.68L61.59 52.68Q66.69 52.68 69.03 50.89Q71.37 49.09 71.37 45.34Q71.37 41.59 69.03 39.83Q66.69 38.06 61.59 38.06L48.39 38.06Z"/>
+<text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBM</text>
+<text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text>
+<text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Médicale</text>
+</svg><figcaption>Au nom SLBM, si le bureau retient ce nom</figcaption></figure>
+</section><section class="prop" id="p3" aria-labelledby="t3">
+  <header class="prop-tete"><span class="num" aria-hidden="true">3</span><div><h2 id="t3"><span class="lu">Proposition 3 : </span>La boîte de Petri</h2><p class="idee">Une boîte de Petri vue d’en haut, avec quatre colonies qui poussent sur la gélose : l’objet que tout biologiste reconnaît au premier coup d’œil. La colonie grise en haut à gauche et la grande colonie vert foncé à droite rappellent les deux ronds de l’ancien logo, réunis dans un même cadre.</p></div></header>
+  <div class="vues">
+    <figure class="vue v-blanc"><svg aria-hidden="true" focusable="false" class="lockup" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 364 120">
+  <circle cx="60" cy="60" r="52" fill="#5F7A2B"/><circle cx="60" cy="55" r="39.5" fill="#D6E4A6"/><circle cx="71" cy="64" r="15.5" fill="#5F7A2B"/><circle cx="47" cy="39" r="11" fill="#5E6266"/><circle cx="39.5" cy="62" r="8" fill="#A3BE3C"/><circle cx="52" cy="82.5" r="6.5" fill="#A3BE3C"/>
+  <text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBC</text>
+  <text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text>
+  <text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Clinique</text>
+</svg><figcaption>Sur fond blanc</figcaption></figure>
+    <figure class="vue v-olive"><svg aria-hidden="true" focusable="false" class="lockup" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 364 120">
+  <circle cx="60" cy="60" r="52" fill="#FFFFFF"/><circle cx="60" cy="55" r="39.5" fill="#A3BE3C"/><circle cx="71" cy="64" r="15.5" fill="#5F7A2B"/><circle cx="47" cy="39" r="11" fill="#5E6266"/><circle cx="39.5" cy="62" r="8" fill="#5F7A2B"/><circle cx="52" cy="82.5" r="6.5" fill="#5F7A2B"/>
+  <text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#FFFFFF">SLBC</text>
+  <text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#FFFFFF">Syndicat des Laboratoires</text>
+  <text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#D6E4A6">de Biologie Clinique</text>
+</svg><figcaption>Sur le vert du site</figcaption></figure>
+  </div>
+  
+  
+  <div class="site-tete" aria-hidden="true"><span class="st-logo"><svg aria-hidden="true" focusable="false" class="st-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="52" fill="#5F7A2B"/><circle cx="60" cy="55" r="39.5" fill="#D6E4A6"/><circle cx="71" cy="64" r="15.5" fill="#5F7A2B"/><circle cx="47" cy="39" r="11" fill="#5E6266"/><circle cx="39.5" cy="62" r="8" fill="#A3BE3C"/><circle cx="52" cy="82.5" r="6.5" fill="#A3BE3C"/>
+</svg><span class="st-mot">SLBC</span></span>
+<span class="st-onglets"><span class="st-on">Accueil</span><span>Le syndicat</span><span>Veille</span><span>Presse</span></span><span class="st-btn">Adhérer</span></div>
+  <div class="petits">
+  <div class="bloc"><p class="bloc-t">En petit</p><div class="tailles"><span class="taille"><span class="t-img" style="--t:64px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="52" fill="#5F7A2B"/><circle cx="60" cy="55" r="39.5" fill="#D6E4A6"/><circle cx="71" cy="64" r="15.5" fill="#5F7A2B"/><circle cx="47" cy="39" r="11" fill="#5E6266"/><circle cx="39.5" cy="62" r="8" fill="#A3BE3C"/><circle cx="52" cy="82.5" r="6.5" fill="#A3BE3C"/>
+</svg></span><span class="t-n">64 px</span></span><span class="taille"><span class="t-img" style="--t:32px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="52" fill="#5F7A2B"/><circle cx="60" cy="55" r="39.5" fill="#D6E4A6"/><circle cx="71" cy="64" r="15.5" fill="#5F7A2B"/><circle cx="47" cy="39" r="11" fill="#5E6266"/><circle cx="39.5" cy="62" r="8" fill="#A3BE3C"/><circle cx="52" cy="82.5" r="6.5" fill="#A3BE3C"/>
+</svg></span><span class="t-n">32 px</span></span><span class="taille"><span class="t-img" style="--t:16px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="52" fill="#5F7A2B"/><circle cx="60" cy="55" r="39.5" fill="#D6E4A6"/><circle cx="71" cy="64" r="15.5" fill="#5F7A2B"/><circle cx="47" cy="39" r="11" fill="#5E6266"/><circle cx="39.5" cy="62" r="8" fill="#A3BE3C"/><circle cx="52" cy="82.5" r="6.5" fill="#A3BE3C"/>
+</svg></span><span class="t-n">16 px</span></span></div></div>
+  <div class="bloc"><p class="bloc-t">Onglet du navigateur</p><div class="onglet"><span class="o-fav"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="52" fill="#5F7A2B"/><circle cx="60" cy="55" r="39.5" fill="#D6E4A6"/><circle cx="71" cy="64" r="15.5" fill="#5F7A2B"/><circle cx="47" cy="39" r="11" fill="#5E6266"/><circle cx="39.5" cy="62" r="8" fill="#A3BE3C"/><circle cx="52" cy="82.5" r="6.5" fill="#A3BE3C"/>
+</svg></span><span>SLBC – Accueil</span></div></div>
+  <div class="bloc"><p class="bloc-t">Une couleur</p><div class="mono"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <path fill="#2E3236" fill-rule="evenodd" d="M60 8 A52 52 0 1 0 60 112 A52 52 0 1 0 60 8 Z M60 15.5 A39.5 39.5 0 1 1 60 94.5 A39.5 39.5 0 1 1 60 15.5 Z"/><circle cx="71" cy="64" r="15.5" fill="#2E3236"/><circle cx="47" cy="39" r="11" fill="#2E3236"/><circle cx="39.5" cy="62" r="8" fill="#2E3236"/><circle cx="52" cy="82.5" r="6.5" fill="#2E3236"/>
+</svg></div></div>
+  <div class="bloc"><p class="bloc-t">Réseaux sociaux</p><div class="avatar"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="52" fill="#5F7A2B"/><circle cx="60" cy="55" r="39.5" fill="#D6E4A6"/><circle cx="71" cy="64" r="15.5" fill="#5F7A2B"/><circle cx="47" cy="39" r="11" fill="#5E6266"/><circle cx="39.5" cy="62" r="8" fill="#A3BE3C"/><circle cx="52" cy="82.5" r="6.5" fill="#A3BE3C"/>
+</svg></div></div>
+</div>
+  <div class="textes">
+    <div><h3>Pourquoi plus fort</h3><p>Le signe montre un objet du laboratoire au lieu de deux formes abstraites. Le bord plus épais en bas donne de la profondeur à la boîte : on voit une boîte, pas un simple rond.</p></div>
+    <div><h3>Et Mastercard ?</h3><p>Il n’y a plus deux disques égaux qui se chevauchent, mais un seul grand rond qui contient quatre colonies de tailles différentes, bien séparées.</p></div>
+    <div><h3>À l’ouverture des pages</h3><p>À l’ouverture de chaque page, la boîte apparaît vide, puis les colonies poussent l’une après l’autre, de la plus petite à la plus grande.</p></div>
+    <div><h3>À vérifier</h3><p>Faire une recherche d’antériorité de marque (INPI, EUIPO) parmi les logos de laboratoires et de sociétés savantes qui pourraient déjà utiliser une boîte de Petri. Vérifier aussi qu’on ne le prend pas pour un bouton de vêtement ou pour l’icône « cookie » des bandeaux de cookies.</p></div>
+  </div>
+  <figure class="vue v-slbm"><svg aria-hidden="true" focusable="false" class="lockup lockup-slbm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 367 120">
+  <circle cx="60" cy="60" r="52" fill="#5F7A2B"/><circle cx="60" cy="55" r="39.5" fill="#D6E4A6"/><circle cx="71" cy="64" r="15.5" fill="#5F7A2B"/><circle cx="47" cy="39" r="11" fill="#5E6266"/><circle cx="39.5" cy="62" r="8" fill="#A3BE3C"/><circle cx="52" cy="82.5" r="6.5" fill="#A3BE3C"/>
+  <text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBM</text>
+  <text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text>
+  <text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Médicale</text>
+</svg><figcaption>Au nom SLBM, si le bureau retient ce nom</figcaption></figure>
+</section><section class="prop" id="p4" aria-labelledby="t4">
+  <header class="prop-tete"><span class="num" aria-hidden="true">4</span><div><h2 id="t4"><span class="lu">Proposition 4 : </span>La cellule qui se divise</h2><p class="idee">Une seule cellule au moment où elle devient deux : une membrane vert foncé, un intérieur vert anis qui se resserre au milieu et deux noyaux gris. Le signe dit une profession vivante, qui grandit et se renouvelle sans se couper de ce qu’elle est.</p></div></header>
+  <div class="vues">
+    <figure class="vue v-blanc"><svg aria-hidden="true" focusable="false" class="lockup" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 364 120">
+  <path d="M65.78 86.91A29 29 0 1 1 24.5 56.8A30 30 0 0 0 40.8 36.26A36 36 0 1 1 74.11 80.01A8 8 0 0 0 65.78 86.91Z" fill="#5F7A2B"/>
+  <path d="M60.83 86.22A24 24 0 1 1 26.66 61.31A35 35 0 0 0 45.68 37.34A31 31 0 1 1 74.37 75.02A13 13 0 0 0 60.83 86.22Z" fill="#A3BE3C"/>
+  <circle cx="34.6" cy="84.4" r="13.5" fill="#5E6266"/>
+  <circle cx="79.6" cy="42.4" r="17" fill="#5E6266"/>
+  <text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBC</text>
+  <text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text>
+  <text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Clinique</text>
+</svg><figcaption>Sur fond blanc</figcaption></figure>
+    <figure class="vue v-olive"><svg aria-hidden="true" focusable="false" class="lockup" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 364 120">
+  <path d="M65.78 86.91A29 29 0 1 1 24.5 56.8A30 30 0 0 0 40.8 36.26A36 36 0 1 1 74.11 80.01A8 8 0 0 0 65.78 86.91Z" fill="#D6E4A6"/>
+  <path d="M60.83 86.22A24 24 0 1 1 26.66 61.31A35 35 0 0 0 45.68 37.34A31 31 0 1 1 74.37 75.02A13 13 0 0 0 60.83 86.22Z" fill="#A3BE3C"/>
+  <circle cx="34.6" cy="84.4" r="13.5" fill="#5E6266"/>
+  <circle cx="79.6" cy="42.4" r="17" fill="#5E6266"/>
+  <text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#FFFFFF">SLBC</text>
+  <text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#FFFFFF">Syndicat des Laboratoires</text>
+  <text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#D6E4A6">de Biologie Clinique</text>
+</svg><figcaption>Sur le vert du site</figcaption></figure>
+  </div>
+  <p class="note">Les noyaux sont gros et proches du centre de chaque moitié : plus petits et placés aux deux bouts, ils faisaient penser à un maillon de chaîne.</p>
+  
+  <div class="site-tete" aria-hidden="true"><span class="st-logo"><svg aria-hidden="true" focusable="false" class="st-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <path d="M65.78 86.91A29 29 0 1 1 24.5 56.8A30 30 0 0 0 40.8 36.26A36 36 0 1 1 74.11 80.01A8 8 0 0 0 65.78 86.91Z" fill="#5F7A2B"/>
+  <path d="M60.83 86.22A24 24 0 1 1 26.66 61.31A35 35 0 0 0 45.68 37.34A31 31 0 1 1 74.37 75.02A13 13 0 0 0 60.83 86.22Z" fill="#A3BE3C"/>
+  <circle cx="34.6" cy="84.4" r="13.5" fill="#5E6266"/>
+  <circle cx="79.6" cy="42.4" r="17" fill="#5E6266"/>
+</svg><span class="st-mot">SLBC</span></span>
+<span class="st-onglets"><span class="st-on">Accueil</span><span>Le syndicat</span><span>Veille</span><span>Presse</span></span><span class="st-btn">Adhérer</span></div>
+  <div class="petits">
+  <div class="bloc"><p class="bloc-t">En petit</p><div class="tailles"><span class="taille"><span class="t-img" style="--t:64px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <path d="M65.78 86.91A29 29 0 1 1 24.5 56.8A30 30 0 0 0 40.8 36.26A36 36 0 1 1 74.11 80.01A8 8 0 0 0 65.78 86.91Z" fill="#5F7A2B"/>
+  <path d="M60.83 86.22A24 24 0 1 1 26.66 61.31A35 35 0 0 0 45.68 37.34A31 31 0 1 1 74.37 75.02A13 13 0 0 0 60.83 86.22Z" fill="#A3BE3C"/>
+  <circle cx="34.6" cy="84.4" r="13.5" fill="#5E6266"/>
+  <circle cx="79.6" cy="42.4" r="17" fill="#5E6266"/>
+</svg></span><span class="t-n">64 px</span></span><span class="taille"><span class="t-img" style="--t:32px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <path d="M65.78 86.91A29 29 0 1 1 24.5 56.8A30 30 0 0 0 40.8 36.26A36 36 0 1 1 74.11 80.01A8 8 0 0 0 65.78 86.91Z" fill="#5F7A2B"/>
+  <path d="M60.83 86.22A24 24 0 1 1 26.66 61.31A35 35 0 0 0 45.68 37.34A31 31 0 1 1 74.37 75.02A13 13 0 0 0 60.83 86.22Z" fill="#A3BE3C"/>
+  <circle cx="34.6" cy="84.4" r="13.5" fill="#5E6266"/>
+  <circle cx="79.6" cy="42.4" r="17" fill="#5E6266"/>
+</svg></span><span class="t-n">32 px</span></span><span class="taille"><span class="t-img" style="--t:16px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <path d="M65.78 86.91A29 29 0 1 1 24.5 56.8A30 30 0 0 0 40.8 36.26A36 36 0 1 1 74.11 80.01A8 8 0 0 0 65.78 86.91Z" fill="#5F7A2B"/>
+  <path d="M60.83 86.22A24 24 0 1 1 26.66 61.31A35 35 0 0 0 45.68 37.34A31 31 0 1 1 74.37 75.02A13 13 0 0 0 60.83 86.22Z" fill="#A3BE3C"/>
+  <circle cx="34.6" cy="84.4" r="13.5" fill="#5E6266"/>
+  <circle cx="79.6" cy="42.4" r="17" fill="#5E6266"/>
+</svg></span><span class="t-n">16 px</span></span></div></div>
+  <div class="bloc"><p class="bloc-t">Onglet du navigateur</p><div class="onglet"><span class="o-fav"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <path d="M65.78 86.91A29 29 0 1 1 24.5 56.8A30 30 0 0 0 40.8 36.26A36 36 0 1 1 74.11 80.01A8 8 0 0 0 65.78 86.91Z" fill="#5F7A2B"/>
+  <path d="M60.83 86.22A24 24 0 1 1 26.66 61.31A35 35 0 0 0 45.68 37.34A31 31 0 1 1 74.37 75.02A13 13 0 0 0 60.83 86.22Z" fill="#A3BE3C"/>
+  <circle cx="34.6" cy="84.4" r="13.5" fill="#5E6266"/>
+  <circle cx="79.6" cy="42.4" r="17" fill="#5E6266"/>
+</svg></span><span>SLBC – Accueil</span></div></div>
+  <div class="bloc"><p class="bloc-t">Une couleur</p><div class="mono"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <path d="M65.78 86.91A29 29 0 1 1 24.5 56.8A30 30 0 0 0 40.8 36.26A36 36 0 1 1 74.11 80.01A8 8 0 0 0 65.78 86.91ZM60.83 86.22A24 24 0 1 1 26.66 61.31A35 35 0 0 0 45.68 37.34A31 31 0 1 1 74.37 75.02A13 13 0 0 0 60.83 86.22Z" fill="#2E3236" fill-rule="evenodd"/>
+  <circle cx="34.6" cy="84.4" r="13.5" fill="#2E3236"/>
+  <circle cx="79.6" cy="42.4" r="17" fill="#2E3236"/>
+</svg></div></div>
+  <div class="bloc"><p class="bloc-t">Réseaux sociaux</p><div class="avatar"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <path d="M65.78 86.91A29 29 0 1 1 24.5 56.8A30 30 0 0 0 40.8 36.26A36 36 0 1 1 74.11 80.01A8 8 0 0 0 65.78 86.91Z" fill="#5F7A2B"/>
+  <path d="M60.83 86.22A24 24 0 1 1 26.66 61.31A35 35 0 0 0 45.68 37.34A31 31 0 1 1 74.37 75.02A13 13 0 0 0 60.83 86.22Z" fill="#A3BE3C"/>
+  <circle cx="34.6" cy="84.4" r="13.5" fill="#5E6266"/>
+  <circle cx="79.6" cy="42.4" r="17" fill="#5E6266"/>
+</svg></div></div>
+</div>
+  <div class="textes">
+    <div><h3>Pourquoi plus fort</h3><p>C’est une forme d’un seul tenant, qui parle de biologie au lieu de deux ronds abstraits, et sa silhouette penchée, resserrée au milieu, lui donne du caractère. Les trois couleurs du logo actuel restent : le vert foncé, qui était la zone commune des deux ronds, devient la membrane qui tient l’ensemble.</p></div>
+    <div><h3>Et Mastercard ?</h3><p>On ne voit plus deux disques égaux posés l’un sur l’autre, mais une seule silhouette penchée, avec un étranglement, une membrane et deux noyaux.</p></div>
+    <div><h3>À l’ouverture des pages</h3><p>À l’ouverture de chaque page, la cellule part d’un ovale qui se resserre doucement au milieu jusqu’à sa forme finale, pendant que les deux noyaux s’écartent chacun vers son côté.</p></div>
+    <div><h3>À vérifier</h3><p>Un graphiste devra faire une recherche d’antériorité de marque (INPI, EUIPO) sur les logos en forme de cellule ou de « cacahuète » et vérifier, en noir seul surtout, qu’on n’y lit pas un maillon de chaîne de vélo ou l’icône « lien » des logiciels.</p></div>
+  </div>
+  <figure class="vue v-slbm"><svg aria-hidden="true" focusable="false" class="lockup lockup-slbm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 367 120">
+  <path d="M65.78 86.91A29 29 0 1 1 24.5 56.8A30 30 0 0 0 40.8 36.26A36 36 0 1 1 74.11 80.01A8 8 0 0 0 65.78 86.91Z" fill="#5F7A2B"/>
+  <path d="M60.83 86.22A24 24 0 1 1 26.66 61.31A35 35 0 0 0 45.68 37.34A31 31 0 1 1 74.37 75.02A13 13 0 0 0 60.83 86.22Z" fill="#A3BE3C"/>
+  <circle cx="34.6" cy="84.4" r="13.5" fill="#5E6266"/>
+  <circle cx="79.6" cy="42.4" r="17" fill="#5E6266"/>
+  <text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBM</text>
+  <text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text>
+  <text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Médicale</text>
+</svg><figcaption>Au nom SLBM, si le bureau retient ce nom</figcaption></figure>
+</section>
+  <section class="suite" aria-labelledby="t-suite">
+    <h2 id="t-suite">Et ensuite</h2>
+    <ul>
+      <li>Dites-moi la ou les propositions qui vous plaisent, et ce qu’il faudrait changer.</li>
+      <li>Le logo choisi remplacera les deux ronds partout : en-tête, pied de page, petites signatures animées au-dessus des titres, séparateurs entre les rubriques, charte graphique.</li>
+      <li>Avant de l’adopter, faire vérifier par un graphiste ou un conseil en propriété industrielle qu’il ne ressemble pas à une marque déjà déposée, puis le faire valider par le bureau.</li>
+    </ul>
+  </section>
+</main>

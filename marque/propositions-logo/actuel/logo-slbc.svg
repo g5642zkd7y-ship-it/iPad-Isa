@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 364 120" role="img" aria-label="SLBC, Syndicat des Laboratoires de Biologie Clinique">
+  <defs><clipPath id="act-commun"><circle cx="44" cy="44" r="36"/></clipPath></defs>
+  <circle cx="44" cy="44" r="36" fill="#5E6266"/>
+  <circle cx="76" cy="76" r="36" fill="#A3BE3C"/>
+  <circle cx="76" cy="76" r="36" fill="#5F7A2B" clip-path="url(#act-commun)"/>
+  <text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBC</text>
+  <text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text>
+  <text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Clinique</text>
+</svg>
