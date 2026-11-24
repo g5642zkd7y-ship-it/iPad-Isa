@@ -5,7 +5,7 @@ Chaque piste est dans un dossier <logos>/<clé>/ : symbole.svg, symbole-sombre.s
 logo-slbc-sombre.svg, logo-slbm.svg, description.json (titre, idee, plus_fort, mastercard, animation, a_verifier).
 Le logo actuel est dans <logos>/actuel/. Le site et le logo validé ne changent pas.
 usage : python3 gen_logos.py <dossier logos> <sortie.html> <clé1> <clé2> ..."""
-import html, json, re, sys
+import html, json, os, re, sys
 
 DOS, OUT, CLES = sys.argv[1], sys.argv[2], sys.argv[3:]
 NB, FINE = ' ', ' '
@@ -44,6 +44,19 @@ def petits(cle):
 </div>'''
 
 
+def note(d):
+    return f'<p class="note">{e(d["note"])}</p>' if d.get('note') else ''
+
+
+def variante(cle):
+    """Variante facultative : variante.json (titre, texte), symbole-variante.svg, logo-slbc-variante.svg."""
+    if not os.path.exists(f'{DOS}/{cle}/variante.json'):
+        return ''
+    v = json.load(open(f'{DOS}/{cle}/variante.json', encoding='utf-8'))
+    return f'''<div class="variante"><div class="var-txt"><h3>{e(v["titre"])}</h3><p>{e(v["texte"])}</p></div>
+  <div class="var-img">{svg(cle, "symbole-variante.svg", "var-sym")}{svg(cle, "logo-slbc-variante.svg", "lockup var-lock")}</div></div>'''
+
+
 def proposition(n, cle):
     d = json.load(open(f'{DOS}/{cle}/description.json', encoding='utf-8'))
     return f'''<section class="prop" id="p{n}" aria-labelledby="t{n}">
@@ -52,6 +65,8 @@ def proposition(n, cle):
     <figure class="vue v-blanc">{svg(cle, "logo-slbc.svg", "lockup")}<figcaption>Sur fond blanc</figcaption></figure>
     <figure class="vue v-olive">{svg(cle, "logo-slbc-sombre.svg", "lockup")}<figcaption>Sur le vert du site</figcaption></figure>
   </div>
+  {note(d)}
+  {variante(cle)}
   {entete(cle)}
   {petits(cle)}
   <div class="textes">
@@ -65,7 +80,7 @@ def proposition(n, cle):
 
 
 props = [proposition(i + 1, c) for i, c in enumerate(CLES)]
-apercu = ''.join(f'<a class="ap" href="#p{i + 1}"><span class="ap-img">{svg(c, "symbole.svg")}</span><span class="ap-n">{i + 1}. {e(json.load(open(f"{DOS}/{c}/description.json", encoding="utf-8"))["titre"])}</span></a>' for i, c in enumerate(CLES))
+apercu = f'<div class="ap ap-actuel"><span class="ap-img">{svg("actuel", "symbole.svg")}</span><span class="ap-n">Aujourd’hui</span></div>' + ''.join(f'<a class="ap" href="#p{i + 1}"><span class="ap-img">{svg(c, "symbole.svg")}</span><span class="ap-n">{i + 1}. {e(json.load(open(f"{DOS}/{c}/description.json", encoding="utf-8"))["titre"])}</span></a>' for i, c in enumerate(CLES))
 
 page = f'''<title>Propositions de logo SLBC</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -97,9 +112,10 @@ a:focus-visible{{outline:3px solid var(--vert);outline-offset:3px;border-radius:
 .actuel .lockup{{width:100%;max-width:420px;height:auto;display:block}}
 .actuel h2{{font-size:20px;font-weight:800;margin-bottom:6px}}
 .actuel ul{{margin:8px 0 0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}}
-.apercus{{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}}
+.apercus{{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}}
 .ap{{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 10px 14px;border-radius:16px;background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet);text-decoration:none;color:var(--encre);font-weight:700;font-size:15px;text-align:center;line-height:1.3}}
-.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
+a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
+.ap-actuel{{background:transparent;box-shadow:inset 0 0 0 1px var(--filet);color:var(--gris)}}
 .ap-img svg{{width:84px;height:84px;display:block}}
 .prop{{display:flex;flex-direction:column;gap:18px;padding:clamp(16px,2.4vw,26px);border-radius:24px;background:var(--blanc);box-shadow:0 1px 2px rgba(46,50,54,.06);scroll-margin-top:16px}}
 .prop-tete{{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:start}}
@@ -117,6 +133,13 @@ a:focus-visible{{outline:3px solid var(--vert);outline-offset:3px;border-radius:
 .v-slbm{{background:var(--fond);padding-top:22px;align-items:flex-start}}
 .v-slbm .lockup{{max-width:300px}}
 .v-slbm figcaption{{color:var(--gris)}}
+.note{{font-size:15.5px;color:var(--gris);margin-top:-6px}}
+.variante{{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:18px;align-items:center;padding:16px 18px;border-radius:16px;background:var(--fond)}}
+.var-txt h3{{font-size:16px;font-weight:800;margin-bottom:4px}}
+.var-txt p{{font-size:15.5px}}
+.var-img{{display:flex;align-items:center;gap:22px;min-width:0}}
+.var-sym{{width:64px;height:64px;flex:none;display:block}}
+.var-lock{{max-width:300px}}
 .site-tete{{display:flex;align-items:center;gap:22px;padding:12px 18px;border-radius:14px;background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet),0 6px 16px -10px rgba(46,50,54,.25);overflow:hidden;min-width:0}}
 .st-logo{{display:inline-flex;align-items:center;gap:10px;flex:none}}
 .st-mark{{width:36px;height:36px;display:block}}
@@ -143,7 +166,7 @@ a:focus-visible{{outline:3px solid var(--vert);outline-offset:3px;border-radius:
 .suite ul{{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}}
 @media (max-width:900px){{.petits{{grid-template-columns:repeat(2,minmax(0,1fr))}}.textes{{grid-template-columns:repeat(2,minmax(0,1fr))}}.actuel{{grid-template-columns:minmax(0,1fr)}}}}
 @media (max-width:700px){{.st-onglets{{display:none}}}}
-@media (max-width:560px){{.vues,.textes{{grid-template-columns:minmax(0,1fr)}}.prop-tete h2{{font-size:21px}}.num{{width:40px;height:40px;font-size:20px}}.st-btn{{padding:6px 14px;font-size:15px}}}}
+@media (max-width:560px){{.variante{{grid-template-columns:minmax(0,1fr)}}.var-sym{{display:none}}.vues,.textes{{grid-template-columns:minmax(0,1fr)}}.prop-tete h2{{font-size:21px}}.num{{width:40px;height:40px;font-size:20px}}.st-btn{{padding:6px 14px;font-size:15px}}}}
 </style>
 <main class="page">
   <header class="titre">
@@ -157,7 +180,7 @@ a:focus-visible{{outline:3px solid var(--vert);outline-offset:3px;border-radius:
     <ul><li>Ce qui reste dans toutes les pistes{NB}: le vert anis de l’ancien logo, le gris, le vert foncé, le nom en Nunito très gras et la signature sur deux lignes.</li>
     <li>Ce qui change{NB}: le symbole, pour qu’il ait plus de caractère et qu’on ne pense plus à une carte bancaire.</li></ul></div>
   </section>
-  <nav aria-label="Les {len(CLES)} propositions"><div class="apercus">{apercu}</div></nav>
+  <nav aria-label="Les {len(CLES)} propositions, à côté du logo d’aujourd’hui"><div class="apercus">{apercu}</div></nav>
   {"".join(props)}
   <section class="suite" aria-labelledby="t-suite">
     <h2 id="t-suite">Et ensuite</h2>
