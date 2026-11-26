@@ -3,7 +3,11 @@ Demande d'Isabelle Eimer (26 novembre 2026) : « Je viens te voir au nom du SLBM
 Ce qui est important pour ce syndicat, c'est l'image de la défense de la profession, que l'union fait la force, au-delà de la
 défense de la biologie médicale. Mais effectivement ce syndicat défend en même temps la santé des Français. »
 Chaque piste est dans <dossier>/<clé>/ : symbole.svg, symbole-sombre.svg, symbole-mono.svg, logo-slbm.svg,
-logo-slbm-sombre.svg, logo-slbm-vertical.svg, description.json (titre, idee, defense, union, sante, animation, a_verifier).
+logo-slbm-sombre.svg, logo-slbm-vertical.svg, description.json (titre, idee, seconde_lecture, defense, union, sante,
+couleurs, palette [{nom, hex, role}], fond_sombre, couleur_action, animation, a_verifier).
+Compléments du brief (27 novembre 2026) : « On travaille sur le SLBM et les couleurs », six propositions ; la porteuse du projet
+trouve le logo actuel « hyper pertinent car simple et impactant, et il signifie quelque chose », ses collaborateurs le trouvent
+trop proche de Mastercard.
 Le logo actuel au nom SLBM est dans <dossier>/ref/ (symbole-actuel.svg, logo-slbm-actuel.svg).
 Facultatif : <dossier>/presentation.json {"recommandation": "...", "etat": ["...", ...]} (textes écrits par nous).
 usage : python3 gen_presentation_logo.py <dossier> <sortie.html> <clé1> <clé2> ..."""
@@ -54,13 +58,32 @@ def situations(c):
 </div>'''
 
 
+HEX = re.compile(r'^#[0-9A-Fa-f]{6}$')
+
+
+def couleur(d, champ, defaut):
+    v = d.get(champ, '')
+    return v if HEX.match(v or '') else defaut
+
+
+def nuancier(d):
+    """Les couleurs de la piste : pastilles, nom, code et rôle."""
+    pal = [x for x in d.get('palette', []) if HEX.match(x.get('hex', ''))]
+    if not pal:
+        return ''
+    cases = ''.join(f'<li><span class="pastille" style="background:{x["hex"]}"></span><span class="pal-n">{e(x.get("nom", ""))}</span><span class="pal-h">{x["hex"].upper()}{(" · " + e(x["role"])) if x.get("role") else ""}</span></li>' for x in pal)
+    return f'<div class="couleurs"><h3>Les couleurs</h3><ul class="nuancier">{cases}</ul><p>{e(d.get("couleurs", ""))}</p></div>'
+
+
 def piste(n, c):
     d = json.load(open(f'{DOS}/{c}/description.json', encoding='utf-8'))
-    return f'''<section class="piste" id="piste-{n}" aria-labelledby="t{n}">
-  <header class="p-tete"><span class="num" aria-hidden="true">{n}</span><div><h2 id="t{n}"><span class="lu">Piste {n}{NB}: </span>{e(d["titre"])}</h2><p class="idee">{e(d["idee"])}</p></div></header>
+    sombre, action = couleur(d, 'fond_sombre', '#657B3D'), couleur(d, 'couleur_action', '#5F7A2B')
+    seconde = f'<p class="seconde"><strong>En regardant mieux{NB}:</strong> {e(d["seconde_lecture"])}</p>' if d.get('seconde_lecture') else ''
+    return f'''<section class="piste" id="piste-{n}" aria-labelledby="t{n}" style="--p-sombre:{sombre};--p-action:{action}">
+  <header class="p-tete"><span class="num" aria-hidden="true">{n}</span><div><h2 id="t{n}"><span class="lu">Piste {n}{NB}: </span>{e(d["titre"])}</h2><p class="idee">{e(d["idee"])}</p>{seconde}</div></header>
   <div class="vues">
     <figure class="vue v-blanc">{svg(f"{c}/logo-slbm.svg", "lockup")}<figcaption>Sur fond blanc</figcaption></figure>
-    <figure class="vue v-olive">{svg(f"{c}/logo-slbm-sombre.svg", "lockup")}<figcaption>Sur le vert du site</figcaption></figure>
+    <figure class="vue v-olive">{svg(f"{c}/logo-slbm-sombre.svg", "lockup")}<figcaption>Sur fond sombre</figcaption></figure>
     <figure class="vue v-vert">{svg(f"{c}/logo-slbm-vertical.svg", "lockup-v")}<figcaption>En hauteur</figcaption></figure>
   </div>
   <div class="dit">
@@ -68,6 +91,7 @@ def piste(n, c):
     <div><h3>L’union fait la force</h3><p>{e(d["union"])}</p></div>
     <div><h3>La santé des Français</h3><p>{e(d["sante"])}</p></div>
   </div>
+  {nuancier(d)}
   {situations(c)}
   <div class="bas">
     <p><strong>L’animation sur le site{NB}:</strong> {e(d["animation"])}</p>
@@ -110,6 +134,7 @@ a:focus-visible{{outline:3px solid var(--vert);outline-offset:3px;border-radius:
 .brief{{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;padding:clamp(20px,3vw,32px);border-radius:24px;background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet)}}
 .brief h2{{font-size:15px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gris);margin-bottom:10px}}
 .brief blockquote{{margin:0;font-size:clamp(18px,2vw,21px);line-height:1.5;color:var(--encre);font-weight:600;padding-left:18px;border-left:4px solid var(--anis)}}
+.complement{{margin-top:16px;font-size:15.5px;color:var(--texte)}}
 .brief .qui{{display:block;margin-top:10px;font-size:15px;font-weight:600;color:var(--gris)}}
 .lecture{{display:flex;flex-direction:column;gap:12px}}
 .lecture li{{list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:baseline}}
@@ -139,10 +164,20 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .vue figcaption{{font-size:13.5px;font-weight:700;letter-spacing:.03em;align-self:flex-start;margin-top:auto}}
 .v-blanc,.v-vert{{background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet)}}
 .v-blanc figcaption,.v-vert figcaption{{color:var(--gris)}}
-.v-olive{{background:var(--olive)}}
+.v-olive{{background:var(--p-sombre,var(--olive))}}
 .v-olive figcaption{{color:var(--blanc)}}
 .lockup{{width:100%;max-width:380px;height:auto;display:block}}
 .lockup-v{{width:100%;max-width:200px;height:auto;display:block}}
+.seconde{{font-size:15.5px;margin-top:6px;color:var(--gris)}}
+.seconde strong{{color:var(--encre)}}
+.couleurs{{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 22px;align-items:center;padding:14px 16px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--filet)}}
+.couleurs h3{{font-size:16px;font-weight:800;grid-column:1 / -1}}
+.couleurs p{{font-size:15.5px}}
+.nuancier{{display:flex;flex-wrap:wrap;gap:12px 18px;padding:0;list-style:none}}
+.nuancier li{{display:grid;grid-template-columns:auto auto;grid-template-rows:auto auto;column-gap:8px;align-items:center}}
+.pastille{{grid-row:span 2;width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(46,50,54,.15)}}
+.pal-n{{font-size:14px;font-weight:700;color:var(--encre);line-height:1.2}}
+.pal-h{{font-size:12px;color:var(--gris);font-variant-numeric:tabular-nums;line-height:1.2}}
 .dit{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}}
 .dit h3{{font-size:16px;font-weight:800;padding-bottom:6px;margin-bottom:6px;border-bottom:3px solid var(--anis)}}
 .dit p{{font-size:15.5px}}
@@ -157,8 +192,8 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .st-mark{{width:36px;height:36px;display:block}}
 .st-mot{{font-weight:900;font-size:27px;line-height:1;letter-spacing:.02em;color:var(--texte)}}
 .st-onglets{{display:flex;gap:22px;font-weight:700;font-size:17px;color:var(--encre);min-width:0;overflow:hidden;white-space:nowrap}}
-.st-on{{color:var(--vert)}}
-.st-btn{{margin-left:auto;flex:none;background:var(--vert);color:var(--blanc);font-weight:800;font-size:16px;padding:8px 18px;border-radius:999px}}
+.st-on{{color:var(--p-action,var(--vert))}}
+.st-btn{{margin-left:auto;flex:none;background:var(--p-action,var(--vert));color:var(--blanc);font-weight:800;font-size:16px;padding:8px 18px;border-radius:999px}}
 .lettre{{display:flex;flex-direction:column;gap:9px;aspect-ratio:210/297;max-width:100%;padding:9% 10%;background:var(--blanc);border-radius:4px;box-shadow:0 10px 24px -14px rgba(46,50,54,.45)}}
 .l-logo{{width:58%;height:auto;display:block;margin-bottom:6%}}
 .l-adr{{font-size:10px;font-weight:700;color:var(--gris);margin-bottom:10%}}
@@ -170,7 +205,7 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .c-fn{{font-size:12px;color:var(--gris);font-weight:600}}
 .c-pied{{margin-top:6px;font-size:9.5px;font-weight:700;color:var(--vert)}}
 .badge{{display:flex;flex-direction:column;align-items:center;gap:2px;max-width:200px;padding-bottom:12px;background:var(--blanc);border-radius:10px;overflow:hidden;box-shadow:0 10px 22px -14px rgba(46,50,54,.45);text-align:center}}
-.b-tete{{display:grid;place-items:center;width:100%;padding:14px 0;background:var(--olive);margin-bottom:10px}}
+.b-tete{{display:grid;place-items:center;width:100%;padding:14px 0;background:var(--p-sombre,var(--olive));margin-bottom:10px}}
 .b-sym{{width:54px;height:54px;display:block}}
 .b-nom{{font-weight:900;font-size:16px;color:var(--encre)}}
 .b-fn{{font-size:12.5px;color:var(--gris);font-weight:600}}
@@ -196,7 +231,7 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .suite h2{{font-size:20px;font-weight:800;margin-bottom:8px}}
 .suite ul{{padding-left:1.2em;display:flex;flex-direction:column;gap:6px}}
 @media (max-width:980px){{.vues{{grid-template-columns:repeat(2,minmax(0,1fr))}}.v-vert{{grid-column:1 / -1}}.situ{{grid-template-columns:repeat(4,minmax(0,1fr))}}.s-lettre{{grid-row:auto}}.brief{{grid-template-columns:minmax(0,1fr)}}}}
-@media (max-width:700px){{.st-onglets{{display:none}}.dit,.bas{{grid-template-columns:minmax(0,1fr)}}.situ{{grid-template-columns:repeat(2,minmax(0,1fr))}}.s-lettre,.s-carte,.s-badge,.s-reseau,.s-petit{{grid-column:span 1}}.s-petit{{grid-column:1 / -1}}}}
+@media (max-width:700px){{.couleurs{{grid-template-columns:minmax(0,1fr)}}.st-onglets{{display:none}}.dit,.bas{{grid-template-columns:minmax(0,1fr)}}.situ{{grid-template-columns:repeat(2,minmax(0,1fr))}}.s-lettre,.s-carte,.s-badge,.s-reseau,.s-petit{{grid-column:span 1}}.s-petit{{grid-column:1 / -1}}}}
 @media (max-width:560px){{.vues{{grid-template-columns:minmax(0,1fr)}}.p-tete h2{{font-size:22px}}.num{{width:40px;height:40px;font-size:20px}}.st-btn{{padding:6px 14px;font-size:15px}}.situ{{padding:12px;gap:14px}}.s-lettre,.s-carte,.s-badge,.s-reseau{{grid-column:1 / -1}}.lettre{{max-width:260px}}.carte{{max-width:320px}}}}
 </style>
 <main class="page">
@@ -206,12 +241,13 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
   </header>
   <section class="brief" aria-labelledby="t-brief">
     <div><h2 id="t-brief">Votre brief</h2>
-      <blockquote>«{FINE}Ce qui est important pour ce syndicat, c’est l’image de la défense de la profession, que l’union fait la force, au-delà de la défense de la biologie médicale. Mais effectivement ce syndicat défend en même temps la santé des Français.{FINE}»<span class="qui">Isabelle Eimer, pour le SLBM</span></blockquote></div>
+      <blockquote>«{FINE}Ce qui est important pour ce syndicat, c’est l’image de la défense de la profession, que l’union fait la force, au-delà de la défense de la biologie médicale. Mais effectivement ce syndicat défend en même temps la santé des Français.{FINE}»<span class="qui">Isabelle Eimer, pour le SLBM</span></blockquote>
+      <p class="complement">Vous nous avez aussi dit{NB}: on travaille sur le nom SLBM et sur les couleurs{FINE}; vous voulez six propositions. Vous trouvez le logo actuel «{FINE}hyper pertinent car simple et impactant, et il signifie quelque chose{FINE}»{FINE}; vos collaborateurs le trouvent trop proche de Mastercard.</p></div>
     <div class="lecture"><h2>Ce que le logo doit dire</h2>
       <ul><li><b aria-hidden="true">1</b><span><strong>La défense de la profession.</strong> Un syndicat qui protège et qui se bat.</span></li>
       <li><b aria-hidden="true">2</b><span><strong>L’union fait la force.</strong> Des laboratoires de partout, ensemble.</span></li>
       <li><b aria-hidden="true">3</b><span><strong>La santé des Français.</strong> Ce que la profession défend, au-delà d’elle-même.</span></li></ul>
-      <p class="note">Le nom est SLBM, Syndicat des Laboratoires de Biologie Médicale. Nous avons gardé les couleurs du syndicat et la police de son site, pour que le logo s’y pose sans rien changer d’autre. Chaque piste a été vérifiée en tout petit, en une couleur et sur le vert du site.</p></div>
+      <p class="note">Et comme le logo actuel{NB}: simple, fort, et qui signifie quelque chose. Chaque piste vient avec ses couleurs{FINE}; certaines gardent celles du syndicat, d’autres en proposent de nouvelles. Toutes ont été vérifiées en tout petit, en une couleur et sur fond sombre.</p></div>
   </section>
   {etat}
   <nav aria-label="Les {len(CLES)} pistes, à côté du logo d’aujourd’hui"><div class="apercus">{apercu}</div></nav>
