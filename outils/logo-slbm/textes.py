@@ -66,13 +66,13 @@ P['accroche'] = dict(
 
 P['aile'] = dict(
  titre="Sous son aile",
- idee="Une aile qui s'abaisse, faite de trois plumes aux trois couleurs du logo. La grande plume grise couvre la verte, qui couvre la petite vert anis ; leurs pointes sortent l'une sous l'autre, en escalier.",
- seconde_lecture="Les deux petites plumes sortent de sous la grande et se recouvrent comme des tuiles. Les couleurs gardent l'ordre de votre logo, de haut en bas : gris, vert foncé, vert anis.",
+ idee="Une aile qui s'abaisse, faite de trois plumes aux trois couleurs du logo. La grande plume grise couvre la verte, qui couvre la petite vert anis. Une fine ligne blanche sépare chaque plume de sa voisine et s'élargit jusqu'aux pointes.",
+ seconde_lecture="Les trois plumes partent de la même épaule arrondie et leurs pointes sortent l'une sous l'autre. Les couleurs gardent l'ordre de votre logo, de haut en bas : gris, vert foncé, vert anis.",
  defense="Prendre sous son aile, c'est protéger : quand on reconnaît l'aile, la défense est là.",
  union="Trois plumes de tailles inégales qui tiennent ensemble. L'union vient en second.",
  sante="Sous l'aile, on peut mettre la profession ou le patient ; le dessin ne le dit pas.",
- couleurs="Les trois couleurs du logo, une par plume ; le gris fait la moitié du signe. Sur le vert du site : la grande plume en blanc, celle du milieu en vert anis, la petite en vert clair. En une couleur, deux fines lignes vides remontent des pointes et séparent les trois plumes ; en couleurs, les plumes se touchent.",
- palette=pal((GRIS, "la grande plume, celle qui couvre"), (FONCE, "la plume du milieu"), (ANIS, "la petite plume"), (BLANC, "la grande plume sur le vert du site"), (CLAIR, "la petite plume sur le vert du site"), (ENCRE, "le signe entier en une couleur")),
+ couleurs="Les trois couleurs du logo, une par plume. Sur le vert du site : la grande plume en blanc, celle du milieu en vert clair, la petite en vert anis. En une couleur, c'est le même dessin : les deux lignes vides séparent les plumes. En tout petit, nous prenons un dessin simplifié, aux lignes plus larges.",
+ palette=pal((GRIS, "la grande plume, celle qui couvre"), (FONCE, "la plume du milieu"), (ANIS, "la petite plume"), (BLANC, "la grande plume sur le vert du site"), (CLAIR, "la plume du milieu sur le vert du site"), (ENCRE, "le signe entier en une couleur")),
  animation="À l'ouverture des pages, les trois plumes se déploieraient l'une après l'autre : la petite, la verte, puis la grise, qui viendrait couvrir les deux autres.",
  a_verifier="Dessin en cours de reprise. Nos lecteurs ne savent pas tous ce que c'est : une aile, une feuille, un casque de vélo, une moule ; sur le vert du site, l'un d'eux voit un taco. En couleurs, les plumes se touchent et l'aile se reconnaît moins bien qu'en une couleur : nous les séparons. La plume grise seule a la forme d'une faucille, lecture à écarter pour un syndicat ; elle ressort surtout en blanc sur le vert. En tout petit, les trois plumes se fondent en une tache. Deux lecteurs sur trois le trouvent le plus dessiné des six. Les ressemblances avec des marques qui ont une aile ne sont pas vérifiées.")
 
@@ -90,7 +90,7 @@ P['confluence'] = dict(
 
 P['bouclier'] = dict(
  titre="Le bouclier, d'un seul trait",
- idee="Un bouclier dessiné d'un seul trait gris, tenu devant un grand rond vert anis. La part du rond qu'il couvre passe en vert foncé : c'est ce que le syndicat défend.",
+ idee="Un bouclier tracé d'un seul geste de marqueur gris, tenu devant un grand rond vert anis. Le trait part fin en haut à gauche, s'épaissit en descendant, tourne à la pointe et revient par le haut : sa fin passe au-dessus de son départ. La part du rond qu'il couvre passe en vert foncé : c'est ce que le syndicat défend.",
  seconde_lecture="On retrouve votre logo : le gris en haut à gauche, le vert anis en bas à droite, le vert foncé là où ils se recouvrent. Le rond vert est resté, un peu plus grand ; c'est le rond gris qui est devenu bouclier.",
  defense="C'est le seul signe dont nos trois lecteurs ont compris le sens au premier regard : « protection ». La forme du bouclier reste classique.",
  union="L'union n'y figure pas, sinon par ce qu'il garde de votre logo : deux formes et leur zone commune.",
