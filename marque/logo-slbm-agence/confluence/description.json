@@ -1,37 +1,37 @@
 {
  "key": "confluence",
  "titre": "La confluence",
- "idee": "Deux traits aux bouts arrondis, un gris et un vert anis, partent chacun de leur côté et se rejoignent. Ils continuent en un seul trait vert foncé, bien plus épais que chacun des deux.",
- "seconde_lecture": "Ce sont les trois couleurs de votre logo et la même idée de zone commune : le vert foncé, là où le gris et le vert anis sont réunis. Ici, la partie commune est la plus forte des trois.",
- "defense": "Ce signe ne parle pas de défense : il montre deux forces qui n’en font plus qu’une.",
- "union": "Deux traits en font un seul, plus épais que chacun : c’est l’idée la plus proche de « l’union fait la force ».",
- "sante": "La santé n’y figure pas. Un biologiste y verra peut-être le Y par lequel on dessine les anticorps : à vous de nous le dire.",
- "couleurs": "Les trois couleurs du logo : le gris et le vert anis pour les deux traits, le vert foncé pour le trait commun. Sur le vert du site, le trait commun passe en blanc, comme le nom, et les deux traits en vert clair. En une couleur, de fines lignes vides séparent les trois traits : le signe est alors en trois morceaux.",
+ "idee": "Un long trait gris part de la gauche et se relève vers la droite d’un seul geste. Un trait vert anis, plus court, le rejoint par-dessous. Là où ils se recouvrent, le trait devient vert foncé, plus plein, puis il s’affine jusqu’à la pointe.",
+ "seconde_lecture": "Ce sont les trois couleurs de votre logo et la même idée de zone commune : le vert foncé, là où le gris et le vert anis se recouvrent. Ici, la partie commune fait la moitié du signe.",
+ "defense": "Ce signe ne parle pas de défense : il montre un élan, deux forces qui n’en font plus qu’une.",
+ "union": "Deux traits en font un seul, plus large que chacun : c’est notre façon de dessiner « l’union fait la force ». Sans légende, nos trois lecteurs ne la lisent qu’un peu.",
+ "sante": "La santé n’y figure pas. Les verts et la forme font plutôt penser à une feuille.",
+ "couleurs": "Les trois couleurs du logo : le gris pour le trait long, le vert anis pour le trait court, le vert foncé là où ils se recouvrent. Sur le vert du site : le trait long en blanc, le trait court en vert anis, la partie commune en vert clair. En une couleur, une seule forme, sans ligne vide : la fourche suffit à montrer les deux traits. En tout petit, nous prenons un dessin simplifié, aux traits plus gras.",
  "palette": [
   {
    "nom": "gris cellule",
    "hex": "#5E6266",
-   "role": "le trait du haut"
+   "role": "le trait long"
   },
   {
    "nom": "vert anis",
    "hex": "#A3BE3C",
-   "role": "le trait du bas"
+   "role": "le trait court, qui le rejoint"
   },
   {
    "nom": "vert foncé",
    "hex": "#5F7A2B",
-   "role": "le trait commun"
+   "role": "la partie commune"
   },
   {
    "nom": "blanc",
    "hex": "#FFFFFF",
-   "role": "le trait commun sur le vert du site"
+   "role": "le trait long sur le vert du site"
   },
   {
    "nom": "vert clair",
    "hex": "#D6E4A6",
-   "role": "les deux traits sur le vert du site"
+   "role": "la partie commune sur le vert du site"
   },
   {
    "nom": "encre",
@@ -39,8 +39,8 @@
    "role": "le signe entier en une couleur"
   }
  ],
- "animation": "À définir avec le nouveau dessin.",
- "a_verifier": "Dessin à refaire. Nos trois lecteurs l’ont classé dernier. Ils y voient une hélice ou un Y couché, et surtout un engin à nez rond avec deux ailettes, pointé vers le nom : un missile, à côté d’un sigle qui en désigne déjà un. En noir et sur le vert, deux d’entre eux relèvent aussi une lecture grivoise. Nous gardons l’idée, deux traits qui n’en font qu’un, et nous préparons un autre dessin.",
+ "animation": "À l’ouverture des pages, le trait gris se tracerait de gauche à droite, le trait vert anis le rejoindrait par-dessous, puis la partie commune filerait jusqu’à la pointe.",
+ "a_verifier": "C’est notre troisième dessin de cette idée, et nos trois lecteurs le classent encore dernier. Ils y voient d’abord la virgule d’une marque de sport (les trois citent Nike), un oiseau en vol ou une feuille. À côté du sigle SLBM, qui désigne aussi un missile, une trajectoire qui monte avec sa traînée : pour qui connaît ce sens, on ne voit plus qu’elle. Tourné, une lame courbe. C’est le signe le plus léger des six à côté du nom, et en tout petit il n’en reste qu’un accent sans le dessin simplifié. Nous le montrons pour son trait ; nous ne le recommandons pas.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }

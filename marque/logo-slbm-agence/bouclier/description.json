@@ -1,9 +1,9 @@
 {
  "key": "bouclier",
  "titre": "Le bouclier, d’un seul trait",
- "idee": "Un bouclier dessiné d’un seul trait gris, tenu devant un grand rond vert anis. La part du rond qu’il couvre passe en vert foncé : c’est ce que le syndicat défend.",
+ "idee": "Un bouclier tracé d’un seul geste de marqueur gris, tenu devant un grand rond vert anis. Le trait part fin en haut à gauche, s’épaissit en descendant, tourne à la pointe et revient par le haut : sa fin passe au-dessus de son départ. La part du rond qu’il couvre passe en vert foncé : c’est ce que le syndicat défend.",
  "seconde_lecture": "On retrouve votre logo : le gris en haut à gauche, le vert anis en bas à droite, le vert foncé là où ils se recouvrent. Le rond vert est resté, un peu plus grand ; c’est le rond gris qui est devenu bouclier.",
- "defense": "C’est le seul signe dont nos trois lecteurs ont compris le sens au premier regard : « protection ». La forme du bouclier reste classique.",
+ "defense": "C’est le seul signe où nos trois lecteurs lisent « défendre » sans légende. La forme du bouclier reste classique.",
  "union": "L’union n’y figure pas, sinon par ce qu’il garde de votre logo : deux formes et leur zone commune.",
  "sante": "Le rond vert, derrière le bouclier, peut être la profession ou la santé des patients ; le dessin ne tranche pas.",
  "couleurs": "Les trois couleurs du logo actuel, à la même place. Sur le vert du site : trait blanc, rond vert anis, part couverte en vert clair, détachée du trait par une fine ligne. En une couleur, le bouclier, la part couverte et le reste du rond sont trois formes séparées par une fine ligne vide ; en tout petit, la part couverte est retirée pour que l’intérieur du bouclier reste vide.",
@@ -39,8 +39,8 @@
    "role": "le signe entier en une couleur"
   }
  ],
- "animation": "À l’ouverture des pages, le rond vert se poserait, puis le bouclier se tracerait devant lui d’un seul mouvement, sans tourner ; la part couverte passerait alors en vert foncé.",
- "a_verifier": "Trait en cours de reprise. Nos lecteurs y voient aussi le logo d’un antivirus, d’une mutuelle ou d’un assureur ; la part vert foncé fait une feuille, donc un label « bio » ; tous y voient aussi un gland. Le raccord du haut, où le trait se referme, passe pour une maladresse, et le trait a la même épaisseur partout : nous le retraçons. Retourné, pointe en haut, le contour rappellerait une goutte ou une ogive : le signe ne doit jamais tourner. À côté du sigle SLBM, un bouclier peut aussi faire penser à la défense militaire. En photocopie grise, le gris et le vert foncé se confondent : prendre la version en une couleur.",
+ "animation": "À l’ouverture des pages, le rond vert se poserait, puis le bouclier se tracerait devant lui d’un seul mouvement, du haut à gauche jusqu’à son retour par le haut, sans tourner ; la part couverte passerait alors en vert foncé.",
+ "a_verifier": "Nos lecteurs y voient aussi le logo d’un antivirus, d’une mutuelle ou d’un assureur : c’est le signe le plus courant des six. Le trait ne se referme plus en haut à gauche : deux lecteurs y voient un slip vu de face ou une poche, et le lecteur moqueur, en noir, une lecture anatomique dans la part couverte. La part vert foncé fait aussi une feuille. Retourné, pointe en haut, le contour rappellerait une goutte ou une ogive : le signe ne doit jamais tourner. À côté du sigle SLBM, un bouclier fait penser au « bouclier antimissile ». En tout petit, le trait fin du haut disparaît et le dessin se brouille. En photocopie grise, le gris et le vert foncé se confondent : prendre la version en une couleur.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }
