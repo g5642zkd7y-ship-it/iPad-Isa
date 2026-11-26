@@ -10,7 +10,7 @@ trouve le logo actuel « hyper pertinent car simple et impactant, et il signifie
 trop proche de Mastercard.
 Facultatifs : symbole-petit.svg (16 et 32 px, onglet), symbole-blanc.svg (en petit sur le vert du site).
 Le logo actuel au nom SLBM est dans <dossier>/ref/ (symbole-actuel.svg, logo-slbm-actuel.svg).
-Facultatif : <dossier>/presentation.json {"recommandation": "...", "etat": ["...", ...]} (textes écrits par nous).
+Facultatif : <dossier>/presentation.json {"recommandation", "etat" (liste), "etat_titre", "surtitre", "complement", "note"} (textes écrits par nous).
 usage : python3 gen_presentation_logo.py <dossier> <sortie.html> <clé1> <clé2> ..."""
 import html, json, os, re, sys
 
@@ -117,11 +117,13 @@ def piste(n, c):
 </section>'''
 
 
+COMPLEMENT = f'Vous nous avez aussi dit{NB}: on travaille sur le nom SLBM{FINE}; on garde les couleurs de la charte{FINE}; le logo doit rester simple{FINE}; vous voulez six propositions. Vous trouvez le logo actuel «{FINE}hyper pertinent car simple et impactant, et il signifie quelque chose{FINE}»{FINE}; vos collaborateurs le trouvent trop proche de Mastercard.'
+NOTE = f'Et comme le logo actuel{NB}: simple, fort, et qui signifie quelque chose. Les six pistes gardent les couleurs de la charte. Toutes ont été vérifiées en tout petit, en une couleur et sur le vert du site.'
 titres = [json.load(open(f'{DOS}/{c}/description.json', encoding='utf-8'))['titre'] for c in CLES]
 apercu = (f'<div class="ap ap-actuel"><span class="ap-img">{svg("ref/symbole-actuel.svg")}</span><span class="ap-n">Aujourd’hui</span></div>'
           + ''.join(f'<a class="ap" href="#piste-{i + 1}"><span class="ap-img">{svg(f"{c}/symbole.svg")}</span><span class="ap-n">{i + 1}. {e(t)}</span></a>' for i, (c, t) in enumerate(zip(CLES, titres))))
 reco = f'''<section class="reco" aria-labelledby="t-reco"><h2 id="t-reco">Notre recommandation</h2><p>{e(PRES["recommandation"])}</p></section>''' if PRES.get('recommandation') else ''
-etat = f'''<section class="etat" aria-labelledby="t-etat"><h2 id="t-etat">Ce que nous avons regardé avant de dessiner</h2><ul>{"".join(f"<li>{e(x)}</li>" for x in PRES["etat"])}</ul></section>''' if PRES.get('etat') else ''
+etat = f'''<section class="etat" aria-labelledby="t-etat"><h2 id="t-etat">{e(PRES.get("etat_titre", "Ce que nous avons regardé avant de dessiner"))}</h2><ul>{"".join(f"<li>{e(x)}</li>" for x in PRES["etat"])}</ul></section>''' if PRES.get('etat') else ''
 
 page = f'''<title>Logo du SLBM</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -258,18 +260,18 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 </style>
 <main class="page">
   <header class="titre">
-    <p class="surtitre">Proposition de l’agence</p>
+    <p class="surtitre">{e(PRES.get("surtitre", "Proposition de l’agence"))}</p>
     <h1>Logo du SLBM</h1>
   </header>
   <section class="brief" aria-labelledby="t-brief">
     <div><h2 id="t-brief">Votre brief</h2>
       <blockquote>«{FINE}Ce qui est important pour ce syndicat, c’est l’image de la défense de la profession, que l’union fait la force, au-delà de la défense de la biologie médicale. Mais effectivement ce syndicat défend en même temps la santé des Français.{FINE}»<span class="qui">Isabelle Eimer, pour le SLBM</span></blockquote>
-      <p class="complement">Vous nous avez aussi dit{NB}: on travaille sur le nom SLBM{FINE}; on garde les couleurs de la charte{FINE}; le logo doit rester simple{FINE}; vous voulez six propositions. Vous trouvez le logo actuel «{FINE}hyper pertinent car simple et impactant, et il signifie quelque chose{FINE}»{FINE}; vos collaborateurs le trouvent trop proche de Mastercard.</p></div>
+      <p class="complement">{e(PRES.get("complement", COMPLEMENT))}</p></div>
     <div class="lecture"><h2>Ce que le logo doit dire</h2>
       <ul><li><b aria-hidden="true">1</b><span><strong>La défense de la profession.</strong> Un syndicat qui protège et qui se bat.</span></li>
       <li><b aria-hidden="true">2</b><span><strong>L’union fait la force.</strong> Des laboratoires de partout, ensemble.</span></li>
       <li><b aria-hidden="true">3</b><span><strong>La santé des Français.</strong> Ce que la profession défend, au-delà d’elle-même.</span></li></ul>
-      <p class="note">Et comme le logo actuel{NB}: simple, fort, et qui signifie quelque chose. Les six pistes gardent les couleurs de la charte et restent aussi simples que le logo actuel{NB}: quatre formes au plus, un dessin qu’on refait de mémoire. Toutes ont été vérifiées en tout petit, en une couleur et sur le vert du site.</p></div>
+      <p class="note">{e(PRES.get("note", NOTE))}</p></div>
   </section>
   {etat}
   <nav aria-label="Les {len(CLES)} pistes, à côté du logo d’aujourd’hui"><div class="apercus">{apercu}</div></nav>
