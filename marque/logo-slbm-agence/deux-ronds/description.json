@@ -1,17 +1,17 @@
 {
  "key": "deux-ronds",
  "titre": "Vos deux ronds",
- "idee": "Les deux ronds de votre logo, à la même place et aux mêmes couleurs. Le vert reste plein ; le gris devient un anneau épais, tracé comme un O au marqueur. L’anneau ne se remplit, en vert foncé, que là où il rejoint l’autre rond.",
- "seconde_lecture": "C’est le dessin des pastilles du site : un rond tracé au marqueur, posé sur un rond vert anis décalé en bas à droite.",
+ "idee": "Les deux ronds de votre logo, à la même place et aux mêmes couleurs. Le vert reste plein ; le gris est tracé au marqueur, d’un seul geste : on voit où le trait commence et où il s’arrête, en haut à gauche. Là où il rejoint le rond vert, il se remplit de vert foncé.",
+ "seconde_lecture": "C’est le trait de votre site : presque la même épaisseur d’un bout à l’autre et deux bouts ronds, comme le trait sous les onglets. C’est aussi le dessin des pastilles : un rond tracé à la main, posé sur un rond vert anis décalé en bas à droite.",
  "defense": "Le signe ne dit pas la défense directement. Il dit ce que dit votre logo actuel : deux forces et ce qu’elles ont en commun.",
  "union": "Seul, le rond gris n’est qu’un trait ; il ne devient plein qu’en rejoignant l’autre. La zone commune est la partie la plus dense du signe : c’est « l’union fait la force » montré tel quel.",
  "sante": "Les deux ronds restent deux cellules, la matière de la biologie médicale. Le signe ne dit pas la santé des Français directement.",
- "couleurs": "Les trois couleurs du logo actuel, rangées de la même façon : le gris en haut à gauche, le vert anis en bas à droite, le vert foncé là où ils se rejoignent. Sur le vert du site : anneau blanc, rond vert anis, zone commune vert clair, comme votre logo sur fond sombre. En une couleur, une fine ligne vide détoure la zone commune.",
+ "couleurs": "Les trois couleurs du logo actuel, rangées de la même façon : le gris en haut à gauche, le vert anis en bas à droite, le vert foncé là où ils se rejoignent. Sur le vert du site : trait blanc, rond vert anis, zone commune vert clair, comme votre logo sur fond sombre. En une couleur, le rond tracé passe devant le rond plein : une fine ligne vide suit son bord et la zone commune reste pleine.",
  "palette": [
   {
    "nom": "gris cellule",
    "hex": "#5E6266",
-   "role": "l’anneau tracé au marqueur"
+   "role": "le rond tracé au marqueur"
   },
   {
    "nom": "vert anis",
@@ -26,7 +26,7 @@
   {
    "nom": "blanc",
    "hex": "#FFFFFF",
-   "role": "l’anneau sur le vert du site"
+   "role": "le rond tracé sur le vert du site"
   },
   {
    "nom": "vert clair",
@@ -39,8 +39,8 @@
    "role": "le signe entier en une couleur"
   }
  ],
- "animation": "À l’ouverture des pages, les deux ronds se rapprochent comme aujourd’hui : l’anneau gris se trace, puis la zone commune se remplit de vert foncé quand ils se rejoignent.",
- "a_verifier": "Mastercard : un anneau creux et un rond plein, en diagonale, s’en éloignent nettement ; de loin, la zone vert foncé reste celle de deux ronds qui se chevauchent. À montrer à vos collaborateurs. On peut aussi y voir une bague et sa pierre, une loupe sans manche, deux maillons. Le tracé à la main se voit peu : en petit, on lit un anneau régulier.",
+ "animation": "À l’ouverture des pages, les deux ronds se rapprochent comme aujourd’hui : le rond gris se trace d’un seul geste, puis la zone commune se remplit de vert foncé quand ils se rejoignent.",
+ "a_verifier": "Mastercard : un rond tracé au marqueur et un rond plein, en diagonale, s’en éloignent nettement à nos yeux ; de loin, la zone vert foncé reste pourtant celle de deux ronds qui se chevauchent. À montrer à vos collaborateurs, sans leur dire ce que l’on cherche. Le trait ne se ferme pas : certains y verront un anneau ouvert, ou cassé, plutôt qu’un rond tracé à la main ; on peut aussi y voir une bague et sa pierre, une loupe sans manche et, faiblement, la lettre Q devant le nom. Ce signe et « Bien entouré » ont le même gris, le même vert et la même épaisseur de trait : ce sont deux frères.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }

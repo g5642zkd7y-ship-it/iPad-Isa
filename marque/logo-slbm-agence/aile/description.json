@@ -1,12 +1,12 @@
 {
  "key": "aile",
  "titre": "Sous son aile",
- "idee": "Une aile qui s’abaisse, faite de trois plumes aux trois couleurs du logo. La grande plume grise couvre la verte, qui couvre la petite vert anis.",
- "seconde_lecture": "Les trois plumes partent de la même épaule : une plume seule ne fait pas une aile. Les couleurs gardent l’ordre de votre logo, de haut en bas : gris, vert foncé, vert anis.",
+ "idee": "Une aile qui s’abaisse, faite de trois plumes aux trois couleurs du logo. La grande plume grise couvre la verte, qui couvre la petite vert anis ; leurs pointes sortent l’une sous l’autre, en escalier.",
+ "seconde_lecture": "Les trois plumes partent de la même épaule et se recouvrent comme des tuiles : une plume seule ne fait pas une aile. Les couleurs gardent l’ordre de votre logo, de haut en bas : gris, vert foncé, vert anis.",
  "defense": "Prendre sous son aile, c’est protéger. Avec le bouclier, c’est le signe le plus direct des six sur la défense, sans arme ni mur.",
- "union": "Une aile, ce sont plusieurs plumes qui tiennent ensemble : ici trois, de tailles inégales, serrées l’une contre l’autre. L’union est dite, mais en second.",
+ "union": "Une aile, ce sont plusieurs plumes qui tiennent ensemble : ici trois, de tailles inégales, qui se recouvrent. L’union est dite, mais en second.",
  "sante": "Sous l’aile, on peut mettre la profession ou le patient. Le signe ne montre pas la santé directement.",
- "couleurs": "Les trois couleurs du logo, une par plume. Le gris domine : la grande plume fait plus de la moitié du signe. Sur le vert du site : blanc, vert clair et vert anis ; la petite plume vert anis y ressort peu. En une couleur, une fine ligne vide sépare les trois plumes.",
+ "couleurs": "Les trois couleurs du logo, une par plume ; le gris fait la moitié du signe. Sur le vert du site : la grande plume en blanc, celle du milieu en vert anis, la petite en vert clair. En une couleur, deux fines lignes vides partent des pointes et séparent les trois plumes.",
  "palette": [
   {
    "nom": "gris cellule",
@@ -31,7 +31,7 @@
   {
    "nom": "vert clair",
    "hex": "#D6E4A6",
-   "role": "la plume du milieu sur le vert du site"
+   "role": "la petite plume sur le vert du site"
   },
   {
    "nom": "encre",
@@ -40,7 +40,7 @@
   }
  ],
  "animation": "À l’ouverture des pages, les trois plumes se déploient l’une après l’autre depuis l’épaule : la petite, la verte, puis la grise, qui vient couvrir les deux autres.",
- "a_verifier": "Notre contrôle y voit d’abord trois griffes, à cause des pointes qui tombent, avant d’y voir une aile : le dessin est en cours de reprise. L’aile est un emblème très répandu : les ressemblances avec des marques existantes ne sont pas vérifiées.",
+ "a_verifier": "Dans le premier dessin, notre contrôle voyait trois griffes avant de voir une aile : les plumes ont été redessinées pour se recouvrir comme des tuiles. On peut encore y voir une feuille, ou la coque d’un casque, avant l’aile ; la plume grise seule a la forme d’une faucille. L’aile est un emblème très répandu : les ressemblances avec des marques existantes ne sont pas vérifiées.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }
