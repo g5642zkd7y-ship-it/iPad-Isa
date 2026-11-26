@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 366.8 120" role="img" aria-label="SLBM, Syndicat des Laboratoires de Biologie Médicale">
+  <defs><clipPath id="bouclier-logo-commun"><path d="M49.33 105.59 C27.74 92.29 14.3 69.01 13.6 43.66 C12.88 18.18 22 15.92 46.78 14.4 C71.96 12.86 81.91 17.75 82.65 44.31 C83.35 69.24 70.63 92.62 49.33 105.59 Z"/></clipPath></defs>
+  <circle cx="72.97" cy="72.09" r="41" fill="#A3BE3C"/>
+  <circle cx="72.97" cy="72.09" r="41" fill="#5F7A2B" clip-path="url(#bouclier-logo-commun)"/>
+  <path d="M45.65 7.25 C39.35 7.62 32.75 8.04 26.62 9.58 C15.17 12.45 8.95 19.24 6.9 30.84 C5.72 37.53 5.81 44.84 6.56 51.58 C9.34 76.53 23.99 99.03 45.44 112 C47.97 113.53 50.93 113.41 53.41 111.88 C70.44 101.43 82.83 85.17 87.89 65.79 C90.51 55.74 91.04 44.9 89.51 34.63 C87.18 19.1 79.76 9.51 63.62 7.41 C57.66 6.64 51.63 6.9 45.65 7.25 Z M49.34 96.56 C31.05 83.3 20.56 61.41 21.04 38.89 C21.12 34.88 21.48 28.74 24.83 26.03 C27.9 23.55 33.32 22.88 37.16 22.41 C41.82 21.85 46.62 21.53 51.31 21.4 C55.75 21.26 60.73 21.35 65 22.61 C70.28 24.17 72.43 27.41 73.7 32.56 C74.96 37.73 75.2 43.55 74.95 48.86 C74.04 67.74 64.66 85.43 49.34 96.56 Z" fill="#5E6266" fill-rule="evenodd"/>
+  <text x="144" y="66" font-family="Nunito" font-weight="900" font-size="74" letter-spacing="1.5" fill="#2E3236">SLBM</text>
+  <text x="146" y="90" font-family="Nunito" font-weight="700" font-size="17.5" fill="#3F4347">Syndicat des Laboratoires</text>
+  <text x="146" y="111" font-family="Nunito" font-weight="700" font-size="17.5" fill="#5F7A2B">de Biologie Médicale</text>
+</svg>

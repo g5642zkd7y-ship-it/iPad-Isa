@@ -1,0 +1,46 @@
+{
+ "key": "bouclier",
+ "titre": "Le bouclier, d’un seul trait",
+ "idee": "Un bouclier tracé d’un seul trait de marqueur gris, tenu devant un grand rond vert anis. La part du rond qu’il couvre passe en vert foncé : c’est ce que le syndicat défend.",
+ "seconde_lecture": "On retrouve votre logo : le gris en haut à gauche, le vert anis en bas à droite, le vert foncé là où ils se recouvrent. Le rond vert est resté ; c’est le rond gris qui est devenu bouclier.",
+ "defense": "C’est le signe le plus direct sur la défense : un bouclier, tenu devant ce qu’on protège. Le trait à la main l’éloigne de l’écusson officiel et de l’icône de sécurité.",
+ "union": "Le signe ne dit pas l’union directement. Il en garde ce que dit votre logo actuel : deux formes et leur zone commune.",
+ "sante": "Le rond vert, derrière le bouclier, peut être la profession ou la santé des patients : ce que le syndicat défend. Le signe ne le précise pas.",
+ "couleurs": "Les trois couleurs du logo actuel, à la même place. Sur le vert du site : trait blanc, rond vert anis, part couverte en vert clair. En une couleur, le bouclier, la part couverte et le reste du rond sont trois formes séparées par une fine ligne vide ; en tout petit, la part couverte est retirée pour que le bouclier reste ouvert.",
+ "palette": [
+  {
+   "nom": "gris cellule",
+   "hex": "#5E6266",
+   "role": "le bouclier, tracé au marqueur"
+  },
+  {
+   "nom": "vert anis",
+   "hex": "#A3BE3C",
+   "role": "le rond, derrière le bouclier"
+  },
+  {
+   "nom": "vert foncé",
+   "hex": "#5F7A2B",
+   "role": "la part du rond que le bouclier couvre"
+  },
+  {
+   "nom": "blanc",
+   "hex": "#FFFFFF",
+   "role": "le bouclier sur le vert du site"
+  },
+  {
+   "nom": "vert clair",
+   "hex": "#D6E4A6",
+   "role": "la part couverte sur le vert du site"
+  },
+  {
+   "nom": "encre",
+   "hex": "#2E3236",
+   "role": "le signe entier en une couleur"
+  }
+ ],
+ "animation": "À l’ouverture des pages, le rond vert se pose, puis le bouclier se trace devant lui d’un seul mouvement ; la part couverte passe alors en vert foncé.",
+ "a_verifier": "Cela reste un bouclier : on peut y voir l’icône « protection » d’un logiciel ou l’écusson d’un club. La part vert foncé a la forme d’une feuille. En photocopie grise, le gris et le vert foncé se confondent : prendre la version en une couleur. Les ressemblances avec des marques existantes ne sont pas vérifiées.",
+ "fond_sombre": "#657B3D",
+ "couleur_action": "#5F7A2B"
+}

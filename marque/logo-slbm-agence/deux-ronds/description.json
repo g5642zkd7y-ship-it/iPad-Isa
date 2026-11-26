@@ -1,0 +1,46 @@
+{
+ "key": "deux-ronds",
+ "titre": "Vos deux ronds",
+ "idee": "Les deux ronds de votre logo, à la même place et aux mêmes couleurs. Le vert reste plein ; le gris devient un anneau épais, tracé comme un O au marqueur. L’anneau ne se remplit, en vert foncé, que là où il rejoint l’autre rond.",
+ "seconde_lecture": "C’est le dessin des pastilles du site : un rond tracé au marqueur, posé sur un rond vert anis décalé en bas à droite.",
+ "defense": "Le signe ne dit pas la défense directement. Il dit ce que dit votre logo actuel : deux forces et ce qu’elles ont en commun.",
+ "union": "Seul, le rond gris n’est qu’un trait ; il ne devient plein qu’en rejoignant l’autre. La zone commune est la partie la plus dense du signe : c’est « l’union fait la force » montré tel quel.",
+ "sante": "Les deux ronds restent deux cellules, la matière de la biologie médicale. Le signe ne dit pas la santé des Français directement.",
+ "couleurs": "Les trois couleurs du logo actuel, rangées de la même façon : le gris en haut à gauche, le vert anis en bas à droite, le vert foncé là où ils se rejoignent. Sur le vert du site : anneau blanc, rond vert anis, zone commune vert clair, comme votre logo sur fond sombre. En une couleur, une fine ligne vide détoure la zone commune.",
+ "palette": [
+  {
+   "nom": "gris cellule",
+   "hex": "#5E6266",
+   "role": "l’anneau tracé au marqueur"
+  },
+  {
+   "nom": "vert anis",
+   "hex": "#A3BE3C",
+   "role": "le rond plein"
+  },
+  {
+   "nom": "vert foncé",
+   "hex": "#5F7A2B",
+   "role": "la zone commune"
+  },
+  {
+   "nom": "blanc",
+   "hex": "#FFFFFF",
+   "role": "l’anneau sur le vert du site"
+  },
+  {
+   "nom": "vert clair",
+   "hex": "#D6E4A6",
+   "role": "la zone commune sur le vert du site"
+  },
+  {
+   "nom": "encre",
+   "hex": "#2E3236",
+   "role": "le signe entier en une couleur"
+  }
+ ],
+ "animation": "À l’ouverture des pages, les deux ronds se rapprochent comme aujourd’hui : l’anneau gris se trace, puis la zone commune se remplit de vert foncé quand ils se rejoignent.",
+ "a_verifier": "Mastercard : un anneau creux et un rond plein, en diagonale, s’en éloignent nettement ; de loin, la zone vert foncé reste celle de deux ronds qui se chevauchent. À montrer à vos collaborateurs. On peut aussi y voir une bague et sa pierre, une loupe sans manche, deux maillons. Le tracé à la main se voit peu : en petit, on lit un anneau régulier.",
+ "fond_sombre": "#657B3D",
+ "couleur_action": "#5F7A2B"
+}

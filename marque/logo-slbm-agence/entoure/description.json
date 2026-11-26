@@ -1,0 +1,36 @@
+{
+ "key": "entoure",
+ "titre": "Bien entouré",
+ "idee": "Un rond vert anis, plein, entouré d’un seul geste gris tracé à la main, comme on entoure au stylo ce qui compte. Le geste ne se referme pas : sa fin passe au large de son départ.",
+ "seconde_lecture": "Le rond vert n’est pas au centre : il se loge en bas à droite, contre le geste. Le gris est plus plein en haut à gauche, le vert est en bas à droite : c’est la diagonale de votre logo actuel, et le rond vert est le sien.",
+ "defense": "Entourer, c’est protéger : le geste gris fait le tour de ce qu’il défend. Ce n’est pas un mur : le trait est celui d’une main, plus plein d’un côté, plus fin de l’autre.",
+ "union": "Le signe montre le collectif autour de chacun plutôt que plusieurs formes qui se rejoignent : dans le rond vert, on peut voir le biologiste ; autour de lui, son syndicat. L’union est dite par « être bien entouré ».",
+ "sante": "On peut aussi lire le rond vert comme le patient, et le geste comme la profession qui veille sur lui. Le signe ne montre pas la santé directement : c’est une lecture, pas une image.",
+ "couleurs": "Deux couleurs dans le signe : le gris du logo pour le geste, le vert anis pour le rond. Le vert foncé reste dans le nom, sur la ligne « de Biologie Médicale ». Sur le vert du site, le geste passe en blanc et le rond reste vert anis. En une couleur, le rond est un peu plus petit, pour que le blanc entre le rond et le geste tienne en petit.",
+ "palette": [
+  {
+   "nom": "gris cellule",
+   "hex": "#5E6266",
+   "role": "le geste qui entoure"
+  },
+  {
+   "nom": "vert anis",
+   "hex": "#A3BE3C",
+   "role": "le rond, ce qui est entouré"
+  },
+  {
+   "nom": "blanc",
+   "hex": "#FFFFFF",
+   "role": "le geste sur le vert du site"
+  },
+  {
+   "nom": "encre",
+   "hex": "#2E3236",
+   "role": "le signe entier en une couleur"
+  }
+ ],
+ "animation": "À l’ouverture des pages, le rond vert se pose, puis le geste gris se trace autour de lui d’un seul mouvement, comme le trait au marqueur sous les onglets du site.",
+ "a_verifier": "On peut y voir un œil qui regarde en bas à droite, une spirale ou une planète sur son orbite. À 16 px, le blanc entre le rond et le geste devient très fin. Les ressemblances avec des marques qui ont un cercle tracé au pinceau ne sont pas vérifiées.",
+ "fond_sombre": "#657B3D",
+ "couleur_action": "#5F7A2B"
+}

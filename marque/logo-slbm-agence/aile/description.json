@@ -1,0 +1,46 @@
+{
+ "key": "aile",
+ "titre": "Sous son aile",
+ "idee": "Une aile qui s’abaisse, faite de trois plumes aux trois couleurs du logo. La grande plume grise couvre la verte, qui couvre la petite vert anis.",
+ "seconde_lecture": "Les trois plumes partent de la même épaule : une plume seule ne fait pas une aile. Les couleurs gardent l’ordre de votre logo, de haut en bas : gris, vert foncé, vert anis.",
+ "defense": "Prendre sous son aile, c’est protéger. Avec le bouclier, c’est le signe le plus direct des six sur la défense, sans arme ni mur.",
+ "union": "Une aile, ce sont plusieurs plumes qui tiennent ensemble : ici trois, de tailles inégales, serrées l’une contre l’autre. L’union est dite, mais en second.",
+ "sante": "Sous l’aile, on peut mettre la profession ou le patient. Le signe ne montre pas la santé directement.",
+ "couleurs": "Les trois couleurs du logo, une par plume. Le gris domine : la grande plume fait plus de la moitié du signe. Sur le vert du site : blanc, vert clair et vert anis ; la petite plume vert anis y ressort peu. En une couleur, une fine ligne vide sépare les trois plumes.",
+ "palette": [
+  {
+   "nom": "gris cellule",
+   "hex": "#5E6266",
+   "role": "la grande plume, celle qui couvre"
+  },
+  {
+   "nom": "vert foncé",
+   "hex": "#5F7A2B",
+   "role": "la plume du milieu"
+  },
+  {
+   "nom": "vert anis",
+   "hex": "#A3BE3C",
+   "role": "la petite plume"
+  },
+  {
+   "nom": "blanc",
+   "hex": "#FFFFFF",
+   "role": "la grande plume sur le vert du site"
+  },
+  {
+   "nom": "vert clair",
+   "hex": "#D6E4A6",
+   "role": "la plume du milieu sur le vert du site"
+  },
+  {
+   "nom": "encre",
+   "hex": "#2E3236",
+   "role": "le signe entier en une couleur"
+  }
+ ],
+ "animation": "À l’ouverture des pages, les trois plumes se déploient l’une après l’autre depuis l’épaule : la petite, la verte, puis la grise, qui vient couvrir les deux autres.",
+ "a_verifier": "Notre contrôle y voit d’abord trois griffes, à cause des pointes qui tombent, avant d’y voir une aile : le dessin est en cours de reprise. L’aile est un emblème très répandu : les ressemblances avec des marques existantes ne sont pas vérifiées.",
+ "fond_sombre": "#657B3D",
+ "couleur_action": "#5F7A2B"
+}

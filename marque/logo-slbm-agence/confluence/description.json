@@ -1,0 +1,46 @@
+{
+ "key": "confluence",
+ "titre": "La confluence",
+ "idee": "Deux traits de pinceau, un gris et un vert anis, partent chacun de leur côté et se rejoignent. Ils continuent en un seul trait vert foncé, bien plus épais que chacun des deux, tourné vers le nom.",
+ "seconde_lecture": "Ce sont les trois couleurs de votre logo et la même idée de zone commune : le vert foncé, là où le gris et le vert anis sont réunis. Un biologiste peut aussi y reconnaître, couché, le Y par lequel on dessine les anticorps, qui défendent l’organisme ; nous ne l’avons pas dessiné comme un schéma : à vous de nous dire si cette lecture vous paraît juste.",
+ "defense": "Le signe ne montre pas un bouclier : il montre une force qui avance. Pour un biologiste, le Y de l’anticorps y ajoute l’idée de défense.",
+ "union": "C’est « l’union fait la force » dessiné tel quel : deux traits fins en font un seul, plus épais que chacun. C’est le signe le plus direct des six sur ce point.",
+ "sante": "Le signe ne dit pas la santé directement, sauf par la lecture de l’anticorps, que seuls les professionnels feront.",
+ "couleurs": "Les trois couleurs du logo : le gris et le vert anis pour les deux traits, le vert foncé pour le trait commun. Sur le vert du site, le trait commun passe en blanc, comme le nom, et les deux traits en vert clair et en vert anis ; en petit sur ce fond, on prend la version blanche. En une couleur, une fine ligne vide marque l’endroit où les deux traits se rejoignent.",
+ "palette": [
+  {
+   "nom": "gris cellule",
+   "hex": "#5E6266",
+   "role": "le trait du haut"
+  },
+  {
+   "nom": "vert anis",
+   "hex": "#A3BE3C",
+   "role": "le trait du bas"
+  },
+  {
+   "nom": "vert foncé",
+   "hex": "#5F7A2B",
+   "role": "le trait commun"
+  },
+  {
+   "nom": "blanc",
+   "hex": "#FFFFFF",
+   "role": "le trait commun sur le vert du site"
+  },
+  {
+   "nom": "vert clair",
+   "hex": "#D6E4A6",
+   "role": "le trait du haut sur le vert du site"
+  },
+  {
+   "nom": "encre",
+   "hex": "#2E3236",
+   "role": "le signe entier en une couleur"
+  }
+ ],
+ "animation": "À l’ouverture des pages, les deux traits se tracent en même temps, chacun de son côté, se rejoignent, puis le trait commun avance vers le nom.",
+ "a_verifier": "On peut y voir un Y couché, une fourche ou un lance-pierre. Tourné d’un quart de tour, on peut y lire un col ouvert et une cravate : nous le présentons toujours couché, tourné vers le nom. Le logo actuel de Synlab, fait de traits, n’a pas pu être comparé : à regarder avant de choisir.",
+ "fond_sombre": "#657B3D",
+ "couleur_action": "#5F7A2B"
+}
