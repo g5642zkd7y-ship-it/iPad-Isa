@@ -5,9 +5,10 @@ défense de la biologie médicale. Mais effectivement ce syndicat défend en mê
 Chaque piste est dans <dossier>/<clé>/ : symbole.svg, symbole-sombre.svg, symbole-mono.svg, logo-slbm.svg,
 logo-slbm-sombre.svg, logo-slbm-vertical.svg, description.json (titre, idee, seconde_lecture, defense, union, sante,
 couleurs, palette [{nom, hex, role}], fond_sombre, couleur_action, animation, a_verifier).
-Compléments du brief (27 novembre 2026) : « On travaille sur le SLBM et les couleurs », six propositions ; la porteuse du projet
+Compléments du brief (26 novembre 2026) : « On travaille sur le SLBM et les couleurs », six propositions ; la porteuse du projet
 trouve le logo actuel « hyper pertinent car simple et impactant, et il signifie quelque chose », ses collaborateurs le trouvent
 trop proche de Mastercard.
+Facultatifs : symbole-petit.svg (16 et 32 px, onglet), symbole-blanc.svg (en petit sur le vert du site).
 Le logo actuel au nom SLBM est dans <dossier>/ref/ (symbole-actuel.svg, logo-slbm-actuel.svg).
 Facultatif : <dossier>/presentation.json {"recommandation": "...", "etat": ["...", ...]} (textes écrits par nous).
 usage : python3 gen_presentation_logo.py <dossier> <sortie.html> <clé1> <clé2> ..."""
@@ -35,6 +36,19 @@ def e(s):
     return html.escape(s, quote=False)
 
 
+def petit(c):
+    """Le dessin prévu pour les petites tailles (16 et 32 px), sinon le symbole."""
+    return f"{c}/symbole-petit.svg" if os.path.exists(f"{DOS}/{c}/symbole-petit.svg") else f"{c}/symbole.svg"
+
+
+def petit_vert(c):
+    """En petit sur le vert du site : la version blanche d'une seule couleur, si la piste en a une."""
+    if not os.path.exists(f"{DOS}/{c}/symbole-blanc.svg"):
+        return ''
+    return ('<span class="sur-vert">' + "".join(f'<span class="taille"><span class="t-img" style="--t:{px}px">{svg(f"{c}/symbole-blanc.svg")}</span><span class="t-n">{px}{NB}px</span></span>' for px in (32, 16))
+            + '<span class="t-n sv-n">Sur le vert, en blanc</span></span>')
+
+
 def situations(c):
     """Le logo comme le bureau le verrait : site, lettre, carte de visite, badge, réseaux sociaux, onglet."""
     return f'''<div class="situ">
@@ -51,8 +65,9 @@ def situations(c):
   <figure class="s-reseau"><div class="reseau" aria-hidden="true"><span class="r-bandeau"></span><span class="r-av">{svg(f"{c}/symbole.svg")}</span><span class="r-nom">SLBM{NB}– Syndicat des Laboratoires de Biologie Médicale</span><span class="r-txt">Syndicat professionnel{NB}· Paris</span></div>
     <figcaption>Les réseaux sociaux</figcaption></figure>
   <figure class="s-petit"><div class="petit" aria-hidden="true">
-    <span class="tailles">{"".join(f'<span class="taille"><span class="t-img" style="--t:{px}px">{svg(f"{c}/symbole.svg")}</span><span class="t-n">{px}{NB}px</span></span>' for px in (64, 32, 16))}</span>
-    <span class="onglet"><span class="o-fav">{svg(f"{c}/symbole.svg")}</span>SLBM{NB}– Accueil</span>
+    <span class="tailles">{"".join(f'<span class="taille"><span class="t-img" style="--t:{px}px">{svg(f"{c}/symbole.svg" if px > 32 else petit(c))}</span><span class="t-n">{px}{NB}px</span></span>' for px in (64, 32, 16))}</span>
+    <span class="onglet"><span class="o-fav">{svg(petit(c))}</span>SLBM{NB}– Accueil</span>
+    {petit_vert(c)}
     <span class="mono">{svg(f"{c}/symbole-mono.svg")}<span class="t-n">En une couleur</span></span></div>
     <figcaption>En petit et en une couleur</figcaption></figure>
 </div>'''
@@ -71,14 +86,16 @@ def nuancier(d):
     pal = [x for x in d.get('palette', []) if HEX.match(x.get('hex', ''))]
     if not pal:
         return ''
-    cases = ''.join(f'<li><span class="pastille" style="background:{x["hex"]}"></span><span class="pal-n">{e(x.get("nom", ""))}</span><span class="pal-h">{x["hex"].upper()}{(" · " + e(x["role"])) if x.get("role") else ""}</span></li>' for x in pal)
+    cases = ''.join(f'<li><span class="pastille" style="background:{x["hex"]}"></span><span class="pal-n">{e(x.get("nom", ""))}</span><span class="pal-h">{x["hex"].upper()}</span>{('<span class="pal-r">' + e(x["role"]) + '</span>') if x.get("role") else ""}</li>' for x in pal)
     return f'<div class="couleurs"><h3>Les couleurs de la charte dans le signe</h3><ul class="nuancier">{cases}</ul><p>{e(d.get("couleurs", ""))}</p></div>'
 
 
 def piste(n, c):
     d = json.load(open(f'{DOS}/{c}/description.json', encoding='utf-8'))
     sombre, action = couleur(d, 'fond_sombre', '#657B3D'), couleur(d, 'couleur_action', '#5F7A2B')
-    seconde = f'<p class="seconde"><strong>En regardant mieux{NB}:</strong> {e(d["seconde_lecture"])}</p>' if d.get('seconde_lecture') else ''
+    sl = re.sub(r'^En regardant mieux,?\s*', '', d.get('seconde_lecture', '')).strip()
+    sl = sl[:1].upper() + sl[1:]
+    seconde = f'<p class="seconde"><strong>En regardant mieux{NB}:</strong> {e(sl)}</p>' if sl else ''
     return f'''<section class="piste" id="piste-{n}" aria-labelledby="t{n}" style="--p-sombre:{sombre};--p-action:{action}">
   <header class="p-tete"><span class="num" aria-hidden="true">{n}</span><div><h2 id="t{n}"><span class="lu">Piste {n}{NB}: </span>{e(d["titre"])}</h2><p class="idee">{e(d["idee"])}</p>{seconde}</div></header>
   <div class="vues">
@@ -170,12 +187,13 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .lockup-v{{width:100%;max-width:200px;height:auto;display:block}}
 .seconde{{font-size:15.5px;margin-top:6px;color:var(--gris)}}
 .seconde strong{{color:var(--encre)}}
-.couleurs{{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 22px;align-items:center;padding:14px 16px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--filet)}}
-.couleurs h3{{font-size:16px;font-weight:800;grid-column:1 / -1}}
-.couleurs p{{font-size:15.5px}}
-.nuancier{{display:flex;flex-wrap:wrap;gap:12px 18px;padding:0;list-style:none}}
-.nuancier li{{display:grid;grid-template-columns:auto auto;grid-template-rows:auto auto;column-gap:8px;align-items:center}}
-.pastille{{grid-row:span 2;width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(46,50,54,.15)}}
+.couleurs{{display:flex;flex-direction:column;gap:12px;padding:14px 16px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--filet)}}
+.couleurs h3{{font-size:16px;font-weight:800}}
+.couleurs p{{font-size:15.5px;max-width:70ch}}
+.nuancier{{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:12px 18px;padding:0;margin:0;list-style:none}}
+.nuancier li{{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;row-gap:1px;align-content:start}}
+.pastille{{grid-row:span 3;width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(46,50,54,.15)}}
+.pal-r{{font-size:13px;color:var(--texte,#3F4347);line-height:1.35}}
 .pal-n{{font-size:14px;font-weight:700;color:var(--encre);line-height:1.2}}
 .pal-h{{font-size:12px;color:var(--gris);font-variant-numeric:tabular-nums;line-height:1.2}}
 .dit{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}}
@@ -187,6 +205,7 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .s-site{{grid-column:1 / -1}}
 .s-lettre{{grid-column:span 2;grid-row:span 2}}
 .s-carte,.s-badge,.s-reseau,.s-petit{{grid-column:span 2}}
+.s-badge{{align-items:center;justify-content:center}}
 .site-tete{{display:flex;align-items:center;gap:22px;padding:12px 18px;border-radius:12px;background:var(--blanc);box-shadow:0 6px 16px -10px rgba(46,50,54,.25);overflow:hidden;min-width:0}}
 .st-logo{{display:inline-flex;align-items:center;gap:10px;flex:none}}
 .st-mark{{width:36px;height:36px;display:block}}
@@ -224,6 +243,9 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .onglet{{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;max-width:100%;padding:7px 12px;border-radius:9px 9px 0 0;background:var(--fond);box-shadow:0 -1px 0 var(--filet);font-size:12.5px;color:var(--encre);white-space:nowrap;overflow:hidden}}
 .o-fav svg{{width:16px;height:16px;display:block}}
 .mono{{flex-direction:row;gap:10px;align-items:center}}
+.sur-vert{{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 16px;padding:10px 14px;border-radius:8px;background:var(--olive)}}
+.sur-vert .t-n{{color:var(--blanc)}}
+.sv-n{{align-self:center}}
 .mono svg{{width:40px;height:40px;display:block}}
 .bas{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;font-size:15.5px}}
 .bas strong{{color:var(--encre)}}
@@ -231,7 +253,7 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .suite h2{{font-size:20px;font-weight:800;margin-bottom:8px}}
 .suite ul{{padding-left:1.2em;display:flex;flex-direction:column;gap:6px}}
 @media (max-width:980px){{.vues{{grid-template-columns:repeat(2,minmax(0,1fr))}}.v-vert{{grid-column:1 / -1}}.situ{{grid-template-columns:repeat(4,minmax(0,1fr))}}.s-lettre{{grid-row:auto}}.brief{{grid-template-columns:minmax(0,1fr)}}}}
-@media (max-width:700px){{.couleurs{{grid-template-columns:minmax(0,1fr)}}.st-onglets{{display:none}}.dit,.bas{{grid-template-columns:minmax(0,1fr)}}.situ{{grid-template-columns:repeat(2,minmax(0,1fr))}}.s-lettre,.s-carte,.s-badge,.s-reseau,.s-petit{{grid-column:span 1}}.s-petit{{grid-column:1 / -1}}}}
+@media (max-width:700px){{.st-onglets{{display:none}}.dit,.bas{{grid-template-columns:minmax(0,1fr)}}.situ{{grid-template-columns:repeat(2,minmax(0,1fr))}}.s-lettre,.s-carte,.s-badge,.s-reseau,.s-petit{{grid-column:span 1}}.s-petit{{grid-column:1 / -1}}}}
 @media (max-width:560px){{.vues{{grid-template-columns:minmax(0,1fr)}}.p-tete h2{{font-size:22px}}.num{{width:40px;height:40px;font-size:20px}}.st-btn{{padding:6px 14px;font-size:15px}}.situ{{padding:12px;gap:14px}}.s-lettre,.s-carte,.s-badge,.s-reseau{{grid-column:1 / -1}}.lettre{{max-width:260px}}.carte{{max-width:320px}}}}
 </style>
 <main class="page">
