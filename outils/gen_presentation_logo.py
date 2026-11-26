@@ -72,7 +72,7 @@ def nuancier(d):
     if not pal:
         return ''
     cases = ''.join(f'<li><span class="pastille" style="background:{x["hex"]}"></span><span class="pal-n">{e(x.get("nom", ""))}</span><span class="pal-h">{x["hex"].upper()}{(" · " + e(x["role"])) if x.get("role") else ""}</span></li>' for x in pal)
-    return f'<div class="couleurs"><h3>Les couleurs</h3><ul class="nuancier">{cases}</ul><p>{e(d.get("couleurs", ""))}</p></div>'
+    return f'<div class="couleurs"><h3>Les couleurs de la charte dans le signe</h3><ul class="nuancier">{cases}</ul><p>{e(d.get("couleurs", ""))}</p></div>'
 
 
 def piste(n, c):
@@ -83,7 +83,7 @@ def piste(n, c):
   <header class="p-tete"><span class="num" aria-hidden="true">{n}</span><div><h2 id="t{n}"><span class="lu">Piste {n}{NB}: </span>{e(d["titre"])}</h2><p class="idee">{e(d["idee"])}</p>{seconde}</div></header>
   <div class="vues">
     <figure class="vue v-blanc">{svg(f"{c}/logo-slbm.svg", "lockup")}<figcaption>Sur fond blanc</figcaption></figure>
-    <figure class="vue v-olive">{svg(f"{c}/logo-slbm-sombre.svg", "lockup")}<figcaption>Sur fond sombre</figcaption></figure>
+    <figure class="vue v-olive">{svg(f"{c}/logo-slbm-sombre.svg", "lockup")}<figcaption>Sur le vert du site</figcaption></figure>
     <figure class="vue v-vert">{svg(f"{c}/logo-slbm-vertical.svg", "lockup-v")}<figcaption>En hauteur</figcaption></figure>
   </div>
   <div class="dit">
@@ -242,12 +242,12 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
   <section class="brief" aria-labelledby="t-brief">
     <div><h2 id="t-brief">Votre brief</h2>
       <blockquote>«{FINE}Ce qui est important pour ce syndicat, c’est l’image de la défense de la profession, que l’union fait la force, au-delà de la défense de la biologie médicale. Mais effectivement ce syndicat défend en même temps la santé des Français.{FINE}»<span class="qui">Isabelle Eimer, pour le SLBM</span></blockquote>
-      <p class="complement">Vous nous avez aussi dit{NB}: on travaille sur le nom SLBM et sur les couleurs{FINE}; vous voulez six propositions. Vous trouvez le logo actuel «{FINE}hyper pertinent car simple et impactant, et il signifie quelque chose{FINE}»{FINE}; vos collaborateurs le trouvent trop proche de Mastercard.</p></div>
+      <p class="complement">Vous nous avez aussi dit{NB}: on travaille sur le nom SLBM{FINE}; on garde les couleurs de la charte{FINE}; le logo doit rester simple{FINE}; vous voulez six propositions. Vous trouvez le logo actuel «{FINE}hyper pertinent car simple et impactant, et il signifie quelque chose{FINE}»{FINE}; vos collaborateurs le trouvent trop proche de Mastercard.</p></div>
     <div class="lecture"><h2>Ce que le logo doit dire</h2>
       <ul><li><b aria-hidden="true">1</b><span><strong>La défense de la profession.</strong> Un syndicat qui protège et qui se bat.</span></li>
       <li><b aria-hidden="true">2</b><span><strong>L’union fait la force.</strong> Des laboratoires de partout, ensemble.</span></li>
       <li><b aria-hidden="true">3</b><span><strong>La santé des Français.</strong> Ce que la profession défend, au-delà d’elle-même.</span></li></ul>
-      <p class="note">Et comme le logo actuel{NB}: simple, fort, et qui signifie quelque chose. Chaque piste vient avec ses couleurs{FINE}; certaines gardent celles du syndicat, d’autres en proposent de nouvelles. Toutes ont été vérifiées en tout petit, en une couleur et sur fond sombre.</p></div>
+      <p class="note">Et comme le logo actuel{NB}: simple, fort, et qui signifie quelque chose. Les six pistes gardent les couleurs de la charte et restent aussi simples que le logo actuel{NB}: quatre formes au plus, un dessin qu’on refait de mémoire. Toutes ont été vérifiées en tout petit, en une couleur et sur le vert du site.</p></div>
   </section>
   {etat}
   <nav aria-label="Les {len(CLES)} pistes, à côté du logo d’aujourd’hui"><div class="apercus">{apercu}</div></nav>
