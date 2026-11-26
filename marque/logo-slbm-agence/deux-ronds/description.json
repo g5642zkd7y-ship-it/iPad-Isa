@@ -1,17 +1,17 @@
 {
  "key": "deux-ronds",
  "titre": "Vos deux ronds",
- "idee": "Les deux ronds de votre logo, à la même place et aux mêmes couleurs. Le vert reste plein ; le gris est tracé au marqueur, d’un seul geste : on voit où le trait commence et où il s’arrête, en haut à gauche. Là où il rejoint le rond vert, il se remplit de vert foncé.",
- "seconde_lecture": "C’est le trait de votre site : presque la même épaisseur d’un bout à l’autre et deux bouts ronds, comme le trait sous les onglets. C’est aussi le dessin des pastilles : un rond tracé à la main, posé sur un rond vert anis décalé en bas à droite.",
- "defense": "Le signe ne dit pas la défense directement. Il dit ce que dit votre logo actuel : deux forces et ce qu’elles ont en commun.",
- "union": "Seul, le rond gris n’est qu’un trait ; il ne devient plein qu’en rejoignant l’autre. La zone commune est la partie la plus dense du signe : c’est « l’union fait la force » montré tel quel.",
- "sante": "Les deux ronds restent deux cellules, la matière de la biologie médicale. Le signe ne dit pas la santé des Français directement.",
+ "idee": "Les deux ronds de votre logo, à la même place et aux mêmes couleurs. Le vert reste plein ; le gris devient un trait épais, ouvert en haut à gauche, aux deux bouts ronds. Là où il rejoint le rond vert, il se remplit de vert foncé.",
+ "seconde_lecture": "C’est le principe des pastilles du site : un rond tracé, posé sur un rond vert anis décalé en bas à droite. Ici, le trait est plus épais et le rond vert dépasse davantage.",
+ "defense": "Ce signe ne parle pas de défense. Il redit ce que dit votre logo actuel : deux forces et ce qu’elles ont en commun.",
+ "union": "Seul, le rond gris n’est qu’un trait ; la zone commune est sa seule partie pleine. C’est notre façon de dire « l’union fait la force », comme sur votre logo.",
+ "sante": "Deux ronds, deux cellules : la matière de la biologie médicale. La santé des Français n’y figure pas.",
  "couleurs": "Les trois couleurs du logo actuel, rangées de la même façon : le gris en haut à gauche, le vert anis en bas à droite, le vert foncé là où ils se rejoignent. Sur le vert du site : trait blanc, rond vert anis, zone commune vert clair, comme votre logo sur fond sombre. En une couleur, le rond tracé passe devant le rond plein : une fine ligne vide suit son bord et la zone commune reste pleine.",
  "palette": [
   {
    "nom": "gris cellule",
    "hex": "#5E6266",
-   "role": "le rond tracé au marqueur"
+   "role": "le rond tracé"
   },
   {
    "nom": "vert anis",
@@ -39,8 +39,8 @@
    "role": "le signe entier en une couleur"
   }
  ],
- "animation": "À l’ouverture des pages, les deux ronds se rapprochent comme aujourd’hui : le rond gris se trace d’un seul geste, puis la zone commune se remplit de vert foncé quand ils se rejoignent.",
- "a_verifier": "Mastercard : un rond tracé au marqueur et un rond plein, en diagonale, s’en éloignent nettement à nos yeux ; de loin, la zone vert foncé reste pourtant celle de deux ronds qui se chevauchent. À montrer à vos collaborateurs, sans leur dire ce que l’on cherche. Le trait ne se ferme pas : certains y verront un anneau ouvert, ou cassé, plutôt qu’un rond tracé à la main ; on peut aussi y voir une bague et sa pierre, une loupe sans manche et, faiblement, la lettre Q devant le nom. Ce signe et « Bien entouré » ont le même gris, le même vert et la même épaisseur de trait : ce sont deux frères.",
+ "animation": "À l’ouverture des pages, les deux ronds se rapprocheraient comme aujourd’hui : le rond gris se tracerait d’un seul geste, puis la zone commune se remplirait de vert foncé.",
+ "a_verifier": "Mastercard : nos trois lecteurs y ont encore pensé au premier regard, en couleurs. Cette piste reste la plus proche de votre logo et ne règle donc pas la remarque de vos collaborateurs. Le trait ouvert : deux lecteurs y voient un anneau cassé, fâcheux pour un syndicat qui parle d’union ; en noir, une tétine ou une boule de Noël. En tout petit (en-tête du site, onglet du navigateur), l’ouverture ne se voit plus. Le signe doit rester en diagonale, jamais redressé.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }

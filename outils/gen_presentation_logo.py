@@ -10,7 +10,7 @@ trouve le logo actuel « hyper pertinent car simple et impactant, et il signifie
 trop proche de Mastercard.
 Facultatifs : symbole-petit.svg (16 et 32 px, onglet), symbole-blanc.svg (en petit sur le vert du site).
 Le logo actuel au nom SLBM est dans <dossier>/ref/ (symbole-actuel.svg, logo-slbm-actuel.svg).
-Facultatif : <dossier>/presentation.json {"recommandation", "etat" (liste), "etat_titre", "surtitre", "complement", "note"} (textes écrits par nous).
+Facultatif : <dossier>/presentation.json {"recommandation", "etat" (liste), "etat_titre", "surtitre", "complement", "note", "test" (liste : key, voit, gene, defense, union, sante, rang), "test_titre", "test_intro", "test_note", "fin" (liste), "fin_titre", "suite" (liste)} (textes écrits par nous).
 usage : python3 gen_presentation_logo.py <dossier> <sortie.html> <clé1> <clé2> ..."""
 import html, json, os, re, sys
 
@@ -36,6 +36,9 @@ def e(s):
     return html.escape(s, quote=False)
 
 
+MOTS = {64: 'petit', 32: 'très petit', 16: 'minuscule'}
+
+
 def petit(c):
     """Le dessin prévu pour les petites tailles (16 et 32 px), sinon le symbole."""
     return f"{c}/symbole-petit.svg" if os.path.exists(f"{DOS}/{c}/symbole-petit.svg") else f"{c}/symbole.svg"
@@ -45,7 +48,7 @@ def petit_vert(c):
     """En petit sur le vert du site : la version blanche d'une seule couleur, si la piste en a une."""
     if not os.path.exists(f"{DOS}/{c}/symbole-blanc.svg"):
         return ''
-    return ('<span class="sur-vert">' + "".join(f'<span class="taille"><span class="t-img" style="--t:{px}px">{svg(f"{c}/symbole-blanc.svg")}</span><span class="t-n">{px}{NB}px</span></span>' for px in (32, 16))
+    return ('<span class="sur-vert">' + "".join(f'<span class="taille"><span class="t-img" style="--t:{px}px">{svg(f"{c}/symbole-blanc.svg")}</span><span class="t-n">{MOTS[px]}</span></span>' for px in (32, 16))
             + '<span class="t-n sv-n">Sur le vert, en blanc</span></span>')
 
 
@@ -65,7 +68,7 @@ def situations(c):
   <figure class="s-reseau"><div class="reseau" aria-hidden="true"><span class="r-bandeau"></span><span class="r-av">{svg(f"{c}/symbole.svg")}</span><span class="r-nom">SLBM{NB}– Syndicat des Laboratoires de Biologie Médicale</span><span class="r-txt">Syndicat professionnel{NB}· Paris</span></div>
     <figcaption>Les réseaux sociaux</figcaption></figure>
   <figure class="s-petit"><div class="petit" aria-hidden="true">
-    <span class="tailles">{"".join(f'<span class="taille"><span class="t-img" style="--t:{px}px">{svg(f"{c}/symbole.svg" if px > 32 else petit(c))}</span><span class="t-n">{px}{NB}px</span></span>' for px in (64, 32, 16))}</span>
+    <span class="tailles">{"".join(f'<span class="taille"><span class="t-img" style="--t:{px}px">{svg(f"{c}/symbole.svg" if px > 32 else petit(c))}</span><span class="t-n">{MOTS[px]}</span></span>' for px in (64, 32, 16))}</span>
     <span class="onglet"><span class="o-fav">{svg(petit(c))}</span>SLBM{NB}– Accueil</span>
     {petit_vert(c)}
     <span class="mono">{svg(f"{c}/symbole-mono.svg")}<span class="t-n">En une couleur</span></span></div>
@@ -118,12 +121,38 @@ def piste(n, c):
 
 
 COMPLEMENT = f'Vous nous avez aussi dit{NB}: on travaille sur le nom SLBM{FINE}; on garde les couleurs de la charte{FINE}; le logo doit rester simple{FINE}; vous voulez six propositions. Vous trouvez le logo actuel «{FINE}hyper pertinent car simple et impactant, et il signifie quelque chose{FINE}»{FINE}; vos collaborateurs le trouvent trop proche de Mastercard.'
-NOTE = f'Et comme le logo actuel{NB}: simple, fort, et qui signifie quelque chose. Les six pistes gardent les couleurs de la charte. Toutes ont été vérifiées en tout petit, en une couleur et sur le vert du site.'
+NOTE = f'Les six pistes gardent les couleurs de la charte. Toutes sont montrées en tout petit, en une couleur et sur le vert du site.'
 titres = [json.load(open(f'{DOS}/{c}/description.json', encoding='utf-8'))['titre'] for c in CLES]
 apercu = (f'<div class="ap ap-actuel"><span class="ap-img">{svg("ref/symbole-actuel.svg")}</span><span class="ap-n">Aujourd’hui</span></div>'
           + ''.join(f'<a class="ap" href="#piste-{i + 1}"><span class="ap-img">{svg(f"{c}/symbole.svg")}</span><span class="ap-n">{i + 1}. {e(t)}</span></a>' for i, (c, t) in enumerate(zip(CLES, titres))))
 reco = f'''<section class="reco" aria-labelledby="t-reco"><h2 id="t-reco">Notre recommandation</h2><p>{e(PRES["recommandation"])}</p></section>''' if PRES.get('recommandation') else ''
 etat = f'''<section class="etat" aria-labelledby="t-etat"><h2 id="t-etat">{e(PRES.get("etat_titre", "Ce que nous avons regardé avant de dessiner"))}</h2><ul>{"".join(f"<li>{e(x)}</li>" for x in PRES["etat"])}</ul></section>''' if PRES.get('etat') else ''
+fin = f'''<section class="etat" aria-labelledby="t-fin"><h2 id="t-fin">{e(PRES.get("fin_titre", "Ce qui n’est pas vérifié"))}</h2><ul>{"".join(f"<li>{e(x)}</li>" for x in PRES["fin"])}</ul></section>''' if PRES.get('fin') else ''
+SUITE = PRES.get('suite') or [
+    'Vous choisissez une piste, ou deux à pousser plus loin, et vous nous dites ce qu’il faut changer.',
+    f'Nous affinons la piste retenue, puis nous l’essayons sur le site complet{NB}: en-tête, pied de page, animations des pages.',
+    f'Avant toute adoption{NB}: recherche d’antériorité de marque par un conseil en propriété industrielle, puis validation par le bureau.']
+
+
+def test_lecture():
+    """Le test de lecture sans légende : un tableau, une ligne par piste (il se replie en fiches sur téléphone)."""
+    lignes = PRES.get('test')
+    if not lignes:
+        return ''
+    rangs = ''
+    for x in lignes:
+        if x.get('key') not in CLES:
+            continue
+        n = CLES.index(x['key']) + 1
+        rangs += (f'<tr><th scope="row"><a href="#piste-{n}"><span class="tl-img">{svg(x["key"] + "/symbole.svg")}</span><span>{n}. {e(titres[n - 1])}</span></a></th>'
+                  f'<td data-l="Au premier regard">{e(x.get("voit", ""))}</td><td data-l="La lecture gênante">{e(x.get("gene", ""))}</td>'
+                  f'<td data-l="Défense">{e(x.get("defense", ""))}</td><td data-l="Union">{e(x.get("union", ""))}</td><td data-l="Santé">{e(x.get("sante", ""))}</td>'
+                  f'<td data-l="Classement">{e(x.get("rang", ""))}</td></tr>')
+    intro = f'<p>{e(PRES["test_intro"])}</p>' if PRES.get('test_intro') else ''
+    note = f'<p class="tl-note">{e(PRES["test_note"])}</p>' if PRES.get('test_note') else ''
+    return f'''<section class="test" aria-labelledby="t-test"><h2 id="t-test">{e(PRES.get("test_titre", "Le test de lecture"))}</h2>{intro}
+  <table class="tl"><thead><tr><th scope="col">Piste</th><th scope="col">Au premier regard</th><th scope="col">La lecture gênante</th><th scope="col">Défense</th><th scope="col">Union</th><th scope="col">Santé</th><th scope="col">Classement</th></tr></thead><tbody>{rangs}</tbody></table>{note}</section>'''
+
 
 page = f'''<title>Logo du SLBM</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -163,7 +192,19 @@ a:focus-visible{{outline:3px solid var(--vert);outline-offset:3px;border-radius:
 .lecture .note{{font-size:15px;color:var(--gris)}}
 .etat,.reco{{padding:22px clamp(18px,3vw,28px);border-radius:20px}}
 .etat{{background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet)}}
-.etat h2,.reco h2{{font-size:20px;font-weight:800;margin-bottom:8px}}
+.etat h2,.reco h2,.test h2{{font-size:20px;font-weight:800;margin-bottom:8px}}
+.test{{padding:22px clamp(18px,3vw,28px);border-radius:20px;background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet)}}
+.test>p{{max-width:62em}}
+.tl{{width:100%;border-collapse:collapse;margin-top:14px;font-size:15px}}
+.tl th,.tl td{{text-align:left;vertical-align:top;padding:10px 12px 10px 0;border-top:1px solid var(--filet)}}
+.tl thead th{{border-top:0;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--gris);padding-top:0}}
+.tl tbody th{{font-weight:800;color:var(--encre);min-width:150px}}
+.tl tbody th a{{display:inline-flex;align-items:center;gap:10px;color:var(--encre);text-decoration:none}}
+.tl tbody th a:hover span:last-child{{text-decoration:underline}}
+.tl-img svg{{width:40px;height:40px;display:block}}
+.tl td:nth-child(n+4){{white-space:nowrap}}
+.tl td:last-child{{font-weight:700;color:var(--encre)}}
+.tl-note{{margin-top:12px;font-size:14.5px;color:var(--gris)}}
 .etat ul{{padding-left:1.2em;display:flex;flex-direction:column;gap:6px}}
 .reco{{background:var(--olive);color:var(--blanc)}}
 .reco h2{{color:var(--blanc)}}
@@ -186,7 +227,7 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .v-olive{{background:var(--p-sombre,var(--olive))}}
 .v-olive figcaption{{color:var(--blanc)}}
 .lockup{{width:100%;max-width:380px;height:auto;display:block}}
-.lockup-v{{width:100%;max-width:200px;height:auto;display:block}}
+.lockup-v{{width:100%;max-width:260px;height:auto;display:block}}
 .seconde{{font-size:15.5px;margin-top:6px;color:var(--gris)}}
 .seconde strong{{color:var(--encre)}}
 .couleurs{{display:flex;flex-direction:column;gap:12px;padding:14px 16px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--filet)}}
@@ -225,9 +266,10 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .c-nom{{font-weight:900;font-size:15px;color:var(--encre)}}
 .c-fn{{font-size:12px;color:var(--gris);font-weight:600}}
 .c-pied{{margin-top:6px;font-size:9.5px;font-weight:700;color:var(--vert)}}
-.badge{{display:flex;flex-direction:column;align-items:center;gap:2px;max-width:200px;padding-bottom:12px;background:var(--blanc);border-radius:10px;overflow:hidden;box-shadow:0 10px 22px -14px rgba(46,50,54,.45);text-align:center}}
+.badge{{display:flex;flex-direction:column;align-items:center;gap:2px;width:176px;max-width:100%;padding-bottom:12px;background:var(--blanc);border-radius:10px;overflow:hidden;box-shadow:0 10px 22px -14px rgba(46,50,54,.45);text-align:center}}
 .b-tete{{display:grid;place-items:center;width:100%;padding:14px 0;background:var(--p-sombre,var(--olive));margin-bottom:10px}}
 .b-sym{{width:54px;height:54px;display:block}}
+.b-nom,.b-fn{{padding:0 12px}}
 .b-nom{{font-weight:900;font-size:16px;color:var(--encre)}}
 .b-fn{{font-size:12.5px;color:var(--gris);font-weight:600}}
 .b-pied{{margin-top:8px;font-weight:900;font-size:13px;letter-spacing:.06em;color:var(--vert)}}
@@ -254,6 +296,8 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .suite{{padding:22px clamp(18px,3vw,28px);border-radius:20px;background:var(--vert-clair);color:var(--encre)}}
 .suite h2{{font-size:20px;font-weight:800;margin-bottom:8px}}
 .suite ul{{padding-left:1.2em;display:flex;flex-direction:column;gap:6px}}
+@media (max-width:900px){{.tl thead{{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}.tl,.tl tbody,.tl tr,.tl th,.tl td{{display:block}}.tl tr{{padding:12px 0;border-top:1px solid var(--filet)}}.tl th,.tl td{{border:0;padding:3px 0}}.tl td:nth-child(n+4){{white-space:normal}}.tl td::before{{content:attr(data-l) "\\00a0: ";font-weight:700;color:var(--gris)}}.tl tbody th{{margin-bottom:4px}}}}
+@media (max-width:560px){{.apercus{{grid-template-columns:repeat(2,minmax(0,1fr))}}.ap-actuel{{grid-column:1 / -1;flex-direction:row;justify-content:center;padding-block:6px}}.ap-actuel .ap-img svg{{width:56px;height:56px}}}}
 @media (max-width:980px){{.vues{{grid-template-columns:repeat(2,minmax(0,1fr))}}.v-vert{{grid-column:1 / -1}}.situ{{grid-template-columns:repeat(4,minmax(0,1fr))}}.s-lettre{{grid-row:auto}}.brief{{grid-template-columns:minmax(0,1fr)}}}}
 @media (max-width:700px){{.st-onglets{{display:none}}.dit,.bas{{grid-template-columns:minmax(0,1fr)}}.situ{{grid-template-columns:repeat(2,minmax(0,1fr))}}.s-lettre,.s-carte,.s-badge,.s-reseau,.s-petit{{grid-column:span 1}}.s-petit{{grid-column:1 / -1}}}}
 @media (max-width:560px){{.vues{{grid-template-columns:minmax(0,1fr)}}.p-tete h2{{font-size:22px}}.num{{width:40px;height:40px;font-size:20px}}.st-btn{{padding:6px 14px;font-size:15px}}.situ{{padding:12px;gap:14px}}.s-lettre,.s-carte,.s-badge,.s-reseau{{grid-column:1 / -1}}.lettre{{max-width:260px}}.carte{{max-width:320px}}}}
@@ -263,27 +307,25 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
     <p class="surtitre">{e(PRES.get("surtitre", "Proposition de l’agence"))}</p>
     <h1>Logo du SLBM</h1>
   </header>
+  <nav aria-label="Les {len(CLES)} pistes, à côté du logo d’aujourd’hui"><div class="apercus">{apercu}</div></nav>
   <section class="brief" aria-labelledby="t-brief">
-    <div><h2 id="t-brief">Votre brief</h2>
+    <div><h2 id="t-brief">Votre demande</h2>
       <blockquote>«{FINE}Ce qui est important pour ce syndicat, c’est l’image de la défense de la profession, que l’union fait la force, au-delà de la défense de la biologie médicale. Mais effectivement ce syndicat défend en même temps la santé des Français.{FINE}»<span class="qui">Isabelle Eimer, pour le SLBM</span></blockquote>
       <p class="complement">{e(PRES.get("complement", COMPLEMENT))}</p></div>
     <div class="lecture"><h2>Ce que le logo doit dire</h2>
-      <ul><li><b aria-hidden="true">1</b><span><strong>La défense de la profession.</strong> Un syndicat qui protège et qui se bat.</span></li>
-      <li><b aria-hidden="true">2</b><span><strong>L’union fait la force.</strong> Des laboratoires de partout, ensemble.</span></li>
-      <li><b aria-hidden="true">3</b><span><strong>La santé des Français.</strong> Ce que la profession défend, au-delà d’elle-même.</span></li></ul>
+      <ul><li><b aria-hidden="true">1</b><span><strong>La défense de la profession.</strong></span></li>
+      <li><b aria-hidden="true">2</b><span><strong>L’union fait la force.</strong></span></li>
+      <li><b aria-hidden="true">3</b><span><strong>La santé des Français</strong>, que le syndicat défend en même temps.</span></li></ul>
       <p class="note">{e(PRES.get("note", NOTE))}</p></div>
   </section>
   {etat}
-  <nav aria-label="Les {len(CLES)} pistes, à côté du logo d’aujourd’hui"><div class="apercus">{apercu}</div></nav>
+  {test_lecture()}
   {"".join(piste(i + 1, c) for i, c in enumerate(CLES))}
   {reco}
+  {fin}
   <section class="suite" aria-labelledby="t-suite">
     <h2 id="t-suite">Et ensuite</h2>
-    <ul>
-      <li>Vous choisissez une piste, ou deux à pousser plus loin, et vous nous dites ce qu’il faut changer.</li>
-      <li>Nous affinons la piste retenue, puis nous l’essayons sur le site complet{NB}: en-tête, pied de page, animations des pages.</li>
-      <li>Avant toute adoption{NB}: recherche d’antériorité de marque par un conseil en propriété industrielle, puis validation par le bureau.</li>
-    </ul>
+    <ul>{"".join(f"<li>{e(x)}</li>" for x in SUITE)}</ul>
   </section>
 </main>
 '''

@@ -2,10 +2,10 @@
  "key": "accroche",
  "titre": "Tenir ensemble",
  "idee": "Vos deux ronds, gris en haut à gauche et vert en bas à droite, s’ouvrent et s’accrochent l’un à l’autre : le bras de chacun passe par-dessus l’autre et se referme sur ce qu’ils ont en commun, en vert foncé.",
- "seconde_lecture": "C’est la piste la plus proche de votre logo, donc la plus géométrique des six : les ronds restent de vrais ronds, ce sont les deux fentes blanches qui les font s’accrocher.",
- "defense": "Les deux ronds se referment sur ce qu’ils ont en commun et le gardent au milieu, à l’abri. La défense est dite par ce geste, sans bouclier.",
- "union": "C’est le sujet du signe : deux formes qui se tiennent l’une l’autre, aucune ne peut partir sans l’autre. La zone commune est soudée aux deux.",
- "sante": "Le signe ne dit pas la santé directement. On peut lire, au centre, ce que la profession protège : c’est une lecture, pas une image.",
+ "seconde_lecture": "C’est la plus géométrique des six : les ronds restent de vrais ronds, ce sont deux fentes blanches qui les font s’accrocher. Nos trois lecteurs y ont lu un S, celui de syndicat et de SLBM.",
+ "defense": "Les deux ronds se referment sur ce qu’ils ont en commun et le gardent au milieu. La défense passe par ce geste, sans bouclier.",
+ "union": "Deux formes qui se tiennent : aucune ne peut partir sans l’autre. C’est le sujet du signe.",
+ "sante": "La santé n’est pas montrée. Au centre, on peut voir ce que la profession protège.",
  "couleurs": "Les trois couleurs du logo actuel, à la même place. Sur le vert du site : rond gris en blanc, rond vert en vert anis, zone commune en vert clair. En une couleur, deux traits fins cernent la zone commune ; pour toute impression sans couleur, prendre cette version et non une conversion en gris, où le gris et le vert foncé se confondent.",
  "palette": [
   {
@@ -39,8 +39,8 @@
    "role": "le signe entier en une couleur"
   }
  ],
- "animation": "À l’ouverture des pages, les deux ronds se rapprochent comme aujourd’hui, puis chacun passe un bras par-dessus l’autre : les deux fentes blanches s’ouvrent et la zone commune apparaît.",
- "a_verifier": "Deux virgules tête-bêche : il reste un air de yin et yang, surtout en une couleur. Au centre, on peut voir une amande ou le noyau d’un fruit. À 16 px, les fentes ne sont plus que deux encoches et l’on revoit presque le logo actuel : il faudra un dessin simplifié pour l’onglet du navigateur.",
+ "animation": "À l’ouverture des pages, les deux ronds se rapprocheraient comme aujourd’hui, puis chacun passerait un bras par-dessus l’autre : les deux fentes blanches s’ouvriraient et la zone commune apparaîtrait.",
+ "a_verifier": "Le yin et le yang : nos trois lecteurs l’ont vu, et deux d’entre eux notent qu’il évoque les médecines douces plutôt que la science. En une couleur, deux virgules tête-bêche, qui prêtent à une plaisanterie grivoise ; chacune est un rond terminé par une pointe. Au centre, une amande ou un œil. En tout petit, les fentes ne sont plus que deux encoches et l’on revoit presque le logo actuel : il faudra un dessin simplifié pour l’onglet du navigateur.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }

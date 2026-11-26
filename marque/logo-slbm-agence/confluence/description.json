@@ -1,12 +1,12 @@
 {
  "key": "confluence",
  "titre": "La confluence",
- "idee": "Deux traits de pinceau, un gris et un vert anis, partent chacun de leur côté et se rejoignent. Ils continuent en un seul trait vert foncé, bien plus épais que chacun des deux, tourné vers le nom. Le trait gris est long et couché, le vert anis plus court et plus raide.",
- "seconde_lecture": "Ce sont les trois couleurs de votre logo et la même idée de zone commune : le vert foncé, là où le gris et le vert anis sont réunis. Ici, la partie commune n’est plus un simple recouvrement : c’est la plus forte des trois. Un biologiste peut aussi y reconnaître, couché, le Y par lequel on dessine les anticorps, qui défendent l’organisme ; avec ses deux traits inégaux, ce n’est pas un schéma : à vous de nous dire si cette lecture vous paraît juste.",
- "defense": "Le signe ne montre pas un bouclier : il montre une force qui avance. Pour un biologiste, le Y de l’anticorps y ajoute l’idée de défense.",
- "union": "C’est « l’union fait la force » dessiné tel quel : deux traits en font un seul, bien plus épais que chacun. C’est le signe le plus direct des six sur ce point.",
- "sante": "Le signe ne dit pas la santé directement, sauf par la lecture de l’anticorps, que seuls les professionnels feront.",
- "couleurs": "Les trois couleurs du logo : le gris et le vert anis pour les deux traits, le vert foncé pour le trait commun. Sur le vert du site, le trait commun passe en blanc, comme le nom, et les deux traits en vert clair, séparés du trait commun par une fine ligne. En une couleur, la même ligne vide marque l’endroit où les deux traits se rejoignent.",
+ "idee": "Deux traits aux bouts arrondis, un gris et un vert anis, partent chacun de leur côté et se rejoignent. Ils continuent en un seul trait vert foncé, bien plus épais que chacun des deux.",
+ "seconde_lecture": "Ce sont les trois couleurs de votre logo et la même idée de zone commune : le vert foncé, là où le gris et le vert anis sont réunis. Ici, la partie commune est la plus forte des trois.",
+ "defense": "Ce signe ne parle pas de défense : il montre deux forces qui n’en font plus qu’une.",
+ "union": "Deux traits en font un seul, plus épais que chacun : c’est l’idée la plus proche de « l’union fait la force ».",
+ "sante": "La santé n’y figure pas. Un biologiste y verra peut-être le Y par lequel on dessine les anticorps : à vous de nous le dire.",
+ "couleurs": "Les trois couleurs du logo : le gris et le vert anis pour les deux traits, le vert foncé pour le trait commun. Sur le vert du site, le trait commun passe en blanc, comme le nom, et les deux traits en vert clair. En une couleur, de fines lignes vides séparent les trois traits : le signe est alors en trois morceaux.",
  "palette": [
   {
    "nom": "gris cellule",
@@ -39,8 +39,8 @@
    "role": "le signe entier en une couleur"
   }
  ],
- "animation": "À l’ouverture des pages, les deux traits se tracent en même temps, chacun de son côté, se rejoignent, puis le trait commun avance vers le nom.",
- "a_verifier": "On peut y voir un Y couché, une hélice ou un lance-pierre. Dans le premier dessin, notre contrôle lisait aussi une fusée ou une fléchette qui file vers le nom, ce qui tombe mal puisque le sigle SLBM désigne aussi un missile : les deux traits sont maintenant inégaux pour l’éviter. Debout, on pourrait y lire un col ouvert : nous le présentons toujours couché, tourné vers le nom. Le logo actuel de Synlab, fait de traits, n’a pas pu être comparé : à regarder avant de choisir.",
+ "animation": "À définir avec le nouveau dessin.",
+ "a_verifier": "Dessin à refaire. Nos trois lecteurs l’ont classé dernier. Ils y voient une hélice ou un Y couché, et surtout un engin à nez rond avec deux ailettes, pointé vers le nom : un missile, à côté d’un sigle qui en désigne déjà un. En noir et sur le vert, deux d’entre eux relèvent aussi une lecture grivoise. Nous gardons l’idée, deux traits qui n’en font qu’un, et nous préparons un autre dessin.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }

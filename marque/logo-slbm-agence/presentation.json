@@ -1,16 +1,86 @@
 {
  "surtitre": "Proposition de l’agence, après vos retours",
- "etat_titre": "Ce que vous nous avez dit, et ce que nous avons changé",
+ "etat_titre": "Vos retours, et ce que nous en avons fait",
  "etat": [
-  "« Bof », puis « mon petit frère aurait pu les faire » : le premier jeu était fait au compas et à la règle. Nous sommes repartis du dessin : des traits tracés, pleins d’un côté et fins de l’autre, qu’on ne refait pas en deux minutes avec des ronds et des rectangles.",
-  "« On n’est pas dans les cravates » : chaque signe a été regardé à l’envers, tourné, en noir et en flou, pour chercher ce qu’on pourrait y voir sans le vouloir. Ce que nous avons trouvé est écrit sous chaque piste, à la ligne « À vérifier ».",
-  "« Ça ressemble à Biogroup avec sa goutte » : il n’y a plus aucune goutte, ni rien qui y ressemble.",
-  "Un contrôle indépendant a ensuite relu les six signes. Il en a jugé deux bons à montrer (1 et 3) et nous en a fait reprendre quatre : le rond gris de la piste 2 est redevenu un vrai trait de marqueur, l’aile (4) ne montre plus trois griffes, les deux traits de la confluence (5) sont devenus inégaux, et l’on voit de nouveau où part le marqueur sur le bouclier (6). Ces quatre reprises n’ont pas encore été relues par un regard extérieur.",
-  "Vous trouvez le logo actuel « hyper pertinent » : trois pistes partent de vos deux ronds (1, 2 et 3), trois sont nouvelles (4, 5 et 6). Toutes gardent les couleurs de la charte.",
-  "Écartés en cours de route, après un jury interne : le microscope (déjà présent dans les logos d’autres organisations de biologistes), la loupe (le bouton « rechercher »), le stéthoscope (l’outil du médecin) et les lettres dessinées.",
-  "La santé des Français : aucun des six signes ne la montre directement, puisque les signes qui la montraient ont été écartés. Elle passe par ce que chaque signe entoure ou protège, et par la devise.",
-  "Ce que nous n’avons pas pu faire : comparer les six signes aux logos actuels de Biogroup, Cerballiance, Unilabs et Synlab, dont les sites ne sont pas accessibles depuis notre atelier. C’est à faire d’un coup d’œil, par vous ou vos collaborateurs, avant de choisir."
+  "« Bof », puis « mon petit frère aurait pu les faire » : le premier jeu était fait au compas et à la règle. Les pistes 1, 4 et 6 sont maintenant tracées à la main. Les pistes 2 et 3 gardent vos deux ronds, donc leur géométrie : nous les montrons parce que vous tenez au logo actuel. La piste 5 est à refaire.",
+  "« On n’est pas dans les cravates » : chaque signe a été regardé à l’envers, tourné, en noir et en petit, puis montré sans légende à trois lecteurs. Ce qu’ils y ont vu, y compris ce qui prête à sourire, est écrit dans le tableau ci-dessous et sous chaque piste, à la ligne « À vérifier ».",
+  "« Ça ressemble à Biogroup avec sa goutte » : aucun signe n’est une goutte. Deux s’en approchent quand on les retourne ou qu’on les regarde en une couleur : le bouclier (6) et les deux virgules de la piste 3. C’est écrit sous ces pistes."
  ],
- "note": "Et comme le logo actuel : simple, fort, et qui signifie quelque chose. Les six pistes gardent les couleurs de la charte. Toutes ont été vérifiées en tout petit, en une couleur et sur le vert du site.",
- "recommandation": "Notre préférence va à la piste 1, « Bien entouré » : c’est le signe le plus dessiné, celui que notre jury interne puis notre contrôle ont le mieux noté, et il dit à la fois la défense (entourer, c’est protéger) et le collectif autour de chacun, en gardant votre rond vert. Pour rester au plus près du logo actuel tout en répondant à la remarque sur Mastercard : la piste 2, « Vos deux ronds ». Si le bureau veut que la défense se voie au premier regard : la piste 6, le bouclier. Rien ne change sur le site : il garde ses deux ronds tant que le bureau n’a pas décidé."
+ "test_titre": "Ce que trois lecteurs y ont vu, sans légende",
+ "test_intro": "Nous avons montré les six signes à trois lecteurs sans leur dire ce qu’ils représentent : un passant, un biologiste membre d’un bureau syndical et un collègue moqueur, chargé de trouver la lecture qui fait rire. Ce sont des assistants automatiques de l’agence, pas des personnes : leur regard ne remplace pas celui de vos collaborateurs.",
+ "test": [
+  {
+   "key": "entoure",
+   "voit": "Une boule verte entourée d’un coup de pinceau gris : « quelque chose de protégé ». Aussi un œil, une arobase.",
+   "gene": "Faible : en noir, une cible à côté du sigle ; tourné, un escargot.",
+   "defense": "oui",
+   "union": "en partie",
+   "sante": "non",
+   "rang": "1er pour les trois"
+  },
+  {
+   "key": "deux-ronds",
+   "voit": "Deux ronds qui se chevauchent : les trois pensent d’abord à Mastercard, puis à un anneau cassé.",
+   "gene": "Moyenne : en noir, une tétine ou une boule de Noël ; un maillon cassé, pour un syndicat qui parle d’union.",
+   "defense": "non",
+   "union": "oui",
+   "sante": "non",
+   "rang": "4e ou 5e"
+  },
+  {
+   "key": "accroche",
+   "voit": "Un S fait de deux croissants qui s’emboîtent ; deux mains qui s’accrochent ; un yin et yang.",
+   "gene": "Moyenne : le yin et le yang ; en noir, deux virgules tête-bêche.",
+   "defense": "en partie",
+   "union": "oui",
+   "sante": "non",
+   "rang": "2e pour les trois"
+  },
+  {
+   "key": "aile",
+   "voit": "Une aile ou une feuille ; aussitôt après, un casque de vélo. « C’est joli, mais je ne sais pas ce que c’est. »",
+   "gene": "Moyenne : une moule, une mèche gominée ; sur le vert, un taco.",
+   "defense": "en partie",
+   "union": "en partie",
+   "sante": "non",
+   "rang": "4e ou 5e"
+  },
+  {
+   "key": "confluence",
+   "voit": "Une hélice à trois pales, un Y couché, une flèche qui pointe à droite.",
+   "gene": "Moyenne : un missile à côté du sigle SLBM ; en noir, une lecture grivoise.",
+   "defense": "non",
+   "union": "oui",
+   "sante": "non",
+   "rang": "dernier pour les trois"
+  },
+  {
+   "key": "bouclier",
+   "voit": "Un bouclier tracé au feutre devant un rond vert : « protection », compris tout de suite.",
+   "gene": "Faible à moyenne : le logo d’un antivirus ou d’une mutuelle ; un gland ; le « bouclier antimissile ».",
+   "defense": "oui",
+   "union": "non",
+   "sante": "en partie",
+   "rang": "3e pour les trois"
+  }
+ ],
+ "test_note": "Les colonnes « défense », « union » et « santé » sont notre avis, pas celui des lecteurs. Aucun des six signes ne montre la santé des Français.",
+ "fin_titre": "Ce que nous avons écarté, et ce qui n’est pas vérifié",
+ "fin": [
+  "Écartés après un premier tri : le microscope (déjà présent dans les logos d’autres organisations de biologistes), la loupe (le bouton « rechercher »), le stéthoscope (l’outil du médecin), les lettres dessinées et toutes les gouttes.",
+  "La santé des Français : aucun signe ne la montre. Dans les pistes 1, 3, 4 et 6, on peut la voir dans ce que le signe entoure ou protège ; les pistes 2 et 5 ne la disent pas. Elle reste portée par la devise du syndicat, « Défendre la biologie, défendre les patients ».",
+  "Les logos actuels de Biogroup, Cerballiance, Unilabs et Synlab : nous n’avons pas pu les ouvrir depuis notre poste de travail. La comparaison reste à faire avant de choisir.",
+  "Mastercard : nous avons comparé de mémoire, sans le logo officiel sous les yeux.",
+  "Les relectures et le test de lecture sont faits par des assistants automatiques, pas par des personnes.",
+  "Aucune recherche de marques déposées n’a été faite.",
+  "Les animations décrites sous chaque piste sont des intentions : aucune n’est réalisée."
+ ],
+ "suite": [
+  "Avant de choisir : poser les six signes à côté des logos de Biogroup, Cerballiance, Unilabs, Synlab et de la FBM, et les montrer à vos collaborateurs sans leur dire ce que l’on cherche.",
+  "Vous choisissez une piste, ou deux à pousser plus loin, et vous nous dites ce qu’il faut changer.",
+  "Nous affinons la piste retenue, puis nous l’essayons sur le site complet : en-tête, pied de page, animations des pages.",
+  "Avant toute adoption : faire vérifier par un spécialiste des marques qu’aucun logo déposé ne lui ressemble, puis validation par le bureau."
+ ],
+ "note": "Les six pistes gardent les couleurs de la charte. Toutes sont montrées en tout petit, en une couleur et sur le vert du site ; ce qui ne tient pas à cette taille est écrit sous chaque piste.",
+ "recommandation": "Notre préférence va à la piste 1, « Bien entouré » : c’est la mieux notée à la relecture et la première des trois lecteurs, qui y voient « quelque chose de protégé ». Elle garde votre rond vert, et aucun des trois n’a pensé à Mastercard. Il reste à la poser à côté du logo de la FBM. Vient ensuite la piste 3, « Tenir ensemble », deuxième pour les trois lecteurs, si son air de yin et yang ne vous gêne pas. Si le bureau veut que la défense se voie au premier regard : la piste 6, le bouclier, dont nous reprenons le trait. La piste 2 reste la plus proche de votre logo, mais nos lecteurs y voient encore Mastercard. Rien ne change sur le site : il garde ses deux ronds tant que le bureau n’a pas décidé."
 }
