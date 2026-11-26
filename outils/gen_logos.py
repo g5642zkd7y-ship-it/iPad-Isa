@@ -4,11 +4,20 @@ et plus impactants, les deux ronds ressemblent à Mastercard ».
 Chaque piste est dans un dossier <logos>/<clé>/ : symbole.svg, symbole-sombre.svg, symbole-mono.svg, logo-slbc.svg,
 logo-slbc-sombre.svg, logo-slbm.svg, description.json (titre, idee, plus_fort, mastercard, animation, a_verifier).
 Le logo actuel est dans <logos>/actuel/. Le site et le logo validé ne changent pas.
-usage : python3 gen_logos.py <dossier logos> <sortie.html> <clé1> <clé2> ..."""
+Une autre planche peut changer le titre, l'introduction, les rubriques de texte et la fin avec --conf=<fichier.json>
+(clés facultatives : title, h1, intro, actuel, sections [[champ, intitulé], …], suite ; textes en HTML, écrits par nous).
+usage : python3 gen_logos.py <dossier logos> <sortie.html> [--conf=<fichier.json>] <clé1> <clé2> ..."""
 import html, json, os, re, sys
 
-DOS, OUT, CLES = sys.argv[1], sys.argv[2], sys.argv[3:]
+DOS, OUT = sys.argv[1], sys.argv[2]
+CONF = {}
+for a in sys.argv[3:]:
+    if a.startswith('--conf='):
+        CONF = json.load(open(a[7:], encoding='utf-8'))
+CLES = [a for a in sys.argv[3:] if not a.startswith('--')]
 NB, FINE = ' ', ' '
+SECTIONS = CONF.get('sections', [['plus_fort', 'Pourquoi plus fort'], ['mastercard', f'Et Mastercard{FINE}?'],
+                                 ['animation', 'À l’ouverture des pages'], ['a_verifier', 'À vérifier']])
 compteur = [0]
 
 
@@ -75,10 +84,7 @@ def proposition(n, cle):
   {entete(cle)}
   {petits(cle)}
   <div class="textes">
-    <div><h3>Pourquoi plus fort</h3><p>{e(d["plus_fort"])}</p></div>
-    <div><h3>Et Mastercard{FINE}?</h3><p>{e(d["mastercard"])}</p></div>
-    <div><h3>À l’ouverture des pages</h3><p>{e(d["animation"])}</p></div>
-    <div><h3>À vérifier</h3><p>{e(d["a_verifier"])}</p></div>
+    {"".join(f'<div><h3>{h}</h3><p>{e(d[c])}</p></div>' for c, h in SECTIONS if d.get(c))}
   </div>
   <figure class="vue v-slbm">{svg(cle, "logo-slbm.svg", "lockup lockup-slbm")}<figcaption>Au nom SLBM, si le bureau retient ce nom</figcaption></figure>
 </section>'''
@@ -87,7 +93,15 @@ def proposition(n, cle):
 props = [proposition(i + 1, c) for i, c in enumerate(CLES)]
 apercu = f'<div class="ap ap-actuel"><span class="ap-img">{svg("actuel", "symbole.svg")}</span><span class="ap-n">Aujourd’hui</span></div>' + ''.join(f'<a class="ap" href="#p{i + 1}"><span class="ap-img">{svg(c, "symbole.svg")}</span><span class="ap-n">{i + 1}. {e(json.load(open(f"{DOS}/{c}/description.json", encoding="utf-8"))["titre"])}</span></a>' for i, c in enumerate(CLES))
 
-page = f'''<title>Propositions de logo SLBC</title>
+INTRO = CONF.get('intro', f'''Vous avez écrit{NB}: <span class="citation">«{FINE}les deux ronds ressemblent à Mastercard{FINE}»</span>, et demandé des logos un peu moins simples et plus impactants. Voici {len(CLES)} pistes. Toutes gardent les couleurs du SLBC et la police Nunito{FINE}; seul le symbole change. Chacune a été vérifiée en tout petit, en une couleur et sur le vert du site, puis relue deux fois. Deux autres pistes, une plaque de laboratoire et une bulle de parole, ont été écartées{NB}: on ne les reconnaissait plus en petit. Le site n’est pas modifié.''')
+ACTUEL = CONF.get('actuel', [f'Ce qui reste dans toutes les pistes{NB}: le vert anis de l’ancien logo, le gris, le vert foncé, le nom en Nunito très gras et la signature sur deux lignes.',
+                             f'Ce qui change{NB}: le symbole, pour qu’il ait plus de caractère et qu’on ne pense plus à une carte bancaire.'])
+SUITE = CONF.get('suite', ['Dites-moi la ou les propositions qui vous plaisent, et ce qu’il faudrait changer.',
+                           f'Le logo choisi remplacera les deux ronds partout{NB}: en-tête, pied de page, petites signatures animées au-dessus des titres, séparateurs entre les rubriques, charte graphique.',
+                           'Avant de l’adopter, faire vérifier par un graphiste ou un conseil en propriété industrielle qu’il ne ressemble pas à une marque déjà déposée, puis le faire valider par le bureau.'])
+TITLE, H1 = CONF.get('title', 'Propositions de logo SLBC'), CONF.get('h1', 'Propositions de logo')
+
+page = f'''<title>{TITLE}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -175,25 +189,20 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 </style>
 <main class="page">
   <header class="titre">
-    <h1>Propositions de logo</h1>
-    <p>Vous avez écrit{NB}: <span class="citation">«{FINE}les deux ronds ressemblent à Mastercard{FINE}»</span>, et demandé des logos un peu moins simples et plus impactants. Voici {len(CLES)} pistes. Toutes gardent les couleurs du SLBC et la police Nunito{FINE}; seul le symbole change. Chacune a été vérifiée en tout petit, en une couleur et sur le vert du site, puis relue deux fois. Deux autres pistes, une plaque de laboratoire et une bulle de parole, ont été écartées{NB}: on ne les reconnaissait plus en petit. Le site n’est pas modifié.</p>
+    <h1>{H1}</h1>
+    <p>{INTRO}</p>
   </header>
   <section class="actuel" aria-labelledby="t-actuel">
     <div>{svg("actuel", "logo-slbc.svg", "lockup")}</div>
     <div><h2 id="t-actuel">Le logo d’aujourd’hui</h2>
     <p>Deux ronds qui se chevauchent, le gris et le vert anis, la zone commune en vert foncé.</p>
-    <ul><li>Ce qui reste dans toutes les pistes{NB}: le vert anis de l’ancien logo, le gris, le vert foncé, le nom en Nunito très gras et la signature sur deux lignes.</li>
-    <li>Ce qui change{NB}: le symbole, pour qu’il ait plus de caractère et qu’on ne pense plus à une carte bancaire.</li></ul></div>
+    <ul>{"".join(f'<li>{x}</li>' for x in ACTUEL)}</ul></div>
   </section>
   <nav aria-label="Les {len(CLES)} propositions, à côté du logo d’aujourd’hui"><div class="apercus">{apercu}</div></nav>
   {"".join(props)}
   <section class="suite" aria-labelledby="t-suite">
     <h2 id="t-suite">Et ensuite</h2>
-    <ul>
-      <li>Dites-moi la ou les propositions qui vous plaisent, et ce qu’il faudrait changer.</li>
-      <li>Le logo choisi remplacera les deux ronds partout{NB}: en-tête, pied de page, petites signatures animées au-dessus des titres, séparateurs entre les rubriques, charte graphique.</li>
-      <li>Avant de l’adopter, faire vérifier par un graphiste ou un conseil en propriété industrielle qu’il ne ressemble pas à une marque déjà déposée, puis le faire valider par le bureau.</li>
-    </ul>
+    <ul>{"".join(f'<li>{x}</li>' for x in SUITE)}</ul>
   </section>
 </main>
 '''
