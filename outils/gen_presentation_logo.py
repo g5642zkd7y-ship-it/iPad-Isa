@@ -276,6 +276,7 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .c-nom{{font-weight:900;font-size:15px;color:var(--encre)}}
 .c-fn{{font-size:12px;color:var(--gris);font-weight:600}}
 .c-pied{{margin-top:6px;font-size:9.5px;font-weight:700;color:var(--vert)}}
+@supports (width:1cqi){{.carte{{container-type:inline-size}}.c-nom{{font-size:min(15px,6.2cqi)}}.c-fn{{font-size:min(12px,4.95cqi)}}.c-pied{{font-size:min(9.5px,3.85cqi);white-space:nowrap}}}}
 .badge{{display:flex;flex-direction:column;align-items:center;gap:2px;width:176px;max-width:100%;padding-bottom:12px;background:var(--blanc);border-radius:10px;overflow:hidden;box-shadow:0 10px 22px -14px rgba(46,50,54,.45);text-align:center}}
 .b-tete{{display:grid;place-items:center;width:100%;padding:14px 0;background:var(--p-sombre,var(--olive));margin-bottom:10px}}
 .b-sym{{width:54px;height:54px;display:block}}
@@ -316,6 +317,7 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .vers-reco{{margin-top:10px;text-align:right;font-weight:700}}
 .vers-reco a{{color:var(--vert);display:inline-block;padding:10px 0}}
 .dit p,.bas p,.idee,.seconde,.couleurs p,.etat li,.suite li,.reco p,.test>p,.tl td,.tl-note,.complement{{text-wrap:pretty}}
+@media (max-width:720px){{.st-onglets{{display:none}}}}
 @media (max-width:359px){{.site-tete{{gap:10px;padding:10px 12px}}.st-logo{{gap:8px}}.st-mark{{width:28px;height:28px}}.st-mot{{font-size:21px}}.st-btn{{padding:6px 12px;font-size:15px}}}}
 </style>
 <main class="page">
