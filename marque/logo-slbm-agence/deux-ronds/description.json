@@ -4,7 +4,7 @@
  "idee": "Les deux ronds de votre logo, à la même place et aux mêmes couleurs. Le vert reste plein ; le gris devient un trait épais, ouvert en haut à gauche, aux deux bouts ronds. Là où il rejoint le rond vert, il se remplit de vert foncé.",
  "seconde_lecture": "C’est le principe des pastilles du site : un rond tracé, posé sur un rond vert anis décalé en bas à droite. Ici, le trait est plus épais et le rond vert dépasse davantage.",
  "defense": "Ce signe ne parle pas de défense. Il redit ce que dit votre logo actuel : deux forces et ce qu’elles ont en commun.",
- "union": "Seul, le rond gris n’est qu’un trait ; la zone commune est sa seule partie pleine. C’est notre façon de dire « l’union fait la force », comme sur votre logo.",
+ "union": "Notre intention : seul, le rond gris n’est qu’un trait ; la zone commune est sa seule partie pleine. Sans légende, nos trois lecteurs ne lisent l’union qu’un peu, et pour l’un d’eux l’anneau ouvert la contredit.",
  "sante": "Deux ronds, deux cellules : la matière de la biologie médicale. La santé des Français n’y figure pas.",
  "couleurs": "Les trois couleurs du logo actuel, rangées de la même façon : le gris en haut à gauche, le vert anis en bas à droite, le vert foncé là où ils se rejoignent. Sur le vert du site : trait blanc, rond vert anis, zone commune vert clair, comme votre logo sur fond sombre. En une couleur, le rond tracé passe devant le rond plein : une fine ligne vide suit son bord et la zone commune reste pleine.",
  "palette": [
@@ -40,7 +40,7 @@
   }
  ],
  "animation": "À l’ouverture des pages, les deux ronds se rapprocheraient comme aujourd’hui : le rond gris se tracerait d’un seul geste, puis la zone commune se remplirait de vert foncé.",
- "a_verifier": "Mastercard : nos trois lecteurs y pensent au premier regard. Cette piste reste la plus proche de votre logo et ne règle donc pas la remarque de vos collaborateurs. Le trait ouvert : les trois y voient un anneau cassé ou pas fini, fâcheux pour un syndicat qui parle d’union. En noir, une tétine, un hochet ou, pour le lecteur moqueur, une grenade et sa goupille. En tout petit (en-tête du site, onglet du navigateur), l’ouverture ne se voit plus et l’on revoit deux ronds. Le signe doit rester en diagonale, jamais redressé.",
+ "a_verifier": "Mastercard : nos trois lecteurs le citent, deux dès le premier regard (« Mastercard en vert et gris »), le troisième surtout en petit. Cette piste reste la plus proche de votre logo et ne règle donc pas la remarque de vos collaborateurs. Le trait ouvert : les trois y voient un anneau cassé ou pas fini, fâcheux pour un syndicat qui parle d’union ; deux, une menotte ouverte. En noir, une tétine ou un hochet ; pour le lecteur moqueur, une grenade et sa goupille ou un boulet de bagnard. Deux lecteurs sur trois ne le trouvent pas dessiné à la main : ils parlent de « formes toutes faites ». En tout petit (onglet du navigateur), l’ouverture n’est plus qu’une encoche et l’on revoit surtout deux ronds ; dans l’en-tête du site, elle se voit encore. Le signe doit rester en diagonale, jamais redressé.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }

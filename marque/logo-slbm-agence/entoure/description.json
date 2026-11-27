@@ -1,12 +1,12 @@
 {
  "key": "entoure",
  "titre": "Bien entouré",
- "idee": "Un rond vert anis, plein, entouré d’un seul geste gris tracé à la main, comme on entoure au stylo ce qui compte. Le geste ne se referme pas : sa fin passe au large de son départ.",
+ "idee": "Un rond vert anis, plein, entouré d’un seul geste gris, plus plein d’un côté et plus fin de l’autre, comme on entoure au stylo ce qui compte. Le geste ne se referme pas : sa fin passe au large de son départ.",
  "seconde_lecture": "Le rond vert n’est pas au centre : il se loge en bas à droite, contre le geste. Le gris est plus plein en haut à gauche, le vert est en bas à droite : c’est la diagonale de votre logo actuel, et le rond vert est le sien.",
- "defense": "Entourer, c’est protéger : le geste gris fait le tour de ce qu’il défend. Le trait est celui d’une main, plus plein d’un côté, plus fin de l’autre.",
- "union": "Le signe montre le collectif autour de chacun : dans le rond vert, le biologiste ; autour de lui, son syndicat. Il ne montre pas plusieurs formes qui se rejoignent.",
- "sante": "On peut voir dans le rond vert le patient, et dans le geste la profession qui veille sur lui. Rien dans le dessin ne l’impose.",
- "couleurs": "Deux couleurs dans le signe : le gris du logo pour le geste, le vert anis pour le rond. Le vert foncé reste dans le nom, sur la ligne « de Biologie Médicale ». Sur le vert du site, le geste passe en blanc et le rond reste vert anis. En une couleur, le rond est un peu plus petit, pour que le blanc entre le rond et le geste tienne en petit.",
+ "defense": "Notre intention : entourer pour protéger ; le geste gris fait le tour de ce qu’il défend. Sans légende, nos trois lecteurs ne lisent la défense qu’un peu.",
+ "union": "Notre intention : le collectif autour de chacun (dans le rond vert, un biologiste ; autour de lui, son syndicat). Sans légende, aucun de nos trois lecteurs n’y lit l’union : ils voient une seule chose, entourée.",
+ "sante": "On peut voir dans le rond vert le patient, et dans le geste la profession qui veille sur lui. Rien dans le dessin ne l’impose : nos trois lecteurs ne devinent la santé qu’un peu.",
+ "couleurs": "Deux couleurs dans le signe : le gris du logo pour le geste, le vert anis pour le rond. Le vert foncé reste dans le nom, sur la ligne « de Biologie Médicale ». Sur le vert du site, le geste passe en blanc et le rond reste vert anis : sur ce vert, le rond ressort moins que le geste, c’est à regarder sur l’écran du site avant de choisir. En une couleur, le rond est un peu plus petit, pour que le blanc entre le rond et le geste tienne en petit.",
  "palette": [
   {
    "nom": "gris cellule",
@@ -30,7 +30,7 @@
   }
  ],
  "animation": "À l’ouverture des pages, le rond vert se poserait, puis le geste gris se tracerait autour de lui d’un seul mouvement, comme le trait au marqueur sous les onglets du site.",
- "a_verifier": "Nos lecteurs y voient d’abord un œil ou une arobase ; le biologiste, une cellule et son noyau. En noir, à côté du sigle SLBM, une cible : « le missile et sa cible ». Tourné, un escargot. Le lecteur moqueur y trouve aussi une lecture grivoise, un sein vu de face. Plus faiblement, un serpent enroulé, gris sur vert anis, qui rappellerait celui du logo encore affiché sur slbc.fr. Dans le secteur, la FBM a aussi un anneau ouvert autour de son dessin : posés côte à côte, les deux signes ne nous paraissent pas se ressembler, mais c’est à faire confirmer par vos collaborateurs. En tout petit, le blanc entre le rond et le geste devient très fin.",
+ "a_verifier": "Nos trois lecteurs y voient d’abord un œil ; ils citent aussi une arobase et, pour le lecteur biologiste, une cellule et son noyau. Les trois parlent d’un œil qui surveille et, à côté du sigle SLBM, d’une cible : « le missile et sa cible ». Un escargot, donc la lenteur. Le lecteur moqueur y trouve une lecture grivoise, un sein vu de face, et juge le signe assez banal, déjà vu ; le passant pense au cercle tracé au pinceau des marques de bien-être. Deux lecteurs citent, de mémoire, la cible de l’enseigne américaine Target : à vérifier. De notre côté, nous y voyons aussi, faiblement, un serpent enroulé, qui rappellerait celui du logo encore affiché sur slbc.fr. Dans le secteur, la Fédération de la Biologie Médicale (FBM) entoure elle aussi son dessin, un microscope et une double hélice, d’un anneau épais, ouvert comme le nôtre en haut à droite. Les couleurs et le contenu n’ont rien de commun (bleu et rouge chez elle), mais l’anneau est de la même famille : c’est le premier point à faire juger par le bureau. En tout petit, le blanc entre le rond et le geste devient très fin.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }

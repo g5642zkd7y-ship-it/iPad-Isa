@@ -85,11 +85,11 @@ def couleur(d, champ, defaut):
 
 
 def nuancier(d):
-    """Les couleurs de la piste : pastilles, nom, code et rôle."""
+    """Les couleurs de la piste : pastilles, nom et rôle."""
     pal = [x for x in d.get('palette', []) if HEX.match(x.get('hex', ''))]
     if not pal:
         return ''
-    cases = ''.join(f'<li><span class="pastille" style="background:{x["hex"]}"></span><span class="pal-n">{e(x.get("nom", ""))}</span><span class="pal-h">{x["hex"].upper()}</span>{('<span class="pal-r">' + e(x["role"]) + '</span>') if x.get("role") else ""}</li>' for x in pal)
+    cases = ''.join(f'<li><span class="pastille" style="background:{x["hex"]}"></span><span class="pal-n">{e(x.get("nom", ""))}</span>{('<span class="pal-r">' + e(x["role"]) + '</span>') if x.get("role") else ""}</li>' for x in pal)
     return f'<div class="couleurs"><h3>Les couleurs de la charte dans le signe</h3><ul class="nuancier">{cases}</ul><p>{e(d.get("couleurs", ""))}</p></div>'
 
 
@@ -115,7 +115,7 @@ def piste(n, c):
   {situations(c)}
   <div class="bas">
     <p><strong>L’animation sur le site{NB}:</strong> {e(d["animation"])}</p>
-    <p><strong>À vérifier{NB}:</strong> {e(d["a_verifier"])}</p>
+    <p><strong>Ce qui peut gêner{NB}:</strong> {e(d["a_verifier"])}</p>
   </div>
 </section>'''
 
@@ -125,7 +125,7 @@ NOTE = f'Les six pistes gardent les couleurs de la charte. Toutes sont montrées
 titres = [json.load(open(f'{DOS}/{c}/description.json', encoding='utf-8'))['titre'] for c in CLES]
 apercu = (f'<div class="ap ap-actuel"><span class="ap-img">{svg("ref/symbole-actuel.svg")}</span><span class="ap-n">Aujourd’hui</span></div>'
           + ''.join(f'<a class="ap" href="#piste-{i + 1}"><span class="ap-img">{svg(f"{c}/symbole.svg")}</span><span class="ap-n">{i + 1}. {e(t)}</span></a>' for i, (c, t) in enumerate(zip(CLES, titres))))
-reco = f'''<section class="reco" aria-labelledby="t-reco"><h2 id="t-reco">Notre recommandation</h2><p>{e(PRES["recommandation"])}</p></section>''' if PRES.get('recommandation') else ''
+reco = f'''<section class="reco" aria-labelledby="t-reco"><h2 id="t-reco">Notre recommandation</h2>{"".join(f"<p>{e(x)}</p>" for x in ([PRES["recommandation"]] if isinstance(PRES["recommandation"], str) else PRES["recommandation"]))}</section>''' if PRES.get('recommandation') else ''
 etat = f'''<section class="etat" aria-labelledby="t-etat"><h2 id="t-etat">{e(PRES.get("etat_titre", "Ce que nous avons regardé avant de dessiner"))}</h2><ul>{"".join(f"<li>{e(x)}</li>" for x in PRES["etat"])}</ul></section>''' if PRES.get('etat') else ''
 fin = f'''<section class="etat" aria-labelledby="t-fin"><h2 id="t-fin">{e(PRES.get("fin_titre", "Ce qui n’est pas vérifié"))}</h2><ul>{"".join(f"<li>{e(x)}</li>" for x in PRES["fin"])}</ul></section>''' if PRES.get('fin') else ''
 SUITE = PRES.get('suite') or [
@@ -135,20 +135,26 @@ SUITE = PRES.get('suite') or [
 
 
 def test_lecture():
-    """Le test de lecture sans légende : un tableau, une ligne par piste (il se replie en fiches sur téléphone)."""
+    """Le test de lecture sans légende : un tableau, une ligne par piste (il se replie en fiches sur téléphone) ;
+    la clé « actuel » donne la ligne du logo d'aujourd'hui."""
     lignes = PRES.get('test')
     if not lignes:
         return ''
     rangs = ''
     for x in lignes:
-        if x.get('key') not in CLES:
+        if x.get('key') == 'actuel':
+            tete = f'<tr class="tl-actuel"><th scope="row"><span class="tl-ref"><span class="tl-img">{svg("ref/symbole-actuel.svg")}</span><span>Aujourd’hui</span></span></th>'
+        elif x.get('key') in CLES:
+            n = CLES.index(x['key']) + 1
+            tete = f'<tr><th scope="row"><a href="#piste-{n}"><span class="tl-img">{svg(x["key"] + "/symbole.svg")}</span><span>{n}. {e(titres[n - 1])}</span></a></th>'
+        else:
             continue
-        n = CLES.index(x['key']) + 1
-        rangs += (f'<tr><th scope="row"><a href="#piste-{n}"><span class="tl-img">{svg(x["key"] + "/symbole.svg")}</span><span>{n}. {e(titres[n - 1])}</span></a></th>'
+        rangs += (tete +
                   f'<td data-l="Au premier regard">{e(x.get("voit", ""))}</td><td data-l="La lecture gênante">{e(x.get("gene", ""))}</td>'
                   f'<td data-l="Défense">{e(x.get("defense", ""))}</td><td data-l="Union">{e(x.get("union", ""))}</td><td data-l="Santé">{e(x.get("sante", ""))}</td>'
                   f'<td data-l="Classement">{e(x.get("rang", ""))}</td></tr>')
-    intro = f'<p>{e(PRES["test_intro"])}</p>' if PRES.get('test_intro') else ''
+    ti = PRES.get('test_intro') or []
+    intro = ''.join(f'<p>{e(x)}</p>' for x in ([ti] if isinstance(ti, str) else ti))
     note = f'<p class="tl-note">{e(PRES["test_note"])}</p>' if PRES.get('test_note') else ''
     return f'''<section class="test" aria-labelledby="t-test"><h2 id="t-test">{e(PRES.get("test_titre", "Le test de lecture"))}</h2>{intro}
   <table class="tl"><thead><tr><th scope="col">Piste</th><th scope="col">Au premier regard</th><th scope="col">La lecture gênante</th><th scope="col">Défense</th><th scope="col">Union</th><th scope="col">Santé</th><th scope="col">Classement</th></tr></thead><tbody>{rangs}</tbody></table>{note}</section>'''
@@ -199,17 +205,21 @@ a:focus-visible{{outline:3px solid var(--vert);outline-offset:3px;border-radius:
 .tl th,.tl td{{text-align:left;vertical-align:top;padding:10px 12px 10px 0;border-top:1px solid var(--filet)}}
 .tl thead th{{border-top:0;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--gris);padding-top:0}}
 .tl tbody th{{font-weight:800;color:var(--encre);min-width:150px}}
-.tl tbody th a{{display:inline-flex;align-items:center;gap:10px;color:var(--encre);text-decoration:none}}
+.tl tbody th a,.tl-ref{{display:inline-flex;align-items:center;gap:10px;color:var(--encre);text-decoration:none}}
+.tl-actuel th,.tl-actuel td{{background:var(--fond)}}
+.tl-actuel th{{padding-left:10px}}
 .tl tbody th a:hover span:last-child{{text-decoration:underline}}
 .tl-img svg{{width:40px;height:40px;display:block}}
-.tl td:nth-child(n+4){{white-space:nowrap}}
+.tl td:nth-child(n+4):not(:last-child){{white-space:nowrap}}
 .tl td:last-child{{font-weight:700;color:var(--encre)}}
+@media (min-width:901px){{.tl td:last-child{{width:15%}}}}
 .tl-note{{margin-top:12px;font-size:14.5px;color:var(--gris)}}
 .etat ul{{padding-left:1.2em;display:flex;flex-direction:column;gap:6px}}
 .reco{{background:var(--olive);color:var(--blanc)}}
 .reco h2{{color:var(--blanc)}}
 .reco p{{font-size:18px;max-width:60em}}
-.apercus{{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}}
+.reco p+p{{margin-top:10px}}
+.apercus{{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}}
 .ap{{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 10px 14px;border-radius:16px;background:var(--blanc);box-shadow:inset 0 0 0 1px var(--filet);text-decoration:none;color:var(--encre);font-weight:700;font-size:15px;text-align:center;line-height:1.3}}
 a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .ap-actuel{{background:transparent;color:var(--gris)}}
@@ -290,24 +300,30 @@ a.ap:hover{{box-shadow:inset 0 0 0 2px var(--vert)}}
 .sur-vert{{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 16px;padding:10px 14px;border-radius:8px;background:var(--olive)}}
 .sur-vert .t-n{{color:var(--blanc)}}
 .sv-n{{align-self:center}}
-.mono svg{{width:40px;height:40px;display:block}}
+.mono svg{{width:64px;height:64px;display:block}}
 .bas{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;font-size:15.5px}}
 .bas strong{{color:var(--encre)}}
 .suite{{padding:22px clamp(18px,3vw,28px);border-radius:20px;background:var(--vert-clair);color:var(--encre)}}
 .suite h2{{font-size:20px;font-weight:800;margin-bottom:8px}}
 .suite ul{{padding-left:1.2em;display:flex;flex-direction:column;gap:6px}}
 @media (max-width:900px){{.tl thead{{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}.tl,.tl tbody,.tl tr,.tl th,.tl td{{display:block}}.tl tr{{padding:12px 0;border-top:1px solid var(--filet)}}.tl th,.tl td{{border:0;padding:3px 0}}.tl td:nth-child(n+4){{white-space:normal}}.tl td::before{{content:attr(data-l) "\\00a0: ";font-weight:700;color:var(--gris)}}.tl tbody th{{margin-bottom:4px}}}}
-@media (max-width:560px){{.apercus{{grid-template-columns:repeat(2,minmax(0,1fr))}}.ap-actuel{{grid-column:1 / -1;flex-direction:row;justify-content:center;padding-block:6px}}.ap-actuel .ap-img svg{{width:56px;height:56px}}}}
-@media (max-width:980px){{.vues{{grid-template-columns:repeat(2,minmax(0,1fr))}}.v-vert{{grid-column:1 / -1}}.situ{{grid-template-columns:repeat(4,minmax(0,1fr))}}.s-lettre{{grid-row:auto}}.brief{{grid-template-columns:minmax(0,1fr)}}}}
-@media (max-width:700px){{.st-onglets{{display:none}}.dit,.bas{{grid-template-columns:minmax(0,1fr)}}.situ{{grid-template-columns:repeat(2,minmax(0,1fr))}}.s-lettre,.s-carte,.s-badge,.s-reseau,.s-petit{{grid-column:span 1}}.s-petit{{grid-column:1 / -1}}}}
+@media (max-width:1071px){{.apercus{{grid-template-columns:repeat(6,minmax(0,1fr))}}.ap-actuel{{grid-column:1 / -1;flex-direction:row;justify-content:center;padding-block:6px}}.ap-actuel .ap-img svg{{width:56px;height:56px}}}}
+@media (max-width:899px){{.apercus{{grid-template-columns:repeat(3,minmax(0,1fr))}}}}
+@media (max-width:560px){{.apercus{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
+@media (max-width:980px){{.vues{{grid-template-columns:repeat(2,minmax(0,1fr))}}.v-vert{{grid-column:1 / -1}}.situ{{grid-template-columns:repeat(4,minmax(0,1fr))}}.brief{{grid-template-columns:minmax(0,1fr)}}}}
+@media (max-width:700px){{.st-onglets{{display:none}}.dit,.bas{{grid-template-columns:minmax(0,1fr)}}.situ{{grid-template-columns:repeat(2,minmax(0,1fr))}}.s-lettre{{grid-row:auto}}.s-lettre,.s-carte,.s-badge,.s-reseau,.s-petit{{grid-column:span 1}}.s-petit{{grid-column:1 / -1}}}}
 @media (max-width:560px){{.vues{{grid-template-columns:minmax(0,1fr)}}.p-tete h2{{font-size:22px}}.num{{width:40px;height:40px;font-size:20px}}.st-btn{{padding:6px 14px;font-size:15px}}.situ{{padding:12px;gap:14px}}.s-lettre,.s-carte,.s-badge,.s-reseau{{grid-column:1 / -1}}.lettre{{max-width:260px}}.carte{{max-width:320px}}}}
+.vers-reco{{margin-top:10px;text-align:right;font-weight:700}}
+.vers-reco a{{color:var(--vert);display:inline-block;padding:10px 0}}
+.dit p,.bas p,.idee,.seconde,.couleurs p,.etat li,.suite li,.reco p,.test>p,.tl td,.tl-note,.complement{{text-wrap:pretty}}
+@media (max-width:359px){{.site-tete{{gap:10px;padding:10px 12px}}.st-logo{{gap:8px}}.st-mark{{width:28px;height:28px}}.st-mot{{font-size:21px}}.st-btn{{padding:6px 12px;font-size:15px}}}}
 </style>
 <main class="page">
   <header class="titre">
     <p class="surtitre">{e(PRES.get("surtitre", "Proposition de l’agence"))}</p>
     <h1>Logo du SLBM</h1>
   </header>
-  <nav aria-label="Les {len(CLES)} pistes, à côté du logo d’aujourd’hui"><div class="apercus">{apercu}</div></nav>
+  <nav aria-label="Les {len(CLES)} pistes, à côté du logo d’aujourd’hui"><div class="apercus">{apercu}</div><p class="vers-reco"><a href="#t-reco">Aller à notre recommandation</a></p></nav>
   <section class="brief" aria-labelledby="t-brief">
     <div><h2 id="t-brief">Votre demande</h2>
       <blockquote>«{FINE}Ce qui est important pour ce syndicat, c’est l’image de la défense de la profession, que l’union fait la force, au-delà de la défense de la biologie médicale. Mais effectivement ce syndicat défend en même temps la santé des Français.{FINE}»<span class="qui">Isabelle Eimer, pour le SLBM</span></blockquote>

@@ -3,8 +3,8 @@
  "titre": "Tenir ensemble",
  "idee": "Vos deux ronds, gris en haut à gauche et vert en bas à droite, s’ouvrent et s’accrochent l’un à l’autre : le bras de chacun passe par-dessus l’autre et se referme sur ce qu’ils ont en commun, en vert foncé.",
  "seconde_lecture": "C’est la plus géométrique des six : les ronds restent de vrais ronds, ce sont deux fentes blanches qui les font s’accrocher. Plusieurs de nos lecteurs y ont lu un S, celui de syndicat et de SLBM.",
- "defense": "Les deux ronds se referment sur ce qu’ils ont en commun et le gardent au milieu. La défense passe par ce geste, sans bouclier.",
- "union": "Deux formes qui se tiennent : aucune ne peut partir sans l’autre. C’est le sujet du signe.",
+ "defense": "Notre intention : les deux ronds se referment sur ce qu’ils ont en commun et le gardent au milieu. Sans légende, aucun de nos trois lecteurs n’y lit la défense.",
+ "union": "Deux formes qui se tiennent : aucune ne peut partir sans l’autre. C’est le sujet du signe, et le seul des six où nos trois lecteurs lisent l’union sans légende.",
  "sante": "La santé n’est pas montrée. Au centre, on peut voir ce que la profession protège.",
  "couleurs": "Les trois couleurs du logo actuel, à la même place. Sur le vert du site : rond gris en blanc, rond vert en vert anis, zone commune en vert clair. En une couleur, deux traits fins cernent la zone commune ; pour toute impression sans couleur, prendre cette version et non une conversion en gris, où le gris et le vert foncé se confondent.",
  "palette": [
@@ -40,7 +40,7 @@
   }
  ],
  "animation": "À l’ouverture des pages, les deux ronds se rapprocheraient comme aujourd’hui, puis chacun passerait un bras par-dessus l’autre : les deux fentes blanches s’ouvriraient et la zone commune apparaîtrait.",
- "a_verifier": "Le yin et le yang : nos trois lecteurs le voient d’abord, et il évoque pour eux les médecines douces plutôt que la science. Les trois citent aussi la même plaisanterie grivoise sur deux formes tête-bêche. En une couleur, chacune des deux virgules est un rond terminé par une pointe, donc proche d’une goutte. Au centre, une amande ou un œil. En tout petit, les fentes ne sont plus que deux encoches et l’on revoit presque le logo actuel : il faudra un dessin simplifié pour l’onglet du navigateur.",
+ "a_verifier": "Le yin et le yang : deux de nos trois lecteurs le voient d’abord, le troisième juste après ; il évoque pour les trois les médecines douces plutôt que la science. Les trois citent aussi la même plaisanterie grivoise sur deux formes tête-bêche, et deux Pac-Man qui se mordent ; deux d’entre eux, deux reins. Mastercard : les trois en retrouvent encore un peu (deux ronds décalés, une zone commune plus foncée). Deux lecteurs citent aussi, de mémoire, le logo de Shazam, un S fait de deux crochets : à vérifier. En une couleur, chacune des deux virgules est un rond terminé par une pointe, donc proche d’une goutte. Au centre, une amande ou un œil. En tout petit, les fentes ne sont plus que deux encoches et l’on revoit presque le logo actuel : il faudra un dessin simplifié pour l’onglet du navigateur.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }

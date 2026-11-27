@@ -2,17 +2,32 @@
  "surtitre": "Proposition de l’agence, après vos retours",
  "etat_titre": "Vos retours, et ce que nous en avons fait",
  "etat": [
-  "« Bof », puis « mon petit frère aurait pu les faire » : le premier jeu était fait au compas et à la règle. Les pistes 1, 4, 5 et 6 sont maintenant tracées à la main. Les pistes 2 et 3 gardent vos deux ronds, donc leur géométrie : nous les montrons parce que vous tenez au logo actuel.",
-  "« On n’est pas dans les cravates » : chaque signe a été regardé à l’envers, tourné, en noir et en petit, puis montré sans légende à trois lecteurs. Ce qu’ils y ont vu, y compris ce qui prête à sourire, est écrit dans le tableau ci-dessous et sous chaque piste, à la ligne « À vérifier ».",
-  "« Ça ressemble à Biogroup avec sa goutte » : aucun signe n’est une goutte. Deux s’en approchent : le bouclier (6) quand on le retourne, pointe en haut, et les deux virgules de la piste 3 en une couleur. C’est écrit sous ces pistes."
+  "Ce que vous avez demandé, et ce que les six pistes en disent : aucune ne dit à la fois la défense et l’union, et aucune ne montre la santé des Français. À notre avis, c’est le prix d’un logo simple : il ne dit bien qu’une chose. La piste 6 dit la défense, la piste 3 l’union ; la piste 1, que nos lecteurs préfèrent, ne dit nettement ni l’une ni l’autre. La santé reste portée par la devise proposée pour le site, « Défendre la biologie, défendre les patients ».",
+  "Le premier jeu vous a paru trop pauvre en dessin : il était fait au compas et à la règle. Les pistes 1, 4, 5 et 6 ont maintenant un trait qui s’épaissit et s’affine, comme un geste de marqueur ; dans les pistes 1 et 6, le rond vert reste un rond parfait, le vôtre. Les pistes 2 et 3 gardent vos deux ronds, donc leur géométrie : nous les montrons parce que vous tenez au logo actuel. À la question « a-t-il l’air dessiné à la main ? », nos trois lecteurs répondent oui pour les pistes 4 et 5, deux sur trois pour les pistes 1 et 6, « un peu » pour la piste 3 ; pour la piste 2, deux sur trois répondent non.",
+  "Vous nous avez demandé de nous inspirer de Nike : nous en avons retenu le principe, un seul geste tendu, plus plein d’un côté et plus fin de l’autre (pistes 1, 5 et 6). La piste 5 le suit de trop près : nos trois lecteurs y voient la virgule de Nike.",
+  "Vous avez vu une cravate dans l’un de nos signes : un dessin peut se lire tout autrement que prévu. Chaque signe a donc été regardé à l’envers, tourné, en noir et en petit, puis montré sans légende à trois lecteurs automatiques (des assistants, pas des personnes). L’essentiel de ce qu’ils y ont vu, y compris ce qui prête à sourire, est écrit dans le tableau ci-dessous et sous chaque piste, à la ligne « Ce qui peut gêner ».",
+  "Vous avez trouvé qu’un signe ressemblait à Biogroup, avec sa goutte : aucun des six n’est une goutte. Deux s’en approchent : le bouclier (6) quand on le retourne, pointe en haut, et les deux virgules de la piste 3 en une couleur. Nous n’avons pas pu voir le logo actuel de Biogroup : c’est à vous de dire s’il reste un air de famille."
  ],
- "test_titre": "Ce que trois lecteurs y ont vu, sans légende",
- "test_intro": "Nous avons montré les six signes à trois lecteurs sans leur dire ce qu’ils représentent : un passant, un biologiste membre d’un bureau syndical et un collègue moqueur, chargé de trouver la lecture qui fait rire. Ce sont des assistants automatiques de l’agence, pas des personnes : leur regard ne remplace pas celui de vos collaborateurs. Un premier test nous a fait redessiner les pistes 4, 5 et 6 ; ce tableau donne le second, fait sur les six dessins de cette page.",
+ "test_titre": "Ce que trois lecteurs automatiques y ont vu, sans légende",
+ "test_intro": [
+  "Nous avons montré les six signes à trois assistants automatiques, sans leur dire ce qu’ils représentent. Chacun tenait un rôle : un passant, un biologiste membre d’un bureau syndical, un collègue moqueur chargé de trouver la lecture qui fait rire. Ce ne sont pas des personnes : leur regard ne remplace pas celui de vos collaborateurs.",
+  "Un premier test nous a fait redessiner les pistes 4, 5 et 6 ; un deuxième a comparé ces nouveaux dessins aux anciens ; ce tableau donne le troisième, fait sur les six dessins de cette page. Votre logo actuel a ensuite été montré seul aux trois mêmes rôles, qui l’ont placé dans leur classement des six : c’est la première ligne du tableau.",
+  "Un point vaut pour toute la page : en anglais, SLBM est aussi le sigle d’un missile lancé depuis un sous-marin. À côté de ce sigle, trois signes prennent un sens gênant : la cible (piste 1), la trajectoire (piste 5), le bouclier antimissile (piste 6). Cela tient au nom, pas au dessin."
+ ],
  "test": [
   {
+   "key": "actuel",
+   "voit": "Deux ronds qui se chevauchent ; un schéma de maths, deux ensembles et leur partie commune ; Mastercard, presque aussitôt, pour les trois.",
+   "gene": "Moyenne à forte : « Mastercard en vert », pour les trois. Rien qui rappelle le missile. Aucun ne le trouve dessiné à la main.",
+   "defense": "non",
+   "union": "oui",
+   "sante": "un peu",
+   "rang": "placé 4e ou 5e sur sept par chacun"
+  },
+  {
    "key": "entoure",
-   "voit": "Un œil, ou une bille verte prise dans un trait gris qui s’enroule ; une arobase. Le biologiste y voit une cellule et son noyau.",
-   "gene": "Faible à moyenne : une cible à côté du sigle, « le missile et sa cible » ; un escargot.",
+   "voit": "Un œil, ou une bille verte prise dans un trait gris qui s’enroule ; une arobase. Le lecteur biologiste y voit une cellule et son noyau.",
+   "gene": "Faible à moyenne : un œil qui surveille, pour les trois ; une cible à côté du sigle, « le missile et sa cible » ; un escargot, donc la lenteur ; pour le lecteur moqueur, une lecture grivoise.",
    "defense": "un peu",
    "union": "non",
    "sante": "un peu",
@@ -20,8 +35,8 @@
   },
   {
    "key": "deux-ronds",
-   "voit": "Deux ronds qui se chevauchent : « Mastercard en vert et gris », pour les trois. Puis un anneau cassé.",
-   "gene": "Moyenne : un anneau qui ne se ferme pas, pour un syndicat qui parle d’union ; une tétine ; en noir, une grenade et sa goupille.",
+   "voit": "Deux ronds qui se chevauchent. « Mastercard en vert et gris » dès le premier regard pour deux lecteurs ; le troisième voit d’abord un anneau cassé.",
+   "gene": "Moyenne : un anneau qui ne se ferme pas, pour un syndicat qui parle d’union ; une tétine ; une menotte ouverte ; en noir, une grenade et sa goupille.",
    "defense": "non",
    "union": "un peu",
    "sante": "non",
@@ -29,8 +44,8 @@
   },
   {
    "key": "accroche",
-   "voit": "Un yin et yang gris et vert : deux virgules qui s’emboîtent. Le biologiste y lit presque un S.",
-   "gene": "Moyenne : le yin et le yang, qui fait médecine douce ; une plaisanterie grivoise sur deux formes tête-bêche, citée par les trois.",
+   "voit": "Un yin et yang gris et vert : deux virgules qui s’emboîtent. Le lecteur biologiste y lit presque un S.",
+   "gene": "Moyenne : le yin et le yang, qui fait médecine douce ; une plaisanterie grivoise sur deux formes tête-bêche, citée par les trois ; deux Pac-Man ; encore un peu Mastercard, pour les trois.",
    "defense": "non",
    "union": "oui",
    "sante": "un peu",
@@ -38,8 +53,8 @@
   },
   {
    "key": "aile",
-   "voit": "Une aile repliée ou une feuille : « une marque de produits naturels, ou une compagnie aérienne ». Le plus beau dessin des six pour deux lecteurs.",
-   "gene": "Faible à moyenne : en noir, une patte griffue ou un régime de bananes ; en couleurs, une moule.",
+   "voit": "Une aile repliée ou une feuille, qui fait penser à une marque de produits naturels ou à une compagnie aérienne. Le plus beau dessin des six pour deux lecteurs.",
+   "gene": "Faible à moyenne : en noir, une patte griffue ou un régime de bananes ; en couleurs, une moule entrouverte, avec un sous-entendu pour le lecteur moqueur.",
    "defense": "un peu",
    "union": "un peu",
    "sante": "un peu",
@@ -47,8 +62,8 @@
   },
   {
    "key": "confluence",
-   "voit": "La virgule d’une marque de sport, pour les trois ; un oiseau en vol ; une feuille sur deux tiges.",
-   "gene": "Moyenne à forte : à côté du sigle SLBM, la trajectoire d’un missile qui monte avec sa traînée.",
+   "voit": "La virgule d’une marque de sport, pour les trois, qui citent Nike ; un oiseau en vol ; une feuille sur deux tiges.",
+   "gene": "Moyenne à forte : à côté du sigle SLBM, la trajectoire d’un missile qui monte avec sa traînée ; tourné, une lame ou une faucille.",
    "defense": "non",
    "union": "un peu",
    "sante": "non",
@@ -57,31 +72,42 @@
   {
    "key": "bouclier",
    "voit": "Un bouclier tracé au feutre devant un rond vert : compris tout de suite.",
-   "gene": "Faible à moyenne : le logo d’un antivirus ou d’une mutuelle ; un slip ou une poche ; le « bouclier antimissile ».",
+   "gene": "Faible à moyenne : le logo d’un antivirus ou d’une mutuelle ; un écusson de club devant son ballon ; un trait mal fermé, pour deux lecteurs ; un slip ou une poche ; le « bouclier antimissile » ; pour le lecteur moqueur, une lecture grivoise.",
    "defense": "oui",
    "union": "non",
    "sante": "non",
    "rang": "2e pour deux lecteurs, 4e pour le moqueur"
   }
  ],
- "test_note": "Les colonnes « défense », « union » et « santé » résument la réponse des trois lecteurs à la question posée en fin de test : ce signe vous évoque-t-il l’idée de défendre, celle de s’unir, la santé ? Leurs réponses concordent presque partout. Aucun signe ne dit à la fois la défense et l’union : il faudra choisir ce que le logo dit d’abord.",
- "fin_titre": "Ce que nous avons écarté, et ce qui n’est pas vérifié",
+ "test_note": "Dans la colonne « La lecture gênante », le premier mot donne la force de la gêne selon les lecteurs. Les colonnes « défense », « union » et « santé » résument leur réponse à la question posée en fin de test : ce signe vous évoque-t-il l’idée de défendre, celle de s’unir, la santé ? Leurs réponses concordent presque partout. Mastercard : les trois lecteurs le citent pour la piste 2, encore un peu pour la piste 3 ; un seul, un peu, pour la piste 6 ; aucun pour les pistes 1, 4 et 5.",
+ "fin_titre": "Ce que nous avons écarté, ce qui reste à vérifier et ce que le choix entraîne",
  "fin": [
   "Écartés après un premier tri : le microscope (déjà présent dans les logos d’autres organisations de biologistes), la loupe (le bouton « rechercher »), le stéthoscope (l’outil du médecin), les lettres dessinées et toutes les gouttes.",
   "Écartés en cours de route, pour la piste 5 : un premier dessin à trois branches, où nos lecteurs voyaient un missile à côté du sigle, puis une coche tracée au pinceau, où ils voyaient la virgule de Nike et le « validé » des logiciels.",
-  "La santé des Français : aucun signe ne la montre. Nos lecteurs la devinent un peu dans les pistes 1, 3 et 4, pas dans les autres. Elle reste portée par la devise du syndicat, « Défendre la biologie, défendre les patients ».",
+  "Les logos du secteur que nous avons pu voir, relevés le 26 novembre 2026 : SDBIO, Les Biologistes Médicaux, SNMB, FBP, FBM et Les Biologistes Indépendants. Aucun n’a vos trois couleurs. Deux points à retenir : l’anneau ouvert de la FBM, de la même famille que celui de la piste 1, et les trois gouttes des Biologistes Médicaux, à poser à côté de la piste 3 en une couleur.",
   "Les logos actuels de Biogroup, Cerballiance, Unilabs et Synlab : nous n’avons pas pu les ouvrir depuis notre poste de travail. La comparaison reste à faire avant de choisir.",
-  "Mastercard, Nike et les autres marques citées par nos lecteurs : comparaisons faites de mémoire, sans les logos officiels sous les yeux.",
+  "Mastercard, Nike, Shazam, Target et les autres marques citées par nos lecteurs : comparaisons faites de mémoire, sans les logos officiels sous les yeux.",
   "Les relectures et les tests de lecture sont faits par des assistants automatiques, pas par des personnes.",
   "Aucune recherche de marques déposées n’a été faite.",
-  "Les animations décrites sous chaque piste sont des intentions : aucune n’est réalisée."
+  "Les animations décrites sous chaque piste sont des intentions : aucune n’est réalisée.",
+  "Le nom SLBM n’est pas encore adopté : il dépend du vote de l’assemblée générale. Les six signes ne dépendent pas du sigle ; les lectures liées au missile, elles, ne tiennent qu’à lui.",
+  "Si une piste est retenue, il faudra reprendre ce qui repose aujourd’hui sur les deux ronds : l’animation à l’ouverture des pages, les filets, les pastilles et la charte. Les pistes 1, 2, 3 et 6 gardent le rond vert ; les pistes 4 et 5 l’abandonnent."
  ],
  "suite": [
-  "Avant de choisir : poser les six signes à côté des logos de Biogroup, Cerballiance, Unilabs, Synlab et de la FBM, et les montrer à vos collaborateurs sans leur dire ce que l’on cherche.",
+  "Avant de choisir, deux choses que nous ne pouvons pas faire à votre place. Montrer les six signes, sans légende, à trois ou quatre personnes qui ne connaissent pas le projet : nos lecteurs sont des assistants automatiques. Et poser les signes à côté des logos de Biogroup, Cerballiance, Unilabs et Synlab, que nous n’avons pas pu voir : envoyez-nous une capture de chacun, ou faites la comparaison avec vos collaborateurs.",
   "Vous choisissez une piste, ou deux à pousser plus loin, et vous nous dites ce qu’il faut changer. Si vous voulez un signe qui dise à la fois la défense et l’union, dites-le-nous : aucune des six ne le fait, il faudrait en dessiner une septième.",
   "Nous affinons la piste retenue, puis nous l’essayons sur le site complet : en-tête, pied de page, animations des pages.",
   "Avant toute adoption : faire vérifier par un spécialiste des marques qu’aucun logo déposé ne lui ressemble, puis validation par le bureau."
  ],
  "note": "Les six pistes gardent les couleurs de la charte. Toutes sont montrées en tout petit, en une couleur et sur le vert du site ; ce qui ne tient pas à cette taille est écrit sous chaque piste.",
- "recommandation": "Notre préférence va à la piste 1, « Bien entouré » : première pour deux de nos trois lecteurs, deuxième pour le troisième. Elle garde votre rond vert, aucun des trois n’y a vu Mastercard, et le biologiste y lit une cellule et son noyau. Sa limite : elle dit « protégé » plus qu’« unis ». Il reste à la poser à côté du logo de la FBM. Ensuite, tout dépend de ce que le bureau veut dire d’abord. La défense : la piste 6, le bouclier, deuxième pour deux lecteurs et la seule où les trois lisent « défendre » sans légende ; c’est aussi le signe le plus courant. L’union : la piste 3, « Tenir ensemble », la seule où les trois lisent « s’unir », si son air de yin et yang ne vous gêne pas. La piste 2 reste la plus proche de votre logo, mais nos lecteurs y voient encore Mastercard. La piste 4 est un beau dessin, que l’on prend pour le logo d’une marque de produits naturels. Nous ne recommandons pas la piste 5. Rien ne change sur le site : il garde ses deux ronds tant que le bureau n’a pas décidé."
+ "recommandation": [
+  "Notre préférence va à la piste 1, « Bien entouré ». Deux de nos trois lecteurs la jugent la plus simple des six et la plus lisible en tout petit ; elle est première pour ces deux-là, deuxième pour le troisième. Elle garde votre rond vert et aucun des trois n’y voit Mastercard.",
+  "Par rapport à votre logo actuel : les trois lecteurs le placent derrière les pistes 1 et 6. Il reste le plus simple et le plus lisible en tout petit, et c’est, avec la piste 3, le seul où les trois lisent l’union. Mais aucun n’y lit la défense, aucun ne le trouve dessiné à la main, et les trois y voient Mastercard presque aussitôt.",
+  "Les limites de la piste 1 : elle ne dit pas ce que vous avez demandé en premier. La défense ne s’y lit qu’un peu, et aucun lecteur n’y lit l’union. Les trois y voient aussi un œil qui surveille. Et son anneau ouvert est de la même famille que celui du logo de la FBM : c’est au bureau d’en juger. Si vous la retenez, nous pouvons déplacer l’ouverture du geste pour l’en éloigner.",
+  "Si le logo doit d’abord dire la défense, comme dans votre demande : la piste 6, le bouclier, la seule où les trois lisent « défendre » sans légende. C’est aussi un signe très courant, et il se brouille en tout petit.",
+  "S’il doit d’abord dire l’union : la piste 3, « Tenir ensemble », la seule où les trois lisent « s’unir ». Mais les trois y voient le yin et le yang, citent la même plaisanterie grivoise et y retrouvent encore un peu Mastercard.",
+  "Ces deux pistes sont aussi celles qui s’approchent le plus d’une goutte (la 6 quand on la retourne, la 3 en une couleur) : à regarder avec ce que vous nous avez dit de Biogroup.",
+  "La piste 2 reste la plus proche de votre logo, mais les trois lecteurs y voient Mastercard. La piste 4 est un beau dessin, que l’on prend pour le logo d’une marque de produits naturels. Nous ne recommandons pas la piste 5.",
+  "Rien ne change sur le site : il garde ses deux ronds tant que le bureau n’a pas décidé."
+ ]
 }

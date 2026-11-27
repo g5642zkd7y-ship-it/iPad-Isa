@@ -3,8 +3,8 @@
  "titre": "Sous son aile",
  "idee": "Une aile qui s’abaisse, faite de trois plumes aux trois couleurs du logo. La grande plume grise couvre la verte, qui couvre la petite vert anis. Une fine ligne blanche sépare chaque plume de sa voisine et s’élargit jusqu’aux pointes.",
  "seconde_lecture": "Les trois plumes partent de la même épaule arrondie et leurs pointes sortent l’une sous l’autre. Les couleurs gardent l’ordre de votre logo, de haut en bas : gris, vert foncé, vert anis.",
- "defense": "Prendre sous son aile, c’est protéger : quand on reconnaît l’aile, la défense est là.",
- "union": "Trois plumes de tailles inégales qui tiennent ensemble. L’union vient en second.",
+ "defense": "Une aile qui couvre : la défense est là quand on reconnaît l’aile. Sans légende, nos trois lecteurs ne la lisent qu’un peu.",
+ "union": "Trois plumes de tailles inégales qui tiennent ensemble. L’union vient en second : nos lecteurs ne la lisent qu’un peu.",
  "sante": "Sous l’aile, on peut mettre la profession ou le patient ; le dessin ne le dit pas.",
  "couleurs": "Les trois couleurs du logo, une par plume. Sur le vert du site : la grande plume en blanc, celle du milieu en vert clair, la petite en vert anis. En une couleur, c’est le même dessin : les deux lignes vides séparent les plumes. En tout petit, nous prenons un dessin simplifié, aux lignes plus larges.",
  "palette": [
@@ -40,7 +40,7 @@
   }
  ],
  "animation": "À l’ouverture des pages, les trois plumes se déploieraient l’une après l’autre : la petite, la verte, puis la grise, qui viendrait couvrir les deux autres.",
- "a_verifier": "Le biologiste et le lecteur moqueur y voient le plus beau dessin des six, mais « personne ne saura dire ce que c’est » : une aile, une feuille, le logo d’une marque de produits naturels ou d’une compagnie aérienne plutôt que celui d’un syndicat. En noir, les deux lignes vides découpent trois pointes : une patte griffue, un régime de bananes. En couleurs, plus faiblement, une moule. En tout petit, les lignes se bouchent : nous prenons le dessin simplifié. Les ressemblances avec des marques qui ont une aile ou une feuille ne sont pas vérifiées.",
+ "a_verifier": "Le lecteur biologiste et le lecteur moqueur y voient le plus beau dessin des six ; mais, dit le premier, « personne ne saura dire ce que c’est » : une aile, une feuille, une vague, un coquillage. Les trois pensent à une marque de produits naturels plutôt qu’à un syndicat ; deux, à une compagnie aérienne. En noir, les deux lignes vides découpent trois pointes : les trois y voient une patte griffue ou un régime de bananes. En couleurs, les trois y voient aussi une moule entrouverte ; le lecteur moqueur y relève un sous-entendu. En tout petit, les lignes se bouchent : nous prenons le dessin simplifié. Les ressemblances avec des marques qui ont une aile ou une feuille ne sont pas vérifiées.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }

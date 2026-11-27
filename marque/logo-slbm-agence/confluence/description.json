@@ -4,7 +4,7 @@
  "idee": "Un long trait gris part de la gauche et se relève vers la droite d’un seul geste. Un trait vert anis, plus court, le rejoint par-dessous. Là où ils se recouvrent, le trait devient vert foncé, plus plein, puis il s’affine jusqu’à la pointe.",
  "seconde_lecture": "Ce sont les trois couleurs de votre logo et la même idée de zone commune : le vert foncé, là où le gris et le vert anis se recouvrent. Ici, la partie commune fait la moitié du signe.",
  "defense": "Ce signe ne parle pas de défense : il montre un élan, deux forces qui n’en font plus qu’une.",
- "union": "Deux traits en font un seul, plus large que chacun : c’est notre façon de dessiner « l’union fait la force ». Sans légende, nos trois lecteurs ne la lisent qu’un peu.",
+ "union": "Deux traits en font un seul, plus large que chacun. Sans légende, nos trois lecteurs ne lisent l’union qu’un peu ; deux précisent : en couleurs seulement.",
  "sante": "La santé n’y figure pas. Les verts et la forme font plutôt penser à une feuille.",
  "couleurs": "Les trois couleurs du logo : le gris pour le trait long, le vert anis pour le trait court, le vert foncé là où ils se recouvrent. Sur le vert du site : le trait long en blanc, le trait court en vert anis, la partie commune en vert clair. En une couleur, une seule forme, sans ligne vide : la fourche suffit à montrer les deux traits. En tout petit, nous prenons un dessin simplifié, aux traits plus gras.",
  "palette": [
@@ -40,7 +40,7 @@
   }
  ],
  "animation": "À l’ouverture des pages, le trait gris se tracerait de gauche à droite, le trait vert anis le rejoindrait par-dessous, puis la partie commune filerait jusqu’à la pointe.",
- "a_verifier": "C’est notre troisième dessin de cette idée, et nos trois lecteurs le classent encore dernier. Ils y voient d’abord la virgule d’une marque de sport (les trois citent Nike), un oiseau en vol ou une feuille. À côté du sigle SLBM, qui désigne aussi un missile, une trajectoire qui monte avec sa traînée : pour qui connaît ce sens, on ne voit plus qu’elle. Tourné, une lame courbe. C’est le signe le plus léger des six à côté du nom, et en tout petit il n’en reste qu’un accent sans le dessin simplifié. Nous le montrons pour son trait ; nous ne le recommandons pas.",
+ "a_verifier": "C’est notre troisième dessin de cette idée, et nos trois lecteurs le classent encore dernier. Deux y voient d’abord la virgule d’une marque de sport, le troisième une feuille puis cette virgule ; les trois citent Nike. Aussi un oiseau en vol. À côté du sigle SLBM, la trajectoire d’un missile qui monte avec sa traînée : pour qui connaît ce sens du sigle, on ne voit plus qu’elle. Tourné, une lame courbe ; une faucille, pour deux lecteurs. C’est le signe le plus léger des six à côté du nom, et en tout petit il n’en reste qu’un accent sans le dessin simplifié. Dans le logo en hauteur, nous l’avons agrandi d’un quart par rapport aux autres signes, et dans le logo horizontal nous l’avons posé sur la ligne du nom au lieu de le centrer : sans cela, il flottait. Nous le gardons parmi les six parce que son trait est le plus proche de ce que vous demandiez en citant Nike ; nous ne le recommandons pas.",
  "fond_sombre": "#657B3D",
  "couleur_action": "#5F7A2B"
 }
